@@ -1,0 +1,8 @@
+- [Project: CyberTrader Dev Lab foundation](project_cybertrader_foundation.md) — canonical vision, tech stack, team structure locked 2026-04-19
+- [User: Ghost (founder)](user_ghost.md) — founder + creative lead, newbie to mobile game dev, working with co-founder Zoro
+- [Feedback: session style](feedback_session_style.md) — Council header every non-trivial reply, refine prompts, structured output, verify before claiming
+- [Reference: v5 canonical source](reference_v5_repo.md) — github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v5 README + BUILD_PLAN.md
+- [Reference: target repo](reference_target_repo.md) — github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-
+- [Project: locked tech stack](project_tech_stack.md) — Expo + RN + TS + Zustand + MMKV + Supabase + Solana Mobile Wallet Adapter
+- [Feedback: tool verification policy](feedback_tool_verification.md) — verify every referenced tool/API before writing code against it
+- [Reference: AI team frameworks](reference_agent_frameworks.md) — ElizaOS, OpenClaw, CatchMe, OPC-skills, Remotion, SpriteCook MCP
