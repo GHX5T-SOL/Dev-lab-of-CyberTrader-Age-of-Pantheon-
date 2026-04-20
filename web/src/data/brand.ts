@@ -66,12 +66,12 @@ export const ASSET_SPEC: AssetSpec[] = [
   { slug: "fractal_dust", displayName: "FDST - Fractal Dust", pathInWeb: "/brand/commodities/fractal_dust.png", status: "generated", note: "SpriteCook original." },
   { slug: "plutonion_gas", displayName: "PGAS - Plutonion Gas", pathInWeb: "/brand/commodities/plutonion_gas.png", status: "generated", note: "SpriteCook original." },
   { slug: "neon_glass", displayName: "NGLS - Neon Glass", pathInWeb: "/brand/commodities/neon_glass.png", status: "generated", note: "SpriteCook original." },
-  { slug: "helix_mud", displayName: "HXMD - Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
-  { slug: "void_bloom", displayName: "VBLO - Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
-  { slug: "oracle_resin", displayName: "ORES - Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
-  { slug: "velvet_tabs", displayName: "VTAB - Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
-  { slug: "neon_dust", displayName: "NDST - Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
-  { slug: "phantom_crates", displayName: "PCRT - Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "helix_mud", displayName: "HXMD - Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
+  { slug: "void_bloom", displayName: "VBLO - Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
+  { slug: "oracle_resin", displayName: "ORES - Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
+  { slug: "velvet_tabs", displayName: "VTAB - Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
+  { slug: "neon_dust", displayName: "NDST - Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
+  { slug: "phantom_crates", displayName: "PCRT - Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "generated", note: "Local redesign matching approved 3D neon style." },
   { slug: "ghost_chips", displayName: "GCHP - Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "generated", note: "SpriteCook original." },
 ];
 

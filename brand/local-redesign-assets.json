@@ -1,0 +1,50 @@
+[
+  {
+    "ticker": "HXMD",
+    "label": "Helix Mud",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "61dfb676a902",
+    "path": "web/public/brand/commodities/helix_mud.png",
+    "generated_at": "2026-04-20"
+  },
+  {
+    "ticker": "VBLO",
+    "label": "Void Bloom",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "48852d7b285f",
+    "path": "web/public/brand/commodities/void_bloom.png",
+    "generated_at": "2026-04-20"
+  },
+  {
+    "ticker": "ORES",
+    "label": "Oracle Resin",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "40a92f8e96e1",
+    "path": "web/public/brand/commodities/oracle_resin.png",
+    "generated_at": "2026-04-20"
+  },
+  {
+    "ticker": "VTAB",
+    "label": "Velvet Tabs",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "7ffa74009932",
+    "path": "web/public/brand/commodities/velvet_tabs.png",
+    "generated_at": "2026-04-20"
+  },
+  {
+    "ticker": "NDST",
+    "label": "Neon Dust",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "372feecbe6f7",
+    "path": "web/public/brand/commodities/neon_dust.png",
+    "generated_at": "2026-04-20"
+  },
+  {
+    "ticker": "PCRT",
+    "label": "Phantom Crates",
+    "generator": "scripts/redesign-remaining-commodities.ps1",
+    "sha12": "5ecd50865032",
+    "path": "web/public/brand/commodities/phantom_crates.png",
+    "generated_at": "2026-04-20"
+  }
+]

@@ -10,4 +10,4 @@ Current concept set for asset_vault_01.
 - Motion direction: rotate commodity preview shells in CSS, not baked into source PNGs.
 - Inspiration board: `ascii-terminal-board.svg` explores corrupted CLI, binary field, and signal-skull motifs.
 
-SpriteCook originals currently committed: FDST, PGAS, NGLS, GCHP. The remaining six commodity files are temporary reference placeholders and should be regenerated as original SpriteCook assets when credits are available.
+SpriteCook originals currently committed: FDST, PGAS, NGLS, GCHP. Local redesigns now committed in the same approved 3D neon direction: HXMD, VBLO, ORES, VTAB, NDST, PCRT.
