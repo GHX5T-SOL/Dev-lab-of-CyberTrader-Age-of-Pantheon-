@@ -6,9 +6,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_00 PM.png",
                          "source_sha12":  "9a32ae898f8e",
                          "output":  "web/public/brand/commodities/fractal_dust.png",
-                         "output_sha12":  "1443432bd5b8",
+                         "output_sha12":  "3a8978bbd1fe",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "PGAS",
@@ -16,9 +17,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_58 PM.png",
                          "source_sha12":  "9d4167c92a60",
                          "output":  "web/public/brand/commodities/plutonion_gas.png",
-                         "output_sha12":  "f5c911d29c1c",
+                         "output_sha12":  "5e75a63316f9",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "NGLS",
@@ -26,9 +28,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_26_52 PM.png",
                          "source_sha12":  "e701e81e414a",
                          "output":  "web/public/brand/commodities/neon_glass.png",
-                         "output_sha12":  "47f5eba93658",
+                         "output_sha12":  "0aae3837861f",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "HXMD",
@@ -36,9 +39,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_27_54 PM.png",
                          "source_sha12":  "084d9fad1f19",
                          "output":  "web/public/brand/commodities/helix_mud.png",
-                         "output_sha12":  "be40569a6371",
+                         "output_sha12":  "b5ee08e653ad",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "VBLO",
@@ -46,9 +50,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_28_51 PM.png",
                          "source_sha12":  "2da375f9efe0",
                          "output":  "web/public/brand/commodities/void_bloom.png",
-                         "output_sha12":  "662e3616ca0f",
+                         "output_sha12":  "1dfdfefb9ae6",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "ORES",
@@ -56,9 +61,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_30_02 PM.png",
                          "source_sha12":  "628a6f48f1e7",
                          "output":  "web/public/brand/commodities/oracle_resin.png",
-                         "output_sha12":  "8ef1457de305",
+                         "output_sha12":  "8312ad7c986b",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      },
                      {
                          "ticker":  "VTAB",
@@ -66,9 +72,10 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_31_05 PM.png",
                          "source_sha12":  "a2fd4a2bec73",
                          "output":  "web/public/brand/commodities/velvet_tabs.png",
-                         "output_sha12":  "1db11dfce309",
+                         "output_sha12":  "d308ffa7c212",
                          "imported_at":  "2026-04-20",
-                         "generator":  "ChatGPT image generation, user supplied"
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
                      }
                  ],
     "not_imported":  [
