@@ -5,6 +5,7 @@ import { STATUS } from "@/data/status";
 import { TASKS } from "@/data/tasks";
 import { TEAM } from "@/data/team";
 import { AUTOMATIONS } from "@/data/automations";
+import { TOOLKIT, CATEGORY_LABELS, type ToolkitCategory } from "@/data/toolkit";
 
 export const metadata = { title: "Office Floor — Dev Lab" };
 
@@ -12,7 +13,14 @@ export default function OfficePage() {
   const ghostTask = TASKS.find((t) => t.owner === "ghost" && t.status !== "done");
   const zoroTask = TASKS.find((t) => t.owner === "zoro" && t.status !== "done");
   const agentsPresent = TEAM.filter((m) => m.kind === "agent").length;
-  const activeCrons = AUTOMATIONS.length;
+  const activeCrons = AUTOMATIONS.filter((a) => a.tier === "vercel").length;
+  const toolkitByCat = TOOLKIT.reduce<Record<ToolkitCategory, typeof TOOLKIT>>(
+    (acc, t) => {
+      (acc[t.category] ??= []).push(t);
+      return acc;
+    },
+    {} as Record<ToolkitCategory, typeof TOOLKIT>,
+  );
 
   return (
     <div className="flex flex-col gap-10">
@@ -22,7 +30,7 @@ export default function OfficePage() {
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-acid" />
           <span>signal stable · {agentsPresent} agents on floor</span>
           <span className="text-dust">·</span>
-          <span className="text-dust">{activeCrons} crons armed</span>
+          <span className="text-dust">{activeCrons} crons armed on vercel</span>
           <span className="text-dust">·</span>
           <span className="text-dust">penthouse, s1lkroad tower, sector 7</span>
         </div>
@@ -195,6 +203,65 @@ export default function OfficePage() {
             occupants={["Palette", "Reel"]}
             preview="14 character rigs. Generate via SpriteCook MCP — Phase B binds them to an R3F scene."
           />
+        </div>
+      </section>
+
+      {/* Studio toolkit — media + AI the agents reach for first */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-end justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-violet">
+              shelf_02 // studio toolkit
+            </div>
+            <h2 className="mt-1 text-2xl tracking-wide">What the studio runs on</h2>
+          </div>
+          <a
+            href="https://github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-/blob/main/docs/Studio-Toolkit.md"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[10px] uppercase tracking-[0.25em] text-cyan"
+          >
+            open toolkit doc →
+          </a>
+        </div>
+        <p className="max-w-3xl text-sm leading-relaxed text-dust">
+          Keys + licenses the team has and defaults to. Voice → ElevenLabs. Talking avatars →
+          HeyGen + Hyperframes. 2D portraits → SpriteCook. 3D rigs → Ready Player Me. Video →
+          Remotion. Design → Canva + Claude Design. Every tool here is wired; reach for these
+          before suggesting third-party alternatives.
+        </p>
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {(Object.keys(toolkitByCat) as ToolkitCategory[]).map((cat) => {
+            const tools = toolkitByCat[cat];
+            if (!tools || tools.length === 0) return null;
+            return (
+              <div
+                key={cat}
+                className="panel rounded-sm p-4"
+                style={{ borderColor: `${tools[0]?.accent ?? "#00F5FF"}33` }}
+              >
+                <div
+                  className="text-[10px] uppercase tracking-[0.3em]"
+                  style={{ color: tools[0]?.accent ?? "#00F5FF" }}
+                >
+                  {CATEGORY_LABELS[cat]}
+                </div>
+                <ul className="mt-2 space-y-1.5 text-[12px] text-chrome/90">
+                  {tools.map((t) => (
+                    <li key={t.slug} className="flex items-start gap-2">
+                      <span className="mt-1.5 inline-block h-1 w-1 rounded-full bg-acid" />
+                      <span>
+                        <span className="text-chrome">{t.name}</span>
+                        {t.envKey && (
+                          <span className="ml-1 text-[10px] text-dust">· {t.envKey}</span>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </section>
 

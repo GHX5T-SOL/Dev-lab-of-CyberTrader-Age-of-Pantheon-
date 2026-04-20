@@ -28,21 +28,15 @@ export interface Automation {
   description: string;
   phase: "A" | "B" | "C"; // A = stub, B = partial, C = autonomous
   accent: string;
+  /**
+   * Where this job runs. Vercel Hobby caps crons at 1/day, so sub-daily jobs
+   * are kept as "local" — still callable (manual POST / dev scripts / local
+   * tick) but not armed in vercel.json. Upgrade to Pro → flip to "vercel".
+   */
+  tier: "vercel" | "local";
 }
 
 export const AUTOMATIONS: Automation[] = [
-  {
-    slug: "ai-team-tick",
-    name: "AI Team Tick",
-    owner: "compass",
-    schedule: "0 * * * *",
-    humanSchedule: "every hour, on the hour",
-    endpoint: "/api/cron/ai-team-tick",
-    description:
-      "Heartbeat. Confirms cron infrastructure is alive. Phase C dispatches outstanding tasks to the right agent.",
-    phase: "A",
-    accent: "#00F5FF",
-  },
   {
     slug: "council-standup",
     name: "Council Standup",
@@ -54,6 +48,7 @@ export const AUTOMATIONS: Automation[] = [
       "Compass calls the Council. Top 3 stale tasks get picked up. Owners update status lines. Decision log appended.",
     phase: "B",
     accent: "#67FFB5",
+    tier: "vercel",
   },
   {
     slug: "nightly-audit",
@@ -66,30 +61,7 @@ export const AUTOMATIONS: Automation[] = [
       "Talon (OpenClaw) scans the repo: brand asset integrity, stale TODOs, broken internal links, missing docs.",
     phase: "B",
     accent: "#FFB341",
-  },
-  {
-    slug: "weekly-digest",
-    name: "Weekly Digest",
-    owner: "compass",
-    schedule: "0 8 * * 1",
-    humanSchedule: "Mondays at 08:00 UTC",
-    endpoint: "/api/cron/weekly-digest",
-    description:
-      "Compass compiles last-week wins, open blockers, next-week plan. Goes to memory/MEMORY.md + posts to Discord (Phase C).",
-    phase: "B",
-    accent: "#7A5BFF",
-  },
-  {
-    slug: "market-tick",
-    name: "Synthetic Market Tick",
-    owner: "hydra",
-    schedule: "*/15 * * * *",
-    humanSchedule: "every 15 minutes",
-    endpoint: "/api/cron/market-tick",
-    description:
-      "Hydra's ElizaOS swarm runs a 5-minute deterministic market simulation. Validates the price engine before it ships to the game.",
-    phase: "A",
-    accent: "#FF2A4D",
+    tier: "vercel",
   },
   {
     slug: "brand-qa",
@@ -102,6 +74,46 @@ export const AUTOMATIONS: Automation[] = [
       "Palette scans /public/brand and parent repo /brand for missing files, wrong dimensions, palette drift.",
     phase: "A",
     accent: "#FF2A4D",
+    tier: "vercel",
+  },
+  {
+    slug: "weekly-digest",
+    name: "Weekly Digest",
+    owner: "compass",
+    schedule: "0 8 * * 1",
+    humanSchedule: "Mondays at 08:00 UTC",
+    endpoint: "/api/cron/weekly-digest",
+    description:
+      "Compass compiles last-week wins, open blockers, next-week plan. Goes to memory/MEMORY.md + posts to Discord (Phase C).",
+    phase: "B",
+    accent: "#7A5BFF",
+    tier: "vercel",
+  },
+  {
+    slug: "ai-team-tick",
+    name: "AI Team Tick",
+    owner: "compass",
+    schedule: "0 * * * *",
+    humanSchedule: "every hour (local dev only on Hobby)",
+    endpoint: "/api/cron/ai-team-tick",
+    description:
+      "Heartbeat. Confirms cron infrastructure is alive. Phase C dispatches outstanding tasks to the right agent. Hobby plan caps Vercel crons at daily — run locally via `curl` or `vercel dev` loop, or upgrade to Pro.",
+    phase: "A",
+    accent: "#00F5FF",
+    tier: "local",
+  },
+  {
+    slug: "market-tick",
+    name: "Synthetic Market Tick",
+    owner: "hydra",
+    schedule: "*/15 * * * *",
+    humanSchedule: "every 15 min (local dev only on Hobby)",
+    endpoint: "/api/cron/market-tick",
+    description:
+      "Hydra's ElizaOS swarm runs a 5-minute deterministic market simulation. Validates the price engine before it ships to the game. Hobby plan caps Vercel crons at daily — run locally or upgrade to Pro.",
+    phase: "A",
+    accent: "#FF2A4D",
+    tier: "local",
   },
 ];
 

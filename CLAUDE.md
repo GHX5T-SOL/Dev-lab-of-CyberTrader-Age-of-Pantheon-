@@ -30,6 +30,7 @@
 - **Lore bible**: [docs/Lore-Bible.md](docs/Lore-Bible.md)
 - **Economy design**: [docs/Economy-Design.md](docs/Economy-Design.md)
 - **Brand guidelines**: [brand/brand-guidelines.md](brand/brand-guidelines.md)
+- **Studio toolkit** (voice, video, avatar, design APIs): [docs/Studio-Toolkit.md](docs/Studio-Toolkit.md)
 - **AI team**: [agents.md](agents.md) + [`agents/`](agents/)
 - **Council rules**: [AI_Council_Charter.md](AI_Council_Charter.md)
 - **Collaboration**: [Collaboration_Protocol.md](Collaboration_Protocol.md)
