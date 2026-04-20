@@ -7,6 +7,7 @@ import { SpendTicker } from "@/components/SpendTicker";
 
 const NAV = [
   { href: "/office", label: "Floor" },
+  { href: "/office/floor-3d", label: "3D" },
   { href: "/office/roadmap", label: "Roadmap" },
   { href: "/office/tasks", label: "Tasks" },
   { href: "/office/team", label: "Team" },
@@ -17,6 +18,8 @@ const NAV = [
   { href: "/office/brand", label: "Brand" },
   { href: "/office/avatars", label: "Avatars" },
   { href: "/office/wireframes", label: "Wireframes" },
+  { href: "/office/reel", label: "Reel" },
+  { href: "/office/broadcast", label: "Broadcast" },
   { href: "/office/status", label: "Status" },
   { href: "/office/notes", label: "Notes" },
 ];

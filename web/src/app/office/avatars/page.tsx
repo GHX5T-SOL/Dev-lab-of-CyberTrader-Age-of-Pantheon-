@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { CyberText } from "@/components/CyberText";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { AVATAR_SPECS } from "@/data/avatars";
+import { PERFORMERS } from "@/data/performers";
 import { TEAM } from "@/data/team";
 
 export const metadata = { title: "Avatar Lab — Character Rigs" };
@@ -45,6 +47,156 @@ export default function AvatarsPage() {
               <li>• orbit controls + click-to-zoom on each workstation</li>
             </ul>
           </div>
+        </div>
+      </Panel>
+
+      {/* RPM creator embed — Phase B hook, live now for hand-tuning rigs */}
+      <Panel tone="violet">
+        <PanelHeader
+          eyebrow="phase b · live now"
+          title="Ready Player Me creator — tune a rig in-frame"
+          right={
+            <a
+              href="https://readyplayer.me/avatar"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[10px] uppercase tracking-[0.25em] text-cyan"
+            >
+              open in new tab →
+            </a>
+          }
+        />
+        <p className="mb-3 text-[13px] leading-relaxed text-chrome/90">
+          Shape a rig, snap a portrait, grab the glTF URL — all inside the Lab. When you&apos;re
+          done, copy the model URL and paste it into{" "}
+          <code className="text-cyan">PERFORMERS[slug].rpmAvatarUrl</code>. The Floor 3D scene
+          picks it up on the next load; the stand-in disappears and the real rig takes the desk.
+        </p>
+        <div
+          className="relative overflow-hidden rounded-sm border border-violet/40"
+          style={{ boxShadow: "0 0 30px rgba(122,91,255,0.25) inset" }}
+        >
+          <iframe
+            src="https://demo.readyplayer.me/avatar?frameApi"
+            title="Ready Player Me avatar creator"
+            allow="camera *; microphone *; clipboard-write"
+            loading="lazy"
+            className="block h-[640px] w-full bg-void"
+          />
+        </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-dust">
+          Output URL looks like{" "}
+          <code className="text-cyan">https://models.readyplayer.me/&lt;id&gt;.glb</code>. The Floor
+          3D loader handles both plain glTF and gzip variants. Avatar mesh is served from RPM CDN,
+          so no storage cost on our side.
+        </p>
+      </Panel>
+
+      {/* Portrait gallery — live preview of whichever /brand/avatars/<slug>.png exists */}
+      <Panel tone="acid">
+        <PanelHeader
+          eyebrow="spritecook gallery"
+          title="2D portraits — live preview"
+          right={
+            <span className="rounded-sm border border-cyan/40 px-2 py-0.5 text-[10px] uppercase tracking-[0.25em] text-cyan">
+              drop .png · page renders it
+            </span>
+          }
+        />
+        <p className="mb-4 text-[13px] leading-relaxed text-chrome/90">
+          Every card below points at <code className="text-cyan">/brand/avatars/&lt;slug&gt;.png</code>.
+          Drop a SpriteCook render in that folder with the correct slug and the card wakes up. No
+          code change, no deploy — just a static asset at the known URL.
+        </p>
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+          {AVATAR_SPECS.map((a) => {
+            const member = TEAM.find((m) => m.slug === a.slug);
+            const accent = member?.accent ?? "#00F5FF";
+            return (
+              <div
+                key={`gallery-${a.slug}`}
+                className="flex flex-col items-center gap-2 rounded-sm border p-2"
+                style={{ borderColor: `${accent}55` }}
+              >
+                <div
+                  className="relative aspect-[2/3] w-full overflow-hidden rounded-sm"
+                  style={{
+                    background: `linear-gradient(160deg, ${accent}22 0%, #0a0d12 100%)`,
+                    boxShadow: `inset 0 0 30px ${accent}22`,
+                  }}
+                >
+                  {/* Next/Image handles the 404 → placeholder path gracefully via fallback styling */}
+                  <Image
+                    src={`/brand/avatars/${a.slug}.png`}
+                    alt={`${a.displayName} portrait`}
+                    fill
+                    sizes="(max-width: 768px) 40vw, 180px"
+                    className="object-cover object-top"
+                    style={{ mixBlendMode: "screen" }}
+                    unoptimized
+                  />
+                  {/* Diegetic corner tag */}
+                  <div
+                    className="absolute top-1 left-1 rounded-sm px-1.5 py-0.5 text-[8px] uppercase tracking-[0.2em]"
+                    style={{ background: `${accent}55`, color: "#050608" }}
+                  >
+                    {a.slug}
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div
+                    className="text-[11px] tracking-wide"
+                    style={{ color: accent }}
+                  >
+                    {a.displayName}
+                  </div>
+                  <div className="text-[9px] uppercase tracking-[0.2em] text-dust">
+                    {a.animPose.replace(/_/g, " ")}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Panel>
+
+      {/* Voice + rig pairing — cross-reference from performers.ts */}
+      <Panel>
+        <PanelHeader
+          eyebrow="voice ↔ rig binding"
+          title="Which rigs also have a voice"
+        />
+        <p className="mb-3 text-[13px] leading-relaxed text-chrome/90">
+          The 3D floor reads from <code className="text-cyan">/data/performers.ts</code>. When a
+          rig has both a <code className="text-cyan">rpmAvatarUrl</code> <em>and</em> a{" "}
+          <code className="text-cyan">voiceSampleUrl</code>, the character walks, stands at a desk,
+          and speaks on click. Everything else falls back to a stand-in.
+        </p>
+        <div className="grid gap-2 text-[12px] md:grid-cols-2">
+          {PERFORMERS.map((p) => {
+            const member = TEAM.find((m) => m.slug === p.slug);
+            const rig = Boolean(p.rpmAvatarUrl);
+            const voice = Boolean(p.voiceSampleUrl);
+            return (
+              <div
+                key={`bind-${p.slug}`}
+                className="flex items-center justify-between gap-3 rounded-sm border border-cyan/15 px-3 py-2"
+              >
+                <div>
+                  <span className="text-chrome">{member?.name ?? p.slug}</span>
+                  <span className="ml-2 text-[11px] text-dust">· {member?.role ?? "—"}</span>
+                </div>
+                <div className="flex gap-2 text-[10px] uppercase tracking-[0.2em]">
+                  <span className={rig ? "text-acid" : "text-dust"}>
+                    rig {rig ? "✓" : "—"}
+                  </span>
+                  <span className={voice ? "text-acid" : "text-dust"}>
+                    voice {voice ? "✓" : "—"}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Panel>
 

@@ -203,6 +203,33 @@ export default function OfficePage() {
             occupants={["Palette", "Reel"]}
             preview="14 character rigs. Generate via SpriteCook MCP — Phase B binds them to an R3F scene."
           />
+          <Workstation
+            href="/office/floor-3d"
+            title="Floor 3D"
+            subtitle="immersive R3F office"
+            icon="◬"
+            tone="acid"
+            occupants={["all"]}
+            preview="Walkable 3D scene with 14 operators. Click any character, hear their voice in real time."
+          />
+          <Workstation
+            href="/office/reel"
+            title="Reel Booth"
+            subtitle="Remotion explainer videos"
+            icon="▶"
+            tone="violet"
+            occupants={["Reel"]}
+            preview="MP4s cut with Remotion, voiced with ElevenLabs. Zoro's welcome reel, AI Council, First Day."
+          />
+          <Workstation
+            href="/office/broadcast"
+            title="Broadcast"
+            subtitle="HeyGen Hyperframes"
+            icon="☍"
+            tone="heat"
+            occupants={["Reel"]}
+            preview="Hyperrealistic talking avatars with lip sync. Any agent, any script, rendered on demand."
+          />
         </div>
       </section>
 
