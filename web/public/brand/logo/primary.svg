@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 240" fill="none">
+  <rect width="960" height="240" fill="#050608"/>
+  <path d="M96 188 168 52 240 188H96Z" stroke="#00F5FF" stroke-width="8" stroke-linejoin="miter"/>
+  <path d="M122 136H214M158 136H252" stroke="#67FFB5" stroke-width="6"/>
+  <path d="M286 74h330v28H286zM286 126h452v28H286zM286 178h260v18H286z" fill="#00F5FF"/>
+  <path d="M624 74h38v28h-38zM752 126h44v28h-44zM560 178h54v18h-54z" fill="#FF2A4D"/>
+  <text x="286" y="224" fill="#E8ECF5" font-family="Consolas, monospace" font-size="28" letter-spacing="6">AGE OF PANTHEON</text>
+</svg>

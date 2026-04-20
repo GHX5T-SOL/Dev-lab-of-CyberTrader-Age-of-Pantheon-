@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" fill="none">
+  <rect width="1400" height="900" fill="#050608"/>
+  <g opacity="0.18" font-family="Consolas, monospace" font-size="18" fill="#00F5FF">
+    <text x="40" y="50">01010011 003A S1LKROAD 4.0 // SIGNAL LEAK // ASSET_VAULT_01</text>
+    <text x="40" y="86">1010 1110 0101 0001 1110 0010 0111 0100 0001 0110 1111 0100</text>
+    <text x="40" y="122">unpack shard... reroute via exit 7... e_AGENT noise masked...</text>
+  </g>
+  <rect x="44" y="164" width="396" height="560" stroke="#00F5FF" stroke-opacity="0.42"/>
+  <text x="72" y="216" font-family="Consolas, monospace" font-size="26" fill="#00F5FF" letter-spacing="6">CLI CORRUPTION</text>
+  <g font-family="Consolas, monospace" font-size="20">
+    <text x="74" y="282" fill="#E8ECF5">root@pirate_os:~$ scan --heat</text>
+    <text x="74" y="326" fill="#67FFB5">ENERGY: ONLINE</text>
+    <text x="74" y="370" fill="#FFB341">WARN: route phantom detected</text>
+    <text x="74" y="414" fill="#FF2A4D">HEAT +04</text>
+    <text x="74" y="458" fill="#00F5FF">FDST PGAS NGLS HXMD VBLO</text>
+    <text x="74" y="502" fill="#00F5FF">ORES VTAB NDST PCRT GCHP</text>
+    <text x="74" y="568" fill="#7A5BFF">PANTHEON whisper: [redacted]</text>
+  </g>
+  <rect x="502" y="164" width="396" height="560" stroke="#67FFB5" stroke-opacity="0.42"/>
+  <text x="530" y="216" font-family="Consolas, monospace" font-size="26" fill="#67FFB5" letter-spacing="6">ORIGINAL SKULL</text>
+  <path d="M700 278C640 278 602 316 602 372C602 416 626 446 660 460V516H740V460C774 446 798 416 798 372C798 316 760 278 700 278Z" stroke="#00F5FF" stroke-width="8"/>
+  <path d="M650 384h42M708 384h42M670 450h60M684 462v54M716 462v54" stroke="#67FFB5" stroke-width="6"/>
+  <path d="M614 536h172M634 568h132M660 600h80" stroke="#FF2A4D" stroke-width="5"/>
+  <text x="548" y="668" font-family="Consolas, monospace" font-size="20" fill="#E8ECF5">signal-skull mask, not external IP</text>
+  <rect x="960" y="164" width="396" height="560" stroke="#FFB341" stroke-opacity="0.42"/>
+  <text x="988" y="216" font-family="Consolas, monospace" font-size="26" fill="#FFB341" letter-spacing="6">MATRIX FIELD</text>
+  <g font-family="Consolas, monospace" font-size="22">
+    <text x="998" y="282" fill="#00F5FF">0 1 0 1 0 1 0 1 0 1</text>
+    <text x="998" y="326" fill="#67FFB5">1 0 1 0 1 0 1 0 1 0</text>
+    <text x="998" y="370" fill="#00F5FF">0 X 0 B 0 L 0 // 2077</text>
+    <text x="998" y="414" fill="#FF2A4D">e_AGENT TRACE FAILED</text>
+    <text x="998" y="458" fill="#E8ECF5">commodity shells rotate in CSS</text>
+    <text x="998" y="502" fill="#7A5BFF">violet reserved for memory</text>
+  </g>
+  <path d="M72 798h1256" stroke="#00F5FF" stroke-opacity="0.35"/>
+  <text x="72" y="842" font-family="Consolas, monospace" font-size="24" fill="#E8ECF5">Rule: working cyberdeck first. Decoration only survives if it feels functional.</text>
+</svg>

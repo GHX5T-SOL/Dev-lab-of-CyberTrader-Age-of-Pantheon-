@@ -61,18 +61,18 @@ export interface AssetSpec {
  * reference.
  */
 export const ASSET_SPEC: AssetSpec[] = [
-  { slug: "logo_primary", displayName: "CyberTrader primary logo", pathInWeb: "/brand/logo/primary.png", status: "placeholder" },
-  { slug: "logo_mark", displayName: "CyberTrader mark (icon)", pathInWeb: "/brand/logo/mark.png", status: "placeholder" },
-  { slug: "fractal_dust", displayName: "FDST — Fractal Dust", pathInWeb: "/brand/commodities/fractal_dust.png", status: "placeholder" },
-  { slug: "plutonion_gas", displayName: "PGAS — Plutonion Gas", pathInWeb: "/brand/commodities/plutonion_gas.png", status: "placeholder" },
-  { slug: "neon_glass", displayName: "NGLS — Neon Glass", pathInWeb: "/brand/commodities/neon_glass.png", status: "placeholder" },
-  { slug: "helix_mud", displayName: "HXMD — Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "placeholder" },
-  { slug: "void_bloom", displayName: "VBLO — Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "placeholder" },
-  { slug: "oracle_resin", displayName: "ORES — Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "placeholder" },
-  { slug: "velvet_tabs", displayName: "VTAB — Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "placeholder" },
-  { slug: "neon_dust", displayName: "NDST — Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "placeholder" },
-  { slug: "phantom_crates", displayName: "PCRT — Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "placeholder" },
-  { slug: "ghost_chips", displayName: "GCHP — Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "placeholder" },
+  { slug: "logo_primary", displayName: "CyberTrader primary logo", pathInWeb: "/brand/logo/primary.png", status: "generated" },
+  { slug: "logo_mark", displayName: "CyberTrader mark (icon)", pathInWeb: "/brand/logo/mark.png", status: "generated" },
+  { slug: "fractal_dust", displayName: "FDST — Fractal Dust", pathInWeb: "/brand/commodities/fractal_dust.png", status: "generated" },
+  { slug: "plutonion_gas", displayName: "PGAS — Plutonion Gas", pathInWeb: "/brand/commodities/plutonion_gas.png", status: "generated" },
+  { slug: "neon_glass", displayName: "NGLS — Neon Glass", pathInWeb: "/brand/commodities/neon_glass.png", status: "generated" },
+  { slug: "helix_mud", displayName: "HXMD — Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "generated" },
+  { slug: "void_bloom", displayName: "VBLO — Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "generated" },
+  { slug: "oracle_resin", displayName: "ORES — Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "generated" },
+  { slug: "velvet_tabs", displayName: "VTAB — Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "generated" },
+  { slug: "neon_dust", displayName: "NDST — Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "generated" },
+  { slug: "phantom_crates", displayName: "PCRT — Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "generated" },
+  { slug: "ghost_chips", displayName: "GCHP — Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "generated" },
 ];
 
 export const MOTION_RULES = [

@@ -159,11 +159,58 @@ a:hover {
     0 10px 40px -20px rgba(122, 91, 255, 0.35);
 }
 
+@keyframes commodity-shell-rotate {
+  0% { transform: rotateX(58deg) rotateZ(0deg); }
+  100% { transform: rotateX(58deg) rotateZ(360deg); }
+}
+
+@keyframes commodity-asset-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.025); }
+}
+
+.commodity-hologram {
+  position: relative;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--commodity-accent, #00f5ff) 18%, transparent) inset,
+    0 18px 42px -28px color-mix(in srgb, var(--commodity-accent, #00f5ff) 70%, transparent);
+}
+
+.commodity-hologram::before {
+  content: "";
+  position: absolute;
+  width: 76%;
+  height: 76%;
+  border: 1px solid color-mix(in srgb, var(--commodity-accent, #00f5ff) 55%, transparent);
+  border-radius: 999px;
+  transform: rotateX(58deg);
+  animation: commodity-shell-rotate 8s linear infinite;
+}
+
+.commodity-hologram::after {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--commodity-accent, #00f5ff) 20%, transparent) 0%, transparent 62%),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(0, 245, 255, 0.06) 8px);
+  mix-blend-mode: screen;
+}
+
+.commodity-hologram__asset {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--commodity-accent, #00f5ff) 55%, transparent));
+  animation: commodity-asset-float 4.6s ease-in-out infinite;
+}
+
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   .flicker,
   .glitch,
-  .caret::after {
+  .caret::after,
+  .commodity-hologram::before,
+  .commodity-hologram__asset {
     animation: none;
   }
   .glitch::before,

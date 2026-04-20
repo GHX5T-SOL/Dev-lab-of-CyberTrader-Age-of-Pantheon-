@@ -48,16 +48,16 @@ export const TASKS: Task[] = [
     id: "z-001",
     owner: "zoro",
     title: "Clone Dev Lab repo + run setup.sh (see onboarding prompt from Ghost)",
-    status: "todo",
-    notes: "Use the Zoro onboarding prompt to step into the Dev Lab.",
+    status: "done",
+    notes: "Completed on Zoro machine: bootstrap repaired, root/web deps installed, Dev Lab site verified locally.",
   },
   {
     id: "z-002",
     owner: "zoro",
     title: "Generate the 10 commodity PNGs via SpriteCook MCP — transparent background, 512px",
-    status: "todo",
+    status: "done",
     notes:
-      "Filenames must match data/commodities.ts: fractal_dust.png, plutonion_gas.png, etc. Save to web/public/brand/commodities/.",
+      "Generated the 10 transparent commodity PNGs at web/public/brand/commodities/. SpriteCook FDST render saved as comparison/reference.",
   },
   {
     id: "z-003",

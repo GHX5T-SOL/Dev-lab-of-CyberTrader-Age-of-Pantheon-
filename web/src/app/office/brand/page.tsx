@@ -19,6 +19,40 @@ export default function BrandPage() {
       </header>
 
       <section>
+        <Panel tone="acid">
+          <PanelHeader eyebrow="logo concepts" title="Eidolon mark / favicon pass" />
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+              <img
+                src="/brand/logo/primary.png"
+                alt="CyberTrader primary logo concept"
+                className="h-auto w-full"
+              />
+              <code className="mt-3 block text-[11px] text-dust">/brand/logo/primary.png</code>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+                <img
+                  src="/brand/logo/mark.png"
+                  alt="CyberTrader Eidolon mark concept"
+                  className="mx-auto h-36 w-36"
+                />
+                <code className="mt-3 block text-center text-[11px] text-dust">/brand/logo/mark.png</code>
+              </div>
+              <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+                <img
+                  src="/brand/logo/favicon.svg"
+                  alt="CyberTrader favicon concept"
+                  className="mx-auto h-24 w-24"
+                />
+                <code className="mt-3 block text-center text-[11px] text-dust">/brand/logo/favicon.svg</code>
+              </div>
+            </div>
+          </div>
+        </Panel>
+      </section>
+
+      <section>
         <Panel>
           <PanelHeader eyebrow="palette" title="Color tokens" />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -90,12 +124,25 @@ export default function BrandPage() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {ASSET_SPEC.filter((a) => a.slug !== "logo_primary" && a.slug !== "logo_mark").map(
               (a) => {
-                const ticker = COMMODITIES.find((c) => c.slug === a.slug)?.ticker;
+                const commodity = COMMODITIES.find((c) => c.slug === a.slug);
+                const ticker = commodity?.ticker;
                 return (
                   <div
                     key={a.slug}
                     className="rounded-sm border border-cyan/10 bg-ink/60 p-3"
                   >
+                    <div
+                      className="commodity-hologram mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-sm border border-cyan/10 bg-void/70"
+                      style={{
+                        ["--commodity-accent" as string]: commodity?.accent ?? "#00F5FF",
+                      }}
+                    >
+                      <img
+                        src={a.pathInWeb}
+                        alt={a.displayName}
+                        className="commodity-hologram__asset h-[82%] w-[82%] object-contain"
+                      />
+                    </div>
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] uppercase tracking-[0.25em] text-cyan">
                         {ticker ?? a.slug}
@@ -133,6 +180,48 @@ export default function BrandPage() {
             dark background, holographic-material look, faint internal glow. Ticker ordering must
             match <code className="text-cyan">web/src/data/commodities.ts</code>.
           </p>
+        </Panel>
+      </section>
+
+      <section>
+        <Panel tone="violet">
+          <PanelHeader eyebrow="comparison" title="SpriteCook + local generated pass" />
+          <div className="grid gap-4 lg:grid-cols-3">
+            <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-cyan">SpriteCook reference</div>
+              <img
+                src="/brand/commodities/spritecook/fractal_dust_spritecook.png"
+                alt="SpriteCook Fractal Dust reference render"
+                className="mt-3 h-auto w-full rounded-sm"
+              />
+              <p className="mt-3 text-[12px] leading-relaxed text-dust">
+                Premium render sample. Kept as reference because the generated frame is not a clean
+                transparent commodity cutout.
+              </p>
+            </div>
+            <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-cyan">Transparent PNG set</div>
+              <img
+                src="/brand/ideas/commodity-contact-sheet.png"
+                alt="Commodity transparent PNG contact sheet"
+                className="mt-3 h-auto w-full rounded-sm"
+              />
+              <p className="mt-3 text-[12px] leading-relaxed text-dust">
+                Website-ready pass. Transparent source PNGs live at the exact runtime paths above.
+              </p>
+            </div>
+            <div className="rounded-sm border border-cyan/10 bg-void/70 p-4">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-cyan">Inspiration board</div>
+              <img
+                src="/brand/ideas/ascii-terminal-board.svg"
+                alt="CyberTrader corrupted terminal inspiration board"
+                className="mt-3 h-auto w-full rounded-sm"
+              />
+              <p className="mt-3 text-[12px] leading-relaxed text-dust">
+                Editable SVG for CLI corruption, binary field, and original signal-skull motifs.
+              </p>
+            </div>
+          </div>
         </Panel>
       </section>
     </div>
