@@ -70,8 +70,8 @@ export const ASSET_SPEC: AssetSpec[] = [
   { slug: "void_bloom", displayName: "VBLO - Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "generated", note: "ChatGPT user-supplied final candidate." },
   { slug: "oracle_resin", displayName: "ORES - Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "generated", note: "ChatGPT user-supplied final candidate." },
   { slug: "velvet_tabs", displayName: "VTAB - Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "generated", note: "ChatGPT user-supplied final candidate." },
-  { slug: "neon_dust", displayName: "NDST - Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "placeholder", note: "Needs ChatGPT final: glowing powder pile with energy mist." },
-  { slug: "phantom_crates", displayName: "PCRT - Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "placeholder", note: "Needs ChatGPT final: futuristic encrypted crate with glowing symbol core." },
+  { slug: "neon_dust", displayName: "NDST - Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "generated", note: "Gemini user-supplied final candidate." },
+  { slug: "phantom_crates", displayName: "PCRT - Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "generated", note: "Gemini user-supplied final candidate." },
   { slug: "ghost_chips", displayName: "GCHP - Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "generated", note: "SpriteCook original." },
 ];
 

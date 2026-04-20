@@ -6,7 +6,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_00 PM.png",
                          "source_sha12":  "9a32ae898f8e",
                          "output":  "web/public/brand/commodities/fractal_dust.png",
-                         "output_sha12":  "3a8978bbd1fe",
+                         "output_sha12":  "b0fe0c5bc79c",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -17,7 +17,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_58 PM.png",
                          "source_sha12":  "9d4167c92a60",
                          "output":  "web/public/brand/commodities/plutonion_gas.png",
-                         "output_sha12":  "5e75a63316f9",
+                         "output_sha12":  "9ffb35a52ecb",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -28,7 +28,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_26_52 PM.png",
                          "source_sha12":  "e701e81e414a",
                          "output":  "web/public/brand/commodities/neon_glass.png",
-                         "output_sha12":  "0aae3837861f",
+                         "output_sha12":  "901f5fabf61a",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -39,7 +39,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_27_54 PM.png",
                          "source_sha12":  "084d9fad1f19",
                          "output":  "web/public/brand/commodities/helix_mud.png",
-                         "output_sha12":  "b5ee08e653ad",
+                         "output_sha12":  "8d56c4717e5d",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -50,7 +50,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_28_51 PM.png",
                          "source_sha12":  "2da375f9efe0",
                          "output":  "web/public/brand/commodities/void_bloom.png",
-                         "output_sha12":  "1dfdfefb9ae6",
+                         "output_sha12":  "d0f932a9c596",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -61,7 +61,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_30_02 PM.png",
                          "source_sha12":  "628a6f48f1e7",
                          "output":  "web/public/brand/commodities/oracle_resin.png",
-                         "output_sha12":  "8312ad7c986b",
+                         "output_sha12":  "8b34b79393a9",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -72,7 +72,29 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_31_05 PM.png",
                          "source_sha12":  "a2fd4a2bec73",
                          "output":  "web/public/brand/commodities/velvet_tabs.png",
-                         "output_sha12":  "d308ffa7c212",
+                         "output_sha12":  "dcec95706ec9",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
+                     },
+                     {
+                         "ticker":  "NDST",
+                         "label":  "Neon Dust",
+                         "source":  "C:\\Users\\akmha\\Downloads\\Gemini_Generated_Image_rjb27xrjb27xrjb2.png",
+                         "source_sha12":  "f28ba4b92846",
+                         "output":  "web/public/brand/commodities/neon_dust.png",
+                         "output_sha12":  "2260b122b602",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied",
+                         "background":  "edge-connected dark studio background removed to alpha"
+                     },
+                     {
+                         "ticker":  "PCRT",
+                         "label":  "Phantom Crates",
+                         "source":  "C:\\Users\\akmha\\Downloads\\Gemini_Generated_Image_974hp5974hp5974h.png",
+                         "source_sha12":  "f40b89859547",
+                         "output":  "web/public/brand/commodities/phantom_crates.png",
+                         "output_sha12":  "1217fa5c9154",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -82,21 +104,10 @@
                          {
                              "source_sha12":  "cfb732308055",
                              "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_32_07 PM.png",
-                             "note":  "Unused duplicate Plutonion Gas containment-orb candidate; not mapped to NDST/PCRT because it does not match those commodity specs."
+                             "note":  "Unused duplicate Plutonion Gas containment-orb candidate; not mapped because final NDST/PCRT art was supplied later."
                          }
                      ],
     "still_needed":  [
-                         {
-                             "label":  "Neon Dust",
-                             "needed":  "glowing powder pile with energy mist",
-                             "ticker":  "NDST",
-                             "output":  "web/public/brand/commodities/neon_dust.png"
-                         },
-                         {
-                             "label":  "Phantom Crates",
-                             "needed":  "futuristic encrypted crate with glowing symbol core",
-                             "ticker":  "PCRT",
-                             "output":  "web/public/brand/commodities/phantom_crates.png"
-                         }
+
                      ]
 }

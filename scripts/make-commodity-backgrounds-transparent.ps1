@@ -95,6 +95,33 @@ public static class CommodityBackgroundAlpha {
     File.Copy(tempPath, path, true);
     File.Delete(tempPath);
   }
+
+  public static void ClearBottomRightMark(string path) {
+    string tempPath = path + ".tmp.png";
+    using (var source = new Bitmap(path))
+    using (var bitmap = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb)) {
+      using (var g = Graphics.FromImage(bitmap)) {
+        g.Clear(Color.Transparent);
+        g.DrawImage(source, 0, 0, source.Width, source.Height);
+      }
+
+      int startX = (int)(bitmap.Width * 0.78);
+      int startY = (int)(bitmap.Height * 0.78);
+      for (int y = startY; y < bitmap.Height; y++) {
+        for (int x = startX; x < bitmap.Width; x++) {
+          Color c = bitmap.GetPixel(x, y);
+          int max = Math.Max(c.R, Math.Max(c.G, c.B));
+          if (max > 36) {
+            bitmap.SetPixel(x, y, Color.FromArgb(0, c.R, c.G, c.B));
+          }
+        }
+      }
+
+      bitmap.Save(tempPath, ImageFormat.Png);
+    }
+    File.Copy(tempPath, path, true);
+    File.Delete(tempPath);
+  }
 }
 "@
 
@@ -107,7 +134,9 @@ $targets = @(
   "helix_mud.png",
   "void_bloom.png",
   "oracle_resin.png",
-  "velvet_tabs.png"
+  "velvet_tabs.png",
+  "neon_dust.png",
+  "phantom_crates.png"
 )
 
 foreach ($file in $targets) {
@@ -116,6 +145,13 @@ foreach ($file in $targets) {
     throw "Missing commodity image: $path"
   }
   [CommodityBackgroundAlpha]::Process($path, $Threshold)
+}
+
+foreach ($file in @("neon_dust.png", "phantom_crates.png")) {
+  $path = Join-Path $commodityDir $file
+  if (Test-Path -LiteralPath $path) {
+    [CommodityBackgroundAlpha]::ClearBottomRightMark($path)
+  }
 }
 
 if (Test-Path -LiteralPath $manifestPath) {

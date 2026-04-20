@@ -51,6 +51,18 @@ $mappings = @(
     label = "Velvet Tabs"
     source = "C:\Users\akmha\Downloads\ChatGPT Image Apr 20, 2026, 09_31_05 PM.png"
     output = "velvet_tabs.png"
+  },
+  @{
+    ticker = "NDST"
+    label = "Neon Dust"
+    source = "C:\Users\akmha\Downloads\Gemini_Generated_Image_rjb27xrjb27xrjb2.png"
+    output = "neon_dust.png"
+  },
+  @{
+    ticker = "PCRT"
+    label = "Phantom Crates"
+    source = "C:\Users\akmha\Downloads\Gemini_Generated_Image_974hp5974hp5974h.png"
+    output = "phantom_crates.png"
   }
 )
 
@@ -92,7 +104,7 @@ foreach ($item in $mappings) {
 
 $unused = @(
   @{
-    note = "Unused duplicate Plutonion Gas containment-orb candidate; not mapped to NDST/PCRT because it does not match those commodity specs."
+    note = "Unused duplicate Plutonion Gas containment-orb candidate; not mapped because final NDST/PCRT art was supplied later."
     source = "C:\Users\akmha\Downloads\ChatGPT Image Apr 20, 2026, 09_32_07 PM.png"
     source_sha12 = (Get-FileHash -Algorithm SHA256 -LiteralPath "C:\Users\akmha\Downloads\ChatGPT Image Apr 20, 2026, 09_32_07 PM.png").Hash.Substring(0, 12).ToLowerInvariant()
   }
@@ -101,10 +113,7 @@ $unused = @(
 [ordered]@{
   imported = $manifest
   not_imported = $unused
-  still_needed = @(
-    @{ ticker = "NDST"; label = "Neon Dust"; output = "web/public/brand/commodities/neon_dust.png"; needed = "glowing powder pile with energy mist" },
-    @{ ticker = "PCRT"; label = "Phantom Crates"; output = "web/public/brand/commodities/phantom_crates.png"; needed = "futuristic encrypted crate with glowing symbol core" }
-  )
+  still_needed = @()
 } | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $brandDir "chatgpt-commodity-assets.json")
 
-Write-Host "Imported ChatGPT commodity assets for FDST, PGAS, NGLS, HXMD, VBLO, ORES, and VTAB."
+Write-Host "Imported ChatGPT/Gemini commodity assets for FDST, PGAS, NGLS, HXMD, VBLO, ORES, VTAB, NDST, and PCRT."
