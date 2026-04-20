@@ -1,5 +1,5 @@
 /**
- * Brand kit — the on-site version. Canon lives at brand/brand-guidelines.md
+ * Brand kit - the on-site version. Canon lives at brand/brand-guidelines.md
  * in the parent repo.
  */
 
@@ -11,7 +11,7 @@ export interface PaletteToken {
 }
 
 export const PALETTE_TOKENS: PaletteToken[] = [
-  { name: "bg.void", hex: "#050608", role: "Primary background — true black with a faint blue cast." },
+  { name: "bg.void", hex: "#050608", role: "Primary background - true black with a faint blue cast." },
   { name: "accent.cyan", hex: "#00F5FF", role: "Primary interactive, system voice, terminal output." },
   { name: "accent.acidGreen", hex: "#67FFB5", role: "Success, price-up, rank-up moment." },
   { name: "danger.heat", hex: "#FF2A4D", role: "Danger, price-down, heat alert." },
@@ -57,27 +57,27 @@ export interface AssetSpec {
 /**
  * Canonical asset filename spec. Zoro's task: generate each commodity PNG on
  * transparent background at 512x512 minimum via SpriteCook MCP, then place at
- * the listed path. The Pirate OS v0.1.3 artboard Ghost shared is the visual
- * reference.
+ * the listed path. Ghost's v0.1.3 artboard is only a style reference; do not
+ * crop it into production files.
  */
 export const ASSET_SPEC: AssetSpec[] = [
   { slug: "logo_primary", displayName: "CyberTrader primary logo", pathInWeb: "/brand/logo/primary.png", status: "generated" },
   { slug: "logo_mark", displayName: "CyberTrader mark (icon)", pathInWeb: "/brand/logo/mark.png", status: "generated" },
-  { slug: "fractal_dust", displayName: "FDST — Fractal Dust", pathInWeb: "/brand/commodities/fractal_dust.png", status: "generated" },
-  { slug: "plutonion_gas", displayName: "PGAS — Plutonion Gas", pathInWeb: "/brand/commodities/plutonion_gas.png", status: "generated" },
-  { slug: "neon_glass", displayName: "NGLS — Neon Glass", pathInWeb: "/brand/commodities/neon_glass.png", status: "generated" },
-  { slug: "helix_mud", displayName: "HXMD — Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "generated" },
-  { slug: "void_bloom", displayName: "VBLO — Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "generated" },
-  { slug: "oracle_resin", displayName: "ORES — Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "generated" },
-  { slug: "velvet_tabs", displayName: "VTAB — Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "generated" },
-  { slug: "neon_dust", displayName: "NDST — Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "generated" },
-  { slug: "phantom_crates", displayName: "PCRT — Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "generated" },
-  { slug: "ghost_chips", displayName: "GCHP — Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "generated" },
+  { slug: "fractal_dust", displayName: "FDST - Fractal Dust", pathInWeb: "/brand/commodities/fractal_dust.png", status: "generated", note: "SpriteCook original." },
+  { slug: "plutonion_gas", displayName: "PGAS - Plutonion Gas", pathInWeb: "/brand/commodities/plutonion_gas.png", status: "generated", note: "SpriteCook original." },
+  { slug: "neon_glass", displayName: "NGLS - Neon Glass", pathInWeb: "/brand/commodities/neon_glass.png", status: "generated", note: "SpriteCook original." },
+  { slug: "helix_mud", displayName: "HXMD - Helix Mud", pathInWeb: "/brand/commodities/helix_mud.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "void_bloom", displayName: "VBLO - Void Bloom", pathInWeb: "/brand/commodities/void_bloom.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "oracle_resin", displayName: "ORES - Oracle Resin", pathInWeb: "/brand/commodities/oracle_resin.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "velvet_tabs", displayName: "VTAB - Velvet Tabs", pathInWeb: "/brand/commodities/velvet_tabs.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "neon_dust", displayName: "NDST - Neon Dust", pathInWeb: "/brand/commodities/neon_dust.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "phantom_crates", displayName: "PCRT - Phantom Crates", pathInWeb: "/brand/commodities/phantom_crates.png", status: "placeholder", note: "Temporary style placeholder; needs original SpriteCook render." },
+  { slug: "ghost_chips", displayName: "GCHP - Ghost Chips", pathInWeb: "/brand/commodities/ghost_chips.png", status: "generated", note: "SpriteCook original." },
 ];
 
 export const MOTION_RULES = [
   "Transitions feel like BIOS output, not like marketing.",
-  "Glitch is rare — reserve for rank-up and Pantheon moments.",
+  "Glitch is rare - reserve for rank-up and Pantheon moments.",
   "Respect prefers-reduced-motion.",
   "No generic purple gradients. Violet = lore only.",
   "Cyan + acid green = primary interactive.",
