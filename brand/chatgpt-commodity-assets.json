@@ -1,0 +1,95 @@
+{
+    "imported":  [
+                     {
+                         "ticker":  "FDST",
+                         "label":  "Fractal Dust",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_00 PM.png",
+                         "source_sha12":  "9a32ae898f8e",
+                         "output":  "web/public/brand/commodities/fractal_dust.png",
+                         "output_sha12":  "1443432bd5b8",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "PGAS",
+                         "label":  "Plutonion Gas",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_58 PM.png",
+                         "source_sha12":  "9d4167c92a60",
+                         "output":  "web/public/brand/commodities/plutonion_gas.png",
+                         "output_sha12":  "f5c911d29c1c",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "NGLS",
+                         "label":  "Neon Glass",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_26_52 PM.png",
+                         "source_sha12":  "e701e81e414a",
+                         "output":  "web/public/brand/commodities/neon_glass.png",
+                         "output_sha12":  "47f5eba93658",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "HXMD",
+                         "label":  "Helix Mud",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_27_54 PM.png",
+                         "source_sha12":  "084d9fad1f19",
+                         "output":  "web/public/brand/commodities/helix_mud.png",
+                         "output_sha12":  "be40569a6371",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "VBLO",
+                         "label":  "Void Bloom",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_28_51 PM.png",
+                         "source_sha12":  "2da375f9efe0",
+                         "output":  "web/public/brand/commodities/void_bloom.png",
+                         "output_sha12":  "662e3616ca0f",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "ORES",
+                         "label":  "Oracle Resin",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_30_02 PM.png",
+                         "source_sha12":  "628a6f48f1e7",
+                         "output":  "web/public/brand/commodities/oracle_resin.png",
+                         "output_sha12":  "8ef1457de305",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     },
+                     {
+                         "ticker":  "VTAB",
+                         "label":  "Velvet Tabs",
+                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_31_05 PM.png",
+                         "source_sha12":  "a2fd4a2bec73",
+                         "output":  "web/public/brand/commodities/velvet_tabs.png",
+                         "output_sha12":  "1db11dfce309",
+                         "imported_at":  "2026-04-20",
+                         "generator":  "ChatGPT image generation, user supplied"
+                     }
+                 ],
+    "not_imported":  [
+                         {
+                             "source_sha12":  "cfb732308055",
+                             "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_32_07 PM.png",
+                             "note":  "Unused duplicate Plutonion Gas containment-orb candidate; not mapped to NDST/PCRT because it does not match those commodity specs."
+                         }
+                     ],
+    "still_needed":  [
+                         {
+                             "label":  "Neon Dust",
+                             "needed":  "glowing powder pile with energy mist",
+                             "ticker":  "NDST",
+                             "output":  "web/public/brand/commodities/neon_dust.png"
+                         },
+                         {
+                             "label":  "Phantom Crates",
+                             "needed":  "futuristic encrypted crate with glowing symbol core",
+                             "ticker":  "PCRT",
+                             "output":  "web/public/brand/commodities/phantom_crates.png"
+                         }
+                     ]
+}

@@ -1,43 +1,13 @@
 [
   {
-    "ticker": "HXMD",
-    "label": "Helix Mud",
-    "generator": "scripts/redesign-remaining-commodities.ps1",
-    "sha12": "d5aba3a95796",
-    "path": "web/public/brand/commodities/helix_mud.png",
-    "generated_at": "2026-04-20"
-  },
-  {
-    "ticker": "VBLO",
-    "label": "Void Bloom",
-    "generator": "scripts/redesign-remaining-commodities.ps1",
-    "sha12": "255636124b24",
-    "path": "web/public/brand/commodities/void_bloom.png",
-    "generated_at": "2026-04-20"
-  },
-  {
-    "ticker": "ORES",
-    "label": "Oracle Resin",
-    "generator": "scripts/redesign-remaining-commodities.ps1",
-    "sha12": "52c65416d0bf",
-    "path": "web/public/brand/commodities/oracle_resin.png",
-    "generated_at": "2026-04-20"
-  },
-  {
-    "ticker": "VTAB",
-    "label": "Velvet Tabs",
-    "generator": "scripts/redesign-remaining-commodities.ps1",
-    "sha12": "0fe7cb1d3b5e",
-    "path": "web/public/brand/commodities/velvet_tabs.png",
-    "generated_at": "2026-04-20"
-  },
-  {
     "ticker": "NDST",
     "label": "Neon Dust",
     "generator": "scripts/redesign-remaining-commodities.ps1",
     "sha12": "858fd15ef10d",
     "path": "web/public/brand/commodities/neon_dust.png",
-    "generated_at": "2026-04-20"
+    "generated_at": "2026-04-20",
+    "status": "placeholder",
+    "note": "Still needs a user-supplied ChatGPT final in the approved premium 3D style."
   },
   {
     "ticker": "PCRT",
@@ -45,6 +15,8 @@
     "generator": "scripts/redesign-remaining-commodities.ps1",
     "sha12": "0b80a7a261da",
     "path": "web/public/brand/commodities/phantom_crates.png",
-    "generated_at": "2026-04-20"
+    "generated_at": "2026-04-20",
+    "status": "placeholder",
+    "note": "Still needs a user-supplied ChatGPT final in the approved premium 3D style."
   }
 ]
