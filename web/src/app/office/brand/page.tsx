@@ -140,7 +140,7 @@ export default function BrandPage() {
                       <img
                         src={a.pathInWeb}
                         alt={a.displayName}
-                        className="commodity-hologram__asset h-[82%] w-[82%] object-contain"
+                        className="commodity-hologram__asset h-full w-full object-contain"
                       />
                     </div>
                     <div className="flex items-center justify-between">

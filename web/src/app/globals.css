@@ -177,23 +177,16 @@ a:hover {
 }
 
 .commodity-hologram::before {
-  content: "";
-  position: absolute;
-  width: 76%;
-  height: 76%;
-  border: 1px solid color-mix(in srgb, var(--commodity-accent, #00f5ff) 55%, transparent);
-  border-radius: 999px;
-  transform: rotateX(58deg);
-  animation: commodity-shell-rotate 8s linear infinite;
+  display: none;
 }
 
 .commodity-hologram::after {
   content: "";
   position: absolute;
-  inset: 16%;
+  inset: 0;
   background:
-    radial-gradient(circle, color-mix(in srgb, var(--commodity-accent, #00f5ff) 20%, transparent) 0%, transparent 62%),
-    repeating-linear-gradient(0deg, transparent 0 7px, rgba(0, 245, 255, 0.06) 8px);
+    radial-gradient(circle, color-mix(in srgb, var(--commodity-accent, #00f5ff) 8%, transparent) 0%, transparent 64%),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(0, 245, 255, 0.025) 8px);
   mix-blend-mode: screen;
 }
 
@@ -201,7 +194,6 @@ a:hover {
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 0 18px color-mix(in srgb, var(--commodity-accent, #00f5ff) 55%, transparent));
-  animation: commodity-asset-float 4.6s ease-in-out infinite;
 }
 
 /* Reduce motion */
