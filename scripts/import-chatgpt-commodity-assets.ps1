@@ -13,7 +13,7 @@ $mappings = @(
   @{
     ticker = "FDST"
     label = "Fractal Dust"
-    source = "C:\Users\akmha\Downloads\ChatGPT Image Apr 20, 2026, 09_25_00 PM.png"
+    source = "C:\Users\akmha\Downloads\Gemini_Generated_Image_bku8sxbku8sxbku8.png"
     output = "fractal_dust.png"
   },
   @{

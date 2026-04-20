@@ -3,10 +3,10 @@
                      {
                          "ticker":  "FDST",
                          "label":  "Fractal Dust",
-                         "source":  "C:\\Users\\akmha\\Downloads\\ChatGPT Image Apr 20, 2026, 09_25_00 PM.png",
-                         "source_sha12":  "9a32ae898f8e",
+                         "source":  "C:\\Users\\akmha\\Downloads\\Gemini_Generated_Image_bku8sxbku8sxbku8.png",
+                         "source_sha12":  "838c043a36f2",
                          "output":  "web/public/brand/commodities/fractal_dust.png",
-                         "output_sha12":  "b0fe0c5bc79c",
+                         "output_sha12":  "b182ae73303d",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -83,7 +83,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\Gemini_Generated_Image_rjb27xrjb27xrjb2.png",
                          "source_sha12":  "f28ba4b92846",
                          "output":  "web/public/brand/commodities/neon_dust.png",
-                         "output_sha12":  "2260b122b602",
+                         "output_sha12":  "69c791a64016",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"
@@ -94,7 +94,7 @@
                          "source":  "C:\\Users\\akmha\\Downloads\\Gemini_Generated_Image_974hp5974hp5974h.png",
                          "source_sha12":  "f40b89859547",
                          "output":  "web/public/brand/commodities/phantom_crates.png",
-                         "output_sha12":  "1217fa5c9154",
+                         "output_sha12":  "ba7753e26ddb",
                          "imported_at":  "2026-04-20",
                          "generator":  "ChatGPT image generation, user supplied",
                          "background":  "edge-connected dark studio background removed to alpha"

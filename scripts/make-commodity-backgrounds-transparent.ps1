@@ -105,8 +105,8 @@ public static class CommodityBackgroundAlpha {
         g.DrawImage(source, 0, 0, source.Width, source.Height);
       }
 
-      int startX = (int)(bitmap.Width * 0.78);
-      int startY = (int)(bitmap.Height * 0.78);
+      int startX = (int)(bitmap.Width * 0.84);
+      int startY = (int)(bitmap.Height * 0.84);
       for (int y = startY; y < bitmap.Height; y++) {
         for (int x = startX; x < bitmap.Width; x++) {
           Color c = bitmap.GetPixel(x, y);
@@ -147,7 +147,7 @@ foreach ($file in $targets) {
   [CommodityBackgroundAlpha]::Process($path, $Threshold)
 }
 
-foreach ($file in @("neon_dust.png", "phantom_crates.png")) {
+foreach ($file in @("fractal_dust.png", "neon_dust.png", "phantom_crates.png")) {
   $path = Join-Path $commodityDir $file
   if (Test-Path -LiteralPath $path) {
     [CommodityBackgroundAlpha]::ClearBottomRightMark($path)
