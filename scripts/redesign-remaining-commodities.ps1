@@ -21,17 +21,25 @@ function RectF([float]$x, [float]$y, [float]$w, [float]$h) {
   [Drawing.RectangleF]::new($x, $y, $w, $h)
 }
 
-function DrawRadialGlow($g, [float]$cx, [float]$cy, [float]$rx, [float]$ry, [string]$hex, [int]$alpha = 120) {
+function NewPen([string]$hex, [int]$alpha, [float]$width) {
+  $pen = [Drawing.Pen]::new((C $hex $alpha), $width)
+  $pen.LineJoin = [Drawing.Drawing2D.LineJoin]::Round
+  $pen.StartCap = [Drawing.Drawing2D.LineCap]::Round
+  $pen.EndCap = [Drawing.Drawing2D.LineCap]::Round
+  $pen
+}
+
+function DrawRadialGlow($g, [float]$cx, [float]$cy, [float]$rx, [float]$ry, [string]$hex, [int]$alpha = 90) {
   for ($i = 18; $i -ge 1; $i--) {
-    $a = [int]($alpha * ($i / 18.0) * 0.42)
-    $scale = 0.35 + ($i * 0.09)
+    $a = [int]($alpha * [Math]::Pow($i / 18.0, 1.8))
+    $scale = 0.22 + ($i * 0.055)
     $brush = [Drawing.SolidBrush]::new((C $hex $a))
     $g.FillEllipse($brush, $cx - ($rx * $scale), $cy - ($ry * $scale), $rx * 2 * $scale, $ry * 2 * $scale)
     $brush.Dispose()
   }
 }
 
-function DrawEllipseGradient($g, [Drawing.RectangleF]$rect, [string]$center, [int]$centerAlpha, [string]$edge, [int]$edgeAlpha) {
+function FillEllipseGradient($g, [Drawing.RectangleF]$rect, [string]$center, [int]$centerAlpha, [string]$edge, [int]$edgeAlpha) {
   $path = [Drawing.Drawing2D.GraphicsPath]::new()
   $path.AddEllipse($rect)
   $brush = [Drawing.Drawing2D.PathGradientBrush]::new($path)
@@ -42,27 +50,58 @@ function DrawEllipseGradient($g, [Drawing.RectangleF]$rect, [string]$center, [in
   $path.Dispose()
 }
 
+function FillPathGradient($g, [Drawing.Drawing2D.GraphicsPath]$path, [string]$center, [int]$centerAlpha, [string]$edge, [int]$edgeAlpha) {
+  $brush = [Drawing.Drawing2D.PathGradientBrush]::new($path)
+  $brush.CenterColor = C $center $centerAlpha
+  $brush.SurroundColors = [Drawing.Color[]]@(C $edge $edgeAlpha)
+  $g.FillPath($brush, $path)
+  $brush.Dispose()
+}
+
 function FillPoly($g, $pts, [string]$fill, [int]$alpha, [string]$stroke = "#00F5FF", [int]$strokeAlpha = 160, [float]$strokeWidth = 3) {
   $brush = [Drawing.SolidBrush]::new((C $fill $alpha))
-  $pen = [Drawing.Pen]::new((C $stroke $strokeAlpha), $strokeWidth)
+  $pen = NewPen $stroke $strokeAlpha $strokeWidth
   $g.FillPolygon($brush, [Drawing.PointF[]]$pts)
   $g.DrawPolygon($pen, [Drawing.PointF[]]$pts)
   $pen.Dispose()
   $brush.Dispose()
 }
 
-function DrawNeonLine($g, [Drawing.PointF[]]$points, [string]$hex, [int]$alpha = 210, [float]$width = 4) {
-  $glow = [Drawing.Pen]::new((C $hex 60), $width * 4)
-  $glow.LineJoin = [Drawing.Drawing2D.LineJoin]::Round
-  $pen = [Drawing.Pen]::new((C $hex $alpha), $width)
-  $pen.LineJoin = [Drawing.Drawing2D.LineJoin]::Round
+function DrawGlowLine($g, [Drawing.PointF[]]$points, [string]$hex, [float]$width = 4, [int]$alpha = 220) {
+  $glow = NewPen $hex 42 ($width * 4)
+  $pen = NewPen $hex $alpha $width
   $g.DrawLines($glow, $points)
   $g.DrawLines($pen, $points)
   $pen.Dispose()
   $glow.Dispose()
 }
 
-function NewAsset($fileName, [scriptblock]$draw) {
+function DrawBase($g, [string]$accent = "#00F5FF") {
+  FillEllipseGradient $g (RectF 300 682 430 96) $accent 78 "#050608" 0
+  FillEllipseGradient $g (RectF 356 704 314 52) "#7A5BFF" 60 "#050608" 0
+  DrawRadialGlow $g 512 595 125 78 "#FF2A4D" 32
+  DrawRadialGlow $g 424 582 86 62 "#00F5FF" 34
+}
+
+function DrawPanelLines($g, [float]$x, [float]$y, [float]$w, [float]$h, [string]$accent) {
+  $pen = NewPen $accent 180 3
+  $thin = NewPen $accent 108 2
+  $g.DrawRectangle($pen, $x, $y, $w, $h)
+  $g.DrawLine($thin, $x + 42, $y + 45, $x + $w - 48, $y + 45)
+  $g.DrawLine($thin, $x + 42, $y + 85, $x + 118, $y + 85)
+  $g.DrawLine($thin, $x + 118, $y + 85, $x + 154, $y + 122)
+  $g.DrawLine($thin, $x + 154, $y + 122, $x + $w - 72, $y + 74)
+  $g.DrawLine($thin, $x + $w - 72, $y + 74, $x + $w - 34, $y + 94)
+  $g.DrawLine($thin, $x + 72, $y + $h - 44, $x + $w - 64, $y + $h - 44)
+  $dot = [Drawing.SolidBrush]::new((C $accent 215))
+  $g.FillEllipse($dot, $x + 120, $y + 81, 10, 10)
+  $g.FillEllipse($dot, $x + $w - 76, $y + 70, 10, 10)
+  $dot.Dispose()
+  $thin.Dispose()
+  $pen.Dispose()
+}
+
+function NewAsset($fileName, [scriptblock]$draw, [string]$accent = "#00F5FF") {
   $bmp = [Drawing.Bitmap]::new(1024, 1024, [Drawing.Imaging.PixelFormat]::Format32bppArgb)
   $g = [Drawing.Graphics]::FromImage($bmp)
   $g.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -70,10 +109,13 @@ function NewAsset($fileName, [scriptblock]$draw) {
   $g.CompositingQuality = [Drawing.Drawing2D.CompositingQuality]::HighQuality
   $g.Clear([Drawing.Color]::Transparent)
 
-  DrawRadialGlow $g 512 610 150 82 "#7A5BFF" 55
-  DrawRadialGlow $g 430 515 92 76 "#00F5FF" 34
-  DrawRadialGlow $g 612 500 96 78 "#FF2A4D" 38
+  DrawBase $g $accent
+  $state = $g.Save()
+  $g.TranslateTransform(512, 585)
+  $g.ScaleTransform(1.32, 1.32)
+  $g.TranslateTransform(-512, -585)
   & $draw $g
+  $g.Restore($state)
 
   $out = Join-Path $outDir $fileName
   $bmp.Save($out, [Drawing.Imaging.ImageFormat]::Png)
@@ -81,182 +123,168 @@ function NewAsset($fileName, [scriptblock]$draw) {
   $bmp.Dispose()
 }
 
-function DrawCircuitFace($g, [float]$x, [float]$y, [float]$w, [float]$h, [string]$accent) {
-  $pen = [Drawing.Pen]::new((C $accent 205), 4)
-  $thin = [Drawing.Pen]::new((C $accent 140), 2)
-  $g.DrawRectangle($pen, $x, $y, $w, $h)
-  $g.DrawLine($thin, $x + 40, $y + 44, $x + $w - 50, $y + 44)
-  $g.DrawLine($thin, $x + 40, $y + 88, $x + 120, $y + 88)
-  $g.DrawLine($thin, $x + $w - 58, $y + 44, $x + $w - 58, $y + 116)
-  $g.DrawLine($thin, $x + 78, $y + $h - 50, $x + $w - 62, $y + $h - 50)
-  $g.FillEllipse([Drawing.SolidBrush]::new((C $accent 220)), $x + 115, $y + 80, 10, 10)
-  $g.FillEllipse([Drawing.SolidBrush]::new((C $accent 220)), $x + $w - 64, $y + 112, 10, 10)
-  $thin.Dispose()
-  $pen.Dispose()
-}
-
 NewAsset "helix_mud.png" {
   param($g)
-  DrawEllipseGradient $g (RectF 286 618 452 120) "#230025" 165 "#070910" 0
-  DrawRadialGlow $g 512 635 150 50 "#FF2A4D" 88
 
-  $poolPen = [Drawing.Pen]::new((C "#7A5BFF" 170), 5)
-  $cyanPen = [Drawing.Pen]::new((C "#00F5FF" 135), 3)
-  for ($i = 0; $i -lt 6; $i++) {
-    $g.DrawEllipse($poolPen, 315 + ($i * 14), 625 + ($i * 8), 390 - ($i * 28), 86 - ($i * 12))
+  FillEllipseGradient $g (RectF 332 640 362 96) "#21001F" 210 "#050608" 0
+  $pool = NewPen "#7A5BFF" 150 5
+  for ($i = 0; $i -lt 5; $i++) {
+    $g.DrawEllipse($pool, 360 + ($i * 24), 658 + ($i * 8), 304 - ($i * 48), 54 - ($i * 8))
   }
-  $g.DrawArc($cyanPen, 330, 646, 360, 56, 202, 122)
 
-  $mudBrush = [Drawing.Drawing2D.LinearGradientBrush]::new((RectF 400 210 230 430), (C "#090A12" 235), (C "#2E003D" 230), [Drawing.Drawing2D.LinearGradientMode]::Vertical)
-  $path = [Drawing.Drawing2D.GraphicsPath]::new()
-  $path.AddBezier((PF 500 210), (PF 420 310), (PF 600 380), (PF 512 500))
-  $path.AddBezier((PF 512 500), (PF 435 580), (PF 600 610), (PF 520 650))
-  $path.AddBezier((PF 520 650), (PF 620 540), (PF 430 480), (PF 545 390))
-  $path.AddBezier((PF 545 390), (PF 610 330), (PF 530 265), (PF 500 210))
-  $g.FillPath($mudBrush, $path)
-  $g.DrawPath([Drawing.Pen]::new((C "#FF2A4D" 155), 5), $path)
-  $g.DrawPath([Drawing.Pen]::new((C "#00F5FF" 95), 2), $path)
+  $body = [Drawing.Drawing2D.GraphicsPath]::new()
+  $body.AddBezier((PF 522 300), (PF 365 410), (PF 660 500), (PF 510 640))
+  $body.AddBezier((PF 510 640), (PF 664 560), (PF 384 478), (PF 548 360))
+  $body.AddBezier((PF 548 360), (PF 612 318), (PF 565 292), (PF 522 300))
+  FillPathGradient $g $body "#3C003F" 235 "#050608" 150
+  $g.DrawPath((NewPen "#FF2A4D" 165 5), $body)
+  $g.DrawPath((NewPen "#00F5FF" 100 2), $body)
 
-  DrawNeonLine $g ([Drawing.PointF[]]@((PF 430 300), (PF 600 365), (PF 430 450), (PF 610 530), (PF 450 615))) "#00F5FF" 150 3
-  DrawNeonLine $g ([Drawing.PointF[]]@((PF 600 260), (PF 430 350), (PF 610 435), (PF 430 520), (PF 590 600))) "#FF2A4D" 160 3
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 425 390), (PF 604 456), (PF 425 526), (PF 600 594))) "#00F5FF" 4 165
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 604 350), (PF 424 438), (PF 610 510), (PF 452 620))) "#FF2A4D" 3 150
 
-  $poolPen.Dispose()
-  $cyanPen.Dispose()
-  $mudBrush.Dispose()
-  $path.Dispose()
-}
+  $shine = NewPen "#E8ECF5" 55 3
+  $g.DrawBezier($shine, 505, 335, 440, 442, 565, 498, 492, 618)
+  $shine.Dispose()
+  $pool.Dispose()
+  $body.Dispose()
+} "#7A5BFF"
 
 NewAsset "void_bloom.png" {
   param($g)
-  DrawRadialGlow $g 520 560 132 112 "#FF2A4D" 70
-  DrawRadialGlow $g 500 528 74 72 "#00F5FF" 38
 
-  for ($i = 0; $i -lt 8; $i++) {
-    $angle = (($i * 45) - 90) * [Math]::PI / 180
-    $cx = 512 + [Math]::Cos($angle) * 148
-    $cy = 560 + [Math]::Sin($angle) * 94
-    $path = [Drawing.Drawing2D.GraphicsPath]::new()
-    $path.AddBezier((PF 512 568), (PF ($cx - 78) ($cy - 38)), (PF ($cx - 58) ($cy - 150)), (PF $cx ($cy - 18)))
-    $path.AddBezier((PF $cx ($cy - 18)), (PF ($cx + 94) ($cy + 44)), (PF ($cx + 38) ($cy + 135)), (PF 512 568))
-    $brush = [Drawing.Drawing2D.PathGradientBrush]::new($path)
-    $brush.CenterColor = C "#FF2A4D" 185
-    $brush.SurroundColors = [Drawing.Color[]]@(C "#090012" 34)
-    $g.FillPath($brush, $path)
-    $g.DrawPath([Drawing.Pen]::new((C "#FF2A4D" 150), 6), $path)
-    if ($i % 2 -eq 0) { $g.DrawPath([Drawing.Pen]::new((C "#00F5FF" 90), 2), $path) }
-    $brush.Dispose()
-    $path.Dispose()
+  DrawRadialGlow $g 512 545 105 88 "#FF2A4D" 72
+  for ($i = 0; $i -lt 7; $i++) {
+    $angle = (($i * 51.428) - 90) * [Math]::PI / 180
+    $tipX = 512 + [Math]::Cos($angle) * 160
+    $tipY = 552 + [Math]::Sin($angle) * 108
+    $leftX = 512 + [Math]::Cos($angle - 0.36) * 70
+    $leftY = 552 + [Math]::Sin($angle - 0.36) * 52
+    $rightX = 512 + [Math]::Cos($angle + 0.36) * 72
+    $rightY = 552 + [Math]::Sin($angle + 0.36) * 54
+
+    $petal = [Drawing.Drawing2D.GraphicsPath]::new()
+    $petal.AddBezier((PF 512 558), (PF $leftX $leftY), (PF ($tipX - 48) ($tipY - 54)), (PF $tipX $tipY))
+    $petal.AddBezier((PF $tipX $tipY), (PF ($tipX + 50) ($tipY + 42)), (PF $rightX $rightY), (PF 512 558))
+    FillPathGradient $g $petal "#FF2A4D" 185 "#16001E" 52
+    $g.DrawPath((NewPen "#FF2A4D" 150 4), $petal)
+    if ($i % 2 -eq 0) { $g.DrawPath((NewPen "#00F5FF" 78 2), $petal) }
+    $petal.Dispose()
   }
 
-  $corePath = [Drawing.Drawing2D.GraphicsPath]::new()
-  $corePath.AddClosedCurve([Drawing.PointF[]]@((PF 458 520), (PF 498 468), (PF 566 486), (PF 602 548), (PF 560 622), (PF 488 614)))
-  $coreBrush = [Drawing.Drawing2D.PathGradientBrush]::new($corePath)
-  $coreBrush.CenterColor = C "#7A5BFF" 230
-  $coreBrush.SurroundColors = [Drawing.Color[]]@(C "#050608" 120)
-  $g.FillPath($coreBrush, $corePath)
-  $g.DrawPath([Drawing.Pen]::new((C "#FF2A4D" 175), 4), $corePath)
-  DrawRadialGlow $g 522 548 46 38 "#E8ECF5" 54
-  $coreBrush.Dispose()
-  $corePath.Dispose()
+  $core = [Drawing.Drawing2D.GraphicsPath]::new()
+  $core.AddClosedCurve([Drawing.PointF[]]@((PF 450 534), (PF 486 482), (PF 560 486), (PF 610 548), (PF 570 620), (PF 492 625)))
+  FillPathGradient $g $core "#7A5BFF" 230 "#050608" 145
+  $g.DrawPath((NewPen "#00F5FF" 95 3), $core)
+  DrawRadialGlow $g 525 552 52 42 "#E8ECF5" 50
+  $core.Dispose()
 
   $rand = [Random]::new(8080)
-  for ($i = 0; $i -lt 70; $i++) {
-    $x = $rand.Next(380, 660)
-    $y = $rand.Next(390, 690)
-    $r = $rand.Next(3, 9)
-    $brush = [Drawing.SolidBrush]::new((C ($(if ($i % 3 -eq 0) { "#00F5FF" } else { "#FF2A4D" })) 115))
-    $g.FillEllipse($brush, $x, $y, $r, $r)
+  for ($i = 0; $i -lt 58; $i++) {
+    $brush = [Drawing.SolidBrush]::new((C ($(if ($i % 4 -eq 0) { "#00F5FF" } else { "#FF2A4D" })) 130))
+    $g.FillEllipse($brush, $rand.Next(376, 654), $rand.Next(412, 680), $rand.Next(3, 8), $rand.Next(3, 8))
     $brush.Dispose()
   }
-}
+} "#FF2A4D"
 
 NewAsset "oracle_resin.png" {
   param($g)
-  DrawRadialGlow $g 520 560 150 105 "#00F5FF" 78
 
-  $top = @((PF 278 360), (PF 472 252), (PF 750 318), (PF 552 430))
-  $left = @((PF 278 360), (PF 552 430), (PF 552 724), (PF 284 604))
-  $right = @((PF 552 430), (PF 750 318), (PF 744 596), (PF 552 724))
-  FillPoly $g $left "#08232D" 205 "#00F5FF" 160 4
-  FillPoly $g $right "#0A182A" 220 "#7A5BFF" 150 4
-  FillPoly $g $top "#163D4A" 190 "#67FFB5" 130 4
+  $top = @((PF 290 390), (PF 512 276), (PF 746 392), (PF 512 510))
+  $left = @((PF 290 390), (PF 512 510), (PF 512 734), (PF 290 612))
+  $right = @((PF 512 510), (PF 746 392), (PF 746 610), (PF 512 734))
+  FillPoly $g $left "#092D35" 200 "#00F5FF" 150 4
+  FillPoly $g $right "#10142A" 210 "#7A5BFF" 135 4
+  FillPoly $g $top "#16414A" 176 "#67FFB5" 130 4
 
-  $inner = @((PF 360 420), (PF 524 340), (PF 660 388), (PF 500 482))
-  FillPoly $g $inner "#00F5FF" 52 "#E8ECF5" 90 2
-  DrawCircuitFace $g 355 470 270 150 "#00F5FF"
-  DrawNeonLine $g ([Drawing.PointF[]]@((PF 390 585), (PF 460 542), (PF 520 610), (PF 610 552), (PF 680 598))) "#67FFB5" 145 4
-}
+  DrawRadialGlow $g 512 502 128 96 "#00F5FF" 92
+  $innerTop = @((PF 406 420), (PF 512 365), (PF 628 420), (PF 512 478))
+  FillPoly $g $innerTop "#00F5FF" 52 "#E8ECF5" 78 2
+
+  for ($i = 0; $i -lt 4; $i++) {
+    $yy = 470 + ($i * 45)
+    DrawGlowLine $g ([Drawing.PointF[]]@((PF 342 $yy), (PF 512 ($yy + 62)), (PF 690 $yy))) "#00F5FF" 2 95
+  }
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 512 344), (PF 512 734))) "#7A5BFF" 3 92
+  DrawPanelLines $g 356 510 250 135 "#00F5FF"
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 380 605), (PF 455 568), (PF 506 624), (PF 604 562), (PF 680 605))) "#67FFB5" 4 150
+} "#00F5FF"
 
 NewAsset "velvet_tabs.png" {
   param($g)
-  DrawRadialGlow $g 520 560 150 100 "#7A5BFF" 70
-  for ($i = 0; $i -lt 4; $i++) {
-    $dx = $i * 42
-    $dy = $i * 42
-    $top = @((PF (265 + $dx) (330 + $dy)), (PF (635 + $dx) (360 + $dy)), (PF (716 + $dx) (455 + $dy)), (PF (330 + $dx) (435 + $dy)))
-    $side = @((PF (330 + $dx) (435 + $dy)), (PF (716 + $dx) (455 + $dy)), (PF (684 + $dx) (510 + $dy)), (PF (302 + $dx) (492 + $dy)))
-    FillPoly $g $side "#070810" 230 "#7A5BFF" 115 3
-    FillPoly $g $top "#171226" 235 "#FF2A4D" 145 4
-    DrawNeonLine $g ([Drawing.PointF[]]@((PF (340 + $dx) (380 + $dy)), (PF (600 + $dx) (402 + $dy)), (PF (650 + $dx) (446 + $dy)))) "#7A5BFF" 150 3
-    DrawNeonLine $g ([Drawing.PointF[]]@((PF (392 + $dx) (414 + $dy)), (PF (560 + $dx) (426 + $dy)))) "#00F5FF" 110 2
+
+  for ($i = 0; $i -lt 5; $i++) {
+    $dx = $i * 34
+    $dy = $i * 34
+    $top = @((PF (268 + $dx) (355 + $dy)), (PF (618 + $dx) (382 + $dy)), (PF (708 + $dx) (454 + $dy)), (PF (334 + $dx) (436 + $dy)))
+    $front = @((PF (334 + $dx) (436 + $dy)), (PF (708 + $dx) (454 + $dy)), (PF (668 + $dx) (500 + $dy)), (PF (304 + $dx) (484 + $dy)))
+    FillPoly $g $front "#05070F" 238 "#7A5BFF" 108 3
+    FillPoly $g $top "#13101F" 238 "#FF2A4D" 160 4
+    DrawGlowLine $g ([Drawing.PointF[]]@((PF (360 + $dx) (402 + $dy)), (PF (594 + $dx) (420 + $dy)), (PF (646 + $dx) (458 + $dy)))) "#7A5BFF" 3 135
+    if ($i -ge 2) { DrawGlowLine $g ([Drawing.PointF[]]@((PF (410 + $dx) (452 + $dy)), (PF (554 + $dx) (460 + $dy)))) "#00F5FF" 3 120 }
   }
 
-  $font = [Drawing.Font]::new("Consolas", 34, [Drawing.FontStyle]::Bold, [Drawing.GraphicsUnit]::Pixel)
-  $brush = [Drawing.SolidBrush]::new((C "#FF2A4D" 170))
-  $g.DrawString("VELVET", $font, $brush, 405, 490)
-  $brush.Dispose()
-  $font.Dispose()
-}
+  $rim = NewPen "#FF2A4D" 150 5
+  $g.DrawLine($rim, 314, 486, 804, 512)
+  $rim.Dispose()
+} "#7A5BFF"
 
 NewAsset "neon_dust.png" {
   param($g)
-  DrawRadialGlow $g 515 625 150 76 "#FF2A4D" 74
-  DrawEllipseGradient $g (RectF 334 632 360 92) "#FF2A4D" 120 "#050608" 0
-  FillPoly $g @((PF 334 690), (PF 420 565), (PF 512 470), (PF 620 568), (PF 704 690)) "#FF2A4D" 72 "#FF2A4D" 118 3
+
+  FillEllipseGradient $g (RectF 326 636 372 88) "#FF2A4D" 118 "#050608" 0
+  $mound = [Drawing.Drawing2D.GraphicsPath]::new()
+  $mound.AddBezier((PF 330 692), (PF 390 600), (PF 465 520), (PF 512 496))
+  $mound.AddBezier((PF 512 496), (PF 582 522), (PF 646 612), (PF 704 692))
+  $mound.CloseFigure()
+  FillPathGradient $g $mound "#FF2A4D" 168 "#160018" 60
+  $g.DrawPath((NewPen "#7A5BFF" 95 3), $mound)
 
   $rand = [Random]::new(31337)
-  for ($layer = 0; $layer -lt 5; $layer++) {
-    for ($i = 0; $i -lt 210; $i++) {
-      $x = $rand.Next(330, 705)
-      $y = $rand.Next(420 + ($layer * 26), 710)
-      $dist = [Math]::Abs($x - 512) / 205.0
-      $cap = 708 - [int](230 * (1 - [Math]::Min(1, $dist)))
-      if ($y -gt $cap) { continue }
-      $r = $rand.Next(3, 14)
-      $palette = @("#FF2A4D", "#7A5BFF", "#00F5FF")
-      $hex = $palette[$rand.Next(0, $palette.Count)]
-      $brush = [Drawing.SolidBrush]::new((C $hex $rand.Next(120, 220)))
-      $g.FillEllipse($brush, $x, $y, $r, $r)
-      $brush.Dispose()
-    }
+  for ($i = 0; $i -lt 360; $i++) {
+    $x = $rand.Next(328, 706)
+    $y = $rand.Next(470, 700)
+    $centerRise = 1 - [Math]::Min(1, [Math]::Abs($x - 512) / 190.0)
+    $cap = 700 - [int](185 * $centerRise)
+    if ($y -gt $cap) { continue }
+    $palette = @("#FF2A4D", "#7A5BFF", "#00F5FF")
+    $hex = $palette[$rand.Next(0, $palette.Count)]
+    $r = $rand.Next(3, 11)
+    $brush = [Drawing.SolidBrush]::new((C $hex $rand.Next(125, 225)))
+    $g.FillEllipse($brush, $x, $y, $r, $r)
+    $brush.Dispose()
   }
 
-  DrawRadialGlow $g 512 570 58 88 "#E8ECF5" 36
-  DrawNeonLine $g ([Drawing.PointF[]]@((PF 408 675), (PF 508 482), (PF 622 675))) "#7A5BFF" 85 2
-}
+  for ($i = 0; $i -lt 5; $i++) {
+    $mist = NewPen ($(if ($i % 2 -eq 0) { "#00F5FF" } else { "#FF2A4D" })) 62 3
+    $x = 390 + ($i * 58)
+    $g.DrawBezier($mist, $x, 620, $x - 38, 544, $x + 44, 520, $x + 8, 448)
+    $mist.Dispose()
+  }
+  DrawRadialGlow $g 512 575 64 90 "#E8ECF5" 34
+  $mound.Dispose()
+} "#FF2A4D"
 
 NewAsset "phantom_crates.png" {
   param($g)
-  DrawRadialGlow $g 520 575 155 112 "#00F5FF" 76
 
-  $top = @((PF 260 360), (PF 520 245), (PF 792 360), (PF 520 486))
-  $front = @((PF 260 360), (PF 520 486), (PF 520 760), (PF 260 612))
-  $side = @((PF 520 486), (PF 792 360), (PF 792 616), (PF 520 760))
-  FillPoly $g $front "#0A1119" 240 "#00F5FF" 150 5
-  FillPoly $g $side "#111420" 240 "#7A5BFF" 120 5
-  FillPoly $g $top "#142431" 230 "#00F5FF" 150 5
+  $top = @((PF 282 388), (PF 512 282), (PF 756 390), (PF 520 510))
+  $front = @((PF 282 388), (PF 520 510), (PF 520 736), (PF 282 616))
+  $side = @((PF 520 510), (PF 756 390), (PF 756 616), (PF 520 736))
+  FillPoly $g $front "#0A1119" 245 "#00F5FF" 158 5
+  FillPoly $g $side "#111420" 246 "#7A5BFF" 132 5
+  FillPoly $g $top "#142431" 236 "#00F5FF" 150 5
 
-  DrawCircuitFace $g 334 493 260 155 "#00F5FF"
-  FillPoly $g @((PF 520 390), (PF 595 432), (PF 520 480), (PF 445 432)) "#050608" 195 "#00F5FF" 190 4
-  DrawRadialGlow $g 520 432 66 48 "#00F5FF" 125
-  DrawNeonLine $g ([Drawing.PointF[]]@((PF 306 608), (PF 520 724), (PF 738 608))) "#FF2A4D" 100 3
+  $panel = @((PF 390 496), (PF 520 562), (PF 650 498), (PF 650 622), (PF 520 690), (PF 390 622))
+  FillPoly $g $panel "#050608" 185 "#00F5FF" 165 4
+  DrawRadialGlow $g 520 590 82 66 "#00F5FF" 112
+  FillPoly $g @((PF 520 538), (PF 585 580), (PF 520 626), (PF 455 580)) "#071B21" 225 "#00F5FF" 210 4
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 500 580), (PF 520 602), (PF 562 558))) "#67FFB5" 4 170
 
-  for ($i = 0; $i -lt 5; $i++) {
-    $pen = [Drawing.Pen]::new((C "#00F5FF" (90 - $i * 10)), 10 - $i)
-    $g.DrawLine($pen, 285, 375 + ($i * 47), 512, 490 + ($i * 52))
-    $g.DrawLine($pen, 535, 500 + ($i * 50), 765, 382 + ($i * 47))
-    $pen.Dispose()
+  for ($i = 0; $i -lt 4; $i++) {
+    DrawGlowLine $g ([Drawing.PointF[]]@((PF 312 (435 + $i * 46)), (PF 520 (540 + $i * 48)), (PF 724 (438 + $i * 46)))) "#00F5FF" 3 82
   }
-}
+  DrawGlowLine $g ([Drawing.PointF[]]@((PF 318 610), (PF 520 720), (PF 734 612))) "#FF2A4D" 4 118
+} "#00F5FF"
 
-Write-Host "Redesigned HXMD, VBLO, ORES, VTAB, NDST, and PCRT commodity assets."
+Write-Host "Redesigned HXMD, VBLO, ORES, VTAB, NDST, and PCRT using the unified mobile commodity system."
