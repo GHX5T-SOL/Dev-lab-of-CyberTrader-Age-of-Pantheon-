@@ -16,6 +16,9 @@
   "scripts": {
     "postinstall": "echo '\\n[ok] deps installed. Run `npm run install-all-skills` to set up the AI team.\\n'",
 
+    "setup": "bash scripts/bootstrap.sh",
+    "bootstrap": "bash scripts/bootstrap.sh",
+
     "install-all-skills": "bash scripts/install-skills.sh",
     "install-skills:remotion": "npx skills add remotion-dev/skills",
     "install-skills:opc": "npx skills add ReScienceLab/opc-skills",
