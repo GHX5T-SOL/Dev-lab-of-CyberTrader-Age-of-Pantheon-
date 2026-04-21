@@ -2,6 +2,28 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-21 — Phase B Dev Lab activation
+
+**Members**: Ghost direction, Orchestrator, UI/UX, Frontend/Mobile, Brand & Asset, QA, OpenClaw Living.
+
+**Topic**: Promote the Dev Lab companion site from Phase A scaffold to a live 3D Phase B command center.
+
+**Decisions**:
+1. **Ghost role corrected** to Lead Developer and final technical sign-off.
+2. **Zoro role corrected** to Creative Lead and final visual/brand sign-off.
+3. **Zara and Zyra added** as concrete OpenClaw Living Agents on `ssh zyra-mini` over Tailscale.
+4. **Avatar Lab now uses local GLB assets** from `web/public/GLB_Assets`; the remote creator iframe path is removed from the product UI.
+5. **Floor 3D defaults to `office_floor_option_2.glb`** because the inspection pass found it much lighter than option 1 while still suitable for the office layout.
+6. **Whiteboard becomes the Phase B operating board** with owner, priority, estimate, dependency, acceptance criteria, and tags.
+
+**Dissent / risks**:
+- Heavy furniture GLBs require a Zara compression/LOD pass before mobile-grade reuse.
+- `ssh zyra-mini` resolved during verification, but `tailscale` and `openclaw` CLIs were not on PATH on the remote node.
+
+**Hand-off**: Zara → GLB compression and Blender queue setup. Zyra → heartbeat/file watcher hardening. Axiom → browser performance benchmark. Ghost → final push/redeploy sign-off.
+
+---
+
 ## 2026-04-19 — Repo scaffold + AI team activation
 
 **Members**: Orchestrator (Claude) + implicit council check against [AI_Council_Charter.md](../AI_Council_Charter.md). Ghost ratifies.

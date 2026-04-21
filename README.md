@@ -2,7 +2,7 @@
 
 > **The single organized hub** where Ghost, Zoro, and the full AI team turn five scattered prototypes into a shippable cyberpunk trading game.
 
-[![status](https://img.shields.io/badge/status-phase--0--foundation-00ffcc)]()
+[![status](https://img.shields.io/badge/status-phase--b--live--3d--dev--lab-00ffcc)]()
 [![platform](https://img.shields.io/badge/platform-Expo%20%7C%20iOS%20%7C%20Android%20%7C%20Web-00ffcc)]()
 [![web3](https://img.shields.io/badge/web3-Solana-14F195)]()
 
@@ -16,9 +16,10 @@ A **playground + workspace + command center** for CyberTrader: Age of Pantheon �
 
 ## Who this is for
 
-- **Ghost** (founder, product + creative direction)
-- **Zoro** (co-founder)
+- **Ghost** (founder, Lead Developer, elite human coder, final technical sign-off)
+- **Zoro** (co-founder, Creative Lead, artistic visionary, final feel/brand sign-off)
 - **The AI Team** — 12 specialized subagents coordinated by an AI Council (see [agents.md](agents.md) and [AI_Council_Charter.md](AI_Council_Charter.md))
+- **Zara + Zyra** — OpenClaw Living Agents on the secure Mac mini node (`ssh zyra-mini` over Tailscale) for local file ops, GLB processing, heartbeat checks, and long-running render queues.
 
 ## Quickstart
 
@@ -89,11 +90,11 @@ Full step-by-step for a newbie: **[SETUP.md](SETUP.md)**.
 
 Detailed profiles: [`/agents/`](agents/).
 
-## Current phase: **Phase 0 — Foundation**
+## Current phase: **Phase B — Live 3D Dev Lab**
 
-Goal: clean organization, ship-ready scaffolding, team activated. No feature code yet.
+Phase 0 foundation is complete. The web companion now runs as a Phase B command center: local GLB avatar gallery, dynamic React Three Fiber office, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
 
-Next phase: **Phase 1 — MVP** (pirate-OS trading loop from v5 BUILD_PLAN weeks 1–4). See [docs/Roadmap.md](docs/Roadmap.md).
+Next game phase: **Phase 1 — MVP** (pirate-OS trading loop from v5 BUILD_PLAN weeks 1–4). See [docs/Roadmap.md](docs/Roadmap.md) and [PHASE_B.md](PHASE_B.md).
 
 ## Brand & vision (one-line)
 

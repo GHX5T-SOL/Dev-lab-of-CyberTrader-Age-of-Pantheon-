@@ -4,10 +4,11 @@
 
 ## The team
 
-- **Ghost** — founder, product + creative direction, final authority on scope/brand/ship.
-- **Zoro** — co-founder, final authority shared with Ghost.
+- **Ghost** — founder, Lead Developer, elite human coder, final authority on implementation quality, architecture, and ship sign-off.
+- **Zoro** — co-founder, Creative Lead, artistic visionary, final authority on mood, brand feel, lore presentation, and visual quality.
 - **AI Orchestrator (Claude)** — default assistant in every session; routes work to subagents, chairs councils, enforces [Prompt_Guidelines.md](Prompt_Guidelines.md).
 - **12 Subagents** — see [agents.md](agents.md).
+- **Zara + Zyra** — concrete OpenClaw Living Agents on `ssh zyra-mini` over Tailscale. Zara owns asset ops and local GLB/Blender queues; Zyra owns node watch, heartbeat, file watchers, and preview sync readiness.
 - **AI Council** — rotating 5–7 member deliberative body, see [AI_Council_Charter.md](AI_Council_Charter.md).
 
 ## Information flow
@@ -52,7 +53,7 @@ Orchestrator detects non-trivial topic (see [AI_Council_Charter.md](AI_Council_C
 Orchestrator + one lead agent work through a feature. QA agent reviews at the end. Council convenes only if unexpected architectural choice surfaces.
 
 ### 4. Long-running / background
-Handed to **OpenClaw Living Agent** for unattended execution (cron jobs, batch renames, continuous monitoring). Reports back via commit + log file.
+Handed to **OpenClaw Living Agent** governance, then assigned to **Zara** or **Zyra** on the `zyra-mini` Mac mini for unattended execution (cron jobs, batch renames, GLB compression, Blender work, continuous monitoring). Reports back via commit + log file.
 
 ## Hand-off contract
 

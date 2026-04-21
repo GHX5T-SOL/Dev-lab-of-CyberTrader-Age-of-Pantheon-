@@ -1,6 +1,7 @@
 import { STATUS } from "@/data/status";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { CyberText } from "@/components/CyberText";
+import { OPENCLAW_AGENT_STATUS, OPENCLAW_NODE } from "@/data/openclaw";
 
 export const metadata = { title: "Status Terminal" };
 
@@ -33,6 +34,30 @@ export default function StatusPage() {
           <div className="md:col-span-2">
             <span className="text-dust">next milestone:</span>{" "}
             <span className="text-chrome">{STATUS.nextMilestone}</span>
+          </div>
+        </div>
+      </Panel>
+
+      <Panel tone="violet">
+        <PanelHeader eyebrow="physical layer" title={OPENCLAW_NODE.label} />
+        <div className="grid gap-3 text-[13px] leading-relaxed md:grid-cols-[1fr_1fr]">
+          <div>
+            <div className="text-dust">command:</div>
+            <code className="text-cyan">{OPENCLAW_NODE.ssh}</code>
+            <div className="mt-2 text-dust">host:</div>
+            <span className="text-chrome">{OPENCLAW_NODE.host}</span>
+            <p className="mt-3 text-[12px] text-dust">{OPENCLAW_NODE.note}</p>
+          </div>
+          <div className="grid gap-2">
+            {OPENCLAW_AGENT_STATUS.map((agent) => (
+              <div key={agent.slug} className="rounded-sm border border-violet/25 p-3">
+                <div className="text-[10px] uppercase tracking-[0.25em] text-violet">
+                  {agent.name} · {agent.state}
+                </div>
+                <div className="mt-1 text-chrome">{agent.role}</div>
+                <div className="mt-1 text-[12px] text-dust">{agent.heartbeat}</div>
+              </div>
+            ))}
           </div>
         </div>
       </Panel>

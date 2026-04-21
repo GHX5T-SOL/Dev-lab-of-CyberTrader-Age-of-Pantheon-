@@ -22,7 +22,7 @@ type BroadcastSlot = {
 const BROADCASTS: BroadcastSlot[] = [
   {
     slug: "ghost",
-    role: "Founder / Creative Lead",
+    role: "Lead Developer",
     sampleLine:
       "This is the Dev Lab. Twelve AI operators, two humans, one mission — ship the cyberpunk trading sim you've been waiting for.",
     targetLength: "0:12",
@@ -30,7 +30,7 @@ const BROADCASTS: BroadcastSlot[] = [
   },
   {
     slug: "zoro",
-    role: "Co-founder / Build Partner",
+    role: "Creative Lead / Co-founder",
     sampleLine:
       "Walk the floor with me. Every desk is wired. Click an operator, hear them speak — then check the repo, they probably just pushed.",
     targetLength: "0:10",
@@ -63,7 +63,7 @@ export default function BroadcastPage() {
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-heat" />
           <span>broadcast booth · hyperframes pending bind</span>
           <span className="text-dust">·</span>
-          <span className="text-dust">14 operators queued</span>
+          <span className="text-dust">16 operators queued</span>
         </div>
         <CyberText as="h1" className="text-4xl md:text-5xl" glitch>
           BROADCAST
@@ -138,10 +138,10 @@ export default function BroadcastPage() {
             note="One id per operator, created in the HeyGen Studio. Store in PERFORMER.heygenAvatarId (schema ready)."
           />
           <Row
-            label="Ready Player Me rigs"
+            label="Local GLB rigs"
             value="tracked"
             tone="violet"
-            note="14 rigs tracked in /data/avatars.ts. RPM + Hyperframe share rigs — one pipeline, two render targets."
+            note="16 rigs tracked in /data/performers.ts and /public/GLB_Assets. Hyperframes stay a video layer; R3F owns the local office rigs."
           />
         </div>
       </Panel>
@@ -251,7 +251,7 @@ export default function BroadcastPage() {
       <Panel tone="violet">
         <PanelHeader
           eyebrow="the full roster"
-          title="14 Hyperframe slots — scripts in waiting"
+          title="16 Hyperframe slots — scripts in waiting"
         />
         <p className="mb-4 text-[13px] leading-relaxed text-chrome/90">
           Every operator gets a broadcast slot. The four above are first-wave (scripts locked,

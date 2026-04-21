@@ -63,7 +63,7 @@ export const TOOLKIT: ToolkitEntry[] = [
     useFor:
       "2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source.",
     notes:
-      "Prompts for all 14 operators live in data/avatars.ts. Use pixel mode for in-game, HD mode for office portraits.",
+      "Prompts for all 16 operators live in data/avatars.ts. Use pixel mode for in-game, HD mode for office portraits.",
     docsUrl: "https://spritecook.com/docs",
     accent: "#00F5FF",
   },
@@ -72,9 +72,9 @@ export const TOOLKIT: ToolkitEntry[] = [
     name: "Ready Player Me",
     category: "avatar",
     useFor:
-      "3D glTF avatars for the Phase B R3F office. Full-body rigs with standard mixamo-compatible skeletons.",
+      "Research reference for animation-library clips and retargeting patterns; the live Phase B office uses local GLB files.",
     notes:
-      "No env key needed — avatars are created in the RPM studio, exported as .glb, dropped into /web/public/avatars/.",
+      "No creator iframe or remote avatar dependency in the app. Local avatar files live in /web/public/GLB_Assets and are bound through data/performers.ts.",
     docsUrl: "https://docs.readyplayer.me",
     accent: "#67FFB5",
   },

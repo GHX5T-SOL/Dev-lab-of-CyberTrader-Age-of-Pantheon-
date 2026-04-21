@@ -14,7 +14,8 @@ The **AI Council** is the deliberative body for decisions that shape the game's 
   - *New cinematic*: Cinematic, UI/UX, Brand, Frontend, PM → (5)
   - *Technical architecture*: Backend, Frontend, Research, QA, PM, ElizaOS Swarm, OpenClaw → (7)
 - **Standing members** (present in every council): **Project Manager** (facilitator) + **Research & Best-Practices** (fact-checker).
-- **Ghost and Zoro** are non-voting observers with override authority.
+- **Ghost** (Lead Developer) and **Zoro** (Creative Lead) are non-voting observers with override authority.
+- **Zara and Zyra** are OpenClaw physical-layer operators on `ssh zyra-mini`. They can be invited for operational evidence, but they do not count toward Council quorum unless Ghost explicitly changes that rule.
 
 ## When to convene
 

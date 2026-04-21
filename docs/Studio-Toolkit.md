@@ -17,13 +17,15 @@ All keys live in the root `.env` (symlinked into `web/.env.local`). The Dev Lab'
 | Tool | Env key | Use for |
 |---|---|---|
 | **HeyGen + Hyperframes** | `HEYGEN_API_KEY` | Photoreal talking-head avatars for explainer videos, Council broadcast clips, on-site hero intros. Ghost has **Hyperframes** skills installed — use the frame-accurate pipeline for lip sync + sustained eye contact. |
-| **SpriteCook MCP** | `SPRITECOOK_API_KEY` | 2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source. Prompts for all 14 operators live in `web/src/data/avatars.ts`. Pixel mode for in-game; HD mode for office portraits. |
-| **Ready Player Me** | _none (studio → .glb export)_ | 3D glTF avatars for the Phase B R3F office. Full-body rigs with Mixamo-compatible skeletons. Drop `.glb` files into `web/public/avatars/`. |
+| **SpriteCook MCP** | `SPRITECOOK_API_KEY` | 2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source. Prompts for all 16 operators live in `web/src/data/avatars.ts`. Pixel mode for in-game; HD mode for office portraits. |
+| **Local GLB Assets + R3F** | _none_ | Phase B 3D office rigs and props. Files live in `web/public/GLB_Assets/`, are cataloged in `web/src/data/glbAssets.ts`, and are bound through `web/src/data/performers.ts`. |
+| **Ready Player Me animation-library** | _none_ | Research reference for future retargeted mocap clips. Do not use a remote creator iframe in the Dev Lab. |
 
 **Rule of thumb:**
 - Talking head / on-camera → **HeyGen**
 - 2D portrait, icon, sprite → **SpriteCook**
-- 3D walkable office character → **Ready Player Me** + R3F (Phase B)
+- 3D walkable office character → **Local GLB Assets** + R3F (Phase B)
+- Retargeted motion research → **Ready Player Me animation-library** + Blender/Zara queue
 
 ## Video & cinematics
 

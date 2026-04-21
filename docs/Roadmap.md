@@ -1,10 +1,10 @@
 # Roadmap — 30-day plan + beyond
 
-> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Dates are from **2026-04-19** (today).
+> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Dev Lab Phase B status updated **2026-04-21**.
 
 ## Phase 0 — Foundation (this week, 2026-04-19 → 2026-04-25)
 
-**Goal**: organized workspace, team activated, scaffolds in place. No feature code yet.
+**Goal**: organized workspace, team activated, scaffolds in place. Core foundation is complete; remaining entries feed the game MVP.
 
 | Day | Deliverable | Owner |
 |---|---|---|
@@ -15,6 +15,20 @@
 | D5 | First SpriteCook asset batch: Eidolon mark, 4 faction sigils, 10 commodity icons | Brand & Asset |
 | D6 | Intro cinematic storyboard (Remotion skeleton scene) | Cinematic & Animation |
 | D7 | Council retrospective on Phase 0, Phase 1 scope lock | Council |
+
+## Phase B — Live 3D Dev Lab (2026-04-21 → 2026-04-28)
+
+**Goal**: make the web command center feel like a living cyberpunk studio while the game MVP proceeds.
+
+| Deliverable | Owner | Status |
+|---|---|---|
+| Local GLB Avatar Lab replacing the remote creator iframe | Rune / Vex | Live |
+| Dynamic Floor 3D scene with `office_floor_option_2.glb`, furniture props, and moving operators | Rune / Reel | Live |
+| Ghost = Lead Developer and Zoro = Creative Lead across web/docs | Compass | Live |
+| Zara + Zyra OpenClaw agents surfaced on Team Wall, header, status, docs, and task board | Talon / Zyra | Live |
+| 60+ task Whiteboard with owner, priority, estimate, dependency, and acceptance criteria | Compass | Live |
+| GLB compression and LOD pass for heavy furniture files | Zara | Pending |
+| Browser visual/performance benchmark across desktop/mobile | Axiom / Ghost | Pending |
 
 ## Phase 1 — MVP (weeks 2–5, 2026-04-26 → 2026-05-23)
 

@@ -7,19 +7,16 @@ import { useEffect, useRef, useState } from "react";
  * has to press play once. Phase B will replace the <audio> source with a
  * licensed track (Ghost selects).
  *
- * The track path points to /audio/ambient.mp3 which ships as a README
- * placeholder only — no audio is committed yet.
+ * The track path is only enabled when NEXT_PUBLIC_AMBIENT_AUDIO=true. This
+ * avoids probing a placeholder URL and creating a 404 on every office route.
  */
 export function AmbientAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [available, setAvailable] = useState(true);
+  const [available, setAvailable] = useState(false);
 
   useEffect(() => {
-    // Probe: if the /audio/ambient.mp3 doesn't exist, disable the button.
-    fetch("/audio/ambient.mp3", { method: "HEAD" })
-      .then((r) => setAvailable(r.ok))
-      .catch(() => setAvailable(false));
+    setAvailable(process.env.NEXT_PUBLIC_AMBIENT_AUDIO === "true");
   }, []);
 
   function toggle() {
@@ -39,7 +36,7 @@ export function AmbientAudio() {
 
   return (
     <div className="pointer-events-auto fixed bottom-4 right-4 z-50">
-      <audio ref={audioRef} src="/audio/ambient.mp3" preload="none" />
+      {available && <audio ref={audioRef} src="/audio/ambient.mp3" preload="none" />}
       <button
         onClick={toggle}
         disabled={!available}

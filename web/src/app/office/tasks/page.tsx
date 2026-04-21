@@ -1,4 +1,4 @@
-import { LAST_UPDATED, TASKS, type TaskStatus } from "@/data/tasks";
+import { LAST_UPDATED, TASKS, type TaskPriority, type TaskStatus } from "@/data/tasks";
 import { TEAM } from "@/data/team";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { CyberText } from "@/components/CyberText";
@@ -15,6 +15,13 @@ const STATUS_COLOR: Record<TaskStatus, string> = {
   done: "#00F5FF",
 };
 
+const PRIORITY_COLOR: Record<TaskPriority, string> = {
+  P0: "#FF2A4D",
+  P1: "#FFB341",
+  P2: "#67FFB5",
+  P3: "#8A94A7",
+};
+
 export default function TasksPage() {
   const byOwner = TEAM.map((m) => ({
     member: m,
@@ -28,11 +35,13 @@ export default function TasksPage() {
       <header className="flex items-end justify-between gap-4">
         <div className="flex flex-col gap-2">
           <div className="text-[10px] uppercase tracking-[0.3em] text-acid">whiteboard_01</div>
-          <CyberText as="h1" className="text-3xl md:text-4xl">TASKS</CyberText>
+          <CyberText as="h1" className="text-3xl md:text-4xl" glitch>
+            PHASE B WHITEBOARD
+          </CyberText>
           <p className="max-w-3xl text-sm leading-relaxed text-dust">
-            Who owns what, right now. Static board in Phase A — edit{" "}
-            <code className="text-cyan">web/src/data/tasks.ts</code>. Phase B syncs with GitHub
-            Issues or a Supabase table.
+            Who owns what, right now. This board is static data shaped for a future draggable
+            GitHub Issues or Supabase sync: priority, estimate, dependencies, acceptance criteria,
+            and owner tags are all in <code className="text-cyan">web/src/data/tasks.ts</code>.
           </p>
         </div>
         <div className="text-[10px] uppercase tracking-[0.25em] text-dust">
@@ -44,7 +53,7 @@ export default function TasksPage() {
         {byOwner.map(({ member, tasks }) => (
           <Panel
             key={member.slug}
-            tone={member.kind === "founder" ? "acid" : "cyan"}
+            tone={member.kind === "founder" ? "acid" : member.kind === "openclaw" ? "violet" : "cyan"}
           >
             <PanelHeader
               eyebrow={member.role}
@@ -60,16 +69,60 @@ export default function TasksPage() {
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1 text-[13px] text-chrome">{t.title}</div>
-                      <span
-                        className="shrink-0 rounded-sm border px-1.5 py-0.5 text-[9px] uppercase tracking-[0.25em]"
-                        style={{ borderColor: `${color}55`, color }}
-                      >
-                        {t.status}
-                      </span>
+                      <div className="flex shrink-0 flex-col items-end gap-1">
+                        <span
+                          className="rounded-sm border px-1.5 py-0.5 text-[9px] uppercase tracking-[0.25em]"
+                          style={{ borderColor: `${PRIORITY_COLOR[t.priority]}55`, color: PRIORITY_COLOR[t.priority] }}
+                        >
+                          {t.priority}
+                        </span>
+                        <span
+                          className="rounded-sm border px-1.5 py-0.5 text-[9px] uppercase tracking-[0.25em]"
+                          style={{ borderColor: `${color}55`, color }}
+                        >
+                          {t.status}
+                        </span>
+                      </div>
                     </div>
                     {t.notes && (
                       <div className="mt-1 text-[11px] leading-relaxed text-dust">
                         {t.notes}
+                      </div>
+                    )}
+                    <div className="mt-2 grid gap-2 text-[10px] leading-relaxed text-dust sm:grid-cols-2">
+                      <div>
+                        <span className="text-dust/60">estimate:</span>{" "}
+                        <span className="text-chrome">{t.estimate}</span>
+                      </div>
+                      {t.dependencies && t.dependencies.length > 0 && (
+                        <div>
+                          <span className="text-dust/60">deps:</span>{" "}
+                          <span className="text-chrome">{t.dependencies.join(", ")}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-2 border-t border-cyan/10 pt-2">
+                      <div className="text-[9px] uppercase tracking-[0.25em] text-cyan/70">
+                        acceptance
+                      </div>
+                      <ul className="mt-1 space-y-1 text-[11px] leading-relaxed text-chrome/80">
+                        {t.acceptanceCriteria.map((item) => (
+                          <li key={item}>
+                            <span className="text-acid">✓</span> {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {t.tags.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {t.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-sm border border-cyan/15 bg-void px-1.5 py-0.5 text-[9px] uppercase tracking-[0.18em] text-dust"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     )}
                     {t.links && t.links.length > 0 && (

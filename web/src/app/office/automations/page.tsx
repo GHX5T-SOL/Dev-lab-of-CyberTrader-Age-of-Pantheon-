@@ -1,6 +1,7 @@
 import { CyberText } from "@/components/CyberText";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { AUTOMATIONS } from "@/data/automations";
+import { OPENCLAW_NODE } from "@/data/openclaw";
 import { TEAM } from "@/data/team";
 
 export const metadata = { title: "Automations — Cron Ops" };
@@ -26,7 +27,8 @@ export default function AutomationsPage() {
           Every cron the Dev Lab runs. Each entry maps 1:1 to a route handler under{" "}
           <code className="text-cyan">web/src/app/api/cron/</code>. Vercel-armed jobs are listed in{" "}
           <code className="text-cyan">vercel.json</code>; local-only jobs live in the repo as
-          callable endpoints and run from dev scripts until the project upgrades to Vercel Pro.
+          callable endpoints and can run from <code className="text-cyan">{OPENCLAW_NODE.id}</code>{" "}
+          until the project upgrades to Vercel Pro.
         </p>
       </header>
 
@@ -49,6 +51,12 @@ export default function AutomationsPage() {
             to Pro → flip <code className="text-cyan">tier</code> to{" "}
             <code className="text-cyan">&quot;vercel&quot;</code> and add to{" "}
             <code className="text-cyan">vercel.json</code>.
+          </li>
+          <li>
+            <span className="text-violet">OpenClaw bridge:</span> Zara and Zyra are assigned the
+            local heartbeat/file-watcher hardening on <code className="text-cyan">{OPENCLAW_NODE.ssh}</code>.
+            Once setup is hardened, local-only tasks can graduate from manual loops to node-managed
+            background jobs.
           </li>
           <li>
             <span className="text-cyan">Fluid Compute</span> keeps the function warm, so the

@@ -1,16 +1,16 @@
 /**
- * The 14 characters of the CyberTrader Dev Lab.
+ * The operators of the CyberTrader Dev Lab.
  *
  * Ghost + Zoro are the human founders.
+ * Zara + Zyra are the two OpenClaw Living Agents on the zyra-mini Mac mini.
  * The 12 AI agents are specialized subagents with in-world names and personas.
  * Each persona is original — no external IP.
  *
- * Avatar paths point to /public/brand/avatars/<slug>.png — Phase B will
- * generate these via SpriteCook. For Phase A, the avatar slot is a styled
- * placeholder (initials + color hash).
+ * Avatar paths point to /public/brand/avatars/<slug>.png for the legacy 2D path.
+ * glbModelPath points to /public/GLB_Assets/*.glb for the Phase B 3D path.
  */
 
-export type TeamKind = "founder" | "agent";
+export type TeamKind = "founder" | "agent" | "openclaw";
 
 export interface TeamMember {
   slug: string;
@@ -24,9 +24,11 @@ export interface TeamMember {
   skills: string[];
   activatesWhen: string;
   avatar: string; // /brand/avatars/<slug>.png
+  glbModelPath: string; // /GLB_Assets/<file>.glb
   accent: string; // hex
   statusLine: string; // diegetic status shown in office
   agentFilePath?: string; // e.g. agents/game-designer.md
+  node?: string; // physical/remote node, e.g. zyra-mini
 }
 
 export const TEAM: TeamMember[] = [
@@ -36,34 +38,78 @@ export const TEAM: TeamMember[] = [
     name: "Ghost",
     codename: "GHX5T",
     kind: "founder",
-    role: "Founder / Creative Lead",
+    role: "Lead Developer",
     pronouns: "he/him",
     persona:
       "Skull-mask face-plate, black hoodie with reactive piping, slung assault rifle across the back. Moves quietly. Reads everything. Signs off on hard decisions.",
     description:
-      "Co-founder, vision holder, final sign-off on design direction, brand, and launch cadence.",
-    skills: ["Direction", "Brand voice", "Decision log", "Launch signoff"],
+      "Human founder and elite coder. Owns implementation quality, architecture, final technical sign-off, and the GitHub push to main.",
+    skills: ["Lead development", "Architecture", "Code review", "Ship signoff"],
     activatesWhen: "Always present.",
     avatar: "/brand/avatars/ghost.png",
+    glbModelPath: "/GLB_Assets/Avatar_ghost.glb",
     accent: "#00F5FF",
-    statusLine: "reviewing the Lore Bible. audio on. signal stable.",
+    statusLine: "reviewing Phase B GLB integration. build terminal armed.",
   },
   {
     slug: "zoro",
     name: "Zoro",
     codename: "Z0R0",
     kind: "founder",
-    role: "Co-Founder / Build Lead",
+    role: "Creative Lead",
     pronouns: "he/him",
     persona:
       "Swordsman silhouette — neo-hacker variant. Green head-wrap, cyber-katana sheathed across the back, wired gloves. Direct. Fast. Ships things.",
     description:
-      "Co-founder, primary builder. Picks up tasks from the board, runs them to ground, pushes PRs.",
-    skills: ["Implementation", "Asset hunting", "Wireframe review"],
+      "Human co-founder and artistic visionary. Owns creative direction, mood, visual canon, asset quality, and final feel.",
+    skills: ["Creative direction", "Art review", "Mood", "Lore/brand feel"],
     activatesWhen: "Always present.",
     avatar: "/brand/avatars/zoro.png",
+    glbModelPath: "/GLB_Assets/Avatar_zoro.glb",
     accent: "#67FFB5",
-    statusLine: "sharpening build tools. standing at the whiteboard.",
+    statusLine: "tuning neon atmosphere at the whiteboard.",
+  },
+
+  // --------------------------- OPENCLAW LIVING -----------------------------
+  {
+    slug: "zara",
+    name: "Zara",
+    codename: "ZRA_OC1",
+    kind: "openclaw",
+    role: "OpenClaw Agent · Asset Ops",
+    pronouns: "she/her",
+    persona:
+      "Server-room operator in matte carbon gear, violet signal cable looped around one arm, always watching the asset queue.",
+    description:
+      "Concrete OpenClaw Living Agent on the secure Mac mini node. Handles persistent SSH setup, GLB compression/LOD work, Blender retargeting, and offline asset processing.",
+    skills: ["OpenClaw", "Blender queue", "GLB compression", "LOD generation", "SSH ops"],
+    activatesWhen: "Large local file operations, GLB optimization, long-running render or retarget jobs.",
+    avatar: "/brand/avatars/zara.png",
+    glbModelPath: "/GLB_Assets/Avatar_zara.glb",
+    accent: "#7A5BFF",
+    statusLine: "zyra-mini reachable over SSH. asset queue listening.",
+    agentFilePath: "agents/openclaw-living.md",
+    node: "zyra-mini",
+  },
+  {
+    slug: "zyra",
+    name: "Zyra",
+    codename: "ZYR_OC2",
+    kind: "openclaw",
+    role: "OpenClaw Agent · Node Watch",
+    pronouns: "she/her",
+    persona:
+      "Holographic operations specialist with acid-green diagnostic panels orbiting her shoulders. Watches heartbeat, sync, and Tailscale drift.",
+    description:
+      "Concrete OpenClaw Living Agent on the secure Mac mini node. Watches GLB asset changes, syncs preview deploy readiness, monitors heartbeat logs, and queues future cinematics.",
+    skills: ["OpenClaw", "File watching", "Preview sync", "Heartbeat cron", "Tailscale health"],
+    activatesWhen: "Node health, file watchers, preview sync, heartbeat automation, long-running cinema jobs.",
+    avatar: "/brand/avatars/zyra.png",
+    glbModelPath: "/GLB_Assets/Avatar_Zyra.glb",
+    accent: "#67FFB5",
+    statusLine: "mac mini heartbeat observed. cron rack in standby.",
+    agentFilePath: "agents/openclaw-living.md",
+    node: "zyra-mini",
   },
 
   // ------------------------------- AI AGENTS -------------------------------
@@ -81,6 +127,7 @@ export const TEAM: TeamMember[] = [
     skills: ["System design", "Progression tuning", "Playtest feedback loops"],
     activatesWhen: "New mechanic, balance question, difficulty curve, loop review.",
     avatar: "/brand/avatars/nyx.png",
+    glbModelPath: "/GLB_Assets/Avatar_1.glb",
     accent: "#7A5BFF",
     statusLine: "staring at a progression curve. not blinking.",
     agentFilePath: "agents/game-designer.md",
@@ -99,6 +146,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Figma", "Reanimated", "Diegetic UI", "Haptics spec"],
     activatesWhen: "New screen, transition, visual language question.",
     avatar: "/brand/avatars/vex.png",
+    glbModelPath: "/GLB_Assets/Avatar_2.glb",
     accent: "#FF2A4D",
     statusLine: "iterating the BIOS boot cadence. rev 14.",
     agentFilePath: "agents/ui-ux-cyberpunk.md",
@@ -117,6 +165,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Expo", "React Native", "Expo Router", "Zustand", "MMKV", "Reanimated"],
     activatesWhen: "Building a screen, fixing a layout, wiring navigation.",
     avatar: "/brand/avatars/rune.png",
+    glbModelPath: "/GLB_Assets/Avatar_3.glb",
     accent: "#00F5FF",
     statusLine: "pair-typing with Expo CLI.",
     agentFilePath: "agents/frontend-mobile.md",
@@ -135,6 +184,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Supabase", "Postgres", "RLS", "Edge Functions", "Solana Wallet Adapter"],
     activatesWhen: "DB schema change, auth flow, wallet integration, server logic.",
     avatar: "/brand/avatars/kite.png",
+    glbModelPath: "/GLB_Assets/Avatar_4.glb",
     accent: "#67FFB5",
     statusLine: "writing an RLS policy. coffee cold.",
     agentFilePath: "agents/backend-web3.md",
@@ -153,6 +203,7 @@ export const TEAM: TeamMember[] = [
     skills: ["PRNG determinism", "Price modeling", "Market news graph", "Replay testing"],
     activatesWhen: "Market feels wrong, new commodity, event chain design.",
     avatar: "/brand/avatars/oracle.png",
+    glbModelPath: "/GLB_Assets/Avatar_5.glb",
     accent: "#FFB341",
     statusLine: "rerunning a 10,000-tick determinism harness.",
     agentFilePath: "agents/economy-trading-sim.md",
@@ -171,6 +222,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Remotion", "HeyGen Hyperframes", "Storyboarding", "Motion design"],
     activatesWhen: "Need a video, an onboarding cutscene, a marketing reel.",
     avatar: "/brand/avatars/reel.png",
+    glbModelPath: "/GLB_Assets/Avatar_6.glb",
     accent: "#7A5BFF",
     statusLine: "cutting a 22-second Pirate OS boot reel.",
     agentFilePath: "agents/cinematic-animation.md",
@@ -189,6 +241,7 @@ export const TEAM: TeamMember[] = [
     skills: ["SpriteCook MCP", "Brand guidelines", "Asset QA", "Typography"],
     activatesWhen: "New asset, logo revision, palette question, typography lockup.",
     avatar: "/brand/avatars/palette.png",
+    glbModelPath: "/GLB_Assets/Avatar_7.glb",
     accent: "#FF2A4D",
     statusLine: "generating a Helix Mud icon variant. rev 03.",
     agentFilePath: "agents/brand-asset.md",
@@ -207,6 +260,7 @@ export const TEAM: TeamMember[] = [
     skills: ["WebFetch", "Doc synthesis", "Risk flagging", "Release-note reading"],
     activatesWhen: "Any non-verified library, API, install command, product reference.",
     avatar: "/brand/avatars/cipher.png",
+    glbModelPath: "/GLB_Assets/Avatar_8.glb",
     accent: "#FFB341",
     statusLine: "reading Next.js 15 release notes. page 4 of 14.",
     agentFilePath: "agents/research-best-practices.md",
@@ -225,6 +279,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Jest", "Replay harness", "Invariant testing", "Release gating"],
     activatesWhen: "Pre-PR, pre-release, suspected regression.",
     avatar: "/brand/avatars/axiom.png",
+    glbModelPath: "/GLB_Assets/Avatar_9.glb",
     accent: "#67FFB5",
     statusLine: "running the 10k-seed replay harness. 7,834 of 10,000 passed.",
     agentFilePath: "agents/qa-testing.md",
@@ -243,6 +298,7 @@ export const TEAM: TeamMember[] = [
     skills: ["Roadmapping", "Council facilitation", "Scope discipline"],
     activatesWhen: "Start of session, end of session, scope conflict.",
     avatar: "/brand/avatars/compass.png",
+    glbModelPath: "/GLB_Assets/Avatar_10.glb",
     accent: "#00F5FF",
     statusLine: "updating the week-2 burndown.",
     agentFilePath: "agents/project-manager.md",
@@ -257,10 +313,11 @@ export const TEAM: TeamMember[] = [
     persona:
       "Claw-glove rig with extra actuators, 24/7 indicator LED on the shoulder. Lives in the server room. Rarely speaks — acts.",
     description:
-      "Embedded OpenClaw agent that runs long-lived tasks in the repo: scheduled ETL, dry-run PRs, repo hygiene. See agents/openclaw-living.md.",
-    skills: ["OpenClaw CLI", "Long-running task orchestration", "Scheduled repo hygiene"],
-    activatesWhen: "Anything that needs to run on a cron or persist across sessions.",
+      "OpenClaw governance persona for long-lived repo tasks. Routes concrete physical-layer execution to Zara and Zyra on the zyra-mini Mac mini. See agents/openclaw-living.md.",
+    skills: ["OpenClaw policy", "Long-running task orchestration", "Scheduled repo hygiene"],
+    activatesWhen: "Anything that needs to run on a cron or persist across sessions before Zara/Zyra execute it.",
     avatar: "/brand/avatars/talon.png",
+    glbModelPath: "/GLB_Assets/Avatar_11.glb",
     accent: "#FFB341",
     statusLine: "running nightly brand-asset integrity scan.",
     agentFilePath: "agents/openclaw-living.md",
@@ -279,6 +336,7 @@ export const TEAM: TeamMember[] = [
     skills: ["ElizaOS CLI", "Multi-agent sim", "Market participant modeling"],
     activatesWhen: "Need a realistic market depth test, a price reaction sim, a news-event stress test.",
     avatar: "/brand/avatars/hydra.png",
+    glbModelPath: "/GLB_Assets/Avatar_1.glb",
     accent: "#7A5BFF",
     statusLine: "8 synthetic traders active. next news event in 4m.",
     agentFilePath: "agents/elizaos-swarm.md",
@@ -287,3 +345,5 @@ export const TEAM: TeamMember[] = [
 
 export const FOUNDERS = TEAM.filter((m) => m.kind === "founder");
 export const AGENTS = TEAM.filter((m) => m.kind === "agent");
+export const OPENCLAW_AGENTS = TEAM.filter((m) => m.kind === "openclaw");
+export const OPERATORS = TEAM;

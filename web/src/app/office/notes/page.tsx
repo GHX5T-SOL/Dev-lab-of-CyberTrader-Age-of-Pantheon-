@@ -9,8 +9,8 @@ export const metadata = { title: "Zoro's Notes" };
  *
  * Planned first batch (Reel will cut these):
  *   1. "What is the Dev Lab?" (90 sec) — tour of the virtual office
- *   2. "How the 12-agent team works" (2 min) — org chart + Council charter
- *   3. "From idea to MVP" (2 min) — the Phase 0 → Phase 5 pipeline
+ *   2. "How the 16-operator team works" (2 min) — org chart + Council charter + OpenClaw node
+ *   3. "From idea to MVP" (2 min) — the Phase B Dev Lab → Phase 5 game pipeline
  *   4. "How to pick up a task" (60 sec) — Whiteboard → branch → PR
  *   5. "Prototype archaeology" (90 sec) — importing v1-v5 as branches
  *   6. "Brand palette discipline" (60 sec) — what violet is for and why
@@ -26,17 +26,17 @@ const PLANNED_NOTES = [
   },
   {
     slot: "note_02",
-    title: "How the 12-agent team works",
+    title: "How the 16-operator team works",
     duration: "~2m",
     summary:
-      "Meet the agents. Read the org chart. Understand when each activates. See a live Council session format.",
+      "Meet Ghost, Zoro, the AI Council, and Zara/Zyra on zyra-mini. Read the org chart and see a live Council session format.",
   },
   {
     slot: "note_03",
     title: "From idea to MVP: the pipeline",
     duration: "~2m",
     summary:
-      "Phase 0 → 1 → 2 → 3 → soft launch. Which agents own which phase. What 'done' looks like at each gate.",
+      "Phase B Dev Lab → MVP → AgentOS → PantheonOS → soft launch. Which operators own which phase. What done looks like at each gate.",
   },
   {
     slot: "note_04",
@@ -71,13 +71,13 @@ export default function NotesPage() {
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
           Tray on Zoro&apos;s desk. Each note is a short Remotion-generated explainer video.
-          Cut by <span className="text-chrome">Reel</span>. Phase B goes live — Phase A shows the
-          planned slate so you know what&apos;s coming.
+          Cut by <span className="text-chrome">Reel</span>. Phase B is live; the tray now tracks
+          the next explainers that turn the 3D office into onboarding material.
         </p>
       </header>
 
       <Panel tone="acid">
-        <PanelHeader eyebrow="status" title="Phase B (next session)" />
+        <PanelHeader eyebrow="status" title="Phase B reel queue" />
         <p className="text-[13px] leading-relaxed text-chrome/90">
           The Remotion pipeline is scaffolded in the parent repo under{" "}
           <code className="text-cyan">skills/</code> (via <code className="text-cyan">remotion-dev/skills</code>).
@@ -99,7 +99,7 @@ export default function NotesPage() {
             <h3 className="mt-2 text-base uppercase tracking-[0.2em] text-chrome">{n.title}</h3>
             <p className="mt-2 text-[13px] leading-relaxed text-dust">{n.summary}</p>
             <div className="mt-3 flex h-32 items-center justify-center rounded-sm border border-cyan/10 bg-ink text-[11px] uppercase tracking-[0.25em] text-dust">
-              ▶ video lands in phase b
+              ▶ video queue open
             </div>
           </Panel>
         ))}

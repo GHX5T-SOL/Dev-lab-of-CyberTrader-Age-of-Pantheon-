@@ -17,7 +17,7 @@ export default function RoadmapPage() {
         <div className="text-[10px] uppercase tracking-[0.3em] text-cyan">calendar_01</div>
         <CyberText as="h1" className="text-3xl md:text-4xl">ROADMAP</CyberText>
         <p className="max-w-3xl text-sm text-dust">
-          Six phases, thirteen weeks. Dates are guidance — milestones are the truth. Source canon:{" "}
+          Studio milestones plus the game build phases. Dates are guidance — milestones are the truth. Source canon:{" "}
           <code className="text-cyan">docs/Roadmap.md</code>.
         </p>
       </header>

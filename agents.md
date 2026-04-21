@@ -1,6 +1,6 @@
 # agents.md — The AI Team of CyberTrader: Age of Pantheon
 
-> Master index of the 12-member specialized AI team that builds this game alongside Ghost and Zoro. Individual agent profiles live in [`/agents/`](agents/).
+> Master index of the 12-member specialized AI team that builds this game alongside Ghost and Zoro, plus the two concrete OpenClaw Living Agents running on the secure Mac mini node. Individual agent profiles live in [`/agents/`](agents/).
 
 ## How to read this file
 
@@ -76,16 +76,34 @@ The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rot
 - **Hand-off to**: Ghost + Zoro for final calls.
 
 ### 11. OpenClaw Living Agent → [`agents/openclaw-living.md`](agents/openclaw-living.md)
-- **Role**: repo-embedded executor for long-running, real-world tasks (file ops, batch renames, cron jobs, local research).
+- **Role**: governance/coordination persona for repo-embedded executors and long-running, real-world tasks (file ops, batch renames, cron jobs, local research).
 - **Activates when**: a task needs to run unattended or outside a single Claude conversation.
 - **Tools/skills**: OpenClaw skills, local shell, file system.
-- **Hand-off to**: PM, Backend/Web3.
+- **Hand-off to**: PM, Backend/Web3, Zara, Zyra.
 
 ### 12. ElizaOS Swarm Coordinator → [`agents/elizaos-swarm.md`](agents/elizaos-swarm.md)
 - **Role**: orchestrates the ElizaOS multi-agent swarm that simulates S1LKROAD 4.0 market participants (whales, HFT bots, faction traders, rumor-mill agents).
 - **Activates when**: designing/tuning the market, running live-like simulations, stress-testing event impact.
 - **Tools/skills**: ElizaOS plugins (Solana, trading sim, multi-agent), `deep-research`, `metrics-definition`.
 - **Hand-off to**: Economy & Trading Sim, Backend.
+
+---
+
+## Physical OpenClaw operators
+
+These are not extra Council votes by default. They are concrete physical-layer agents surfaced in the Dev Lab and task board.
+
+### Zara — OpenClaw Asset Ops
+- **Node**: `ssh zyra-mini` over Tailscale (`Bruces-Mac-mini.local`)
+- **Role**: persistent local executor for GLB compression, LOD generation, Blender retargeting, large file cleanup, and render queue prep.
+- **Activates when**: an asset or 3D job is too heavy, too long-running, or too local for a chat session.
+- **Hand-off to**: Talon for governance, Palette/Reel for asset review, Ghost for final approval.
+
+### Zyra — OpenClaw Node Watch
+- **Node**: `ssh zyra-mini` over Tailscale (`Bruces-Mac-mini.local`)
+- **Role**: heartbeat watcher, GLB_Assets file watcher, preview-sync monitor, Tailscale/SSH health observer, long-running cinema queue monitor.
+- **Activates when**: the lab needs autonomous health checks, preview readiness, or background queue status.
+- **Hand-off to**: Talon for automation policy, Axiom for QA alerts, Compass for status updates.
 
 ---
 

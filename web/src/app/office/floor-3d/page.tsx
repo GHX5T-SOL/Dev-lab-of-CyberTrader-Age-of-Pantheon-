@@ -1,6 +1,8 @@
 import { CyberText } from "@/components/CyberText";
 import { Panel, PanelHeader } from "@/components/Panel";
 import Floor3DMount from "./Floor3DMount";
+import { CHOSEN_OFFICE_FLOOR } from "@/data/glbAssets";
+import { OPENCLAW_NODE } from "@/data/openclaw";
 import { PERFORMERS } from "@/data/performers";
 import { TEAM } from "@/data/team";
 
@@ -9,7 +11,7 @@ export const metadata = { title: "Floor 3D — The Immersive Office" };
 export default function Floor3DPage() {
   const total = PERFORMERS.length;
   const withSample = PERFORMERS.filter((p) => p.voiceSampleUrl).length;
-  const withRpm = PERFORMERS.filter((p) => p.rpmAvatarUrl).length;
+  const withGlb = PERFORMERS.filter((p) => p.glbModelPath).length;
 
   return (
     <div className="flex flex-col gap-8">
@@ -21,10 +23,10 @@ export default function Floor3DPage() {
           THE IMMERSIVE OFFICE
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          The Dev Lab as a walkable 3D scene. Every operator anchored to their station — drag to
-          orbit, scroll to zoom, click any character to focus the camera and hear their signature
-          line in their own voice. Pre-rendered ElevenLabs samples for the founders and key
-          orchestrators; live TTS for everyone else on demand.
+          The Dev Lab as a walkable 3D scene. Every operator is now bound to a local GLB rig and
+          anchored to their station — drag to orbit, scroll to zoom, click any character to focus
+          the camera and hear their signature line. Zara and Zyra stand at the OpenClaw server
+          corner on <code className="text-cyan">{OPENCLAW_NODE.id}</code>.
         </p>
       </header>
 
@@ -34,7 +36,7 @@ export default function Floor3DPage() {
         <Stat
           label="operators on floor"
           value={total.toString()}
-          sublabel="14 residents · 3D stand-ins"
+          sublabel="Ghost + Zoro + 12 AI + Zara/Zyra"
           accent="#00F5FF"
         />
         <Stat
@@ -44,9 +46,9 @@ export default function Floor3DPage() {
           accent="#67FFB5"
         />
         <Stat
-          label="RPM rigs bound"
-          value={`${withRpm} / ${total}`}
-          sublabel="Ready Player Me · .glb"
+          label="local GLB rigs"
+          value={`${withGlb} / ${total}`}
+          sublabel="/public/GLB_Assets"
           accent="#7A5BFF"
         />
       </div>
@@ -91,33 +93,34 @@ export default function Floor3DPage() {
         <p className="mt-2 text-[12px] leading-relaxed text-dust">
           Swap any voice_id in{" "}
           <code className="text-cyan">web/src/data/performers.ts</code> for a cloned voice
-          asset from your ElevenLabs account. The stand-in meshes get replaced with Ready
-          Player Me .glb rigs by setting <code className="text-cyan">rpmAvatarUrl</code> on
-          the same record.
+          asset from your ElevenLabs account. Avatar meshes are local files; update{" "}
+          <code className="text-cyan">glbModelPath</code>, <code className="text-cyan">behavior</code>,
+          and <code className="text-cyan">desk3D</code> on the same performer record to move or
+          replace a rig.
         </p>
       </Panel>
 
       <Panel tone="violet">
-        <PanelHeader eyebrow="phase B roadmap" title="What lands on this stage next" />
+        <PanelHeader eyebrow="phase b live" title="What is running on this stage" />
         <ul className="space-y-2 text-[13px] leading-relaxed text-chrome/90">
           <li>
-            <span className="text-cyan">Ready Player Me rigs</span> — swap stand-in capsules
-            for 14 hand-tuned .glb avatars with idle animation library.
+            <span className="text-cyan">Chosen floor shell</span> —{" "}
+            <code className="text-cyan">{CHOSEN_OFFICE_FLOOR.file}</code> is the default base
+            because it is the lighter office export and leaves budget for avatars, Bloom, and props.
           </li>
           <li>
-            <span className="text-cyan">Lip-sync with viseme data</span> — HeyGen Hyperframes
-            emits phoneme tracks; morph targets on the RPM heads drive them in real time as
-            the voice plays.
+            <span className="text-cyan">Dynamic operators</span> — procedural idle, typing,
+            whiteboard, walk, council, and node-watch loops keep the room moving while retargeted
+            mocap clips are prepared.
           </li>
           <li>
-            <span className="text-cyan">Interactive workstations</span> — the whiteboard
-            shows live task counts from <code className="text-cyan">/office/tasks</code>,
-            the monitor wall iframes the wireframes page into six screens.
+            <span className="text-cyan">Interactive workstations</span> — click any operator to
+            focus, then use the voice overlay or jump to the mapped workstation.
           </li>
           <li>
-            <span className="text-cyan">Ghost walk-through</span> — a guided camera path that
-            moves desk-to-desk, each operator delivers their signature line. &ldquo;Press
-            play on the tour&rdquo; mode.
+            <span className="text-cyan">OpenClaw node</span> — Zara and Zyra are stationed by the
+            server rack with <code className="text-cyan">{OPENCLAW_NODE.ssh}</code> documented as
+            the secure physical-layer command.
           </li>
         </ul>
       </Panel>

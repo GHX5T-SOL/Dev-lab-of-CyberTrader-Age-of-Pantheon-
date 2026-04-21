@@ -1,7 +1,7 @@
 export const SITE = {
   name: "CyberTrader Dev Lab",
   tagline: "Virtual office. Neon Void City. Year 2077.",
-  phase: process.env.NEXT_PUBLIC_PHASE ?? "Phase 0 — Foundation",
+  phase: process.env.NEXT_PUBLIC_PHASE ?? "Phase B — Live 3D Dev Lab",
   repo: "https://github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-",
 } as const;
 

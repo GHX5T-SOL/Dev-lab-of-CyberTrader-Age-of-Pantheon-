@@ -88,7 +88,7 @@ export function SpendTicker() {
           err ? "bg-heat" : "animate-pulse bg-acid",
         )}
       />
-      <span className="hidden text-dust md:inline">credits</span>
+      <span className="hidden text-dust md:inline">credits meter</span>
       <span className="font-semibold tracking-[0.15em] text-chrome">
         {loading
           ? "----"

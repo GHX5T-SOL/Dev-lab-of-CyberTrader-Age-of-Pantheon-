@@ -5,6 +5,7 @@ import { STATUS } from "@/data/status";
 import { TASKS } from "@/data/tasks";
 import { TEAM } from "@/data/team";
 import { AUTOMATIONS } from "@/data/automations";
+import { OPENCLAW_AGENT_STATUS, OPENCLAW_NODE } from "@/data/openclaw";
 import { TOOLKIT, CATEGORY_LABELS, type ToolkitCategory } from "@/data/toolkit";
 
 export const metadata = { title: "Office Floor — Dev Lab" };
@@ -13,6 +14,8 @@ export default function OfficePage() {
   const ghostTask = TASKS.find((t) => t.owner === "ghost" && t.status !== "done");
   const zoroTask = TASKS.find((t) => t.owner === "zoro" && t.status !== "done");
   const agentsPresent = TEAM.filter((m) => m.kind === "agent").length;
+  const operatorsPresent = TEAM.length;
+  const openClawPresent = TEAM.filter((m) => m.kind === "openclaw").length;
   const activeCrons = AUTOMATIONS.filter((a) => a.tier === "vercel").length;
   const toolkitByCat = TOOLKIT.reduce<Record<ToolkitCategory, typeof TOOLKIT>>(
     (acc, t) => {
@@ -28,9 +31,13 @@ export default function OfficePage() {
       <section className="flex flex-col gap-4">
         <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-cyan">
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-acid" />
-          <span>signal stable · {agentsPresent} agents on floor</span>
+          <span>phase b live · {operatorsPresent} operators on floor</span>
           <span className="text-dust">·</span>
-          <span className="text-dust">{activeCrons} crons armed on vercel</span>
+          <span className="text-dust">{agentsPresent} ai council agents</span>
+          <span className="text-dust">·</span>
+          <span className="text-dust">{openClawPresent} openclaw agents on {OPENCLAW_NODE.id}</span>
+          <span className="text-dust">·</span>
+          <span className="text-dust">{activeCrons} crons armed</span>
           <span className="text-dust">·</span>
           <span className="text-dust">penthouse, s1lkroad tower, sector 7</span>
         </div>
@@ -41,7 +48,7 @@ export default function OfficePage() {
           Welcome to the Dev Lab. The office overlooks Neon Void City. The team is working — click a
           station to zoom in. Every station maps to a section of the project: calendar (roadmap),
           whiteboard (tasks), team wall, asset vault, monitor wall of wireframes, lore library,
-          status terminal, and Zoro&apos;s desk tray.
+          status terminal, OpenClaw node, and Zoro&apos;s creative desk tray.
         </p>
       </section>
 
@@ -59,6 +66,37 @@ export default function OfficePage() {
           task={zoroTask?.title ?? "No open task."}
           note={zoroTask?.notes}
         />
+      </section>
+
+      <section
+        className="grid gap-3 rounded-sm border border-violet/30 bg-violet/5 p-4 md:grid-cols-[1.2fr_1fr]"
+        style={{ boxShadow: "0 0 35px rgba(122,91,255,0.12) inset" }}
+      >
+        <div>
+          <div className="text-[10px] uppercase tracking-[0.3em] text-violet">
+            openclaw living agents
+          </div>
+          <h2 className="mt-1 text-lg tracking-wide text-chrome">
+            Zara & Zyra on secure Mac mini node
+          </h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-dust">
+            <code className="text-cyan">{OPENCLAW_NODE.ssh}</code> reaches{" "}
+            <span className="text-chrome">{OPENCLAW_NODE.host}</span>. The node is the physical
+            layer for long-running file ops, GLB compression, Blender retargeting, render queues,
+            and heartbeat checks.
+          </p>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {OPENCLAW_AGENT_STATUS.map((agent) => (
+            <div key={agent.slug} className="rounded-sm border border-violet/25 bg-void/45 p-3">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-violet">
+                {agent.name} · {agent.state}
+              </div>
+              <div className="mt-1 text-[12px] text-chrome">{agent.role}</div>
+              <div className="mt-1 text-[11px] leading-relaxed text-dust">{agent.heartbeat}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* The wall-mounted spend monitor — Ghost + Zoro watch this live */}
@@ -102,7 +140,7 @@ export default function OfficePage() {
             icon="◷"
             tone="cyan"
             occupants={["Compass"]}
-            preview="Six phases pinned to the wall. Current: Phase 0. Next milestone on the top-right sticky note."
+            preview="Six phases pinned to the wall. Current: Phase B live inside the Dev Lab, while game foundation work continues toward MVP."
           />
           <Workstation
             href="/office/tasks"
@@ -116,11 +154,11 @@ export default function OfficePage() {
           <Workstation
             href="/office/team"
             title="Team Wall"
-            subtitle="14 operators"
+            subtitle="16 operators"
             icon="◉"
             tone="cyan"
             occupants={["all"]}
-            preview="Ghost + Zoro + 12 AI agents. Each profile card, each persona, each spec file."
+            preview="Ghost Lead Developer, Zoro Creative Lead, 12 AI agents, plus Zara/Zyra on the OpenClaw node."
           />
           <Workstation
             href="/office/bible"
@@ -182,8 +220,8 @@ export default function OfficePage() {
             subtitle="6 scheduled jobs"
             icon="⟳"
             tone="cyan"
-            occupants={["Talon"]}
-            preview="Every automation armed. Phase A heartbeats + Phase B Council hooks live."
+            occupants={["Talon", "Zyra"]}
+            preview="Vercel crons, local loops, and zyra-mini heartbeat tasks. Talon owns governance; Zyra watches the node."
           />
           <Workstation
             href="/office/spend"
@@ -197,11 +235,11 @@ export default function OfficePage() {
           <Workstation
             href="/office/avatars"
             title="Avatar Lab"
-            subtitle="SpriteCook + RPM rigs"
+            subtitle="local GLB rigs"
             icon="☊"
             tone="violet"
-            occupants={["Palette", "Reel"]}
-            preview="14 character rigs. Generate via SpriteCook MCP — Phase B binds them to an R3F scene."
+            occupants={["Palette", "Zara", "Zyra"]}
+            preview="16 live GLB avatars rendered in cards. SpriteCook prompt deck stays archived for 2D art."
           />
           <Workstation
             href="/office/floor-3d"
@@ -210,7 +248,7 @@ export default function OfficePage() {
             icon="◬"
             tone="acid"
             occupants={["all"]}
-            preview="Walkable 3D scene with 14 operators. Click any character, hear their voice in real time."
+            preview="Walkable 3D office with local GLB floor, props, 16 moving operators, and click-to-focus voice cards."
           />
           <Workstation
             href="/office/reel"
@@ -253,9 +291,10 @@ export default function OfficePage() {
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
           Keys + licenses the team has and defaults to. Voice → ElevenLabs. Talking avatars →
-          HeyGen + Hyperframes. 2D portraits → SpriteCook. 3D rigs → Ready Player Me. Video →
-          Remotion. Design → Canva + Claude Design. Every tool here is wired; reach for these
-          before suggesting third-party alternatives.
+          HeyGen + Hyperframes. 2D portraits → SpriteCook. 3D rigs → local GLB assets + R3F.
+          Video → Remotion. Design → Canva + Claude Design. OpenClaw physical ops → Zara/Zyra on
+          <code className="text-cyan"> {OPENCLAW_NODE.id}</code>. Every tool here is wired; reach
+          for these before suggesting third-party alternatives.
         </p>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {(Object.keys(toolkitByCat) as ToolkitCategory[]).map((cat) => {
@@ -301,14 +340,13 @@ export default function OfficePage() {
           This is the <span className="text-chrome">Dev Lab</span>, our internal studio — not the
           game itself. The game is the Expo + React Native build that lives in{" "}
           <code className="text-cyan">/src</code> of the parent repo and will ship to iOS, Android,
-          and web. The Dev Lab exists so Ghost, Zoro, and the 12-agent AI team can see the whole
-          project at a glance and make progress every session.
+          and web. The Dev Lab exists so Ghost, Zoro, the 12-agent AI team, and the OpenClaw
+          operators can see the whole project at a glance.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-dust">
-          Current session output (Phase A): this site exists, gates behind a password, renders all
-          project canon, and hosts the hourly cron stub for autonomous AI team ticks. Phase B
-          upgrades to a real 3D R3F office with SpriteCook-rendered characters and Remotion
-          explainer videos. See{" "}
+          Current session output (Phase B): the Dev Lab has local GLB avatars, a dynamic R3F floor,
+          a massive owner-tagged task board, OpenClaw node surfacing, and a persistent credit meter.
+          See{" "}
           <a className="text-cyan" href="https://github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-/blob/main/PHASE_B.md">
             PHASE_B.md
           </a>{" "}

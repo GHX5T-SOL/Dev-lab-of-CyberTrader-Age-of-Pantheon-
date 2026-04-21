@@ -1,6 +1,7 @@
 import { CyberText } from "@/components/CyberText";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { SpendPanel } from "@/components/SpendPanel";
+import { OPENCLAW_NODE } from "@/data/openclaw";
 import { PROVIDERS } from "@/data/providers";
 
 export const metadata = { title: "Spend · Credit Ops" };
@@ -21,13 +22,38 @@ export default function SpendPage() {
           CREDIT OPS
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          Live panel. Tracks balance + 24h burn across every provider the Dev Lab uses. Poll is
-          every 60s — watch numbers tick down as crons fire and as Ghost + Zoro run prompts.
+          The burn monitor for the Dev Lab. The header meter persists across every workstation,
+          while this wall shows provider health, remaining credits, 24h spend, and escalation
+          paths for Ghost, Zoro, Zara, and Zyra.
         </p>
       </header>
 
+      <section
+        className="grid gap-4 rounded-sm border border-heat/30 bg-heat/5 p-4 md:grid-cols-3"
+        style={{ boxShadow: "0 0 40px rgba(255,42,77,0.12) inset" }}
+      >
+        <CommandCell
+          label="ghost rule"
+          value="No silent burn"
+          copy="Every recurring job needs a named owner, provider category, and rollback path before it graduates from local to Vercel."
+          accent="#00F5FF"
+        />
+        <CommandCell
+          label="zoro rule"
+          value="Spend must show value"
+          copy="Media and avatar credits should produce visible art, lore, reels, or game-facing assets, not invisible experiments."
+          accent="#67FFB5"
+        />
+        <CommandCell
+          label="openclaw node"
+          value={OPENCLAW_NODE.id}
+          copy="Zara and Zyra handle long-running local asset work where remote provider spend is avoidable."
+          accent="#7A5BFF"
+        />
+      </section>
+
       <Panel tone="acid">
-        <PanelHeader eyebrow="the model" title="How this ticker works" />
+        <PanelHeader eyebrow="persistent meter" title="How Credit Ops works" />
         <div className="space-y-2 text-[13px] leading-relaxed text-chrome/90">
           <p>
             The provider registry lives at{" "}
@@ -44,7 +70,8 @@ export default function SpendPage() {
           <p>
             <span className="text-chrome">Providers without a live probe</span> still appear in the
             grid with a direct link to their billing dashboard — click through to read the real
-            balance. We&apos;re adding probes as providers expose them.
+            balance. We&apos;re adding probes as providers expose them, then feeding those readings
+            into the persistent header meter.
           </p>
         </div>
       </Panel>
@@ -90,6 +117,31 @@ function Stat({ label, value, accent }: { label: string; value: string; accent: 
       <div className="mt-1 text-2xl tracking-tight" style={{ color: accent }}>
         {value}
       </div>
+    </div>
+  );
+}
+
+function CommandCell({
+  label,
+  value,
+  copy,
+  accent,
+}: {
+  label: string;
+  value: string;
+  copy: string;
+  accent: string;
+}) {
+  return (
+    <div
+      className="rounded-sm border bg-void/50 p-4"
+      style={{ borderColor: `${accent}55`, boxShadow: `0 0 0 1px ${accent}15 inset` }}
+    >
+      <div className="text-[10px] uppercase tracking-[0.25em] text-dust">{label}</div>
+      <div className="mt-1 text-xl tracking-wide" style={{ color: accent }}>
+        {value}
+      </div>
+      <p className="mt-2 text-[12px] leading-relaxed text-dust">{copy}</p>
     </div>
   );
 }

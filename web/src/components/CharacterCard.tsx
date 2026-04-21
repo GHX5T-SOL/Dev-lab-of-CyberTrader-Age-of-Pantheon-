@@ -11,7 +11,8 @@ export function CharacterCard({ member }: { member: TeamMember }) {
     <div
       className={clsx(
         "panel flex flex-col gap-3 rounded-sm p-5",
-        member.kind === "founder" && "panel-acid"
+        member.kind === "founder" && "panel-acid",
+        member.kind === "openclaw" && "panel-violet"
       )}
     >
       <div className="flex items-start gap-4">
@@ -73,6 +74,18 @@ export function CharacterCard({ member }: { member: TeamMember }) {
           <code className="text-cyan/80">{member.agentFilePath}</code>
         </div>
       )}
+      <div className="grid gap-1 border-t border-cyan/10 pt-2 text-[10px] text-dust">
+        {member.node && (
+          <div>
+            <span className="text-dust/60">node:</span>{" "}
+            <code className="text-acid/90">{member.node}</code>
+          </div>
+        )}
+        <div>
+          <span className="text-dust/60">glb:</span>{" "}
+          <code className="text-cyan/80">{member.glbModelPath}</code>
+        </div>
+      </div>
     </div>
   );
 }

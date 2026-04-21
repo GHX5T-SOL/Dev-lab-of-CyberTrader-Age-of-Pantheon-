@@ -1,6 +1,7 @@
 import { CyberText } from "@/components/CyberText";
 import { Panel, PanelHeader } from "@/components/Panel";
 import { CouncilHall } from "@/components/CouncilHall";
+import { OPENCLAW_NODE } from "@/data/openclaw";
 
 export const metadata = { title: "Council Hall" };
 
@@ -16,7 +17,9 @@ export default function CouncilPage() {
           Round table on floor_02. Compass chairs every session. Three agents rotate in based on
           the topic. Each run writes a structured decision to{" "}
           <code className="text-cyan">memory/council-log.jsonl</code>. Crons fire the standup,
-          nightly audit, and weekly digest on schedule — you can also convene manually.
+          nightly audit, and weekly digest on schedule. Zara and Zyra can be invited from{" "}
+          <code className="text-cyan">{OPENCLAW_NODE.id}</code> when a decision needs physical-node
+          evidence.
         </p>
       </header>
 
@@ -39,6 +42,11 @@ export default function CouncilPage() {
           <li>
             The backing model is Claude (Anthropic). If the key isn&apos;t set, the Council
             gracefully falls back to a stub run so the UI never dead-ends.
+          </li>
+          <li>
+            <span className="text-violet">OpenClaw evidence</span> comes from Zara or Zyra on{" "}
+            <code className="text-cyan">{OPENCLAW_NODE.ssh}</code>. They do not count toward quorum
+            unless Ghost explicitly changes that governance rule.
           </li>
         </ul>
       </Panel>

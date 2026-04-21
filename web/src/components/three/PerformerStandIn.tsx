@@ -14,8 +14,8 @@
  *   - clickable (invokes onSelect callback)
  *   - a Html name tag via drei floats above the head
  *
- * When (in the future) a PerformerSpec gets an rpmAvatarUrl set, swap this
- * out for a GLB loader — but the stand-in already reads the scene well.
+ * Phase B now uses GLBAvatar for local rigs. Keep this component as an
+ * emergency lightweight fallback if a model fails to load.
  */
 import { useRef } from "react";
 import * as THREE from "three";

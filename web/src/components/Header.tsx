@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import { SpendTicker } from "@/components/SpendTicker";
+import { OPENCLAW_NODE } from "@/data/openclaw";
 
 const NAV = [
   { href: "/office", label: "Floor" },
@@ -35,10 +36,10 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-cyan/15 bg-void/70 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
         <Link
           href="/office"
-          className="flex items-center gap-3 text-chrome no-underline hover:text-chrome"
+          className="flex shrink-0 items-center gap-3 text-chrome no-underline hover:text-chrome"
         >
           <span className="flex h-7 w-7 items-center justify-center rounded-sm border border-cyan/50 bg-ink text-[11px] text-cyan">
             CT
@@ -52,7 +53,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden min-w-0 max-w-[52vw] items-center gap-1 overflow-x-auto md:flex">
           {NAV.map((n) => {
             const active = pathname === n.href;
             return (
@@ -60,7 +61,7 @@ export function Header() {
                 key={n.href}
                 href={n.href}
                 className={clsx(
-                  "rounded-sm px-3 py-1 text-[11px] uppercase tracking-[0.2em] transition-colors",
+                  "shrink-0 rounded-sm px-3 py-1 text-[11px] uppercase tracking-[0.2em] transition-colors",
                   active
                     ? "bg-cyan/10 text-cyan"
                     : "text-dust hover:bg-ink hover:text-chrome"
@@ -72,7 +73,16 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
+          <Link
+            href="/office/team"
+            aria-label="Open OpenClaw node status"
+            className="hidden shrink-0 items-center gap-2 rounded-sm border border-violet/35 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-violet no-underline hover:bg-violet/10 2xl:flex"
+          >
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-violet" />
+            <span>{OPENCLAW_NODE.id}</span>
+            <span className="text-dust">2 live</span>
+          </Link>
           <SpendTicker />
           <button
             onClick={logout}

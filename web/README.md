@@ -1,6 +1,6 @@
 # CyberTrader Dev Lab — Virtual Office
 
-> This is **not** the CyberTrader game. This is our **internal studio workspace** — a virtual office where Ghost, Zoro, and the 12-agent AI team coordinate the build of the actual mobile game.
+> This is **not** the CyberTrader game. This is our **internal studio workspace** — a virtual office where Ghost, Zoro, the 12-agent AI Council roster, and the Zara/Zyra OpenClaw operators coordinate the build of the actual mobile game.
 
 ## What's here
 
@@ -8,27 +8,32 @@ A Next.js 15 site, password-gated (password: `2010` by default), deployable to V
 
 - **Roadmap** — phase cadence pulled from `../docs/Roadmap.md`
 - **Game Bible** — full lore from `../docs/Lore-Bible.md`
-- **Team** — all 14 characters (Ghost, Zoro, + 12 AI agents) with avatars, roles, personas
+- **Team** — all 16 operators (Ghost, Zoro, 12 AI agents, Zara, Zyra) with avatars, roles, personas, and OpenClaw node status
 - **Brand** — palette, logos, commodity asset spec
 - **Wireframes** — prototypes v1-v5 index with repo/preview links
 - **Tasks** — current task per person (what Ghost / Zoro / each agent is doing right now)
 - **Status** — current phase, next milestone, blockers
-- **Zoro's Notes** — Remotion-generated explainer videos (Phase B)
+- **Avatar Lab** — live local GLB avatar gallery from `/public/GLB_Assets`
+- **Floor 3D** — dynamic R3F office with the chosen GLB floor, props, moving avatars, and voice overlay
+- **Credit Ops** — persistent spend meter plus provider dashboard
+- **Zoro's Notes** — Remotion-generated explainer videos
 
 ## Phase split (be honest about what's built)
 
-**Phase A — shipped now:**
+**Phase A — shipped:**
 - Full site scaffold, password gate, all content sections populated from `../docs/`
 - Cinematic 2D vault door + keypad entry (CSS + SVG + Framer Motion)
 - Isometric 2D office dashboard with clickable workstations
 - Vercel cron stub at `/api/cron/ai-team-tick`
-- Placeholder character portraits (referenced but not generated)
+- Placeholder character portraits and first static office workstation shell
 
-**Phase B — next session:**
-- React Three Fiber 3D office scene
-- SpriteCook-generated hyperrealistic character avatars for all 14
-- Remotion explainer videos (Zoro onboarding, game flow diagrams, etc.)
-- Ambient music (requires licensed track — Ghost picks)
+**Phase B — live now:**
+- React Three Fiber 3D office scene with `office_floor_option_2.glb`
+- Local GLB avatars for all 16 operators from `/public/GLB_Assets`
+- Zara and Zyra surfaced as OpenClaw Living Agents on `ssh zyra-mini`
+- Whiteboard seeded with 60+ owner-tagged tasks, estimates, dependencies, and acceptance criteria
+- Persistent header credit meter plus refreshed Credit Ops dashboard
+- Remotion explainer queue on Zoro's desk
 
 **Phase C — later:**
 - Vercel Cron wired to real AI team progress logic (actual autonomous work)
@@ -96,8 +101,8 @@ web/
 │   │       ├── auth/verify          POST password check
 │   │       ├── auth/logout          clears cookie
 │   │       └── cron/ai-team-tick    hourly Vercel cron
-│   ├── components/                  VaultDoor, Keypad, OfficeScene, etc.
-│   ├── data/                        team, roadmap, bible, brand, wireframes…
+│   ├── components/                  VaultDoor, Keypad, GLBAvatar, Floor3D, etc.
+│   ├── data/                        team, performers, GLB manifest, roadmap, bible…
 │   ├── lib/                         auth, constants
 │   └── styles/
 ├── middleware.ts                    redirects unauthenticated → /gate

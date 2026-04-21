@@ -15,6 +15,8 @@ export type AutomationOwner =
   | "palette" // brand
   | "oracle" // economy
   | "talon" // openclaw long-running
+  | "zara" // concrete openclaw asset ops on zyra-mini
+  | "zyra" // concrete openclaw node watch on zyra-mini
   | "hydra" // elizaos swarm
   | "council"; // whole team
 
@@ -113,6 +115,19 @@ export const AUTOMATIONS: Automation[] = [
       "Hydra's ElizaOS swarm runs a 5-minute deterministic market simulation. Validates the price engine before it ships to the game. Hobby plan caps Vercel crons at daily — run locally or upgrade to Pro.",
     phase: "A",
     accent: "#FF2A4D",
+    tier: "local",
+  },
+  {
+    slug: "openclaw-heartbeat",
+    name: "OpenClaw Node Heartbeat",
+    owner: "zyra",
+    schedule: "*/10 * * * *",
+    humanSchedule: "every 10 min on zyra-mini (pending enable)",
+    endpoint: "/api/cron/openclaw-heartbeat",
+    description:
+      "Zyra checks ssh/Tailscale reachability, GLB_Assets file watcher state, and local render queue liveness on the zyra-mini Mac mini.",
+    phase: "B",
+    accent: "#7A5BFF",
     tier: "local",
   },
 ];

@@ -8,7 +8,14 @@ function isPublic(pathname: string): boolean {
   if (pathname.startsWith("/_next/")) return true;
   if (pathname.startsWith("/api/cron/")) return true; // protected by CRON_SECRET bearer
   if (pathname === "/favicon.ico") return true;
-  if (pathname.startsWith("/audio/") || pathname.startsWith("/fonts/") || pathname.startsWith("/brand/")) return true;
+  if (
+    pathname.startsWith("/audio/") ||
+    pathname.startsWith("/fonts/") ||
+    pathname.startsWith("/brand/") ||
+    pathname.startsWith("/voices/") ||
+    pathname.startsWith("/videos/") ||
+    pathname.startsWith("/GLB_Assets/")
+  ) return true;
   return false;
 }
 

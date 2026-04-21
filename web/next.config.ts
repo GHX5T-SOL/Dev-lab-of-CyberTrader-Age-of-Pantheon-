@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const configDir = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: join(configDir, ".."),
   // The Dev Lab site is for Ghost + Zoro + AI team only — no SEO indexing.
   async headers() {
     return [

@@ -8,11 +8,9 @@
  *      - Style: hyperrealistic anime / cyberpunk penthouse residents.
  *      - Output path: /web/public/brand/avatars/<slug>.png
  *
- *   2. Ready Player Me + React Three Fiber (Phase B+, true 3D, animated).
- *      - rpmAvatarId is the persistent RPM asset ID we configure once.
- *      - The Phase B /office R3F scene loads the .glb file from:
- *        https://models.readyplayer.me/<rpmAvatarId>.glb
- *      - Idle loops + ambient gestures come from the RPM animation library.
+ *   2. Local GLB + React Three Fiber (Phase B+, true 3D, animated).
+ *      - Phase B uses local .glb files from /public/GLB_Assets.
+ *      - Idle loops + ambient gestures are procedural until retargeted clips land.
  *
  * For Phase A the UI falls back to initial-block placeholders when the PNG
  * is missing. No broken images.
@@ -23,8 +21,6 @@ export interface AvatarSpec {
   displayName: string;
   /** Short, on-brand prompt handed to SpriteCook.generate_game_art. */
   spriteCookPrompt: string;
-  /** Placeholder — fill once the RPM id is created. */
-  rpmAvatarId?: string;
   /** Phase B animation rig pose name (from the R3F scene). */
   animPose: "standing" | "sitting_desk" | "whiteboard" | "terminal" | "patrol" | "couch";
   /** What station in the office this character is anchored to. */
@@ -58,6 +54,22 @@ export const AVATAR_SPECS: AvatarSpec[] = [
       "Hyperrealistic anime portrait, cyberpunk neo-hacker swordsman. Male figure, green head-wrap covering hair, short utilitarian black jacket with acid-green seams, wired gloves. Cyber-katana sheathed across the back — chrome scabbard with a pulse-cyan handguard. Posture: confident, one hand resting on the katana grip. Expression: alert, direct. Lighting: acid-green rim from right, warm amber from below. Background: transparent. Half-body, centred. No external IP.",
     animPose: "whiteboard",
     anchor: "whiteboard",
+  },
+  {
+    slug: "zara",
+    displayName: "Zara",
+    spriteCookPrompt:
+      "Hyperrealistic anime portrait, OpenClaw asset-ops agent. Female cyberpunk operator in matte carbon gear, violet signal cable looped around one arm, standing beside a local server rack and GLB asset queue. Expression: calm, precise. Lighting: violet rim with cyan diagnostic glow. Background: transparent. Half-body, centered. No external IP.",
+    animPose: "terminal",
+    anchor: "server_room",
+  },
+  {
+    slug: "zyra",
+    displayName: "Zyra",
+    spriteCookPrompt:
+      "Hyperrealistic anime portrait, OpenClaw node-watch agent. Female holographic operations specialist with acid-green diagnostic panels orbiting her shoulders, one hand over a heartbeat monitor. Expression: alert and focused. Lighting: acid-green rim, cyan fill, violet backlight. Background: transparent. Half-body, centered. No external IP.",
+    animPose: "terminal",
+    anchor: "server_room",
   },
   {
     slug: "nyx",
