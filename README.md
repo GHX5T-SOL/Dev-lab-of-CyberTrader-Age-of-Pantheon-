@@ -1,6 +1,6 @@
 # Dev Lab of CyberTrader: Age of Pantheon
 
-> **The single organized hub** where Ghost, Zoro, and the full AI team turn five scattered prototypes into a shippable cyberpunk trading game.
+> **The single organized hub** where Ghost, Zoro, the AI Council, and the OpenClaw workers turn five scattered prototypes into a shippable cyberpunk trading game.
 
 [![status](https://img.shields.io/badge/status-phase--0--foundation-00ffcc)]()
 [![platform](https://img.shields.io/badge/platform-Expo%20%7C%20iOS%20%7C%20Android%20%7C%20Web-00ffcc)]()
@@ -16,9 +16,9 @@ A **playground + workspace + command center** for CyberTrader: Age of Pantheon �
 
 ## Who this is for
 
-- **Ghost** (founder, product + creative direction)
-- **Zoro** (co-founder)
-- **The AI Team** — 12 specialized subagents coordinated by an AI Council (see [agents.md](agents.md) and [AI_Council_Charter.md](AI_Council_Charter.md))
+- **Ghost** (founder, human Lead Developer)
+- **Zoro** (co-founder, Creative Lead)
+- **The AI Team** — 12 specialized council subagents plus Zyra and Zara, the named OpenClaw workers on the Mac mini (see [agents.md](agents.md) and [AI_Council_Charter.md](AI_Council_Charter.md))
 
 ## Quickstart
 
@@ -85,6 +85,8 @@ Full step-by-step for a newbie: **[SETUP.md](SETUP.md)**.
 | QA & Testing | Unit + integration + manual UI verification |
 | Project Manager | Roadmap, sprint cadence, unblocks |
 | OpenClaw Living | Repo-embedded executor for file ops and long-running tasks |
+| Zyra | OpenClaw PM / QA worker: pulls latest, reviews the board, runs health checks, convenes Council, reports status |
+| Zara | OpenClaw build worker: picks scoped implementation tasks, branches, tests, pushes, opens draft PRs |
 | ElizaOS Swarm Coordinator | Multi-agent market simulation and Web3 agent orchestration |
 
 Detailed profiles: [`/agents/`](agents/).

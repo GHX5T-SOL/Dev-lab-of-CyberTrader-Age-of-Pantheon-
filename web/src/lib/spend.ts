@@ -216,7 +216,7 @@ async function probeHuggingFace(key: string): Promise<Partial<SpendSnapshot>> {
 // SpriteCook — per MCP tool spec, exposes get_credit_balance via MCP only.
 // Over HTTP we fall back to a placeholder. The Spend page will also surface
 // the MCP number when the agent has MCP access.
-async function probeSpriteCook(_key: string): Promise<Partial<SpendSnapshot>> {
+async function probeSpriteCook(): Promise<Partial<SpendSnapshot>> {
   return { ok: true, note: "use SpriteCook MCP get_credit_balance for live figure" };
 }
 

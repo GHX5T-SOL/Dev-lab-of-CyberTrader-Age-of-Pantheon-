@@ -25,7 +25,7 @@ type Run = {
 
 /**
  * Client-side Council hall. Lets Ghost + Zoro kick off a round manually,
- * and shows the recent log.
+ * and shows the recent log that Zyra/Zara can also consult before work loops.
  */
 export function CouncilHall() {
   const [log, setLog] = useState<Run[]>([]);
@@ -76,8 +76,9 @@ export function CouncilHall() {
         <div className="text-[10px] uppercase tracking-[0.3em] text-acid">convene</div>
         <div className="mt-1 text-lg tracking-wide text-chrome">Call the Council</div>
         <p className="mt-2 text-[13px] leading-relaxed text-dust">
-          Compass always sits. Three more agents rotate in based on topic keywords. Output is
-          structured JSON — picks + summary + actions — persisted to{" "}
+          Compass always sits. Topic keywords pull in the right specialists; Zyra joins automation
+          and QA calls, Zara joins build and PR calls. Output is structured JSON — picks + summary
+          + actions — persisted to{" "}
           <code className="text-cyan">memory/council-log.jsonl</code>.
         </p>
 

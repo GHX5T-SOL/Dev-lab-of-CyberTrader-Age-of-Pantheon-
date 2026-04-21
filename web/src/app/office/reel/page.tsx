@@ -29,11 +29,11 @@ const REELS: Reel[] = [
     narrator: "Ghost",
     accent: "#00F5FF",
     blurb:
-      "A 40-second cold-open. Glitch title, a pan across the Neo-Seoul skyline, the roster of 14 operators, and the five stations on the floor.",
+      "A 40-second cold-open. Glitch title, a pan across Neon Void City, the roster of 16 operators, and the five stations on the floor.",
     beats: [
       "00:00 — glitch title card (DEV LAB)",
-      "00:09 — skyline pan, Neo-Seoul 2077 tagline",
-      "00:18 — the roster: 14 operators staggered on a grid",
+      "00:09 — skyline pan, Neon Void City 2077 tagline",
+      "00:18 — the roster: 16 operators staggered on a grid",
       "00:28 — the five workstations: Council, Floor 3D, Reel, Broadcast, Studio",
       "00:36 — outro slate, URL drop",
     ],
@@ -47,11 +47,11 @@ const REELS: Reel[] = [
     narrator: "Compass",
     accent: "#7A5BFF",
     blurb:
-      "How twelve AI operators run alongside Ghost + Zoro. Quorum ring, the work-flow diagram, and the three non-negotiables that keep the pace honest.",
+      "How twelve council subagents plus Zyra and Zara run alongside Ghost + Zoro. Quorum ring, the work-flow diagram, and the three non-negotiables that keep the pace honest.",
     beats: [
       "00:00 — chapter 01 title reveal",
       "00:03 — rotating circle of twelve with central quorum emblem",
-      "00:13 — flow diagram: founders → council → shipped commits + live ops",
+      "00:13 — flow diagram: founders → council → Zyra/Zara → shipped commits + live ops",
       "00:21 — three non-negotiables cascade in",
       "00:24 — outro URL",
     ],
@@ -71,7 +71,7 @@ const REELS: Reel[] = [
       "00:03 — whiteboard with sprint-01 tickets",
       "00:10 — three-step run-book (floor, brief, council)",
       "00:18 — CTA: cybertrader.app / office / floor-3d",
-      "00:23 — signoff: built by Ghost + Zoro + 12 AI operators",
+      "00:23 — signoff: built by Ghost + Zoro + 14 AI workers",
     ],
   },
 ];

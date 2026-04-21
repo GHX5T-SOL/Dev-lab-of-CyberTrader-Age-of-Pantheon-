@@ -4,10 +4,11 @@
 
 ## The team
 
-- **Ghost** — founder, product + creative direction, final authority on scope/brand/ship.
-- **Zoro** — co-founder, final authority shared with Ghost.
+- **Ghost** — founder and human Lead Developer; final authority on implementation scope, code direction, and ship readiness.
+- **Zoro** — co-founder and Creative Lead; final authority with Ghost on brand, visual direction, tone, and presentation.
 - **AI Orchestrator (Claude)** — default assistant in every session; routes work to subagents, chairs councils, enforces [Prompt_Guidelines.md](Prompt_Guidelines.md).
 - **12 Subagents** — see [agents.md](agents.md).
+- **Zyra + Zara** — named OpenClaw workers on the Mac mini. Zyra owns PM / QA / cron autonomy; Zara owns implementation branches and draft PRs.
 - **AI Council** — rotating 5–7 member deliberative body, see [AI_Council_Charter.md](AI_Council_Charter.md).
 
 ## Information flow
@@ -38,6 +39,7 @@
               back to Ghost + Zoro
               + logged to memory
               + logged to decision log
+              + assigned to Zyra/Zara when autonomous work is safe
 ```
 
 ## Session types
@@ -52,7 +54,10 @@ Orchestrator detects non-trivial topic (see [AI_Council_Charter.md](AI_Council_C
 Orchestrator + one lead agent work through a feature. QA agent reviews at the end. Council convenes only if unexpected architectural choice surfaces.
 
 ### 4. Long-running / background
-Handed to **OpenClaw Living Agent** for unattended execution (cron jobs, batch renames, continuous monitoring). Reports back via commit + log file.
+Handed to **OpenClaw Living Agent** for unattended execution (cron jobs, batch renames, continuous monitoring). In this repo that means **Zyra** for PM / QA / cron / status work and **Zara** for scoped implementation branches. They report back via GitHub branches, draft PRs, logs, and status updates.
+
+### 5. Autonomous pickup
+If no human instruction is waiting, Zyra and Zara pull latest, read the task board, inspect current repo health, check GitHub Issues/PRs, and choose the next safe task. Non-trivial choices go through Council first. Safe low-risk work should not wait for Ghost or Zoro.
 
 ## Hand-off contract
 
@@ -93,6 +98,7 @@ Council: yes (docs/Decision-Log.md#2026-04-22-fdst-event)
 - `main` — always deployable. Only the AI Council or Ghost/Zoro merge here.
 - `phase-<N>-<slug>` — active phase branches, e.g. `phase-1-pirate-os`.
 - `feat/<scope>-<slug>` — short-lived feature branches off the phase branch.
+- `openclaw/<worker>-<scope>` — autonomous Zyra/Zara branches before draft PR review.
 - `experiment/<slug>` — lives in `/playground/` — never merged to main.
 
 ## Pull requests
@@ -129,5 +135,6 @@ See [memory/MEMORY.md](memory/MEMORY.md) for the index.
 ## Cadence
 
 - **Daily** (async): PM Agent posts a one-line status in `docs/Daily-Log.md`.
+- **Every 2-4 hours** (autonomous): Zyra/Zara OpenClaw loops review board health and take safe work when available.
 - **Weekly**: council review of roadmap progress.
 - **Per phase**: retrospective in `docs/Retrospectives/phase-N.md`.

@@ -14,6 +14,7 @@ const PHASE_COLOR: Record<"A" | "B" | "C", string> = {
 export default function AutomationsPage() {
   const vercelArmed = AUTOMATIONS.filter((a) => a.tier === "vercel");
   const localOnly = AUTOMATIONS.filter((a) => a.tier === "local");
+  const openClawJobs = AUTOMATIONS.filter((a) => a.tier === "openclaw");
 
   return (
     <div className="flex flex-col gap-8">
@@ -23,10 +24,10 @@ export default function AutomationsPage() {
           AUTOMATIONS
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          Every cron the Dev Lab runs. Each entry maps 1:1 to a route handler under{" "}
+          Every automation the Dev Lab runs. Vercel entries map 1:1 to a route handler under{" "}
           <code className="text-cyan">web/src/app/api/cron/</code>. Vercel-armed jobs are listed in{" "}
           <code className="text-cyan">vercel.json</code>; local-only jobs live in the repo as
-          callable endpoints and run from dev scripts until the project upgrades to Vercel Pro.
+          callable endpoints. Zyra and Zara run OpenClaw jobs from the Mac mini scheduler.
         </p>
       </header>
 
@@ -56,9 +57,16 @@ export default function AutomationsPage() {
             Council routes at 60s to be safe.
           </li>
           <li>
+            <span className="text-acid">OpenClaw jobs</span> run on{" "}
+            <code className="text-cyan">zyra-mini</code>. Zyra owns PM / QA / status loops; Zara owns
+            build / branch / draft-PR loops. Their endpoints are{" "}
+            <code className="text-cyan">openclaw://cron/*</code> handles, not public HTTP routes.
+          </li>
+          <li>
             Every run <span className="text-cyan">logs to the Vercel Runtime Logs</span>. The
             Council runs also append to <code className="text-cyan">memory/council-log.jsonl</code>{" "}
             (or <code className="text-cyan">/tmp</code> on serverless FS) for the UI to replay.
+            OpenClaw runs report through GitHub branches, logs, and the evening status task.
           </li>
         </ul>
       </Panel>
@@ -74,6 +82,20 @@ export default function AutomationsPage() {
           ))}
         </div>
       </section>
+
+      {openClawJobs.length > 0 && (
+        <section className="flex flex-col gap-3">
+          <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cyan">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
+            openclaw · {openClawJobs.length} jobs · zyra-mini autonomous workers
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {openClawJobs.map((a) => (
+              <AutomationCard key={a.slug} a={a} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {localOnly.length > 0 && (
         <section className="flex flex-col gap-3">
@@ -121,6 +143,12 @@ done`}</pre>
             you don&apos;t want to upgrade Vercel — add a workflow that{" "}
             <code className="text-cyan">curl</code>s the production URL on the schedule you want.
           </li>
+          <li>
+            <span className="text-cyan">OpenClaw:</span>{" "}
+            <code className="text-cyan">ssh zyra-mini</code>, then inspect{" "}
+            <code className="text-cyan">~/.openclaw/cron/jobs.json</code> and the Zyra/Zara agent
+            docs before changing schedules.
+          </li>
         </ul>
       </Panel>
     </div>
@@ -129,7 +157,10 @@ done`}</pre>
 
 function AutomationCard({ a }: { a: (typeof AUTOMATIONS)[number] }) {
   const owner = TEAM.find((m) => m.slug === a.owner);
-  const tierColor = a.tier === "vercel" ? "#67FFB5" : "#FFB341";
+  const tierColor =
+    a.tier === "vercel" ? "#67FFB5" : a.tier === "openclaw" ? "#00F5FF" : "#FFB341";
+  const tierLabel =
+    a.tier === "vercel" ? "vercel-armed" : a.tier === "openclaw" ? "openclaw-armed" : "local-only";
   return (
     <article
       className="panel rounded-sm p-5"
@@ -162,7 +193,7 @@ function AutomationCard({ a }: { a: (typeof AUTOMATIONS)[number] }) {
             className="rounded-sm border px-2 py-0.5 text-[9px] uppercase tracking-[0.25em]"
             style={{ borderColor: `${tierColor}66`, color: tierColor }}
           >
-            {a.tier === "vercel" ? "vercel-armed" : "local-only"}
+            {tierLabel}
           </span>
         </div>
       </div>

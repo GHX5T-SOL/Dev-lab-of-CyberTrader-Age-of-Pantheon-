@@ -4,12 +4,6 @@ import { CyberText } from "@/components/CyberText";
 
 export const metadata = { title: "Monitor Wall — Wireframes" };
 
-const STATUS_TONE: Record<Prototype["status"], "cyan" | "violet" | "acid"> = {
-  archived: "cyan",
-  reference: "violet",
-  active: "acid",
-};
-
 const STATUS_DOT: Record<Prototype["status"], string> = {
   archived: "#8A94A7",
   reference: "#7A5BFF",
@@ -104,7 +98,6 @@ git push -u origin reference/v5
 }
 
 function PrototypeCard({ p }: { p: Prototype }) {
-  const tone = STATUS_TONE[p.status];
   const toneHex = p.status === "active" ? "#67FFB5" : p.status === "reference" ? "#7A5BFF" : "#00F5FF";
 
   return (

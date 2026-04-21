@@ -95,6 +95,18 @@ export const PROVIDERS: Provider[] = [
     category: "llm",
   },
   {
+    slug: "blockrun-clawrouter",
+    name: "BlockRun ClawRouter",
+    label: "ClawRouter",
+    envKey: "BLOCKRUN_CLAWROUTER_WALLET",
+    billingStyle: "prepaid_credits",
+    accent: "#00F5FF",
+    tagline: "OpenClaw model router — paid smart models with free fallback for Zyra/Zara.",
+    hasLiveProbe: false,
+    dashboardUrl: "https://openclaw.ai",
+    category: "llm",
+  },
+  {
     slug: "gemini",
     name: "Google Gemini",
     label: "Gemini",

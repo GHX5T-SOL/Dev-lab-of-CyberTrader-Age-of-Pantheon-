@@ -55,6 +55,7 @@ export interface PerformerSpec {
  *                         +Z (back wall / windows)
  *     server_rack       monitor_wall        brand_vault
  *   [Kite,Talon]        [Vex,Rune]         [Palette]
+ *   [Zyra,Zara]         [OpenClaw rack]
  *        +8                  0                  -8
  *        |                   |                   |
  *  ------+-------------------+-------------------+------ X
@@ -77,9 +78,9 @@ export const PERFORMERS: PerformerSpec[] = [
     voiceId: "pNInz6obpgDQGcFmaJgB", // Adam — deep, measured, authoritative
     voiceSettings: { stability: 0.55, similarityBoost: 0.8, style: 0.1, useSpeakerBoost: true },
     signatureLine:
-      "Dev Lab is online. Every decision routes through the Council. Every ship date routes through me. Let's get to work.",
+      "Dev Lab is online. I am Ghost, lead developer. Every decision routes through the Council. Every merge routes through code that actually works.",
     voiceOver:
-      "This is CyberTrader: Age of Pantheon. A cyberpunk trading simulator. Built by two humans and twelve AI operators. Welcome to the lab.",
+      "This is CyberTrader: Age of Pantheon. A cyberpunk trading simulator. Built by two humans and fourteen AI workers. Welcome to the lab.",
     desk3D: { position: [8, 0, 6], rotationY: -Math.PI / 2, pose: "stand" },
     voiceSampleUrl: "/voices/ghost.mp3",
   },
@@ -88,7 +89,7 @@ export const PERFORMERS: PerformerSpec[] = [
     voiceId: "ErXwobaYiN019PkySvjV", // Antoni — warm, grounded, kind
     voiceSettings: { stability: 0.5, similarityBoost: 0.78, style: 0.2, useSpeakerBoost: true },
     signatureLine:
-      "I'm Zoro. I take tasks off the whiteboard and push PRs. If it's not on the board, it doesn't exist yet — add it, then we build it.",
+      "I'm Zoro. I guard the look, the feel, the myth. If it doesn't look like CyberTrader, it doesn't ship yet.",
     voiceOver:
       "The whiteboard is where the work lives. The Council is where the work gets approved. And Reel cuts an explainer every time we ship something real. Come on — pick up a marker.",
     desk3D: { position: [-6, 0, 4], rotationY: Math.PI / 4, pose: "whiteboard" },
@@ -187,6 +188,22 @@ export const PERFORMERS: PerformerSpec[] = [
     signatureLine:
       "Long-running. Non-blocking. The cron rack is mine. If it needs to run at three AM, it's already armed.",
     desk3D: { position: [6, 0, -6], rotationY: -Math.PI / 2, pose: "terminal" },
+  },
+  {
+    slug: "zyra",
+    voiceId: "EXAVITQu4vr4xnSDxMaL", // Bella — smooth, analytical
+    voiceSettings: { stability: 0.62, similarityBoost: 0.74, style: 0.1 },
+    signatureLine:
+      "Zyra online. I pull main, read the board, check the crons, call the Council, and turn silence into the next safe task.",
+    desk3D: { position: [4.5, 0, -8.5], rotationY: -Math.PI / 2, pose: "terminal" },
+  },
+  {
+    slug: "zara",
+    voiceId: "jsCqWAovK2LkecY7zXl4", // Freya — sharp, fast, stylized
+    voiceSettings: { stability: 0.5, similarityBoost: 0.72, style: 0.25 },
+    signatureLine:
+      "Zara here. Give me a scoped slice or I will find one. Branch, build, test, push, draft PR. No idle hands.",
+    desk3D: { position: [-4.5, 0, -8.5], rotationY: Math.PI / 2, pose: "terminal" },
   },
   {
     slug: "hydra",

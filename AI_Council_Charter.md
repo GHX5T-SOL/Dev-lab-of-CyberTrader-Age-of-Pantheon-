@@ -6,15 +6,18 @@
 
 The **AI Council** is the deliberative body for decisions that shape the game's direction, architecture, or economy. It prevents single-agent tunnel vision, surfaces trade-offs early, and produces a durable decision log Ghost and Zoro can audit.
 
+Ghost is the human **Lead Developer**. Zoro is the human **Creative Lead**. Zyra and Zara are named OpenClaw workers that may convene or join Council sessions when autonomous work touches PM, QA, cron, branch, build, or PR risk.
+
 ## Composition
 
 - **5–7 members per session**, assembled from the agent roster in [agents.md](agents.md).
 - Composition rotates based on topic. Examples:
   - *Economy change*: Game Designer, Economy & Trading Sim, Backend, QA, PM → (5)
   - *New cinematic*: Cinematic, UI/UX, Brand, Frontend, PM → (5)
-  - *Technical architecture*: Backend, Frontend, Research, QA, PM, ElizaOS Swarm, OpenClaw → (7)
+  - *Technical architecture*: Backend, Frontend, Research, QA, PM, ElizaOS Swarm, Zyra or Zara → (7)
+  - *Autonomous OpenClaw work*: PM, Research, QA, Zyra, Zara, owning domain agent → (6)
 - **Standing members** (present in every council): **Project Manager** (facilitator) + **Research & Best-Practices** (fact-checker).
-- **Ghost and Zoro** are non-voting observers with override authority.
+- **Ghost and Zoro** are non-voting observers with override authority. Ghost has final lead-dev say on implementation scope; Zoro has final creative say on brand, visual direction, and presentation.
 
 ## When to convene
 
@@ -24,6 +27,7 @@ The **AI Council** is the deliberative body for decisions that shape the game's 
 | Changing tech stack (lib, framework, DB) | **Yes** |
 | Economy tuning that affects player progression > 10% | **Yes** |
 | Adding a new screen to main navigation | **Yes** |
+| OpenClaw worker taking an autonomous task that can affect architecture, brand, auth, wallet, economy, deployment, or public docs | **Yes** |
 | Renaming / rebranding | **Yes** |
 | Fixing a typo, small bug, tweaking a color shade | No |
 | Adding a utility function | No |

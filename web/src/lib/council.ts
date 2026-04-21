@@ -45,7 +45,7 @@ export async function appendCouncilLog(entry: CouncilRun): Promise<void> {
     const dir = path.dirname(LOG_PATH);
     await fs.mkdir(dir, { recursive: true });
     await fs.appendFile(LOG_PATH, JSON.stringify(entry) + "\n", "utf8");
-  } catch (err) {
+  } catch {
     // Vercel serverless FS is read-only outside /tmp. Fall back to /tmp.
     try {
       const tmp = path.join("/tmp", "council-log.jsonl");
@@ -79,8 +79,8 @@ export async function readCouncilLog(limit = 50): Promise<CouncilRun[]> {
 }
 
 function pickParticipants(topic: string): TeamMember[] {
-  const must = TEAM.filter((m) => m.slug === "compass"); // always present
-  const agents = TEAM.filter((m) => m.kind === "agent" && m.slug !== "compass");
+  const must = TEAM.filter((m) => m.slug === "compass" || m.slug === "cipher"); // always present
+  const agents = TEAM.filter((m) => m.kind === "agent" && !must.some((s) => s.slug === m.slug));
   // Simple heuristic: rotate based on time hash so different agents show up.
   const now = Date.now();
   const seed = Math.floor(now / 60_000);
@@ -106,11 +106,13 @@ function pickParticipants(topic: string): TeamMember[] {
     [["test", "bug", "qa", "regression"], "axiom"],
     [["api", "library", "package", "lib", "framework"], "cipher"],
     [["design", "mechanic", "loop", "rank"], "nyx"],
+    [["openclaw", "cron", "automation", "autonomous", "health", "status"], "zyra"],
+    [["branch", "build", "pr", "pull request", "implementation", "code"], "zara"],
   ];
   for (const [kws, slug] of keywordOwner) {
     if (kws.some((k) => lower.includes(k))) {
       const forced = TEAM.find((m) => m.slug === slug);
-      if (forced && !picked.some((p) => p.slug === slug)) {
+      if (forced && !must.some((p) => p.slug === slug) && !picked.some((p) => p.slug === slug)) {
         picked.pop(); // trim to keep size
         picked.push(forced);
       }
@@ -158,6 +160,8 @@ async function callClaude(
 
   const system = [
     "You are the AI Council of the CyberTrader: Age of Pantheon Dev Lab.",
+    "Ghost is the human founder and Lead Developer. Zoro is the human co-founder and Creative Lead.",
+    "Zyra and Zara are named OpenClaw workers on the Mac mini; include them when automation, QA, build, branch, or PR risk matters.",
     "You output strict JSON matching this TypeScript type:",
     "{",
     '  "picks": Array<{ "slug": string, "stance": "supports" | "neutral" | "pushes_back", "oneLine": string }>,',

@@ -148,6 +148,22 @@ export const AVATAR_SPECS: AvatarSpec[] = [
     anchor: "server_room",
   },
   {
+    slug: "zyra",
+    displayName: "Zyra",
+    spriteCookPrompt:
+      "Hyperrealistic anime portrait, OpenClaw autonomous PM and QA worker. Female figure with chrome eyes, braided black hair with cyan fiber-optic strands, compact shoulder console projecting GitHub branches and cron runes. Matte black tactical jacket with cyan claw-router insignia. Expression: alert, calm, always watching. Background: transparent. Lighting: cyan rim, cool violet fill. Half-body.",
+    animPose: "terminal",
+    anchor: "server_room",
+  },
+  {
+    slug: "zara",
+    displayName: "Zara",
+    spriteCookPrompt:
+      "Hyperrealistic anime portrait, OpenClaw autonomous build worker. Female figure in acid-green trimmed black jacket, terminal glyph tattoos along both hands, a floating code diff panel and test-status strip beside her. Expression: sharp, ready to ship. Background: transparent. Lighting: acid-green rim, amber underglow, cyan fill. Half-body.",
+    animPose: "terminal",
+    anchor: "monitor_wall",
+  },
+  {
     slug: "hydra",
     displayName: "Hydra",
     spriteCookPrompt:

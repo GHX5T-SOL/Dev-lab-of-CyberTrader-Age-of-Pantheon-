@@ -34,7 +34,7 @@ export default function Floor3DPage() {
         <Stat
           label="operators on floor"
           value={total.toString()}
-          sublabel="14 residents · 3D stand-ins"
+          sublabel="16 residents · 3D stand-ins"
           accent="#00F5FF"
         />
         <Stat
@@ -102,7 +102,7 @@ export default function Floor3DPage() {
         <ul className="space-y-2 text-[13px] leading-relaxed text-chrome/90">
           <li>
             <span className="text-cyan">Ready Player Me rigs</span> — swap stand-in capsules
-            for 14 hand-tuned .glb avatars with idle animation library.
+            for 16 hand-tuned .glb avatars with idle animation library.
           </li>
           <li>
             <span className="text-cyan">Lip-sync with viseme data</span> — HeyGen Hyperframes

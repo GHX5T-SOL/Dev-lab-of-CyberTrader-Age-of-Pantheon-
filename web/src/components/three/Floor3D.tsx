@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * The immersive R3F office. All 14 performers arranged around the council
+ * The immersive R3F office. All 16 performers arranged around the council
  * table. Camera orbits, click-to-focus on any performer, ESC to release.
  *
  * This is the client-only entry point — import via next/dynamic with
  * ssr:false from any server page.
  */
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";

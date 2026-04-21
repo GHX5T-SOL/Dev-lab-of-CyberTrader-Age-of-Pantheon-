@@ -1,6 +1,6 @@
 # agents.md — The AI Team of CyberTrader: Age of Pantheon
 
-> Master index of the 12-member specialized AI team that builds this game alongside Ghost and Zoro. Individual agent profiles live in [`/agents/`](agents/).
+> Master index of the 12-subagent AI Council plus the named OpenClaw workers that build this game alongside Ghost and Zoro. Individual agent profiles live in [`/agents/`](agents/).
 
 ## How to read this file
 
@@ -9,7 +9,7 @@
 - **Tools/skills** = the concrete toolkit it relies on.
 - **Hand-off to** = who picks up after its work lands.
 
-The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rotating 5–7 member subset convened for any non-trivial decision.
+The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rotating 5–7 member subset convened for any non-trivial decision. **Zyra** and **Zara** are named OpenClaw workers on the Mac mini; they execute autonomous PM/QA and implementation loops around the Council.
 
 ---
 
@@ -86,6 +86,22 @@ The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rot
 - **Activates when**: designing/tuning the market, running live-like simulations, stress-testing event impact.
 - **Tools/skills**: ElizaOS plugins (Solana, trading sim, multi-agent), `deep-research`, `metrics-definition`.
 - **Hand-off to**: Economy & Trading Sim, Backend.
+
+---
+
+## Named OpenClaw workers
+
+### Zyra — OpenClaw PM / QA Worker → [`agents/openclaw-living.md`](agents/openclaw-living.md)
+- **Role**: autonomous Mac mini worker for board review, repo health, QA sweeps, cron hygiene, Council routing, and status reports.
+- **Activates when**: the task board is stale, checks are needed, crons need validation, a non-trivial autonomous task needs Council input, or Ghost/Zoro need a concise status.
+- **Tools/skills**: OpenClaw, GitHub, shell, tests, typecheck, web build, AI Council, ClawHub skills, ClawRouter fallback.
+- **Hand-off to**: Zara for implementation, Axiom for QA failures, Compass for roadmap drift, Ghost/Zoro for scope or brand decisions.
+
+### Zara — OpenClaw Build Worker → [`agents/openclaw-living.md`](agents/openclaw-living.md)
+- **Role**: autonomous Mac mini implementation worker that picks scoped tasks, branches, codes, verifies, pushes, and opens draft PRs.
+- **Activates when**: a safe implementation slice exists, Zyra assigns a follow-up, CI/config/docs/UI copy needs a bounded patch, or Phase 1 build work is unblocked.
+- **Tools/skills**: OpenClaw, Codex CLI, Claude CLI, GitHub, Next.js, React, Expo, Playwright, tests, typecheck, ClawRouter fallback.
+- **Hand-off to**: Ghost for lead-dev review, Zoro for creative review, Axiom for QA, Compass for task-board updates.
 
 ---
 

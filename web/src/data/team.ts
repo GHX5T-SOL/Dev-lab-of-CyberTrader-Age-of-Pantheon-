@@ -1,8 +1,9 @@
 /**
- * The 14 characters of the CyberTrader Dev Lab.
+ * The 16 operators of the CyberTrader Dev Lab.
  *
  * Ghost + Zoro are the human founders.
- * The 12 AI agents are specialized subagents with in-world names and personas.
+ * The 12 council subagents have in-world names and personas.
+ * Zyra + Zara are the named OpenClaw workers running on the Mac mini.
  * Each persona is original — no external IP.
  *
  * Avatar paths point to /public/brand/avatars/<slug>.png — Phase B will
@@ -36,13 +37,13 @@ export const TEAM: TeamMember[] = [
     name: "Ghost",
     codename: "GHX5T",
     kind: "founder",
-    role: "Founder / Creative Lead",
+    role: "Founder / Lead Developer",
     pronouns: "he/him",
     persona:
-      "Skull-mask face-plate, black hoodie with reactive piping, slung assault rifle across the back. Moves quietly. Reads everything. Signs off on hard decisions.",
+      "Skull-mask face-plate, black hoodie with reactive piping, slung assault rifle across the back. Moves quietly. Reads everything. Codes the hard path when the project needs it.",
     description:
-      "Co-founder, vision holder, final sign-off on design direction, brand, and launch cadence.",
-    skills: ["Direction", "Brand voice", "Decision log", "Launch signoff"],
+      "Human founder and lead developer. Owns architecture judgment, implementation quality, merge decisions, and final ship calls.",
+    skills: ["Implementation", "Architecture", "Product direction", "Merge signoff"],
     activatesWhen: "Always present.",
     avatar: "/brand/avatars/ghost.png",
     accent: "#00F5FF",
@@ -53,13 +54,13 @@ export const TEAM: TeamMember[] = [
     name: "Zoro",
     codename: "Z0R0",
     kind: "founder",
-    role: "Co-Founder / Build Lead",
+    role: "Co-Founder / Creative Lead",
     pronouns: "he/him",
     persona:
-      "Swordsman silhouette — neo-hacker variant. Green head-wrap, cyber-katana sheathed across the back, wired gloves. Direct. Fast. Ships things.",
+      "Swordsman silhouette — neo-hacker artist variant. Green head-wrap, cyber-katana sheathed across the back, wired gloves, sketch slate clipped to the belt. Direct. Visual. Protective of the vibe.",
     description:
-      "Co-founder, primary builder. Picks up tasks from the board, runs them to ground, pushes PRs.",
-    skills: ["Implementation", "Asset hunting", "Wireframe review"],
+      "Human co-founder and creative lead. Owns art direction, tone, cinematic taste, character presentation, and brand polish with Ghost.",
+    skills: ["Creative direction", "Art review", "Asset taste", "Lore feel"],
     activatesWhen: "Always present.",
     avatar: "/brand/avatars/zoro.png",
     accent: "#67FFB5",
@@ -263,6 +264,44 @@ export const TEAM: TeamMember[] = [
     avatar: "/brand/avatars/talon.png",
     accent: "#FFB341",
     statusLine: "running nightly brand-asset integrity scan.",
+    agentFilePath: "agents/openclaw-living.md",
+  },
+  {
+    slug: "zyra",
+    name: "Zyra",
+    codename: "ZYR_OC1",
+    kind: "agent",
+    role: "OpenClaw PM / QA Worker",
+    pronouns: "she/her",
+    persona:
+      "Chrome-eyed operations lead with a living claw-router console orbiting one shoulder. Always awake, always checking health, always turning stale context into the next branch.",
+    description:
+      "Named OpenClaw agent on the Mac mini. Pulls latest, audits repo health, checks tasks and crons, convenes the AI Council, opens draft PRs, and keeps autonomous work moving.",
+    skills: ["OpenClaw", "GitHub triage", "AI Council routing", "QA sweeps", "Cron hygiene"],
+    activatesWhen:
+      "Every scheduled autonomy loop, repo health check, stale task review, or PM/QA handoff.",
+    avatar: "/brand/avatars/zyra.png",
+    accent: "#00F5FF",
+    statusLine: "watching the queue. next autonomy loop armed.",
+    agentFilePath: "agents/openclaw-living.md",
+  },
+  {
+    slug: "zara",
+    name: "Zara",
+    codename: "ZAR_OC2",
+    kind: "agent",
+    role: "OpenClaw Build Worker",
+    pronouns: "she/her",
+    persona:
+      "Black-jacket build runner with acid-green terminal tattoos, one hand on the branch switcher, one eye on the failing test pane.",
+    description:
+      "Named OpenClaw implementation worker on the Mac mini. Picks scoped build tasks, codes on feature branches, verifies locally, pushes, and opens PRs for Ghost/Zoro review.",
+    skills: ["OpenClaw", "Next.js", "React", "Expo", "Playwright", "Draft PRs"],
+    activatesWhen:
+      "Every scheduled build loop, implementation slice, UI fix, task-board pickup, or follow-up from Zyra.",
+    avatar: "/brand/avatars/zara.png",
+    accent: "#67FFB5",
+    statusLine: "standing by on a clean branch. tests loaded.",
     agentFilePath: "agents/openclaw-living.md",
   },
   {

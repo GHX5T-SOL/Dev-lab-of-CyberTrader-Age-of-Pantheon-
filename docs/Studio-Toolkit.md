@@ -17,7 +17,7 @@ All keys live in the root `.env` (symlinked into `web/.env.local`). The Dev Lab'
 | Tool | Env key | Use for |
 |---|---|---|
 | **HeyGen + Hyperframes** | `HEYGEN_API_KEY` | Photoreal talking-head avatars for explainer videos, Council broadcast clips, on-site hero intros. Ghost has **Hyperframes** skills installed — use the frame-accurate pipeline for lip sync + sustained eye contact. |
-| **SpriteCook MCP** | `SPRITECOOK_API_KEY` | 2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source. Prompts for all 14 operators live in `web/src/data/avatars.ts`. Pixel mode for in-game; HD mode for office portraits. |
+| **SpriteCook MCP** | `SPRITECOOK_API_KEY` | 2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source. Prompts for all 16 operators live in `web/src/data/avatars.ts`. Pixel mode for in-game; HD mode for office portraits. |
 | **Ready Player Me** | _none (studio → .glb export)_ | 3D glTF avatars for the Phase B R3F office. Full-body rigs with Mixamo-compatible skeletons. Drop `.glb` files into `web/public/avatars/`. |
 
 **Rule of thumb:**
@@ -47,6 +47,8 @@ All keys live in the root `.env` (symlinked into `web/.env.local`). The Dev Lab'
 | **Anthropic / Claude** | `ANTHROPIC_API_KEY` | Council deliberation, persona voice, long-form reasoning. Council routes use `claude-haiku-4-5` for latency-bound; swap to Sonnet/Opus for deep planning. |
 | **OpenAI** | `OPENAI_API_KEY` | Fallback LLM, DALL-E images, embeddings for memory. |
 | **OpenRouter** | `OPENROUTER_API_KEY` | Multi-provider routing for cost / model-choice optimization. |
+| **OpenClaw** | `OPENCLAW_*` | Runtime for Zyra and Zara on the Mac mini: pull latest, review board, convene Council, verify locally, push branches, and report status. |
+| **BlockRun ClawRouter** | `BLOCKRUN_CLAWROUTER_WALLET` | Model routing for OpenClaw. Prefer paid smart models when funded; fall back to free router lanes so Zyra and Zara keep running when credits run out. |
 | **Vercel AI Gateway** | `VERCEL_AI_GATEWAY_API_KEY` | Unified AI access with fallbacks + observability. Phase C Council migrates here for graceful provider degradation. |
 | **Hugging Face** | `HF_TOKEN` | Open-weight models, datasets, specialized pipelines. |
 | **Conway** | `CONWAY_API_KEY` | Sandboxed code execution, domain management, wallet ops — the agent's runtime utility belt. |

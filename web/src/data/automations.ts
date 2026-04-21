@@ -1,7 +1,9 @@
 /**
- * Registered automations. Each entry corresponds to:
+ * Registered automations. Vercel jobs correspond to:
  *   1. A cron entry in vercel.json
  *   2. A route handler under web/src/app/api/cron/<slug>/route.ts
+ *
+ * OpenClaw jobs correspond to the Mac mini scheduler at ~/.openclaw/cron/jobs.json.
  *
  * The Dev Lab surfaces this list at /office/automations so Ghost + Zoro can
  * see what's running autonomously on the project without them touching a
@@ -15,6 +17,8 @@ export type AutomationOwner =
   | "palette" // brand
   | "oracle" // economy
   | "talon" // openclaw long-running
+  | "zyra" // named OpenClaw PM/QA worker
+  | "zara" // named OpenClaw build worker
   | "hydra" // elizaos swarm
   | "council"; // whole team
 
@@ -32,8 +36,9 @@ export interface Automation {
    * Where this job runs. Vercel Hobby caps crons at 1/day, so sub-daily jobs
    * are kept as "local" — still callable (manual POST / dev scripts / local
    * tick) but not armed in vercel.json. Upgrade to Pro → flip to "vercel".
+   * OpenClaw jobs are armed on zyra-mini and do not map to Vercel route handlers.
    */
-  tier: "vercel" | "local";
+  tier: "vercel" | "local" | "openclaw";
 }
 
 export const AUTOMATIONS: Automation[] = [
@@ -62,6 +67,84 @@ export const AUTOMATIONS: Automation[] = [
     phase: "B",
     accent: "#FFB341",
     tier: "vercel",
+  },
+  {
+    slug: "cybertrader-zyra-autonomy-loop",
+    name: "Zyra Autonomy Loop",
+    owner: "zyra",
+    schedule: "0 */2 * * *",
+    humanSchedule: "every 2 hours on zyra-mini",
+    endpoint: "openclaw://cron/cybertrader-zyra-autonomy-loop",
+    description:
+      "Zyra pulls latest main, reads the task board, checks repo/OpenClaw health, convenes Council when needed, and starts the next safe PM/QA/docs/config task.",
+    phase: "C",
+    accent: "#00F5FF",
+    tier: "openclaw",
+  },
+  {
+    slug: "cybertrader-zara-build-loop",
+    name: "Zara Build Loop",
+    owner: "zara",
+    schedule: "30 */4 * * *",
+    humanSchedule: "every 4 hours on zyra-mini",
+    endpoint: "openclaw://cron/cybertrader-zara-build-loop",
+    description:
+      "Zara selects a scoped implementation slice, creates a branch, verifies locally, pushes, and opens or updates a draft PR for review.",
+    phase: "C",
+    accent: "#67FFB5",
+    tier: "openclaw",
+  },
+  {
+    slug: "cybertrader-zyra-daily-qa",
+    name: "Zyra Daily QA",
+    owner: "zyra",
+    schedule: "20 8 * * *",
+    humanSchedule: "daily at 08:20 Africa/Johannesburg",
+    endpoint: "openclaw://cron/cybertrader-zyra-daily-qa",
+    description:
+      "Runs repo tests, typechecks, web build, OpenClaw health, cron list, and security audit summary before the humans start the day.",
+    phase: "C",
+    accent: "#00F5FF",
+    tier: "openclaw",
+  },
+  {
+    slug: "cybertrader-zara-daily-build",
+    name: "Zara Daily Build",
+    owner: "zara",
+    schedule: "50 8 * * *",
+    humanSchedule: "daily at 08:50 Africa/Johannesburg",
+    endpoint: "openclaw://cron/cybertrader-zara-daily-build",
+    description:
+      "Runs the build lane after Zyra's QA pass, then picks one implementation task if the repo is healthy.",
+    phase: "C",
+    accent: "#67FFB5",
+    tier: "openclaw",
+  },
+  {
+    slug: "cybertrader-zyra-evening-status",
+    name: "Zyra Evening Status",
+    owner: "zyra",
+    schedule: "30 18 * * 1-5",
+    humanSchedule: "weekdays at 18:30 Africa/Johannesburg",
+    endpoint: "openclaw://cron/cybertrader-zyra-evening-status",
+    description:
+      "Posts the day-end status: PRs, blockers, next autonomous move, model/credit state, and Council decisions that need Ghost or Zoro.",
+    phase: "C",
+    accent: "#00F5FF",
+    tier: "openclaw",
+  },
+  {
+    slug: "cybertrader-zara-weekly-roadmap",
+    name: "Zara Weekly Roadmap",
+    owner: "zara",
+    schedule: "15 10 * * 5",
+    humanSchedule: "Fridays at 10:15 Africa/Johannesburg",
+    endpoint: "openclaw://cron/cybertrader-zara-weekly-roadmap",
+    description:
+      "Reviews roadmap drift, task-board gaps, and the next implementation batch, then prepares a draft plan for the Council.",
+    phase: "C",
+    accent: "#67FFB5",
+    tier: "openclaw",
   },
   {
     slug: "brand-qa",

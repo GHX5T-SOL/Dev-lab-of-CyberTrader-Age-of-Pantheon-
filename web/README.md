@@ -1,6 +1,6 @@
 # CyberTrader Dev Lab — Virtual Office
 
-> This is **not** the CyberTrader game. This is our **internal studio workspace** — a virtual office where Ghost, Zoro, and the 12-agent AI team coordinate the build of the actual mobile game.
+> This is **not** the CyberTrader game. This is our **internal studio workspace** — a virtual office where Ghost, Zoro, the 12-subagent AI Council, and the Zyra/Zara OpenClaw workers coordinate the build of the actual mobile game.
 
 ## What's here
 
@@ -8,11 +8,12 @@ A Next.js 15 site, password-gated (password: `2010` by default), deployable to V
 
 - **Roadmap** — phase cadence pulled from `../docs/Roadmap.md`
 - **Game Bible** — full lore from `../docs/Lore-Bible.md`
-- **Team** — all 14 characters (Ghost, Zoro, + 12 AI agents) with avatars, roles, personas
+- **Team** — all 16 characters (Ghost, Zoro, 12 council subagents, Zyra, Zara) with avatars, roles, personas
 - **Brand** — palette, logos, commodity asset spec
 - **Wireframes** — prototypes v1-v5 index with repo/preview links
 - **Tasks** — current task per person (what Ghost / Zoro / each agent is doing right now)
 - **Status** — current phase, next milestone, blockers
+- **Crons** — Vercel route jobs plus OpenClaw jobs running on `zyra-mini`
 - **Zoro's Notes** — Remotion-generated explainer videos (Phase B)
 
 ## Phase split (be honest about what's built)
@@ -21,17 +22,21 @@ A Next.js 15 site, password-gated (password: `2010` by default), deployable to V
 - Full site scaffold, password gate, all content sections populated from `../docs/`
 - Cinematic 2D vault door + keypad entry (CSS + SVG + Framer Motion)
 - Isometric 2D office dashboard with clickable workstations
+- React Three Fiber Floor 3D page with 16 stand-in operators
+- Council Hall, status terminal, credit ops, task board, and automation rack
 - Vercel cron stub at `/api/cron/ai-team-tick`
+- Zyra/Zara OpenClaw worker registry, task board, and cron surface
 - Placeholder character portraits (referenced but not generated)
 
 **Phase B — next session:**
-- React Three Fiber 3D office scene
-- SpriteCook-generated hyperrealistic character avatars for all 14
+- SpriteCook-generated hyperrealistic character avatars for all 16
+- Ready Player Me rigs replacing Floor 3D stand-ins
 - Remotion explainer videos (Zoro onboarding, game flow diagrams, etc.)
 - Ambient music (requires licensed track — Ghost picks)
 
 **Phase C — later:**
 - Vercel Cron wired to real AI team progress logic (actual autonomous work)
+- GitHub Issues sync for the expanded task board and OpenClaw worker loops
 - Onlook integration — **BLOCKED**: Onlook is Next.js+Tailwind only and not embeddable, so it can't edit the Expo/RN game and can't be iframed inside this site. We'll document an alternative IDE path (Conway MCP sandbox or CodeSandbox embed).
 
 ## Run locally
@@ -91,6 +96,9 @@ web/
 │   │   │   ├── wireframes/page.tsx
 │   │   │   ├── tasks/page.tsx
 │   │   │   ├── status/page.tsx
+│   │   │   ├── automations/page.tsx
+│   │   │   ├── council/page.tsx
+│   │   │   ├── floor-3d/page.tsx
 │   │   │   └── notes/page.tsx       Zoro's video tray (Phase B)
 │   │   └── api/
 │   │       ├── auth/verify          POST password check

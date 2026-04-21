@@ -63,7 +63,7 @@ export const TOOLKIT: ToolkitEntry[] = [
     useFor:
       "2D character portraits, item icons, tilesets, UI elements, short 2D animations. Phase A avatar source.",
     notes:
-      "Prompts for all 14 operators live in data/avatars.ts. Use pixel mode for in-game, HD mode for office portraits.",
+      "Prompts for all 16 operators live in data/avatars.ts. Use pixel mode for in-game, HD mode for office portraits.",
     docsUrl: "https://spritecook.com/docs",
     accent: "#00F5FF",
   },
@@ -132,6 +132,30 @@ export const TOOLKIT: ToolkitEntry[] = [
     envKey: "OPENROUTER_API_KEY",
     useFor: "Multi-provider routing for cost / model-choice optimization.",
     accent: "#FFB341",
+  },
+  {
+    slug: "openclaw",
+    name: "OpenClaw",
+    category: "reasoning",
+    envKey: "OPENCLAW_*",
+    useFor:
+      "Zyra and Zara autonomous worker runtime on the Mac mini: task pickup, repo review, cron loops, branch work, and status reports.",
+    notes:
+      "OpenClaw workers must pull latest, inspect the board, convene Council when non-trivial, verify locally, push branches, and never idle when safe tasks exist.",
+    docsUrl: "https://docs.openclaw.ai",
+    accent: "#00F5FF",
+  },
+  {
+    slug: "blockrun-clawrouter",
+    name: "BlockRun ClawRouter",
+    category: "reasoning",
+    envKey: "BLOCKRUN_CLAWROUTER_WALLET",
+    useFor:
+      "Model routing for OpenClaw: prefer paid high-quality models when funded, then fall back to free router lanes so Zyra and Zara keep running.",
+    notes:
+      "Spend monitor tracks this manually until a live probe exists. Empty wallet means free fallback mode, not a hard stop.",
+    docsUrl: "https://openclaw.ai",
+    accent: "#67FFB5",
   },
   {
     slug: "vercel-gateway",

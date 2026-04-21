@@ -17,22 +17,22 @@ type BroadcastSlot = {
   accent: string;
 };
 
-// Curated first-wave broadcasts — every one of these has a pre-rendered voice
-// sample already, so Hyperframe binding can start on day one.
+// Curated first-wave broadcasts. Voice previews render when a pre-rendered
+// sample exists; Zyra/Zara start as script-ready OpenClaw slots.
 const BROADCASTS: BroadcastSlot[] = [
   {
     slug: "ghost",
-    role: "Founder / Creative Lead",
+    role: "Founder / Lead Developer",
     sampleLine:
-      "This is the Dev Lab. Twelve AI operators, two humans, one mission — ship the cyberpunk trading sim you've been waiting for.",
+      "This is the Dev Lab. Fourteen AI workers, two humans, one mission — ship CyberTrader with code that actually works.",
     targetLength: "0:12",
     accent: "#00F5FF",
   },
   {
     slug: "zoro",
-    role: "Co-founder / Build Partner",
+    role: "Co-founder / Creative Lead",
     sampleLine:
-      "Walk the floor with me. Every desk is wired. Click an operator, hear them speak — then check the repo, they probably just pushed.",
+      "Walk the floor with me. Every desk is wired. If it doesn't feel like CyberTrader, it doesn't ship yet.",
     targetLength: "0:10",
     accent: "#67FFB5",
   },
@@ -40,9 +40,25 @@ const BROADCASTS: BroadcastSlot[] = [
     slug: "compass",
     role: "AI Council Chair",
     sampleLine:
-      "The Council meets on the violet table, Monday nine hundred UTC. Twelve seats. Every decision logs to the vault. Quorum is twelve of twelve.",
+      "The Council meets on the violet table. Twelve subagents deliberate, Zyra and Zara report from the cron rack, and every decision logs to the vault.",
     targetLength: "0:14",
     accent: "#7A5BFF",
+  },
+  {
+    slug: "zyra",
+    role: "OpenClaw PM / QA Worker",
+    sampleLine:
+      "Zyra online. I pull main, read the board, check the crons, call the Council, and turn silence into the next safe task.",
+    targetLength: "0:10",
+    accent: "#00F5FF",
+  },
+  {
+    slug: "zara",
+    role: "OpenClaw Build Worker",
+    sampleLine:
+      "Zara here. Give me a scoped slice or I will find one. Branch, build, test, push, draft PR.",
+    targetLength: "0:10",
+    accent: "#67FFB5",
   },
   {
     slug: "reel",
@@ -55,6 +71,8 @@ const BROADCASTS: BroadcastSlot[] = [
 ];
 
 export default function BroadcastPage() {
+  const performerCount = PERFORMERS.length;
+
   return (
     <div className="flex flex-col gap-10">
       {/* Header */}
@@ -63,7 +81,7 @@ export default function BroadcastPage() {
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-heat" />
           <span>broadcast booth · hyperframes pending bind</span>
           <span className="text-dust">·</span>
-          <span className="text-dust">14 operators queued</span>
+          <span className="text-dust">{performerCount} operators queued</span>
         </div>
         <CyberText as="h1" className="text-4xl md:text-5xl" glitch>
           BROADCAST
@@ -141,7 +159,7 @@ export default function BroadcastPage() {
             label="Ready Player Me rigs"
             value="tracked"
             tone="violet"
-            note="14 rigs tracked in /data/avatars.ts. RPM + Hyperframe share rigs — one pipeline, two render targets."
+            note={`${performerCount} rigs tracked in /data/avatars.ts. RPM + Hyperframe share rigs — one pipeline, two render targets.`}
           />
         </div>
       </Panel>
@@ -149,7 +167,7 @@ export default function BroadcastPage() {
       {/* Broadcast slots */}
       <section className="flex flex-col gap-4">
         <div className="text-[10px] uppercase tracking-[0.3em] text-heat">
-          four slots · first wave · hyperframe binding pending
+          {BROADCASTS.length} slots · first wave · hyperframe binding pending
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           {BROADCASTS.map((b) => {
@@ -251,7 +269,7 @@ export default function BroadcastPage() {
       <Panel tone="violet">
         <PanelHeader
           eyebrow="the full roster"
-          title="14 Hyperframe slots — scripts in waiting"
+          title={`${performerCount} Hyperframe slots — scripts in waiting`}
         />
         <p className="mb-4 text-[13px] leading-relaxed text-chrome/90">
           Every operator gets a broadcast slot. The four above are first-wave (scripts locked,

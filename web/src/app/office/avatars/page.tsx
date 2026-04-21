@@ -8,6 +8,8 @@ import { TEAM } from "@/data/team";
 export const metadata = { title: "Avatar Lab — Character Rigs" };
 
 export default function AvatarsPage() {
+  const avatarCount = AVATAR_SPECS.length;
+
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
@@ -16,7 +18,7 @@ export default function AvatarsPage() {
           AVATAR LAB
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          Character rigs for the 14 residents of the Dev Lab. Two pipelines run side by side: a
+          Character rigs for the {avatarCount} residents of the Dev Lab. Two pipelines run side by side: a
           fast 2D portrait path via SpriteCook, and a true-3D animated path via Ready Player Me +
           React Three Fiber for the Phase B immersive office.
         </p>
@@ -226,7 +228,7 @@ export default function AvatarsPage() {
 
       <section className="flex flex-col gap-4">
         <div className="text-[10px] uppercase tracking-[0.3em] text-cyan">
-          14 characters · anchored across the floor
+          {avatarCount} characters · anchored across the floor
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {AVATAR_SPECS.map((a) => {

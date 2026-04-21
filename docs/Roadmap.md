@@ -1,6 +1,6 @@
 # Roadmap — 30-day plan + beyond
 
-> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Dates are from **2026-04-19** (today).
+> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Dates are anchored to the Phase 0 start date: **2026-04-19**.
 
 ## Phase 0 — Foundation (this week, 2026-04-19 → 2026-04-25)
 
@@ -9,12 +9,20 @@
 | Day | Deliverable | Owner |
 |---|---|---|
 | D1 (04-19) | Dev Lab repo scaffolded, agents defined, council charter, brand v1, Game Design Doc, Roadmap, setup.sh | Orchestrator (this session) |
-| D2 | Expo app boots on device + web, Zustand + MMKV wired, theme tokens imported | Frontend/Mobile |
-| D3 | Supabase local stack running, schema migrated, authority adapter interface defined | Backend/Web3 |
-| D4 | Deterministic PRNG + market tick engine skeleton + first unit tests | Economy & Trading Sim |
-| D5 | First SpriteCook asset batch: Eidolon mark, 4 faction sigils, 10 commodity icons | Brand & Asset |
-| D6 | Intro cinematic storyboard (Remotion skeleton scene) | Cinematic & Animation |
-| D7 | Council retrospective on Phase 0, Phase 1 scope lock | Council |
+| D2 | Dev Lab web deployed, root/web checks green, Zyra + Zara OpenClaw workers represented in docs and office UI | Ghost + Compass + Zyra + Zara |
+| D3 | Expo app boots on device + web, Zustand + MMKV wired, theme tokens imported | Frontend/Mobile + Zara |
+| D4 | Supabase local stack running, schema migrated, authority adapter interface defined | Backend/Web3 + Zyra |
+| D5 | Deterministic PRNG + market tick engine skeleton + first unit tests | Economy & Trading Sim |
+| D6 | First SpriteCook asset batch: Eidolon mark, 4 faction sigils, 10 commodity icons | Brand & Asset + Zoro |
+| D7 | Intro cinematic storyboard + Council retrospective on Phase 0, Phase 1 scope lock | Cinematic & Animation + Council |
+
+### 2026-04-21 status
+
+- Dev Lab web is live and the project has passing local verification.
+- Team model expanded to **16 operators**: Ghost, Zoro, 12 council subagents, Zyra, and Zara.
+- Zyra and Zara are documented as OpenClaw workers: Zyra owns PM / QA / cron autonomy; Zara owns implementation branches and draft PRs.
+- OpenClaw crons are mirrored in `web/src/data/automations.ts` so the `/office/automations` page shows both Vercel jobs and Mac mini jobs.
+- Expanded task board now gives Ghost, Zoro, every council subagent, Zyra, and Zara actionable work.
 
 ## Phase 1 — MVP (weeks 2–5, 2026-04-26 → 2026-05-23)
 
@@ -27,6 +35,8 @@
 - S1LKROAD terminal screen skeleton
 - 10 commodities visible with live ticking prices
 - Unit tests: market tick determinism, PRNG seed reproducibility
+- Zyra daily QA lane running before implementation starts
+- Zara opens first draft PR for Ghost review after Council selects the spike
 
 ### Week 3 (05-03 → 05-09): trade loop
 - Buy / sell flow end-to-end
@@ -61,6 +71,8 @@
 - First 10-minute loop completable without developer help
 
 **Phase 1 gate**: AI Council convenes. If all ✅, proceed to Phase 2.
+
+**OpenClaw gate**: Zyra must report latest checks and Zara must have all Phase 1 draft PRs rebased, green, and ready for Ghost/Zoro review before promotion.
 
 ## Phase 2 — Progression & Polish (weeks 6–8, 2026-05-24 → 2026-06-13)
 

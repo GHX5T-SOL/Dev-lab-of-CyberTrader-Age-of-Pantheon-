@@ -9,7 +9,7 @@ export const metadata = { title: "Zoro's Notes" };
  *
  * Planned first batch (Reel will cut these):
  *   1. "What is the Dev Lab?" (90 sec) — tour of the virtual office
- *   2. "How the 12-agent team works" (2 min) — org chart + Council charter
+ *   2. "How the 14-AI-worker team works" (2 min) — org chart + Council charter
  *   3. "From idea to MVP" (2 min) — the Phase 0 → Phase 5 pipeline
  *   4. "How to pick up a task" (60 sec) — Whiteboard → branch → PR
  *   5. "Prototype archaeology" (90 sec) — importing v1-v5 as branches
@@ -26,10 +26,10 @@ const PLANNED_NOTES = [
   },
   {
     slot: "note_02",
-    title: "How the 12-agent team works",
+    title: "How the 14-AI-worker team works",
     duration: "~2m",
     summary:
-      "Meet the agents. Read the org chart. Understand when each activates. See a live Council session format.",
+      "Meet the 12 council subagents, Zyra, and Zara. Read the org chart. Understand when each activates. See a live Council session format.",
   },
   {
     slot: "note_03",

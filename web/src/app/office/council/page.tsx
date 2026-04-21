@@ -13,8 +13,9 @@ export default function CouncilPage() {
           COUNCIL HALL
         </CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          Round table on floor_02. Compass chairs every session. Three agents rotate in based on
-          the topic. Each run writes a structured decision to{" "}
+          Round table on floor_02. Compass chairs every session with Cipher fact-checking. Three to
+          six agents rotate in based on the topic; Zyra joins PM / QA / cron calls and Zara joins
+          implementation / PR-risk calls. Each run writes a structured decision to{" "}
           <code className="text-cyan">memory/council-log.jsonl</code>. Crons fire the standup,
           nightly audit, and weekly digest on schedule — you can also convene manually.
         </p>
@@ -38,7 +39,8 @@ export default function CouncilPage() {
           </li>
           <li>
             The backing model is Claude (Anthropic). If the key isn&apos;t set, the Council
-            gracefully falls back to a stub run so the UI never dead-ends.
+            gracefully falls back to a stub run so the UI never dead-ends. OpenClaw workers can
+            also convene the Council before taking autonomous tasks with real risk.
           </li>
         </ul>
       </Panel>

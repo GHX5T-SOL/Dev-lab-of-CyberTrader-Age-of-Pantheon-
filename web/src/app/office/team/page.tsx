@@ -11,9 +11,10 @@ export default function TeamPage() {
         <div className="text-[10px] uppercase tracking-[0.3em] text-cyan">team_wall_01</div>
         <CyberText as="h1" className="text-3xl md:text-4xl">TEAM</CyberText>
         <p className="max-w-3xl text-sm leading-relaxed text-dust">
-          14 operators. Two founders. Twelve AI agents. Each agent has a name, a persona, and a
-          spec file under <code className="text-cyan">agents/</code>. Portraits land in Phase B via
-          SpriteCook. Until then — initials block + accent.
+          16 operators. Two founders. Twelve council subagents. Two named OpenClaw workers. Each
+          agent has a name, a persona, and a spec file under{" "}
+          <code className="text-cyan">agents/</code>. Portraits land in Phase B via SpriteCook.
+          Until then — initials block + accent.
         </p>
       </header>
 
@@ -33,7 +34,7 @@ export default function TeamPage() {
         <div className="mb-4 flex items-baseline justify-between">
           <CyberText as="h2" className="text-xl">AI TEAM</CyberText>
           <span className="text-[10px] uppercase tracking-[0.25em] text-dust">
-            12 agents · council members
+            14 AI workers · 12 council subagents · 2 OpenClaw agents
           </span>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -47,7 +48,7 @@ export default function TeamPage() {
         <div className="text-[10px] uppercase tracking-[0.25em] text-cyan">org chart</div>
         <h2 className="mt-1 text-lg">How they relate</h2>
         <pre className="mt-3 overflow-x-auto text-[12px] leading-relaxed text-chrome/90">{`
-  Ghost (founder, creative lead)
+  Ghost (founder, lead developer)
     ├── Compass (PM) — runs the board
     │    ├── Nyx         (game design)
     │    ├── Vex         (UI/UX)
@@ -59,10 +60,13 @@ export default function TeamPage() {
     │    ├── Cipher      (research)
     │    ├── Axiom       (QA)
     │    ├── Talon       (OpenClaw — long-running tasks)
+    │    ├── Zyra        (OpenClaw — PM / QA autonomy)
+    │    ├── Zara        (OpenClaw — implementation loops)
     │    └── Hydra       (ElizaOS — market swarm)
-    └── Zoro (co-founder, build lead)
+    └── Zoro (co-founder, creative lead)
 
   Council = any 5-7 agents convened by Compass per AI_Council_Charter.md.
+  Zyra joins PM / QA / cron calls. Zara joins build / branch / PR calls.
   Council never locks out founders — Ghost + Zoro can overrule.
 `}</pre>
       </section>
