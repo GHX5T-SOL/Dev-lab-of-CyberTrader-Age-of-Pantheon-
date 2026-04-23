@@ -1,8 +1,17 @@
-# Roadmap — 30-day plan + beyond
+# Roadmap - Phase B hardening + MVP path
 
-> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Dev Lab Phase B status updated **2026-04-21**.
+> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Planning reality-check updated **2026-04-23**.
 
-## Phase 0 — Foundation (this week, 2026-04-19 → 2026-04-25)
+## Reality check (2026-04-23)
+
+The **Dev Lab web companion is ahead of the actual game**. Phase B is live in `web/`, but the mobile game in `src/` and the backend in `backend/` are still mostly scaffolding: boot placeholder, PRNG, engine contracts, and a starter schema.
+
+That means the next meaningful production step is the **first playable slice**:
+- Zoro locks the creative brief for the first boot/login/terminal trading loop.
+- Ghost / Rune / Kite implement that slice against LocalAuthority.
+- Compass keeps the roadmap, status page, and Whiteboard honest after each council checkpoint.
+
+## Phase 0 - Foundation (this week, 2026-04-19 -> 2026-04-25)
 
 **Goal**: organized workspace, team activated, scaffolds in place. Core foundation is complete; remaining entries feed the game MVP.
 
@@ -16,9 +25,9 @@
 | D6 | Intro cinematic storyboard (Remotion skeleton scene) | Cinematic & Animation |
 | D7 | Council retrospective on Phase 0, Phase 1 scope lock | Council |
 
-## Phase B — Live 3D Dev Lab (2026-04-21 → 2026-04-28)
+## Phase B - Live 3D Dev Lab (2026-04-21 -> 2026-04-28)
 
-**Goal**: make the web command center feel like a living cyberpunk studio while the game MVP proceeds.
+**Goal**: harden the live web command center while the real game MVP finally starts moving.
 
 | Deliverable | Owner | Status |
 |---|---|---|
@@ -29,12 +38,18 @@
 | 60+ task Whiteboard with owner, priority, estimate, dependency, and acceptance criteria | Compass | Live |
 | GLB compression and LOD pass for heavy furniture files | Zara | Pending |
 | Browser visual/performance benchmark across desktop/mobile | Axiom / Ghost | Pending |
+| Council/log/task-board reconciliation after the 2026-04-23 review | Compass / Talon | In progress |
 
-## Phase 1 — MVP (weeks 2–5, 2026-04-26 → 2026-05-23)
+## Phase 1 - MVP (weeks 2-5, 2026-04-26 -> 2026-05-23)
 
-**Goal**: the v5 BUILD_PLAN Phase 1 deliverables, organized and AI-augmented.
+**Goal**: the first playable mobile slice of the actual game, not just more Dev Lab polish.
 
-### Week 2 (04-26 → 05-02): boot + trading terminal
+### Phase 1 kickoff gate
+- Zoro approves the creative brief for the first playable slice: boot/login, terminal hierarchy, commodity presentation, and the tone of the first trade.
+- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active.
+- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end.
+
+### Week 2 (04-26 -> 05-02): boot + trading terminal
 - Intro cinematic MVP (45s, skippable, replayable)
 - Wallet/login with dev-identity fallback
 - Ag3nt_0S//pIRAT3 boot sequence
@@ -42,7 +57,7 @@
 - 10 commodities visible with live ticking prices
 - Unit tests: market tick determinism, PRNG seed reproducibility
 
-### Week 3 (05-03 → 05-09): trade loop
+### Week 3 (05-03 -> 05-09): trade loop
 - Buy / sell flow end-to-end
 - Position tracking (avg entry, realized/unrealized PnL)
 - Energy drain + Dormant Mode
@@ -50,7 +65,7 @@
 - 0BOL ledger (local authority)
 - Unit tests: PnL math, energy drain, heat decay
 
-### Week 4 (05-10 → 05-16): progression + news
+### Week 4 (05-10 -> 05-16): progression + news
 - Rank + XP
 - News system with credibility scores
 - 3 event types (supply shock, pump rumor, eAgent sweep)
@@ -58,10 +73,10 @@
 - Tutorial overlay guiding first buy/sell
 - Unit tests: rank XP, news impact on price
 
-### Week 5 (05-17 → 05-23): polish + verify
+### Week 5 (05-17 -> 05-23): polish + verify
 - 13 MVP screens complete (no placeholders)
 - Settings, help/glossary, notifications
-- Manual QA run-through (full 10-min tutorial loop)
+- Manual QA run-through (full 10-minute tutorial loop)
 - Type check + lint + tests green
 - Bundle size + cold-start budgets hit
 - Phase 1 ship to TestFlight internal + Play Internal Testing
@@ -74,9 +89,9 @@
 - No unattributed protected IP
 - First 10-minute loop completable without developer help
 
-**Phase 1 gate**: AI Council convenes. If all ✅, proceed to Phase 2.
+**Phase 1 gate**: AI Council convenes. If all pass, proceed to Phase 2.
 
-## Phase 2 — Progression & Polish (weeks 6–8, 2026-05-24 → 2026-06-13)
+## Phase 2 - Progression & Polish (weeks 6-8, 2026-05-24 -> 2026-06-13)
 
 **Goal**: AgentOS unlock + faction system + missions.
 
@@ -90,19 +105,19 @@
 - Energy auto-buy
 - eAgent sweep events
 
-## Phase 3 — Endgame & Territory (weeks 9–11, 2026-06-14 → 2026-07-04)
+## Phase 3 - Endgame & Territory (weeks 9-11, 2026-06-14 -> 2026-07-04)
 
 **Goal**: PantheonOS unlock + territory + crew.
 
 - Rank 20 OS upgrade ceremony
-- 3D Neon Void city map (SVG → Three.js if feasible)
+- 3D Neon Void city map (SVG -> Three.js if feasible)
 - Territory control + faction overlays (flagged)
 - Crew formation
 - Advanced raids (flagged until stable)
 - Pantheon memory shard storyline
 - Seasonal leaderboard
 
-## Phase 4 — Soft launch (weeks 12–13, 2026-07-05 → 2026-07-18)
+## Phase 4 - Soft launch (weeks 12-13, 2026-07-05 -> 2026-07-18)
 
 - Beta with ~100 players (invite)
 - Economy tuning via ElizaOS swarm + real-player data
@@ -110,7 +125,7 @@
 - Legal review of $OBOL mint path
 - App Store + Play Store submission
 
-## Phase 5 — Public launch (TBD, target 2026-08)
+## Phase 5 - Public launch (TBD, target 2026-08)
 
 - Seasonal events live
 - Creator program (if legal)
@@ -130,9 +145,9 @@ Convene every Sunday at phase end. Standing agenda: hit/miss, blocker triage, ne
 
 ## Escalation triggers
 
-- Any slip > 3 days on a milestone → PM drafts recovery plan → council → Ghost
-- Any legal/regulatory finding → immediate escalation (no council)
-- Any economy change > 10% affecting existing players → council mandatory
+- Any slip > 3 days on a milestone -> PM drafts recovery plan -> council -> Ghost
+- Any legal/regulatory finding -> immediate escalation (no council)
+- Any economy change > 10% affecting existing players -> council mandatory
 
 ## Living doc
 

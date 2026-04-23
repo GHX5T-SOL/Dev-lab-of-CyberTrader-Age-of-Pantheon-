@@ -1,5 +1,5 @@
 /**
- * Roadmap — mirrors docs/Roadmap.md.
+ * Roadmap - mirrors docs/Roadmap.md.
  * Keep in sync; the docs file is canonical.
  */
 
@@ -24,8 +24,8 @@ export interface Phase {
 export const ROADMAP: Phase[] = [
   {
     id: "phase-0",
-    name: "Phase 0 — Foundation",
-    dates: "2026-04-19 → 2026-04-25",
+    name: "Phase 0 - Foundation",
+    dates: "2026-04-19 -> 2026-04-25",
     status: "complete",
     summary: "Scaffold the Dev Lab, lock the stack, and get the virtual office online.",
     deliverables: [
@@ -47,11 +47,11 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-b-dev-lab",
-    name: "Phase B — Live 3D Dev Lab",
-    dates: "2026-04-21 → 2026-04-28",
+    name: "Phase B - Live 3D Dev Lab",
+    dates: "2026-04-21 -> 2026-04-28",
     status: "active",
     summary:
-      "Turn the companion site into a living cyberpunk command center with local GLB avatars, a dynamic R3F office, and OpenClaw physical-layer surfacing.",
+      "The companion site is live; Phase B now focuses on hardening the 3D Dev Lab while the actual game catches up.",
     deliverables: [
       "Avatar Lab uses 16 local GLB rigs instead of a remote creator iframe",
       "Floor 3D loads office_floor_option_2.glb, furniture props, and moving operators",
@@ -59,10 +59,12 @@ export const ROADMAP: Phase[] = [
       "Zara + Zyra appear on Team Wall, header, status terminal, task board, and docs",
       "Whiteboard seeded with 60+ owner-tagged Phase B tasks",
       "Credit Ops page and persistent header meter refreshed",
+      "Planning layers reconciled after the 2026-04-23 council reality check",
     ],
     milestones: [
       { label: "Local GLB avatar gallery live", done: true },
       { label: "OpenClaw node status surfaced", done: true },
+      { label: "Roadmap / status / task-board reality check applied", done: true },
       { label: "GLB compression / LOD pass complete", done: false },
       { label: "Browser performance benchmark signed off", done: false },
     ],
@@ -70,20 +72,21 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-1",
-    name: "Phase 1 — MVP",
-    dates: "weeks 2-5 (2026-04-26 → 2026-05-23)",
+    name: "Phase 1 - MVP",
+    dates: "weeks 2-5 (2026-04-26 -> 2026-05-23)",
     status: "upcoming",
     summary:
-      "Stand up the deterministic tick loop + BIOS→Terminal Home flow against LocalAuthority. 13 screen stubs feature-flagged.",
+      "The real game is still scaffold-only, so Phase 1 starts with the first playable slice: boot/login, terminal trading, and one full local trade loop.",
     deliverables: [
-      "BIOS boot screen → Terminal Home transition",
-      "Deterministic tick loop (Mulberry32 + xfnv1a)",
+      "Zoro-approved creative brief for the first playable slice",
+      "BIOS boot screen -> Terminal Home transition",
+      "Deterministic tick loop beyond PRNG helpers",
       "Authority Adapter: LocalAuthority complete; SupabaseAuthority stub",
       "First trade flow end-to-end (buy / sell / ledger write)",
-      "13 nav screens stubbed and feature-flagged by OS tier",
-      "Brand palette applied in-app; cyberpunk UI pass",
+      "13 nav screens only after the first trade loop is playable",
     ],
     milestones: [
+      { label: "First playable slice brief signed off by Zoro", done: false },
       { label: "First green build on iOS + Android + Web", done: false },
       { label: "Trade round-trips through LocalAuthority", done: false },
       { label: "Deterministic replay harness passes 1000 seeds", done: false },
@@ -92,14 +95,14 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-2",
-    name: "Phase 2 — AgentOS",
-    dates: "weeks 6-8 (2026-05-24 → 2026-06-13)",
+    name: "Phase 2 - AgentOS",
+    dates: "weeks 6-8 (2026-05-24 -> 2026-06-13)",
     status: "upcoming",
     summary:
       "Unlock the AgentOS tier. Factions meaningful. Supabase authoritative. First cinematics.",
     deliverables: [
       "SupabaseAuthority wired behind a feature flag",
-      "Faction choice → world reaction",
+      "Faction choice -> world reaction",
       "Heat decay live + eAgent sweeps",
       "Remotion onboarding reel cut",
       "First HeyGen Hyperframe UI prototype",
@@ -112,8 +115,8 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-3",
-    name: "Phase 3 — PantheonOS",
-    dates: "weeks 9-11 (2026-06-14 → 2026-07-04)",
+    name: "Phase 3 - PantheonOS",
+    dates: "weeks 9-11 (2026-06-14 -> 2026-07-04)",
     status: "upcoming",
     summary: "Endgame tier. Pantheon shard reveal arcs. Optional Solana Mobile Wallet Adapter.",
     deliverables: [
@@ -130,8 +133,8 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-4",
-    name: "Phase 4 — Soft Launch",
-    dates: "week 12 (2026-07-05 → 2026-07-11)",
+    name: "Phase 4 - Soft Launch",
+    dates: "week 12 (2026-07-05 -> 2026-07-11)",
     status: "upcoming",
     summary: "Closed beta with a small circle. Feedback loop. Store page prep.",
     deliverables: [
@@ -148,8 +151,8 @@ export const ROADMAP: Phase[] = [
   },
   {
     id: "phase-5",
-    name: "Phase 5 — Public Launch",
-    dates: "week 13+ (2026-07-12 →)",
+    name: "Phase 5 - Public Launch",
+    dates: "week 13+ (2026-07-12 ->)",
     status: "upcoming",
     summary: "App Store + Play Store release. Marketing reel live. First real economy pressure test.",
     deliverables: [
