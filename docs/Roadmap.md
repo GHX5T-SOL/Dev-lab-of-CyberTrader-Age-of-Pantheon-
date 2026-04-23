@@ -6,9 +6,11 @@
 
 The **Dev Lab web companion is ahead of the actual game**. Phase B is live in `web/`, but the mobile game in `src/` and the backend in `backend/` are still mostly scaffolding: boot placeholder, PRNG, engine contracts, and a starter schema.
 
-That means the next meaningful production step is the **first playable slice**:
-- Zoro locks the creative brief for the first boot/login/terminal trading loop.
-- Ghost / Rune / Kite implement that slice against LocalAuthority.
+That means the next meaningful production step is the **first playable slice**. That work has now started in `src/`: the local demo already supports boot, handle claim, terminal home, market scan, buy, sell, persistence, and a deterministic `LocalAuthority` path.
+
+The current production focus is:
+- Zoro reviews and approves the shard intro / teaser tone so the experience stays aligned.
+- Ghost / Rune / Kite harden that slice into a repeatable demo on Web, Android, and iOS.
 - Compass keeps the roadmap, status page, and Whiteboard honest after each council checkpoint.
 
 ## Phase 0 - Foundation (this week, 2026-04-19 -> 2026-04-25)
@@ -42,15 +44,15 @@ That means the next meaningful production step is the **first playable slice**:
 
 ## Phase 1 - MVP (weeks 2-5, 2026-04-26 -> 2026-05-23)
 
-**Goal**: the first playable mobile slice of the actual game, not just more Dev Lab polish.
+**Goal**: harden the first playable mobile slice of the actual game into a repeatable demo, not just more Dev Lab polish.
 
 ### Phase 1 kickoff gate
-- Zoro approves the creative brief for the first playable slice: boot/login, terminal hierarchy, commodity presentation, and the tone of the first trade.
-- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active.
-- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end.
+- Zoro approves the creative brief for the first playable slice: boot/login, terminal hierarchy, commodity presentation, and the tone of the first trade. This is complete.
+- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active. This is complete in local/demo form.
+- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end. This gate is now cleared locally; device validation is the next gate.
 
 ### Week 2 (04-26 -> 05-02): boot + trading terminal
-- Intro cinematic MVP (45s, skippable, replayable)
+- Intro cinematic MVP scaffold created in `src/cinematics`; next step is wiring a skippable cut into the app
 - Wallet/login with dev-identity fallback
 - Ag3nt_0S//pIRAT3 boot sequence
 - S1LKROAD terminal screen skeleton
@@ -64,6 +66,14 @@ That means the next meaningful production step is the **first playable slice**:
 - Heat increment + slow decay
 - 0BOL ledger (local authority)
 - Unit tests: PnL math, energy drain, heat decay
+
+### Phase 1 progress snapshot (2026-04-23)
+- Creative brief written in `docs/Phase1-First-Playable-Slice-Brief.md`
+- Routed first slice exists in `src/app` and `src/screens/first-playable`
+- `LocalAuthority` is live; `SupabaseAuthority` remains a stub
+- Deterministic replay harness passes 1000 seeds
+- Web export is green
+- iOS and Android still need honest runtime validation before the demo is called ready
 
 ### Week 4 (05-10 -> 05-16): progression + news
 - Rank + XP

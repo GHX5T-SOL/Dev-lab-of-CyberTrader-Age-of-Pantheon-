@@ -16,24 +16,28 @@ export interface StatusBlock {
 
 export const STATUS: StatusBlock = {
   headline:
-    "Phase B Dev Lab is live, but the actual mobile game is still scaffold-only. The next milestone is the first playable slice.",
+    "Phase B Dev Lab is live and the first playable slice now exists. The next milestone is turning that local slice into a reliable cross-platform demo.",
   phaseId: "phase-b",
   nextMilestone:
-    "Finish Phase B hardening and kick off the first playable slice: Zoro creative brief, LocalAuthority trade loop, GLB perf sign-off, and council log governance.",
+    "Finish Phase B hardening and harden Phase 1: validate the playable slice on Web, Android, and iOS, wire the intro cut into boot, and move SupabaseAuthority beyond stub status.",
   blockers: [
-    "Playable mobile game is still scaffold-only: boot placeholder + PRNG + schema skeleton, no trading loop yet",
+    "The first playable loop is only validated honestly on web so far; Android and iOS runtime checks are still pending",
+    "SupabaseAuthority is still a stub, so the demo depends on LocalAuthority for all real progress",
     "Standalone web typecheck depends on generated .next/types from a prior build",
     "Supabase project not yet created (SUPABASE_* env vars empty)",
     "zyra-mini SSH resolves, but tailscale/openclaw CLIs were not on PATH during verification",
     "Large furniture GLBs need Zara compression/LOD pass before mobile-grade reuse",
   ],
   recentWins: [
+    "First playable slice now supports boot, handle claim, terminal home, market scan, buy, sell, and local persistence",
+    "LocalAuthority backs the current trading loop and deterministic replay passes 1000 seeds",
+    "Phase 1 cinematic workspace added under src/cinematics and the first teaser MP4 renders successfully",
     "AI Council runtime log is wired to memory/council-log.jsonl and /api/council/log",
     "Ghost and Zoro roles corrected globally in the Dev Lab data model",
     "Zara and Zyra added as OpenClaw Living Agents on zyra-mini",
     "16 local GLB avatar paths bound in web/src/data/performers.ts",
     "office_floor_option_2.glb chosen as the Phase B base scene for performance",
-    "Whiteboard expanded into 60+ owner-tagged tasks with estimates and acceptance criteria",
+    "Whiteboard expanded and re-aligned around demo hardening tasks",
   ],
   signals: [
     {
@@ -44,7 +48,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Playable game",
       state: "amber",
-      detail: "Mobile app is still a scaffold: boot placeholder, PRNG, contracts, and starter schema only",
+      detail: "Boot, handle claim, terminal, trade loop, LocalAuthority, and local persistence are live; cross-platform QA and polish still block a true demo-ready call",
     },
     {
       label: "3D office",
@@ -64,7 +68,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Team ready",
       state: "green",
-      detail: "Ghost + Zoro + 12 AI + Zara/Zyra defined with local rigs",
+      detail: "Ghost + Zoro + 12 AI + Zara/Zyra defined with local rigs and a live Phase 1 workstream",
     },
     {
       label: "Spend monitor",
