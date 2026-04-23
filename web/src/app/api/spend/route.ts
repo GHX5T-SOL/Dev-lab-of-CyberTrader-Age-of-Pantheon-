@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { isAuthenticated } from "@/lib/auth";
 import { getSpendReport } from "@/lib/spend";
 
 export const runtime = "nodejs";
@@ -15,10 +14,6 @@ export const dynamic = "force-dynamic";
  */
 export async function GET() {
   const t0 = Date.now();
-  if (!(await isAuthenticated())) {
-    console.warn("[/api/spend] unauthorized");
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
   try {
     const report = await getSpendReport();
     const ms = Date.now() - t0;

@@ -28,10 +28,15 @@ const NAV = [
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const isWorldRoute = pathname === "/office";
 
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST" });
     router.replace("/gate");
+  }
+
+  if (isWorldRoute) {
+    return null;
   }
 
   return (

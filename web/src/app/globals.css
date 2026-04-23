@@ -228,3 +228,20 @@ a:hover {
     radial-gradient(800px 400px at 20% 70%, rgba(255, 42, 77, 0.1) 0%, transparent 70%),
     linear-gradient(180deg, #050608 0%, #0a0d12 50%, #050608 100%);
 }
+
+.game-shell {
+  background:
+    radial-gradient(900px 420px at 18% 82%, rgba(255, 42, 77, 0.16) 0%, transparent 72%),
+    radial-gradient(1200px 600px at 82% 20%, rgba(0, 245, 255, 0.14) 0%, transparent 70%),
+    radial-gradient(900px 520px at 50% 100%, rgba(122, 91, 255, 0.18) 0%, transparent 68%),
+    linear-gradient(180deg, #050608 0%, #030406 100%);
+}
+
+.lab-overlay-panel {
+  backdrop-filter: blur(16px);
+}
+
+.lab-overlay-panel iframe,
+.lab-overlay-panel video {
+  max-width: 100%;
+}
