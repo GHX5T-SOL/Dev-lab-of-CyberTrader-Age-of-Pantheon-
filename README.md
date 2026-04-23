@@ -92,7 +92,7 @@ Detailed profiles: [`/agents/`](agents/).
 
 ## Current phase: **Phase B — Live 3D Dev Lab**
 
-Phase 0 foundation is complete. The web companion now runs as a Phase B command center: local GLB avatar gallery, dynamic React Three Fiber office, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
+Phase 0 foundation is complete. The web companion now runs as a Phase B command center: `/office` is a password-gated office-game runtime with founder selection, in-world movement, local GLB avatars, React Three Fiber office traversal, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
 
 Next game phase: **Phase 1 — MVP** (pirate-OS trading loop from v5 BUILD_PLAN weeks 1–4). See [docs/Roadmap.md](docs/Roadmap.md) and [PHASE_B.md](PHASE_B.md).
 

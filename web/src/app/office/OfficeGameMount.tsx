@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-const ImmersiveOfficeGame = dynamic(() => import("@/components/game/ImmersiveOfficeGame"), {
+const OfficeRuntime = dynamic(() => import("@/components/game/office-v2/OfficeRuntime"), {
   ssr: false,
   loading: () => (
     <div className="flex min-h-screen items-center justify-center bg-void">
@@ -12,10 +12,10 @@ const ImmersiveOfficeGame = dynamic(() => import("@/components/game/ImmersiveOff
           <span className="absolute inset-0 rounded-full border border-cyan" />
         </div>
         <div className="text-[10px] uppercase tracking-[0.34em] text-cyan">
-          booting immersive office runtime
+          booting 3d office runtime
         </div>
         <div className="text-[10px] uppercase tracking-[0.22em] text-dust">
-          loading r3f · movement rig · live workstations
+          loading character select · free roam · live workstations
         </div>
       </div>
     </div>
@@ -23,5 +23,5 @@ const ImmersiveOfficeGame = dynamic(() => import("@/components/game/ImmersiveOff
 });
 
 export default function OfficeGameMount() {
-  return <ImmersiveOfficeGame />;
+  return <OfficeRuntime />;
 }

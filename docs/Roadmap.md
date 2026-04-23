@@ -33,11 +33,14 @@ The current production focus is:
 
 | Deliverable | Owner | Status |
 |---|---|---|
+| `/office` rebuilt as the primary office-game runtime with founder selection, free-roam movement, and hotspot surfaces | Rune / Vex / Ghost | Live |
+| `/office-v2` runtime alias kept for QA and rollout | Rune | Live |
 | Local GLB Avatar Lab replacing the remote creator iframe | Rune / Vex | Live |
 | Dynamic Floor 3D scene with `office_floor_option_2.glb`, furniture props, and moving operators | Rune / Reel | Live |
 | Ghost = Lead Developer and Zoro = Creative Lead across web/docs | Compass | Live |
 | Zara + Zyra OpenClaw agents surfaced on Team Wall, header, status, docs, and task board | Talon / Zyra | Live |
 | 60+ task Whiteboard with owner, priority, estimate, dependency, and acceptance criteria | Compass | Live |
+| Shared Ready Player Me motion pack retargeted onto local office avatars | Reel / Zara | Live |
 | GLB compression and LOD pass for heavy furniture files | Zara | Pending |
 | Browser visual/performance benchmark across desktop/mobile | Axiom / Ghost | Pending |
 | Council/log/task-board reconciliation after the 2026-04-23 review | Compass / Talon | In progress |

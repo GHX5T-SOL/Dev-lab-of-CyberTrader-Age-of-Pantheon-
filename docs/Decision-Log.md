@@ -2,6 +2,31 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-23 - Office runtime rebuild
+
+**Members**: Ghost direction, Compass, Vex, Rune, Reel, Axiom, Talon.
+
+**Topic**: Replace the remaining workstation-style `/office` shell with a true office-game runtime and lock the supporting architecture around it.
+
+**Decisions**:
+1. **`/office` now becomes the primary runtime route.** The user enters through founder selection and then moves through the office rather than browsing a conventional dashboard.
+2. **`/office-v2` remains as an explicit alias.** It gives QA and rollout a stable runtime-specific entry while the architecture settles.
+3. **Runtime interaction is proximity-first.** Whiteboard, wireframes, credits, cinema, brand, council, status, and OpenClaw are handled as in-world hotspots instead of permanent page-level panels.
+4. **Shared avatar motion comes from the Ready Player Me animation library.** Local GLB avatars are retargeted at runtime with `SkeletonUtils.retargetClip` rather than remaining mostly static.
+5. **Agent consoles ship as note/task capture first.** Messaging to avatars is stored through `/api/office/messages`; live autonomous execution remains a future phase.
+
+**Dissent / trade-offs**:
+- The group accepted a web-native stylized-realism target instead of chasing literal AAA photorealism in-browser.
+- Runtime retargeting is good enough for Phase B, but Zara still owns the stronger baked-animation path on `zyra-mini`.
+
+**Hand-off**:
+- Axiom -> keep hardening browser/runtime QA.
+- Zara -> prep higher-fidelity animation bakes and GLB optimization on the node.
+- Compass -> keep roadmap/docs aligned with the office-game architecture.
+- Ghost -> final runtime ship decision and push.
+
+---
+
 ## 2026-04-23 - Project reality check + Zoro next task
 
 **Members**: Compass (facilitator), Cipher (fact-check), Rune/Axiom, Nyx/Oracle, Talon. Ghost and Zoro observed.
