@@ -1,7 +1,7 @@
 # AI Asset Pipeline
 
-> Practical notes from the current upgrade pass using ImageGen, SpriteCook,
-> Figma, and Hugging Face.
+> Practical notes from the current upgrade passes using ImageGen, SpriteCook,
+> Figma, Hugging Face, and Remotion.
 
 ## What changed in this pass
 
@@ -17,6 +17,9 @@ Used built-in image generation to create missing Phase 1 commodity art for:
 - `AETH` Aether Tabs
 - `BLCK` Blacklight Serum
 
+Used built-in image generation again to create:
+- `Eidolon shard core` boot / hydration centerpiece
+
 The generated source files remain under:
 - `C:\Users\akmha\.codex\generated_images\019db97e-f708-7e53-9557-b83070b9a248`
 
@@ -25,6 +28,7 @@ Selected outputs were copied into the project at:
 - `src/assets/commodities/matrix_salt.png`
 - `src/assets/commodities/aether_tabs.png`
 - `src/assets/commodities/blacklight_serum.png`
+- `src/assets/ui/eidolon_shard_core.png`
 
 ## SpriteCook status
 
@@ -59,10 +63,34 @@ Useful style reference found for game-art experimentation:
 That model is not a direct fit for the current premium mobile commodity pass,
 but it is worth remembering for retro side projects or alternate mockups.
 
+Useful current repos found for video experimentation:
+
+- `ali-vilab/text-to-video-ms-1.7b`
+- `ali-vilab/modelscope-damo-text-to-video-synthesis`
+- `camenduru/damo-image-to-video`
+
+Why these matter:
+- they are candidates for future teaser or promo experimentation
+- they are not part of the current in-repo render path, which is now Remotion-first
+
+## Remotion status
+
+A working Phase 1 teaser scaffold now exists under:
+- `src/cinematics/`
+
+Current verified output:
+- `src/cinematics/out/phase1-teaser-still.png`
+
+Current use:
+- vertical teaser still / video scaffold
+- boot shard visual as the cinematic anchor
+- commodity art layered into the market reveal beat
+
 ## Recommended workflow
 
 1. Generate a first-pass commodity or prop image.
 2. Clean the cutout if needed using a background-removal model/workflow.
 3. Import the selected final into `src/assets/` or `web/public/brand/`.
 4. Update the consuming UI immediately so the asset is exercised in runtime.
-5. Replace provisional art later with SpriteCook finals when credits are available.
+5. If needed, promote the same assets into `src/cinematics/public/` for teaser work.
+6. Replace provisional art later with SpriteCook finals when credits are available.
