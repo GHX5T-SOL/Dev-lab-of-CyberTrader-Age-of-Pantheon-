@@ -79,3 +79,7 @@ playground/*
 *.tmp
 *.cache
 .superdesign
+
+# Source media copied into src/assets/media for Expo bundling.
+/A_dark_cinematic_cyberpunk_int_Kling_30__25449.mp4
+/photo_2026-04-17_09-03-00.jpg
