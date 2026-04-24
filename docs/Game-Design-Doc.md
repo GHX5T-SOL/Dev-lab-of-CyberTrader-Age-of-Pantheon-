@@ -160,11 +160,12 @@ No placeholder main-nav pages ship. Feature-flagged screens live behind flags in
 - First 10-minute loop completable without help.
 - Interface feels like a **working cyberdeck**.
 
-## Open design questions (for the Council)
+## Council-locked mechanics (2026-04-24)
 
-1. Should the starter Energy allotment be 72h wall-clock or 72h active-play?
-2. Should the first faction switch be free or 100k 0BOL?
-3. Should Heat decay be linear, exponential, or piecewise?
-4. Should offline tick cap be 50, 100, or 200 ticks?
+**Energy system**: 72h wall-clock allotment with offline tick capping (prevents exploitation while maintaining mobile game expectations)
 
-(These go to council in Phase 1. Defaults in MVP: wall-clock / free / exponential / 100.)
+**Faction switching**: First switch free, subsequent switches cost 0BOL (reduces onboarding friction for new players)
+
+**Heat decay**: Exponential curve (creates strategic risk/reward depth for advanced players)
+
+**Offline simulation**: 100-tick cap (balances user experience vs server performance costs)

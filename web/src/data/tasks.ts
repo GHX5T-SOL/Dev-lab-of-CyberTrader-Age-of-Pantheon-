@@ -23,7 +23,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-23";
+export const LAST_UPDATED = "2026-04-24";
 
 function task(input: Task): Task {
   return input;
@@ -703,6 +703,17 @@ export const TASKS: Task[] = [
     estimate: "2h",
     acceptanceCriteria: ["Source of truth is declared", "Auto-sync or manual sync policy documented", "Retention/export expectations written", "Roadmap or protocol updated to reflect the decision"],
     tags: ["governance", "council", "logging"],
+  }),
+  task({
+    id: "compass-p0-002",
+    owner: "compass",
+    title: "AI Council Session #1: Core game mechanics decisions",
+    status: "done",
+    priority: "P0",
+    estimate: "3h",
+    acceptanceCriteria: ["4 mechanics questions decided", "Decision-Log.md updated", "Game-Design-Doc.md updated", "Council format validated"],
+    tags: ["council", "game-design", "mechanics"],
+    notes: "Completed 2026-04-24. Locked Energy (wall-clock), faction switching (free first), Heat decay (exponential), offline ticks (100 cap).",
   }),
 
   task({

@@ -2,6 +2,24 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-24 — Core Game Mechanics Lock
+
+**Members**: Project Manager (Zyra, facilitator), Research & Best-Practices, Game Designer, Economy & Trading Simulation, Backend/Web3
+
+**Topic**: Four core game mechanics from Game-Design-Doc.md open questions - Energy timing, faction switching costs, Heat decay curves, and offline tick limits.
+
+**Decisions**:
+1. **Starter Energy allotment**: 72h wall-clock (not active-play) - aligns with mobile game expectations, offline tick capping prevents exploitation.
+2. **First faction switch**: Free - reduces onboarding friction and analysis paralysis for new players.
+3. **Heat decay curve**: Exponential - creates strategic risk/reward depth vs linear simplicity.
+4. **Offline tick cap**: 100 ticks - balances user experience vs database/Edge Function performance costs.
+
+**Dissent**: Backend agent preferred active-play energy timing (exploitation prevention) and linear Heat decay (implementation simplicity).
+
+**Hand-off**: Game Designer → update Game-Design-Doc.md to lock decisions. Backend → implement offline tick capping. Economy → model exponential Heat decay parameters. PM → schedule Terminal Home UI council session.
+
+**Affected files**: docs/Game-Design-Doc.md, src/engine/types.ts (validation), backend schema (future)
+
 ## 2026-04-23 - Office runtime rebuild
 
 **Members**: Ghost direction, Compass, Vex, Rune, Reel, Axiom, Talon.
