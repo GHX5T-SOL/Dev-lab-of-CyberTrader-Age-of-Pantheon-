@@ -70,6 +70,25 @@ Examples:
 
 ## Physical Layer Configuration
 
+### SSH Persistent Key Setup (`setup-ssh-zyra-mini.sh`)
+
+A helper script is provided to ensure the **public SSH key** for the current user is installed on the `zyra-mini` node, enabling password‑less `ssh zyra-mini` access for both Zyra and Zara.
+
+```bash
+# From any workspace (Zyra or Zara)
+bash scripts/setup-ssh-zyra-mini.sh
+```
+
+The script:
+1. Generates an SSH key pair (`~/.ssh/id_ed25519`) if none exists.
+2. Uses `ssh-copy-id` (or a manual `cat` fallback) to append the public key to `~/.ssh/authorized_keys` on the remote `zyra-mini` node.
+3. Verifies the connection (`ssh -o BatchMode=yes zyra-mini "echo ok"`).
+4. Prints a short guide on where the access note lives (`docs/Zyra-Zara-Governance.md`).
+
+This satisfies the task *“Set up persistent SSH key auth and document zyra‑mini access”* and provides clear, repeatable documentation for future onboarding.
+
+---
+
 ### **Node Setup** (`ssh zyra-mini`)
 ```bash
 # Zyra workspace
