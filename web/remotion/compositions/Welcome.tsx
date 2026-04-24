@@ -30,7 +30,7 @@ export const WELCOME_DURATION = 1200;
 type Accent = keyof typeof BRAND;
 
 const OPERATORS: { slug: string; name: string; role: string; accent: Accent }[] = [
-  { slug: "ghost", name: "GHOST", role: "Founder / Creative Lead", accent: "cyan" },
+  { slug: "ghost", name: "GHOST", role: "Lead Developer", accent: "cyan" },
   { slug: "zoro", name: "ZORO", role: "Co-founder / Build Partner", accent: "acid" },
   { slug: "compass", name: "COMPASS", role: "AI Council Chair", accent: "violet" },
   { slug: "reel", name: "REEL", role: "Cinematic Director", accent: "heat" },

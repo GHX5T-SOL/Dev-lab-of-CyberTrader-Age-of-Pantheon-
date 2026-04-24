@@ -1,9 +1,31 @@
 import type { LocalAuthoritySnapshot } from "@/authority/local-authority";
-import type { MarketNews, PlayerProfile, Position, Resources } from "@/engine/types";
+import type {
+  DailyChallenge,
+  AwayReport,
+  BountySnapshot,
+  DistrictStateRecord,
+  FlashEvent,
+  MarketNews,
+  Mission,
+  PlayerProfile,
+  Position,
+  RankCelebration,
+  RankSnapshot,
+  Resources,
+  TradeJuice,
+  TradeStreak,
+} from "@/engine/types";
 import type { ChangeMap, PriceMap } from "@/engine/demo-market";
-import type { DemoPhase, TerminalView } from "@/state/demo-store";
+import type {
+  DemoPhase,
+  GameClockState,
+  GameNotification,
+  TerminalView,
+  WorldState,
+} from "@/state/demo-store";
+import type { LocationInventoryMap, TransitShipment } from "@/data/locations";
 
-const STORAGE_KEY = "cybertrader.phase1.terminal-frontend.v3";
+const STORAGE_KEY = "cybertrader.phase1.terminal-frontend.v4";
 
 interface PersistedDemoSession {
   phase: DemoPhase;
@@ -19,6 +41,33 @@ interface PersistedDemoSession {
   resources: Resources;
   positions: Record<string, Position>;
   activeNews: MarketNews[];
+  progression?: RankSnapshot;
+  clock?: GameClockState;
+  world?: WorldState;
+  notifications?: GameNotification[];
+  transitShipments?: TransitShipment[];
+  locationInventories?: LocationInventoryMap;
+  activeFlashEvent?: FlashEvent | null;
+  flashEventCount?: number;
+  nextFlashEventAt?: number;
+  flashCooldownUntil?: number;
+  pendingMission?: Mission | null;
+  activeMission?: Mission | null;
+  missionHistory?: Mission[];
+  npcReputation?: Record<string, number>;
+  missionCount?: number;
+  nextMissionAt?: number;
+  streak?: TradeStreak;
+  dailyChallenges?: DailyChallenge[];
+  dailyChallengeDayKey?: string;
+  districtStates?: Record<string, DistrictStateRecord>;
+  districtStateCount?: number;
+  nextDistrictStateAt?: number;
+  bounty?: BountySnapshot;
+  awayReport?: AwayReport | null;
+  tradeJuice?: TradeJuice | null;
+  heatWarning?: { threshold: number; createdAt: number } | null;
+  rankCelebration?: RankCelebration | null;
   selectedTicker: string;
   orderSize: number;
   lastRealizedPnl: number | null;

@@ -87,7 +87,7 @@ export const WORLD_HOTSPOTS: WorldHotspot[] = [
     id: "wireframes",
     title: "Wireframe Wall",
     room: "Signal Wall",
-    summary: "Prototype monitors for v1-v5, str33t_trad3r, and the active Dev Lab.",
+    summary: "Prototype monitors for v1-v6, str33t_trad3r, and the Dev Lab command center.",
     prompt: "Inspect prototype monitors",
     accent: "#00F5FF",
     position: [0, 2.1, -8.28],

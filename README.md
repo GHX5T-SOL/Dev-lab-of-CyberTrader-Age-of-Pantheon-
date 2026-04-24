@@ -1,6 +1,6 @@
 # Dev Lab of CyberTrader: Age of Pantheon
 
-> **The single organized hub** where Ghost, Zoro, and the full AI team turn five scattered prototypes into a shippable cyberpunk trading game.
+> **The single organized hub** where Ghost, Zoro, and the full AI team turn six scattered prototypes into a shippable cyberpunk trading game.
 
 [![status](https://img.shields.io/badge/status-phase--b--live--3d--dev--lab-00ffcc)]()
 [![platform](https://img.shields.io/badge/platform-Expo%20%7C%20iOS%20%7C%20Android%20%7C%20Web-00ffcc)]()
@@ -12,7 +12,7 @@
 
 A **playground + workspace + command center** for CyberTrader: Age of Pantheon — a mobile cyberpunk trading simulator set in 2077 where players are rogue Eidolons running evolving cyberdeck OS tiers (Ag3nt_0S//pIRAT3 → AgentOS → PantheonOS) and trading commodities on the dark market S1LKROAD 4.0.
 
-**Canonical vision source**: the v5 prototype's `BUILD_PLAN.md`. This Dev Lab absorbs, cleans, and continues from there — but with rock-solid organization, an AI team, and a real ship pipeline.
+**Canonical vision source**: the v5 prototype's `BUILD_PLAN.md`. **Canonical playable build**: `CyberTrader-Age-of-Pantheon-v6`, exported from this Dev Lab's `src/` app on 2026-04-24. This Dev Lab remains the organized source of docs, decisions, and the wider ship pipeline.
 
 ## Who this is for
 
@@ -95,6 +95,13 @@ Detailed profiles: [`/agents/`](agents/).
 Phase 0 foundation is complete. The web companion now runs as a Phase B command center: `/office` is a password-gated office-game runtime with founder selection, in-world movement, local GLB avatars, React Three Fiber office traversal, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
 
 Next game phase: **Phase 1 — MVP** (pirate-OS trading loop from v5 BUILD_PLAN weeks 1–4). See [docs/Roadmap.md](docs/Roadmap.md) and [PHASE_B.md](PHASE_B.md).
+
+## Prototype lineup
+
+- `v1` to `v4` are archived reference prototypes.
+- `v5` remains the design-source reference because its `BUILD_PLAN.md` seeded the current roadmap.
+- `v6` is the chosen playable game branch and lives in its own repo: `https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6`
+- This Dev Lab continues as the command center where docs, planning, decisions, assets, and support systems stay organized around the shipping game.
 
 ## Brand & vision (one-line)
 

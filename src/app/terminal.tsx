@@ -1,12 +1,17 @@
 import * as React from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import * as Haptics from "expo-haptics";
+import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import ActionButton from "@/components/action-button";
+import AnimatedNumber from "@/components/animated-number";
 import ChartSparkline from "@/components/chart-sparkline";
 import CommodityRow from "@/components/commodity-row";
 import ConfirmModal from "@/components/confirm-modal";
 import NeonBorder from "@/components/neon-border";
-import { DEMO_COMMODITIES, getStealthAdjustedHeatDelta, getTradeEnergyCost, roundCurrency } from "@/engine/demo-market";
+import { getLocation } from "@/data/locations";
+import { getActiveDistrictState, isDistrictBuyRestricted, isDistrictSellRestricted } from "@/engine/district-state";
+import { DEMO_COMMODITIES, getTradeEnergyCost, getValueBasedTradeHeatDelta, roundCurrency } from "@/engine/demo-market";
+import { isTradingBlockedByFlash } from "@/engine/flash-events";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
@@ -24,14 +29,19 @@ export default function TerminalRoute() {
   const changes = useDemoStore((state) => state.changes);
   const priceHistory = useDemoStore((state) => state.priceHistory);
   const balance = useDemoStore((state) => state.balanceObol);
-  const resources = useDemoStore((state) => state.resources);
   const positions = useDemoStore((state) => state.positions);
   const activeNews = useDemoStore((state) => state.activeNews);
+  const world = useDemoStore((state) => state.world);
+  const clock = useDemoStore((state) => state.clock);
+  const activeFlashEvent = useDemoStore((state) => state.activeFlashEvent);
+  const districtStates = useDemoStore((state) => state.districtStates);
+  const tradeJuice = useDemoStore((state) => state.tradeJuice);
+  const resources = useDemoStore((state) => state.resources);
+  const heatWarning = useDemoStore((state) => state.heatWarning);
   const orderSize = useDemoStore((state) => state.orderSize);
   const setOrderSize = useDemoStore((state) => state.setOrderSize);
   const buySelected = useDemoStore((state) => state.buySelected);
   const sellSelected = useDemoStore((state) => state.sellSelected);
-  const advanceMarket = useDemoStore((state) => state.advanceMarket);
   const goHome = useDemoStore((state) => state.goHome);
   const isBusy = useDemoStore((state) => state.isBusy);
   const systemMessage = useDemoStore((state) => state.systemMessage);
@@ -46,11 +56,6 @@ export default function TerminalRoute() {
     }
   }, [params.ticker, selectTicker]);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => void advanceMarket(), 3200);
-    return () => clearInterval(timer);
-  }, [advanceMarket]);
-
   const commodity = (DEMO_COMMODITIES.find((item) => item.ticker === selectedTicker) ?? DEMO_COMMODITIES[0])!;
   const price = prices[commodity.ticker] ?? commodity.basePrice;
   const position = positions[commodity.ticker];
@@ -58,8 +63,41 @@ export default function TerminalRoute() {
   const maxSell = position?.quantity ?? 0;
   const maxQty = side === "BUY" ? maxBuy : Math.max(1, maxSell);
   const cost = roundCurrency(price * orderSize);
-  const heatDelta = getStealthAdjustedHeatDelta(resources, commodity.ticker, side);
+  const heatDelta = getValueBasedTradeHeatDelta(commodity.ticker, cost);
   const energyCost = getTradeEnergyCost(side, orderSize);
+  const currentLocation = getLocation(world.currentLocationId);
+  const travelling = Boolean(world.travelDestinationId && world.travelEndTime && world.travelEndTime > clock.nowMs);
+  const destination = getLocation(world.travelDestinationId);
+  const district = getActiveDistrictState(districtStates, world.currentLocationId, clock.nowMs);
+  const districtBlocked = side === "BUY" ? isDistrictBuyRestricted(district.state) : isDistrictSellRestricted(district.state);
+  const flashBlocked = isTradingBlockedByFlash(activeFlashEvent, world.currentLocationId);
+  const tradeBlocked = travelling || districtBlocked || flashBlocked;
+  const remainingMs = world.travelEndTime ? Math.max(0, world.travelEndTime - clock.nowMs) : 0;
+  const etaMinutes = Math.floor(remainingMs / 60_000);
+  const etaSeconds = Math.floor((remainingMs % 60_000) / 1000);
+
+  React.useEffect(() => {
+    if (!tradeJuice || clock.nowMs - tradeJuice.createdAt > 2500) {
+      return;
+    }
+    if (Platform.OS === "web") {
+      return;
+    }
+
+    const type = tradeJuice.kind === "profit"
+      ? Haptics.NotificationFeedbackType.Success
+      : tradeJuice.kind === "loss"
+        ? Haptics.NotificationFeedbackType.Error
+        : Haptics.NotificationFeedbackType.Warning;
+    void Haptics.notificationAsync(type);
+  }, [clock.nowMs, tradeJuice]);
+
+  React.useEffect(() => {
+    if (!heatWarning || clock.nowMs - heatWarning.createdAt > 2500 || Platform.OS === "web") {
+      return;
+    }
+    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+  }, [clock.nowMs, heatWarning]);
 
   const execute = async () => {
     setConfirmVisible(false);
@@ -74,6 +112,12 @@ export default function TerminalRoute() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, paddingBottom: 40, backgroundColor: terminalColors.background }}>
+      {resources.heat >= 90 ? (
+        <View pointerEvents="none" style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, borderWidth: 2, borderColor: terminalColors.red, opacity: 0.35, zIndex: 5 }} />
+      ) : null}
+      {heatWarning && clock.nowMs - heatWarning.createdAt < 1800 ? (
+        <View pointerEvents="none" style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, borderWidth: 2, borderColor: terminalColors.red, zIndex: 6 }} />
+      ) : null}
       <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
         <Pressable
           onPress={() => {
@@ -86,9 +130,31 @@ export default function TerminalRoute() {
         </Pressable>
         <View style={{ flex: 1, alignItems: "flex-end" }}>
           <Text style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 16 }}>S1LKROAD 4.0</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>NODE: LOCALHOST</Text>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>NODE: {currentLocation.name.toUpperCase()}</Text>
         </View>
       </View>
+
+      {travelling ? (
+        <NeonBorder style={{ marginBottom: 12 }}>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
+            TRAVELLING TO {destination.name.toUpperCase()}... ETA {etaMinutes}m {etaSeconds}s
+          </Text>
+          <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            TRADING LOCKED UNTIL ARRIVAL
+          </Text>
+        </NeonBorder>
+      ) : null}
+
+      {districtBlocked || flashBlocked ? (
+        <NeonBorder style={{ marginBottom: 12 }}>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>
+            MARKET LOCKED // {flashBlocked ? "DISTRICT BLACKOUT" : district.state}
+          </Text>
+          <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            TRAVEL AWAY OR WAIT FOR STATE CLEARANCE
+          </Text>
+        </NeonBorder>
+      ) : null}
 
       <NeonBorder active style={{ padding: 0 }}>
         {DEMO_COMMODITIES.map((item, index) => {
@@ -112,7 +178,19 @@ export default function TerminalRoute() {
         <ChartSparkline data={priceHistory[commodity.ticker] ?? [price]} averageEntry={position?.avgEntry} />
       </View>
 
-      <NeonBorder active style={{ marginTop: 16 }}>
+      <NeonBorder
+        active
+        style={{
+          marginTop: 16,
+          borderColor: tradeJuice && clock.nowMs - tradeJuice.createdAt < 1500
+            ? tradeJuice.kind === "profit"
+              ? terminalColors.green
+              : tradeJuice.kind === "loss"
+                ? terminalColors.red
+                : terminalColors.amber
+            : undefined,
+        }}
+      >
         <View style={{ flexDirection: "row", gap: 8 }}>
           {(["BUY", "SELL"] as const).map((ticketSide) => (
             <Pressable
@@ -126,7 +204,11 @@ export default function TerminalRoute() {
             </Pressable>
           ))}
         </View>
-        <Text style={{ marginTop: 16, fontFamily: terminalFont, color: terminalColors.text, fontSize: 30 }}>{price.toFixed(2)} 0BOL</Text>
+        <AnimatedNumber
+          value={price}
+          formatter={(value) => `${value.toFixed(2)} 0BOL`}
+          style={{ marginTop: 16, fontFamily: terminalFont, color: terminalColors.text, fontSize: 30 }}
+        />
         <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>QUANTITY</Text>
         <TextInput
           value={String(orderSize)}
@@ -151,11 +233,38 @@ export default function TerminalRoute() {
             variant="primary"
             glowing
             label="[ EXECUTE ]"
-            disabled={isBusy || (side === "SELL" && maxSell <= 0)}
+            disabled={tradeBlocked || isBusy || (side === "SELL" && maxSell <= 0)}
             onPress={() => setConfirmVisible(true)}
           />
         </View>
       </NeonBorder>
+
+      {tradeJuice && clock.nowMs - tradeJuice.createdAt < 2500 ? (
+        <View style={{ marginTop: 10, alignItems: "center" }}>
+          <Text
+            style={{
+              fontFamily: terminalFont,
+              color: tradeJuice.kind === "profit" ? terminalColors.green : tradeJuice.kind === "loss" ? terminalColors.red : terminalColors.amber,
+              fontSize: tradeJuice.bigWin ? 18 : 12,
+              textAlign: "center",
+            }}
+          >
+            {tradeJuice.bigWin ? "BIG WIN // " : ""}
+            {tradeJuice.kind.toUpperCase()}
+          </Text>
+          <AnimatedNumber
+            value={tradeJuice.pnl}
+            formatter={(value) => `${value >= 0 ? "+" : ""}${value.toFixed(2)} 0BOL`}
+            style={{
+              marginTop: 3,
+              fontFamily: terminalFont,
+              color: tradeJuice.kind === "profit" ? terminalColors.green : tradeJuice.kind === "loss" ? terminalColors.red : terminalColors.amber,
+              fontSize: tradeJuice.bigWin ? 18 : 12,
+              textAlign: "center",
+            }}
+          />
+        </View>
+      ) : null}
 
       {flash ? (
         <Text style={{ marginTop: 10, fontFamily: terminalFont, color: flash === "success" ? terminalColors.green : terminalColors.red, fontSize: 11, textAlign: "center" }}>
@@ -200,12 +309,12 @@ export default function TerminalRoute() {
         <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>NEWS FEED</Text>
         {(activeNews.length
           ? activeNews.slice(0, 5)
-          : [{ id: "quiet", headline: "NO SIGNALS. MARKET HUM IS CLEAN.", affectedTickers: [], credibility: 100, priceMultiplier: 1, tickPublished: 0, tickExpires: 0 }]
+          : [{ id: "quiet", headline: "NO SIGNALS. MARKET HUM IS CLEAN.", affectedTickers: [], credibility: 1, priceMultiplier: 1, tickPublished: 0, tickExpires: 0 }]
         ).map((news) => (
           <View key={news.id} style={{ marginTop: 10 }}>
             <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>{news.headline}</Text>
             <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
-              {news.affectedTickers.join(" ")} // CRED {news.credibility}%
+              {news.affectedTickers.join(" ")} // CRED {Math.round(news.credibility * 100)}%
             </Text>
           </View>
         ))}
