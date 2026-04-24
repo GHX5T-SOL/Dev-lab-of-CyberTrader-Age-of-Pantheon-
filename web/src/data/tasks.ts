@@ -708,6 +708,17 @@ export const TASKS: Task[] = [
     tags: ["governance", "council", "logging"],
     notes: "Policy created: docs/Council-Logging-Policy.md. Canonical source = docs/Decision-Log.md (markdown). JSONL secondary for automation. 2026-04-23 sessions already migrated.",
   }),
+  task({
+    id: "compass-p0-002",
+    owner: "compass",
+    title: "AI Council Session #1: Core game mechanics decisions",
+    status: "done",
+    priority: "P0",
+    estimate: "3h",
+    acceptanceCriteria: ["4 mechanics questions decided", "Decision-Log.md updated", "Game-Design-Doc.md updated", "Council format validated"],
+    tags: ["council", "game-design", "mechanics"],
+    notes: "Completed 2026-04-24. Locked Energy (wall-clock), faction switching (free first), Heat decay (exponential), offline ticks (100 cap).",
+  }),
 
   task({
     id: "talon-p1-001",
