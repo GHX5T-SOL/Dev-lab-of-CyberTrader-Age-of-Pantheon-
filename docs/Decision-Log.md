@@ -2,6 +2,29 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-24 - v6 playable repo promotion
+
+**Members**: Ghost direction, Compass, Rune, Kite, Axiom.
+
+**Topic**: Decide whether the latest playable slice should graduate into its own public prototype repo and how the Dev Lab should refer to it.
+
+**Decisions**:
+1. **`CyberTrader-Age-of-Pantheon-v6` becomes the chosen playable game repo.** It is exported from this Dev Lab's `src/` Expo app so the shipping game has a clean standalone home.
+2. **The Dev Lab remains the command center, not the shipping build repo.** Docs, planning, AI-team operations, assets, and phase tracking stay here.
+3. **Prototype history is now six core versions deep.** `v1` through `v4` remain archived, `v5` remains the design-source reference, and `v6` is the active playable branch.
+4. **The monitor wall and repo docs must say that clearly.** Team-facing references should stop implying the Dev Lab itself is the active prototype.
+
+**Dissent / trade-offs**:
+- Keeping the game inside the Dev Lab would have been simpler in the short term, but it would keep mixing shipping gameplay code with studio-operations code.
+- Exporting `src/` to `v6` adds one more repo to manage, but it makes deployment, demoing, and future game-only iteration much cleaner.
+
+**Hand-off**:
+- Ghost -> push the standalone game repo.
+- Compass -> update Dev Lab docs and prototype references.
+- Axiom -> validate the first clean v6 web demo after export.
+
+---
+
 ## 2026-04-23 - Office runtime rebuild
 
 **Members**: Ghost direction, Compass, Vex, Rune, Reel, Axiom, Talon.

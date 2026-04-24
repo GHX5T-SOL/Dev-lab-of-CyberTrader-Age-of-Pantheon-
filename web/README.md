@@ -10,7 +10,7 @@ A Next.js 15 site, password-gated (password: `2010` by default), deployable to V
 - **Game Bible** — full lore from `../docs/Lore-Bible.md`
 - **Team** — all 16 operators (Ghost, Zoro, 12 AI agents, Zara, Zyra) with avatars, roles, personas, and OpenClaw node status
 - **Brand** — palette, logos, commodity asset spec
-- **Wireframes** — prototypes v1-v5 index with repo/preview links
+- **Wireframes** — prototypes v1-v6 index with repo/preview links
 - **Tasks** — current task per person (what Ghost / Zoro / each agent is doing right now)
 - **Status** — current phase, next milestone, blockers
 - **Avatar Lab** — live local GLB avatar gallery from `/public/GLB_Assets`
@@ -19,6 +19,8 @@ A Next.js 15 site, password-gated (password: `2010` by default), deployable to V
 - **Zoro's Notes** — Remotion-generated explainer videos
 
 ## Phase split (be honest about what's built)
+
+`v6` is now the chosen playable build. This `web/` app remains the internal studio office that tracks the six-prototype history and supports the shipping game.
 
 **Phase A — shipped:**
 - Full site scaffold, password gate, all content sections populated from `../docs/`
