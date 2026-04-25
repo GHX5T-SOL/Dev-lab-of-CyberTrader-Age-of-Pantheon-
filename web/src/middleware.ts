@@ -22,6 +22,16 @@ function isPublic(pathname: string): boolean {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  if (pathname === "/") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/office";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/office") || pathname.startsWith("/office-v2")) {
+    return NextResponse.next();
+  }
+
   if (isPublic(pathname)) {
     return NextResponse.next();
   }
