@@ -23,7 +23,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-25";
+export const LAST_UPDATED = "2026-04-25"; // NOTE: Typecheck fails due to missing Next.js pages/app dir; need to add placeholder or adjust script.
 
 function task(input: Task): Task {
   return input;
