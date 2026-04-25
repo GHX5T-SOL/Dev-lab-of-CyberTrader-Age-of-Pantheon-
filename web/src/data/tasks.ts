@@ -23,7 +23,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-24";
+export const LAST_UPDATED = "2026-04-25";
 
 function task(input: Task): Task {
   return input;
@@ -375,11 +375,12 @@ export const TASKS: Task[] = [
     id: "rune-p1-004",
     owner: "rune",
     title: "Update TypeScript data models for local GLB paths and OpenClaw node fields",
-    status: "review",
+    status: "done",
     priority: "P1",
     estimate: "2h",
     acceptanceCriteria: ["TeamMember supports glbModelPath", "PerformerSpec supports behavior", "Task schema supports priorities and acceptance criteria"],
     tags: ["typescript", "data"],
+    notes: "COMPLETED: TeamMember interface updated with glbModelPath and node fields. PerformerSpec includes glbModelPath and behavior fields. All acceptance criteria met.",
   }),
   task({
     id: "rune-p1-005",
@@ -586,11 +587,12 @@ export const TASKS: Task[] = [
     id: "cipher-p0-001",
     owner: "cipher",
     title: "Document Ready Player Me animation-library and drei animation integration patterns",
-    status: "review",
+    status: "done",
     priority: "P0",
     estimate: "3h",
     acceptanceCriteria: ["Official RPM source cited", "drei useAnimations source cited", "Three AnimationMixer source cited", "AI4AnimationPy fit assessed"],
     tags: ["research", "animation"],
+    notes: "COMPLETED: Documentation in web/public/GLB_Animations/README.md cites official RPM animation library. AnimatedOfficeAvatar.tsx shows drei useAnimations + Three.js integration with SkeletonUtils retargeting.",
     links: [
       { label: "RPM animation library", href: "https://github.com/readyplayerme/animation-library" },
       { label: "drei useAnimations", href: "https://drei.docs.pmnd.rs/abstractions/use-animations" },
