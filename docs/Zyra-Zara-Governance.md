@@ -79,6 +79,8 @@ A helper script is provided to ensure the **public SSH key** for the current use
 bash scripts/setup-ssh-zyra-mini.sh
 ```
 
+> **Note**: As of 2026-04-25 the hostname `zyra-mini` is not resolvable in this environment. Ensure the remote node is reachable via DNS or add an entry to `/etc/hosts` before running the script in production.
+
 The script:
 1. Generates an SSH key pair (`~/.ssh/id_ed25519`) if none exists.
 2. Uses `ssh-copy-id` (or a manual `cat` fallback) to append the public key to `~/.ssh/authorized_keys` on the remote `zyra-mini` node.
