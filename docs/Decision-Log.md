@@ -2,6 +2,32 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-25 - v6 playable systems + Dev Lab sync
+
+**Members**: Ghost direction, Compass, Rune, Kite, Oracle, Axiom, Zara, Zyra.
+
+**Topic**: Accept ready Dev Lab PRs, keep draft work out of `main`, and record the current CyberTrader v6 implementation status across the Dev Lab.
+
+**Decisions**:
+1. **Ready PRs are accepted into `main`.** PR #7 (`feat: GLB assets watcher`) and PR #9 (`zara-p0-001: Persistent SSH key auth for zyra-mini`) were clean and non-draft, so they were merged locally and prepared for push.
+2. **Draft PRs stay draft.** PR #10 (`feat: GLB watcher preview sync`) remains open because it is still marked draft, even though it is currently mergeable.
+3. **v6 is the active playable game repo.** The Dev Lab now tracks `https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6` as the canonical implementation branch for the actual game.
+4. **v6 status must be visible in docs and the office UI.** README, roadmap, v6 export notes, Phase B notes, Whiteboard data, status data, roadmap data, and prototype wall data should all say what is in place.
+
+**Current v6 implementation state**:
+- Core LocalAuthority trade loop, 0BOL ledger, inventory positions, XP/rank, and inventory slot limits.
+- Real-time ticks, deterministic news, location travel, heat/raids, Black Market heat reduction, and couriers.
+- Engagement layer: flash events, NPC missions, district states, streaks, daily challenges, bounty escalation, away reports, and action feedback.
+- Intro cinematic route using the shipped MP4, with browser smoke verification.
+
+**Hand-off**:
+- Compass -> keep roadmap and task-board truth aligned with v6.
+- Axiom -> finish Android/iOS validation and repeatable browser playthrough checks.
+- Kite -> continue SupabaseAuthority feature-flag path without regressing LocalAuthority.
+- Zara/Zyra -> harden GLB watcher, SSH, heartbeat, and preview-sync flows.
+
+---
+
 ## 2026-04-24 — Core Game Mechanics Lock
 
 **Members**: Project Manager (Zyra, facilitator), Research & Best-Practices, Game Designer, Economy & Trading Simulation, Backend/Web3

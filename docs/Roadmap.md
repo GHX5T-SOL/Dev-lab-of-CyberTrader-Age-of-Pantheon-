@@ -1,17 +1,23 @@
 # Roadmap - Phase B hardening + MVP path
 
-> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Planning reality-check updated **2026-04-23**.
+> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Planning reality-check updated **2026-04-25**.
 
-## Reality check (2026-04-23)
+## Reality check (2026-04-25)
 
-The **Dev Lab web companion is ahead of the actual game**. Phase B is live in `web/`, but the mobile game in `src/` and the backend in `backend/` are still mostly scaffolding: boot placeholder, PRNG, engine contracts, and a starter schema.
+The **Dev Lab remains the command center** and the **actual game is now CyberTrader v6** in the standalone repo:
 
-That means the next meaningful production step is the **first playable slice**. That work has now started in `src/`: the local demo already supports boot, handle claim, terminal home, market scan, buy, sell, persistence, and a deterministic `LocalAuthority` path.
+```text
+https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+```
+
+The first playable slice has moved past scaffolding. v6 now has a working LocalAuthority trade loop, ledger/inventory/XP/rank flow, locations/travel, heat/raids, couriers, real-time news, flash events, NPC missions, dynamic district states, streaks, daily challenges, bounty escalation, away reports, and an intro cinematic route.
 
 The current production focus is:
-- Zoro reviews and approves the shard intro / teaser tone so the experience stays aligned.
-- Ghost / Rune / Kite harden that slice into a repeatable demo on Web, Android, and iOS.
-- Compass keeps the roadmap, status page, and Whiteboard honest after each council checkpoint.
+
+- Treat `CyberTrader-Age-of-Pantheon-v6` as the active playable game repo.
+- Keep this Dev Lab as the source of docs, task ownership, roadmap gates, AI Council decisions, and prototype history.
+- Harden v6 for repeatable demos: Android/iOS runtime validation, tuning, SupabaseAuthority feature flag, Vercel deploy checks, and device-safe performance.
+- Keep the Whiteboard honest: no task should imply the first trade loop is still missing.
 
 ## Phase 0 - Foundation (this week, 2026-04-19 -> 2026-04-25)
 
@@ -43,7 +49,8 @@ The current production focus is:
 | Shared Ready Player Me motion pack retargeted onto local office avatars | Reel / Zara | Live |
 | GLB compression and LOD pass for heavy furniture files | Zara | Pending |
 | Browser visual/performance benchmark across desktop/mobile | Axiom / Ghost | Pending |
-| Council/log/task-board reconciliation after the 2026-04-23 review | Compass / Talon | In progress |
+| Council/log/task-board reconciliation after the 2026-04-23 review | Compass / Talon | Live |
+| v6 playable game status mirrored into docs, roadmap, Whiteboard, and monitor wall | Compass | Live |
 
 ## Phase 1 - MVP (weeks 2-5, 2026-04-26 -> 2026-05-23)
 
@@ -51,37 +58,37 @@ The current production focus is:
 
 ### Phase 1 kickoff gate
 - Zoro approves the creative brief for the first playable slice: boot/login, terminal hierarchy, commodity presentation, and the tone of the first trade. This is complete.
-- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active. This is complete in local/demo form.
-- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end. This gate is now cleared locally; device validation is the next gate.
+- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active. This is complete in v6.
+- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end. This gate is cleared; device validation and production hardening are the next gates.
 
 ### Week 2 (04-26 -> 05-02): boot + trading terminal
-- Intro cinematic MVP scaffold created in `src/cinematics`; next step is wiring a skippable cut into the app
+- Intro cinematic route wired in v6 with a skippable video intro
 - Wallet/login with dev-identity fallback
 - Ag3nt_0S//pIRAT3 boot sequence
-- S1LKROAD terminal screen skeleton
-- 10 commodities visible with live ticking prices
-- Unit tests: market tick determinism, PRNG seed reproducibility
+- S1LKROAD terminal with live trading
+- 10 commodities visible with live ticking prices, news, and location modifiers
+- Unit tests: market tick determinism, PRNG seed reproducibility, trade state
 
 ### Week 3 (05-03 -> 05-09): trade loop
-- Buy / sell flow end-to-end
+- Buy / sell flow end-to-end in v6
 - Position tracking (avg entry, realized/unrealized PnL)
 - Energy drain + Dormant Mode
-- Heat increment + slow decay
+- Heat increment + passive decay + raid pressure
 - 0BOL ledger (local authority)
-- Unit tests: PnL math, energy drain, heat decay
+- Unit tests: PnL math, inventory slots, rank, news, raids, location prices
 
-### Phase 1 progress snapshot (2026-04-23)
+### Phase 1 progress snapshot (2026-04-25)
 - Creative brief written in `docs/Phase1-First-Playable-Slice-Brief.md`
-- Routed first slice exists in `src/app` and `src/screens/first-playable`
-- `LocalAuthority` is live; `SupabaseAuthority` remains a stub
-- Deterministic replay harness passes 1000 seeds
-- Web export is green
+- Canonical playable repo: `https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6`
+- `LocalAuthority` is live; `SupabaseAuthority` remains the persistence-hardening task
+- Core trading, progression, locations, heat/raids, couriers, news, intro video, flash events, missions, district states, streaks, daily challenges, bounty, away report, and sensory feedback are implemented in v6
+- Recorded checks: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed
 - iOS and Android still need honest runtime validation before the demo is called ready
 
 ### Week 4 (05-10 -> 05-16): progression + news
-- Rank + XP
-- News system with credibility scores
-- 3 event types (supply shock, pump rumor, eAgent sweep)
+- Rank + XP in place
+- News system with credibility scores in place
+- Flash events, NPC missions, district states, streaks, daily challenges, and bounty escalation in place
 - Profile, inventory, rank screens
 - Tutorial overlay guiding first buy/sell
 - Unit tests: rank XP, news impact on price

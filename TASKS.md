@@ -1,47 +1,74 @@
-# Task Board Status - 2026-04-25 03:15 SAST
+# Task Board Status - 2026-04-25
 
 > Active work tracking for CyberTrader: Age of Pantheon Dev Lab
-> Source: web/src/data/tasks.ts | Last sync: 2026-04-25
+> Source: `web/src/data/tasks.ts` | Last sync: 2026-04-25
 
-## Current Phase: Phase 1 - MVP (weeks 2-5, 2026-04-26 -> 2026-05-23)
+## Current Phase
 
-### 🔥 Active Work
-- **Zara**: `zara-p0-001` SSH setup (P0) - Draft PR #5 open, needs revision per critical review
-- **Zyra**: PM/QA coordination, task triage, completed heartbeat setup
+**Phase B - Dev Lab hardening** and **Phase 1 - v6 MVP hardening** are both active.
 
-### ✅ Ready for Status Update
-- `rune-p1-004`: TypeScript data models updated ✅ (TeamMember + PerformerSpec support GLB + node fields)
-- `cipher-p0-001`: Ready Player Me docs complete ✅ (GLB_Animations/README.md + AnimatedOfficeAvatar.tsx)
+The actual playable game now lives in:
 
-### 🚦 Dependency Chains
-**Blocked on Zara SSH setup:**
-- `zyra-p1-003`: SSH/Tailscale health monitoring
-- `zyra-p0-002`: GLB file watcher setup
-- `zyra-p1-004`: Auto-sync preview readiness
+```text
+https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+```
 
-**High Priority Phase 1 Work:**
-- `rune-p0-008`: Wire Phase 1 teaser into mobile boot (P0, depends on zoro-p0-011)
-- `kite-p0-004`: Turn SupabaseAuthority into feature-flagged demo (P0, depends on rune-p0-008)
-- `axiom-p0-004`: Validate first playable slice on Web/Android/iOS (P0, depends on rune-p0-008)
+The Dev Lab remains the command center for roadmap, task ownership, AI Council decisions, prototype history, assets, and OpenClaw/Zara/Zyra operations.
 
-### 📊 Task Board Health
-- **Total tasks**: ~60+ across all owners
-- **P0 tasks**: 8 (2 done, 2 in progress, 4 blocked)
-- **P1 tasks**: ~20 (mix of todo/doing/dependencies)
-- **Ready for merge**: None identified (PR #5 needs fixes)
+## PR Intake
 
-### 🎯 Next Actions
-1. **Zyra**: Update task statuses in web/src/data/tasks.ts for completed work
-2. **Zara**: Fix PR #5 based on critical review (duplicate headers, missing script)  
-3. **Council Decision**: Whether Zoro-p0-011 (Phase 1 teaser tone) needs review before rune-p0-008 proceeds
-4. **Phase 1 Kickoff**: All P0 Phase 1 tasks currently depend on the Zara→Rune→Kite→Axiom chain
+- Merged locally for push: PR #7 `feat: GLB assets watcher`.
+- Merged locally for push: PR #9 `zara-p0-001: Persistent SSH key auth for zyra-mini`.
+- Left open: PR #10 `feat: GLB watcher preview sync`, because it is still marked draft.
+- Follow-up fix added: root `chokidar` dev dependency for the new GLB watcher script.
 
-### 🔍 Quality Gates
-- **Web typecheck**: ✅ Passing
-- **Web build**: ✅ Passing (101s, 26 pages)
-- **Console**: ✅ Clean
-- **Critical path**: SSH setup → Phase 1 teaser wiring → mobile validation
+## v6 Game Systems In Place
+
+- Core trade loop: buy/sell, 0BOL ledger, inventory positions, average entry, realized PnL, XP/rank, and inventory slots.
+- World systems: 10 locations, travel timers, location price modifiers, Black Market heat reduction, heat/raids, and courier shipments.
+- Live systems: clock, 30-second market ticks, deterministic news, missed-tick catch-up, heat decay, travel/courier resolution, and raid checks.
+- Engagement systems: flash events, NPC missions, district states, streaks, daily challenges, bounty escalation, away report, action feedback, and animated numbers.
+- Intro flow: `/video-intro` uses the shipped MP4 and hands off to the text intro.
+
+## Ready For Status Update
+
+- `zara-p0-001`: Persistent SSH key auth documented through PR #9.
+- `zyra-p0-002`: GLB watcher script landed through PR #7; dependency added before push.
+- `rune-p0-008`: Skippable intro/video route is in v6.
+- `compass-p0-003`: Dev Lab docs, roadmap, task board, and prototype references updated for v6.
+
+## Current High-Priority Work
+
+- `axiom-p0-004`: Validate v6 on Web, Android, and iOS; web smoke is recorded, Android/iOS remain pending.
+- `kite-p0-004`: Move SupabaseAuthority from stub to feature-flagged persistence without breaking LocalAuthority.
+- `vex-p1-004`: Polish the v6 first playable HUD for repeatable demo readability.
+- `ghost-p1-004`: Pick the persistent Whiteboard backend path: GitHub Issues or Supabase cards.
+- `zara-p0-002`: Compress/LOD heavy GLBs before mobile-grade reuse.
+
+## Dependency Chains
+
+**OpenClaw/Zara/Zyra chain:**
+- SSH setup is documented and ready for broader automation.
+- GLB watcher script exists; preview-sync is still draft in PR #10.
+- Next: heartbeat/status surface plus safe manifest/compression queue.
+
+**v6 hardening chain:**
+- Playable core is in place.
+- Next: cross-platform runtime QA, economy tuning, deployment verification, SupabaseAuthority, and mobile performance budgets.
+
+## Task Board Health
+
+- Total tasks: 60+ across all owners.
+- P0 tasks: focused on v6 validation, SupabaseAuthority, GLB/OpenClaw hardening, and Phase B performance.
+- Ready for merge: PR #7 and PR #9 were accepted; PR #10 remains draft.
+- Documentation truth: README, Roadmap, V6 export note, Phase B note, Decision Log, status data, roadmap data, Whiteboard data, and prototype wall data now reference v6.
+
+## Quality Gates
+
+- Latest v6 recorded checks: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`.
+- Latest v6 browser smoke: MP4 intro route, login/intro handoff, terminal buy loop, inventory/balance update, readable status/news surfaces.
+- Dev Lab follow-up: run web build/typecheck after this sync and before deployment.
 
 ---
-*Generated by Zyra autonomous loop at 2026-04-25 03:15 SAST*
-*Standing approval: Full dev/test/build/PR workflow authorized per AGENTS.md*
+
+Generated by Codex Dev Lab sync on 2026-04-25.

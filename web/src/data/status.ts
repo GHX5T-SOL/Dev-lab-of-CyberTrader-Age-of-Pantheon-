@@ -16,22 +16,24 @@ export interface StatusBlock {
 
 export const STATUS: StatusBlock = {
   headline:
-    "Phase B Dev Lab is live and the first playable slice now exists. The next milestone is turning that local slice into a reliable cross-platform demo.",
+    "Phase B Dev Lab is live and CyberTrader v6 is the active playable game repo. The next milestone is hardening v6 into a reliable cross-platform demo.",
   phaseId: "phase-b",
   nextMilestone:
-    "Finish Phase B hardening and harden Phase 1: validate the playable slice on Web, Android, and iOS, wire the intro cut into boot, and move SupabaseAuthority beyond stub status.",
+    "Finish Phase B hardening and harden v6: validate Web, Android, and iOS, tune the economy, verify deployment, and move SupabaseAuthority beyond stub status.",
   blockers: [
-    "The first playable loop is only validated honestly on web so far; Android and iOS runtime checks are still pending",
+    "CyberTrader v6 browser smoke is recorded, but Android and iOS runtime checks are still pending",
     "SupabaseAuthority is still a stub, so the demo depends on LocalAuthority for all real progress",
     "Standalone web typecheck depends on generated .next/types from a prior build",
     "Supabase project not yet created (SUPABASE_* env vars empty)",
-    "zyra-mini SSH resolves, but tailscale/openclaw CLIs were not on PATH during verification",
+    "PR #10 remains draft, so GLB preview-sync is not merged yet",
     "Large furniture GLBs need Zara compression/LOD pass before mobile-grade reuse",
   ],
   recentWins: [
-    "First playable slice now supports boot, handle claim, terminal home, market scan, buy, sell, and local persistence",
-    "LocalAuthority backs the current trading loop and deterministic replay passes 1000 seeds",
-    "Phase 1 cinematic workspace added under src/cinematics and the first teaser MP4 renders successfully",
+    "CyberTrader v6 is the active playable repo and contains the working LocalAuthority trade loop",
+    "v6 now includes XP/rank, inventory slots, locations/travel, heat/raids, couriers, real-time news, flash events, missions, district states, streaks, daily challenges, bounty, and away reports",
+    "v6 intro video route plays the shipped MP4 before handing off to the text intro",
+    "PR #7 GLB watcher and PR #9 persistent SSH key auth were accepted into local main for push",
+    "Root chokidar dependency added so the new GLB watcher script can run",
     "AI Council runtime log is wired to memory/council-log.jsonl and /api/council/log",
     "Ghost and Zoro roles corrected globally in the Dev Lab data model",
     "Zara and Zyra added as OpenClaw Living Agents on zyra-mini",
@@ -48,7 +50,12 @@ export const STATUS: StatusBlock = {
     {
       label: "Playable game",
       state: "amber",
-      detail: "Boot, handle claim, terminal, trade loop, LocalAuthority, and local persistence are live; cross-platform QA and polish still block a true demo-ready call",
+      detail: "v6 has the core game and engagement systems in place; Android/iOS QA, tuning, SupabaseAuthority, and deploy checks still block a true demo-ready call",
+    },
+    {
+      label: "v6 repo",
+      state: "green",
+      detail: "CyberTrader-Age-of-Pantheon-v6 is the canonical playable branch for the actual game",
     },
     {
       label: "3D office",
@@ -63,7 +70,7 @@ export const STATUS: StatusBlock = {
     {
       label: "OpenClaw node",
       state: "amber",
-      detail: "ssh zyra-mini reaches Bruces-Mac-mini.local; heartbeat cron still needs final enable",
+      detail: "SSH setup is documented, GLB watcher landed, and preview-sync remains draft in PR #10",
     },
     {
       label: "Team ready",
@@ -76,5 +83,5 @@ export const STATUS: StatusBlock = {
       detail: "Persistent header ticker and full Credit Ops dashboard are wired to /api/spend",
     },
   ],
-  updated: "2026-04-23",
+  updated: "2026-04-25",
 };

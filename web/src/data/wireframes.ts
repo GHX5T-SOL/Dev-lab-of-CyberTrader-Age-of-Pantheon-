@@ -92,9 +92,10 @@ export const PROTOTYPES: Prototype[] = [
     repo: "https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6",
     status: "active",
     summary:
-      "Exported from this Dev Lab's src Expo app on 2026-04-24. This is the playable game build the team is carrying forward.",
+      "Exported from this Dev Lab's src Expo app and verified on 2026-04-25. This is the active playable game build the team is carrying forward.",
     learnings: [
-      "The first playable slice is stronger as a focused standalone repo",
+      "Core trading, 0BOL ledger, inventory, XP/rank, locations, heat/raids, couriers, news, and intro video are in place",
+      "Engagement systems now include flash events, NPC missions, district states, streaks, daily challenges, bounty, away report, and feedback hooks",
       "Dev Lab should stay the command center while the game ships from v6",
     ],
     importBranch: "release/v6",

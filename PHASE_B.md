@@ -1,12 +1,12 @@
 # Phase B — Live 3D Dev Lab
 
-Status: **LIVE as of 2026-04-21**. Runtime architecture and office-game rebuild updated **2026-04-23**.
+Status: **LIVE as of 2026-04-21**. Runtime architecture and office-game rebuild updated **2026-04-23**. v6 playable-game status mirrored **2026-04-25**.
 
 Phase B turns the Dev Lab web app into a living command center for CyberTrader: Age of Pantheon. The game remains the Expo/React Native build; the Dev Lab is the internal studio floor where Ghost, Zoro, the AI Council, Zara, and Zyra coordinate work.
 
 ## Reality Check
 
-The Dev Lab is meaningfully ahead of the actual mobile game. Phase B should now focus on hardening the live web experience while the team shifts real execution energy toward the first playable slice in `src/` and `backend/`.
+The Dev Lab is the command center, not the shipping game repo. The actual playable game is now `CyberTrader-Age-of-Pantheon-v6`, exported from this repo's `src/` app and verified as the active v6 branch. Phase B should keep hardening the live web command center while the team shifts execution energy toward v6 cross-platform QA, economy tuning, SupabaseAuthority, and deployment readiness.
 
 ## What Is Live
 
@@ -20,6 +20,7 @@ The Dev Lab is meaningfully ahead of the actual mobile game. Phase B should now 
 - **Zara** and **Zyra** are surfaced as OpenClaw Living Agents on `ssh zyra-mini`.
 - **Whiteboard** is now a Phase B operating board with 60+ tasks, owners, priorities, estimates, dependencies, acceptance criteria, and tags.
 - **Credit Ops** has a persistent header meter and a more explicit provider dashboard.
+- **CyberTrader v6** is recorded as the chosen playable game repo with working trade loop, progression, locations, heat/raids, couriers, real-time news, engagement systems, and intro cinematic route.
 
 ## Asset Decision
 
@@ -58,6 +59,7 @@ Zyra owns node watch: heartbeat cron, GLB_Assets file watcher, preview-sync read
 - Ghost and Zoro roles are correct in data, docs, and visible pages.
 - Zara and Zyra appear in Team Wall, header/status surfaces, Avatar Lab, Floor 3D, docs, and the Whiteboard.
 - Heavy GLB budget risks are logged for Zara/Axiom follow-up.
+- Dev Lab docs and live Whiteboard/Roadmap data point to v6 as the active playable game build.
 
 ## Research Notes
 

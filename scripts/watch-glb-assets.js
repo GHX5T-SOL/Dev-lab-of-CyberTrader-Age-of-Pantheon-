@@ -28,8 +28,8 @@ const watcher = chokidar.watch(assetsDir, {
 function suggestUpdate(filePath) {
   const rel = path.relative(assetsDir, filePath);
   console.log(`[watch-glb] Detected change: ${rel}`);
-  console.log('  → Consider updating the GLB manifest and scheduling a compression job.');
-  console.log('  → Run: npm run compress-glb -- <file> (to be implemented)');
+  console.log('  -> Consider updating the GLB manifest and scheduling a compression job.');
+  console.log('  -> Run: npm run compress-glb -- <file> (to be implemented)');
 }
 
 watcher

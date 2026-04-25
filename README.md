@@ -12,7 +12,7 @@
 
 A **playground + workspace + command center** for CyberTrader: Age of Pantheon — a mobile cyberpunk trading simulator set in 2077 where players are rogue Eidolons running evolving cyberdeck OS tiers (Ag3nt_0S//pIRAT3 → AgentOS → PantheonOS) and trading commodities on the dark market S1LKROAD 4.0.
 
-**Canonical vision source**: the v5 prototype's `BUILD_PLAN.md`. **Canonical playable build**: `CyberTrader-Age-of-Pantheon-v6`, exported from this Dev Lab's `src/` app on 2026-04-24. This Dev Lab remains the organized source of docs, decisions, and the wider ship pipeline.
+**Canonical vision source**: the v5 prototype's `BUILD_PLAN.md`. **Canonical playable build**: `CyberTrader-Age-of-Pantheon-v6`, exported from this Dev Lab's `src/` app and verified as the active game repo on 2026-04-25. This Dev Lab remains the organized source of docs, decisions, and the wider ship pipeline.
 
 ## Who this is for
 
@@ -94,7 +94,25 @@ Detailed profiles: [`/agents/`](agents/).
 
 Phase 0 foundation is complete. The web companion now runs as a Phase B command center: `/office` is a password-gated office-game runtime with founder selection, in-world movement, local GLB avatars, React Three Fiber office traversal, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
 
-Next game phase: **Phase 1 — MVP** (pirate-OS trading loop from v5 BUILD_PLAN weeks 1–4). See [docs/Roadmap.md](docs/Roadmap.md) and [PHASE_B.md](PHASE_B.md).
+Next game phase: **Phase 1 - MVP hardening**. The core playable loop now lives in the v6 game repo; Dev Lab work should focus on validation, balancing, cross-platform QA, SupabaseAuthority, and deployment readiness. See [docs/Roadmap.md](docs/Roadmap.md), [PHASE_B.md](PHASE_B.md), and [docs/V6-Prototype-Export.md](docs/V6-Prototype-Export.md).
+
+## CyberTrader v6 current state
+
+The selected playable build is now:
+
+```text
+https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+```
+
+What is in place in v6:
+
+- Working LocalAuthority buy/sell loop with 0BOL ledger updates, inventory positions, average entry, realized PnL, XP, rank, and inventory slots.
+- Real-time game loop: clock, 30-second market ticks, deterministic news, missed-tick catch-up, heat decay, travel resolution, courier resolution, and raid checks.
+- World systems: 10 locations, location pricing, travel lockouts, Black Market heat reduction, heat/bounty pressure, raids, and courier shipments.
+- Engagement systems: flash market events, NPC missions, dynamic district states, trade streaks, daily challenges, bounty escalation, away report, and action feedback.
+- Intro cinematic route using the shipped MP4, with browser smoke verification that `/video-intro` plays and can hand off into the intro flow.
+
+Most recent v6 verification recorded in Dev Lab: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed on the exported game.
 
 ## Prototype lineup
 
