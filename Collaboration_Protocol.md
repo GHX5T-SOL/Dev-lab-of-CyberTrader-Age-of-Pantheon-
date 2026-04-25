@@ -13,6 +13,18 @@
 
 ## Information flow
 
+<!-- SSH Persistent Key Setup -->
+
+### SSH Persistent Key Setup
+
+- Run `scripts/setup-ssh-zyra-mini.sh` on your local machine to generate an Ed25519 SSH key (if not present) and install it on the `zyra-mini` node.
+- The script uses `ssh-copy-id` when available, falling back to a manual `ssh` command.
+- After successful execution, you should be able to run `ssh zyra-mini` without a password.
+- The generated private key is stored at `~/.ssh/id_ed25519` and is **not** committed to the repository (the `.ssh/` directory is now ignored via `.gitignore`).
+- Documentation for this process is kept in this `Collaboration_Protocol.md` under the **SSH Persistent Key Setup** section.
+
+## Information flow
+
 ```
          ┌──────────────────────────────┐
          │   Ghost + Zoro (humans)      │
