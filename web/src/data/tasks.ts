@@ -843,7 +843,7 @@ export const TASKS: Task[] = [
     dependencies: ["zara-p0-001", "kite-p1-002"],
     acceptanceCriteria: ["Heartbeat script exists", "Cron enabled", "Output visible in Dev Lab status or log", "Failure path documented"],
     tags: ["heartbeat", "openclaw", "cron"],
-    notes: "Activated: Hourly heartbeat cron (ID: 863b73c1) monitoring task board, AI Council, build health, performance gates, PR status. HEARTBEAT.md checklist defined.",
+    notes: "Activated: Hourly heartbeat cron (ID: 863b73c1) monitoring task board, AI Council, build health, performance gates, PR status. HEARTBEAT.md checklist created 2026-04-25 to complete missing documentation.",
   }),
   task({
     id: "zyra-p0-002",
