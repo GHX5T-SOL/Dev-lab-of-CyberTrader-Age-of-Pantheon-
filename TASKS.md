@@ -23,6 +23,7 @@ Current external checks on 2026-04-26:
 - `openclaw doctor --fix` completed and archived stale Zyra transcripts. A bounded post-fix doctor still timed out after 60 seconds and reported 38 skill requirement gaps, so that remains an operations follow-up.
 - `rune-p0-001` v6 technical audit is complete: `npm install`, `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web` pass locally.
 - v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
+- `rune-p0-002` Expo Router hardening is complete: the app now uses a shared phase-to-route mapper, protected player routes recover after hydration when deep-linked without a local player, and menu/Android back actions fall back safely when the navigation stack is empty.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
@@ -39,7 +40,7 @@ Current external checks on 2026-04-26:
 
 1. **Ghost** - set the v6 app-store technical bar, audit architecture, approve EAS/TestFlight/Play build plan.
 2. **Zoro** - creative pass on first 10-minute journey and App Store screenshot/preview direction.
-3. **Rune** - route hardening, persistence recovery, EAS profiles; v6 technical audit is complete.
+3. **Rune** - route hardening is complete; persistence recovery and EAS profiles remain.
 4. **Kite** - SupabaseAuthority behind a feature flag, launch-safe identity, schema/RLS.
 5. **Oracle** - 1000-seed economy replay harness and launch tuning pass.
 6. **Axiom** - Web/iOS/Android QA, store-submission regression checklist.

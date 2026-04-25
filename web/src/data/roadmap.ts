@@ -71,9 +71,10 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit is green locally.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit and route hardening are green locally.",
     deliverables: [
       "Typecheck, tests, and web export green",
+      "Expo Router route recovery and Android/menu back paths hardened",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
@@ -84,6 +85,7 @@ export const ROADMAP: Phase[] = [
       { label: "v6 live deployment returns 200", done: true },
       { label: "LocalAuthority trade loop implemented", done: true },
       { label: "Rune technical audit green", done: true },
+      { label: "Expo Router route hardening", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },

@@ -19,7 +19,7 @@ export const STATUS: StatusBlock = {
     "Dev Lab 3D office work is complete. CyberTrader v6 is the active game repo, and the studio is now focused on App Store / Play Store submission readiness.",
   phaseId: "phase-1-v6-reliable-demo",
   nextMilestone:
-    "Make v6 a reliable Web/iOS/Android demo: smoke production web, validate native runtime, harden routing/storage, and prepare EAS internal builds.",
+    "Make v6 a reliable Web/iOS/Android demo: smoke production web, validate native runtime, harden storage, and prepare EAS internal builds.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority remains a stub; LocalAuthority is the only proven authority path",
@@ -35,6 +35,7 @@ export const STATUS: StatusBlock = {
     "CyberTrader v6 live deployment returns HTTP 200",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
+    "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -58,7 +59,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit completed locally: npm install, typecheck, Jest, and Expo web export pass",
+      detail: "Rune audit and route hardening checks pass locally: typecheck, Jest, and Expo web export",
     },
     {
       label: "Native QA",
