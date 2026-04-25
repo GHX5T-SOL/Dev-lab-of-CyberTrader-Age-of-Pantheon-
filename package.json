@@ -14,6 +14,7 @@
     "backend"
   ],
   "scripts": {
+    "monitor-health": "node scripts/monitor-zyra-health.js",
     "postinstall": "echo '\\n[ok] deps installed. Run `npm run install-all-skills` to set up the AI team.\\n'",
 
     "setup": "bash scripts/bootstrap.sh",
