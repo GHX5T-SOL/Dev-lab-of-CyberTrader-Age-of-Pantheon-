@@ -47,6 +47,7 @@
     "test": "jest --config=src/jest.config.js",
     "test:watch": "jest --watch --config=src/jest.config.js",
     "watch:glb": "node scripts/watch-glb-assets.js",
+    "compress-glb": "node scripts/compress-glb.js",
 
     "verify:phase1": "npm run typecheck && npm run lint && npm run test && echo '\\n[ok] Phase 1 verification passed.'"
   },
