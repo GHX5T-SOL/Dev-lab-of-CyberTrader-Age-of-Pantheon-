@@ -8,7 +8,7 @@
 - **Zoro** — co-founder, Creative Lead, artistic visionary, final authority on mood, brand feel, lore presentation, and visual quality.
 - **AI Orchestrator (Claude)** — default assistant in every session; routes work to subagents, chairs councils, enforces [Prompt_Guidelines.md](Prompt_Guidelines.md).
 - **12 Subagents** — see [agents.md](agents.md).
-- **Zara + Zyra** — concrete OpenClaw Living Agents on `ssh zyra-mini` over Tailscale. Zara owns asset ops and local GLB/Blender queues; Zyra owns node watch, heartbeat, file watchers, and preview sync readiness.
+- **Zara + Zyra** — concrete OpenClaw Living Agents on `ssh brucewayne@100.117.148.52` over Tailscale. Zara owns v6 implementation/asset ops; Zyra owns node watch, deployment health, task sync, and autonomous run ledgers.
 - **AI Council** — rotating 5–7 member deliberative body, see [AI_Council_Charter.md](AI_Council_Charter.md).
 
 ## Information flow
@@ -109,9 +109,26 @@ Agents: economy-trading-sim, elizaos-swarm, qa
 Council: yes (docs/Decision-Log.md#2026-04-22-fdst-event)
 ```
 
+## Autonomous v6 execution mode
+
+As of 2026-04-25, Ghost has authorized autonomous agents to work continuously on CyberTrader v6 app-store readiness.
+
+Rules:
+
+- Pull before work.
+- Pick the highest-priority unblocked task from `TASKS.md` / `docs/V6-App-Store-Readiness-Task-Map.md`.
+- Implement one focused change.
+- Run relevant checks.
+- Update task and roadmap truth.
+- Commit with task ID and owner.
+- Push when checks pass.
+- Continue on the next task without waiting for human review.
+
+Hard stops remain: no force-push, no secrets, no on-chain/real-money actions, no production data deletion, and no dependency upgrade without verification.
+
 ## Branching
 
-- `main` — always deployable. Only the AI Council or Ghost/Zoro merge here.
+- `main` — always deployable. Autonomous agents may push here only when checks pass and the change is reversible.
 - `phase-<N>-<slug>` — active phase branches, e.g. `phase-1-pirate-os`.
 - `feat/<scope>-<slug>` — short-lived feature branches off the phase branch.
 - `experiment/<slug>` — lives in `/playground/` — never merged to main.

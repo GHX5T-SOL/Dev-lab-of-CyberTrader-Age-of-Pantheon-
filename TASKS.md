@@ -1,74 +1,83 @@
 # Task Board Status - 2026-04-25
 
-> Active work tracking for CyberTrader: Age of Pantheon Dev Lab
-> Source: `web/src/data/tasks.ts` | Last sync: 2026-04-25
+> Active work tracking for the CyberTrader studio. Source of truth for the live Whiteboard is `web/src/data/tasks.ts`.
 
-## Current Phase
+## Current Truth
 
-**Phase B - Dev Lab hardening** and **Phase 1 - v6 MVP hardening** are both active.
+The **Dev Lab 3D office work is complete**. The Dev Lab is now the studio/control plane: AI Council, docs, decisions, task ownership, automation, and OpenClaw operations.
 
-The actual playable game now lives in:
+The active game is **CyberTrader: Age of Pantheon v6**:
 
 ```text
-https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+Repo: https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
-The Dev Lab remains the command center for roadmap, task ownership, AI Council decisions, prototype history, assets, and OpenClaw/Zara/Zyra operations.
+Current external checks on 2026-04-25:
 
-## PR Intake
+- v6 GitHub repo is public, default branch `main`, latest push `2026-04-24T18:46:34Z`.
+- v6 Vercel deployment returns HTTP 200.
+- Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
+- OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
+- `ai.openclaw.gateway` is running from the 2026.4.24 runtime, and Zara/Zyra v6 cron jobs are enabled on the Mac mini.
+- `openclaw doctor --fix` completed and archived stale Zyra transcripts. A bounded post-fix doctor still timed out after 60 seconds and reported 38 skill requirement gaps, so that remains an operations follow-up.
 
-- Merged locally for push: PR #7 `feat: GLB assets watcher`.
-- Merged locally for push: PR #9 `zara-p0-001: Persistent SSH key auth for zyra-mini`.
-- Left open: PR #10 `feat: GLB watcher preview sync`, because it is still marked draft.
-- Follow-up fix added: root `chokidar` dev dependency for the new GLB watcher script.
+## v6 Systems Already In Place
 
-## v6 Game Systems In Place
+- Cinematic intro route and local login/handle flow.
+- LocalAuthority buy/sell loop with 0BOL ledger updates.
+- Inventory positions, average entry, realized/unrealized PnL, XP, rank, and inventory slots.
+- 10 locations, location pricing, travel lockouts, Black Market heat reduction.
+- Heat, bounty, raids, courier shipments, deterministic news, missed-tick catch-up.
+- Flash events, NPC missions, district states, streaks, daily challenges, away report, and action feedback.
+- Current checks previously recorded: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, plus browser smoke for intro/login/trading.
 
-- Core trade loop: buy/sell, 0BOL ledger, inventory positions, average entry, realized PnL, XP/rank, and inventory slots.
-- World systems: 10 locations, travel timers, location price modifiers, Black Market heat reduction, heat/raids, and courier shipments.
-- Live systems: clock, 30-second market ticks, deterministic news, missed-tick catch-up, heat decay, travel/courier resolution, and raid checks.
-- Engagement systems: flash events, NPC missions, district states, streaks, daily challenges, bounty escalation, away report, action feedback, and animated numbers.
-- Intro flow: `/video-intro` uses the shipped MP4 and hands off to the text intro.
+## Top P0 Work
 
-## Ready For Status Update
+1. **Ghost** - set the v6 app-store technical bar, audit architecture, approve EAS/TestFlight/Play build plan.
+2. **Zoro** - creative pass on first 10-minute journey and App Store screenshot/preview direction.
+3. **Rune** - v6 technical audit, route hardening, persistence recovery, EAS profiles.
+4. **Kite** - SupabaseAuthority behind a feature flag, launch-safe identity, schema/RLS.
+5. **Oracle** - 1000-seed economy replay harness and launch tuning pass.
+6. **Axiom** - Web/iOS/Android QA, store-submission regression checklist.
+7. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
+8. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
+9. **Zyra** - run v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
 
-- `zara-p0-001`: Persistent SSH key auth documented through PR #9.
-- `zyra-p0-002`: GLB watcher script landed through PR #7; dependency added before push.
-- `rune-p0-008`: Skippable intro/video route is in v6.
-- `compass-p0-003`: Dev Lab docs, roadmap, task board, and prototype references updated for v6.
+## Full Task Map
 
-## Current High-Priority Work
+See [`docs/V6-App-Store-Readiness-Task-Map.md`](docs/V6-App-Store-Readiness-Task-Map.md).
 
-- `axiom-p0-004`: Validate v6 on Web, Android, and iOS; web smoke is recorded, Android/iOS remain pending.
-- `kite-p0-004`: Move SupabaseAuthority from stub to feature-flagged persistence without breaking LocalAuthority.
-- `vex-p1-004`: Polish the v6 first playable HUD for repeatable demo readability.
-- `ghost-p1-004`: Pick the persistent Whiteboard backend path: GitHub Issues or Supabase cards.
-- `zara-p0-002`: Compress/LOD heavy GLBs before mobile-grade reuse.
+## Automation Intent
 
-## Dependency Chains
+The team is now permitted to operate in an autonomous product-execution mode:
 
-**OpenClaw/Zara/Zyra chain:**
-- SSH setup is documented and ready for broader automation.
-- GLB watcher script exists; preview-sync is still draft in PR #10.
-- Next: heartbeat/status surface plus safe manifest/compression queue.
+- Pull before work.
+- Pick the highest-priority unblocked task from the task map.
+- Make a focused change.
+- Run the relevant checks.
+- Commit with the task ID.
+- Push when checks pass.
+- Mark the task done or update status/blockers.
+- Repeat.
 
-**v6 hardening chain:**
-- Playable core is in place.
-- Next: cross-platform runtime QA, economy tuning, deployment verification, SupabaseAuthority, and mobile performance budgets.
+Autonomous agents must still obey hard safety rails:
 
-## Task Board Health
+- No force-push.
+- No secret printing or committing.
+- No destructive data deletion unless the task explicitly scopes it.
+- No on-chain or real-money actions.
+- No dependency upgrades without running the relevant build/test path.
 
-- Total tasks: 60+ across all owners.
-- P0 tasks: focused on v6 validation, SupabaseAuthority, GLB/OpenClaw hardening, and Phase B performance.
-- Ready for merge: PR #7 and PR #9 were accepted; PR #10 remains draft.
-- Documentation truth: README, Roadmap, V6 export note, Phase B note, Decision Log, status data, roadmap data, Whiteboard data, and prototype wall data now reference v6.
+## Living Documents
 
-## Quality Gates
+After every meaningful shipped task, update:
 
-- Latest v6 recorded checks: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`.
-- Latest v6 browser smoke: MP4 intro route, login/intro handoff, terminal buy loop, inventory/balance update, readable status/news surfaces.
-- Dev Lab follow-up: run web build/typecheck after this sync and before deployment.
-
----
+- `TASKS.md`
+- `web/src/data/tasks.ts`
+- `docs/V6-App-Store-Readiness-Task-Map.md`
+- `docs/Roadmap.md`
+- `web/src/data/roadmap.ts`
+- `web/src/data/status.ts`
 
 Generated by Codex Dev Lab sync on 2026-04-25.

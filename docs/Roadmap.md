@@ -1,174 +1,145 @@
-# Roadmap - Phase B hardening + MVP path
+# Roadmap - Dev Lab Control Plane and CyberTrader v6
 
-> Rebuilt from v5 `BUILD_PLAN.md` with AI-team cadence, council checkpoints, and verification gates. Planning reality-check updated **2026-04-25**.
+Updated: 2026-04-25
 
-## Reality check (2026-04-25)
+## Reality Check
 
-The **Dev Lab remains the command center** and the **actual game is now CyberTrader v6** in the standalone repo:
+The Dev Lab 3D office phase is complete. The Dev Lab is now the command center where Ghost, Zoro, the AI Council, Zara, Zyra, and Codex automations coordinate the actual game work.
+
+The active game is:
 
 ```text
 https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
-The first playable slice has moved past scaffolding. v6 now has a working LocalAuthority trade loop, ledger/inventory/XP/rank flow, locations/travel, heat/raids, couriers, real-time news, flash events, NPC missions, dynamic district states, streaks, daily challenges, bounty escalation, away reports, and an intro cinematic route.
+v6 already has the core playable loop: intro/login, LocalAuthority trades, ledger, inventory, XP/rank, locations, travel, heat/raids, couriers, news, flash events, NPC missions, district states, streaks, daily challenges, bounty, and away report.
 
-The current production focus is:
+The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
-- Treat `CyberTrader-Age-of-Pantheon-v6` as the active playable game repo.
-- Keep this Dev Lab as the source of docs, task ownership, roadmap gates, AI Council decisions, and prototype history.
-- Harden v6 for repeatable demos: Android/iOS runtime validation, tuning, SupabaseAuthority feature flag, Vercel deploy checks, and device-safe performance.
-- Keep the Whiteboard honest: no task should imply the first trade loop is still missing.
+## Phase 0 - Foundation (2026-04-19 -> 2026-04-25)
 
-## Phase 0 - Foundation (this week, 2026-04-19 -> 2026-04-25)
+Status: **Complete**
 
-**Goal**: organized workspace, team activated, scaffolds in place. Core foundation is complete; remaining entries feed the game MVP.
+- Dev Lab repo scaffolded.
+- AI Council and agent roster created.
+- Brand, lore, economy, tech architecture, roadmap, and collaboration docs created.
+- v1-v6 prototype history consolidated.
 
-| Day | Deliverable | Owner |
-|---|---|---|
-| D1 (04-19) | Dev Lab repo scaffolded, agents defined, council charter, brand v1, Game Design Doc, Roadmap, setup.sh | Orchestrator (this session) |
-| D2 | Expo app boots on device + web, Zustand + MMKV wired, theme tokens imported | Frontend/Mobile |
-| D3 | Supabase local stack running, schema migrated, authority adapter interface defined | Backend/Web3 |
-| D4 | Deterministic PRNG + market tick engine skeleton + first unit tests | Economy & Trading Sim |
-| D5 | First SpriteCook asset batch: Eidolon mark, 4 faction sigils, 10 commodity icons | Brand & Asset |
-| D6 | Intro cinematic storyboard (Remotion skeleton scene) | Cinematic & Animation |
-| D7 | Council retrospective on Phase 0, Phase 1 scope lock | Council |
+## Phase B - Dev Lab 3D Office (2026-04-21 -> 2026-04-25)
 
-## Phase B - Live 3D Dev Lab (2026-04-21 -> 2026-04-28)
+Status: **Complete**
 
-**Goal**: harden the live web command center while the real game MVP finally starts moving.
+- `/office` rebuilt into the playable metaverse-style command center.
+- Founder selection for Ghost/Zoro live.
+- 16 agent profiles and OpenClaw Zara/Zyra surfaced.
+- Avatar Lab and Floor 3D became support surfaces, not the product roadmap.
+- Whiteboard/task/status data now points to v6 as the active game.
+- Dev Lab repo PRs/issues cleaned to zero open items.
 
-| Deliverable | Owner | Status |
-|---|---|---|
-| `/office` rebuilt as the primary office-game runtime with founder selection, free-roam movement, and hotspot surfaces | Rune / Vex / Ghost | Live |
-| `/office-v2` runtime alias kept for QA and rollout | Rune | Live |
-| Local GLB Avatar Lab replacing the remote creator iframe | Rune / Vex | Live |
-| Dynamic Floor 3D scene with `office_floor_option_2.glb`, furniture props, and moving operators | Rune / Reel | Live |
-| Ghost = Lead Developer and Zoro = Creative Lead across web/docs | Compass | Live |
-| Zara + Zyra OpenClaw agents surfaced on Team Wall, header, status, docs, and task board | Talon / Zyra | Live |
-| 60+ task Whiteboard with owner, priority, estimate, dependency, and acceptance criteria | Compass | Live |
-| Shared Ready Player Me motion pack retargeted onto local office avatars | Reel / Zara | Live |
-| GLB compression and LOD pass for heavy furniture files | Zara | Pending |
-| Browser visual/performance benchmark across desktop/mobile | Axiom / Ghost | Pending |
-| Council/log/task-board reconciliation after the 2026-04-23 review | Compass / Talon | Live |
-| v6 playable game status mirrored into docs, roadmap, Whiteboard, and monitor wall | Compass | Live |
+Remaining Dev Lab work is only control-plane maintenance: task truth, docs, automation, and health monitoring.
 
-## Phase 1 - MVP (weeks 2-5, 2026-04-26 -> 2026-05-23)
+## Phase 1 - v6 Reliable Demo (2026-04-26 -> 2026-05-10)
 
-**Goal**: harden the first playable mobile slice of the actual game into a repeatable demo, not just more Dev Lab polish.
+Status: **Active**
 
-### Phase 1 kickoff gate
-- Zoro approves the creative brief for the first playable slice: boot/login, terminal hierarchy, commodity presentation, and the tone of the first trade. This is complete.
-- Ghost / Rune / Kite stand up the LocalAuthority-backed trading loop before any Supabase-dependent scope is treated as active. This is complete in v6.
-- The roadmap only treats Phase 1 as truly in flight once one profitable buy/sell loop is playable end to end. This gate is cleared; device validation and production hardening are the next gates.
+Goal: make v6 a reliable, repeatable demo across Web, iOS simulator, and Android emulator.
 
-### Week 2 (04-26 -> 05-02): boot + trading terminal
-- Intro cinematic route wired in v6 with a skippable video intro
-- Wallet/login with dev-identity fallback
-- Ag3nt_0S//pIRAT3 boot sequence
-- S1LKROAD terminal with live trading
-- 10 commodities visible with live ticking prices, news, and location modifiers
-- Unit tests: market tick determinism, PRNG seed reproducibility, trade state
+Required:
 
-### Week 3 (05-03 -> 05-09): trade loop
-- Buy / sell flow end-to-end in v6
-- Position tracking (avg entry, realized/unrealized PnL)
-- Energy drain + Dormant Mode
-- Heat increment + passive decay + raid pressure
-- 0BOL ledger (local authority)
-- Unit tests: PnL math, inventory slots, rank, news, raids, location prices
+- `npm run typecheck` green.
+- `npm test -- --runInBand` green.
+- `npx expo export --platform web` green.
+- Web smoke passes on the live Vercel deployment.
+- iOS simulator smoke passes.
+- Android emulator smoke passes.
+- First 10-minute loop is completable without developer help.
+- No blank screens, dead-end routes, raw runtime errors, or clipped critical text.
 
-### Phase 1 progress snapshot (2026-04-25)
-- Creative brief written in `docs/Phase1-First-Playable-Slice-Brief.md`
-- Canonical playable repo: `https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6`
-- `LocalAuthority` is live; `SupabaseAuthority` remains the persistence-hardening task
-- Core trading, progression, locations, heat/raids, couriers, news, intro video, flash events, missions, district states, streaks, daily challenges, bounty, away report, and sensory feedback are implemented in v6
-- Recorded checks: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed
-- iOS and Android still need honest runtime validation before the demo is called ready
+Primary owners: Ghost, Zoro, Rune, Vex, Nyx, Axiom, Oracle.
 
-### Week 4 (05-10 -> 05-16): progression + news
-- Rank + XP in place
-- News system with credibility scores in place
-- Flash events, NPC missions, district states, streaks, daily challenges, and bounty escalation in place
-- Profile, inventory, rank screens
-- Tutorial overlay guiding first buy/sell
-- Unit tests: rank XP, news impact on price
+## Phase 2 - Native Internal Testing (2026-05-11 -> 2026-05-24)
 
-### Week 5 (05-17 -> 05-23): polish + verify
-- 13 MVP screens complete (no placeholders)
-- Settings, help/glossary, notifications
-- Manual QA run-through (full 10-minute tutorial loop)
-- Type check + lint + tests green
-- Bundle size + cold-start budgets hit
-- Phase 1 ship to TestFlight internal + Play Internal Testing
+Status: **Upcoming**
 
-**Phase 1 Definition of Done** (from v5 BUILD_PLAN, carries forward):
-- Zero TypeScript errors or failing tests
-- No runtime console errors on first launch
-- No blank screens or placeholder main nav
-- No inaccessible tap targets
-- No unattributed protected IP
-- First 10-minute loop completable without developer help
+Goal: produce TestFlight and Play Internal Testing builds.
 
-**Phase 1 gate**: AI Council convenes. If all pass, proceed to Phase 2.
+Required:
 
-## Phase 2 - Progression & Polish (weeks 6-8, 2026-05-24 -> 2026-06-13)
+- EAS preview/internal/store profiles.
+- Bundle IDs, schemes, app icon, splash, permissions, and env policy documented.
+- Crash/log capture path.
+- Native persistence hydration/recovery.
+- SupabaseAuthority scope decision.
+- Store-safe privacy/token/trading language.
 
-**Goal**: AgentOS unlock + faction system + missions.
+Primary owners: Ghost, Rune, Kite, Axiom, Cipher, Talon.
 
-- Rank 5 OS upgrade ceremony (cinematic)
-- Faction selection flow + one-free-switch rule
-- Node puzzle missions (routing, signal timing, pattern prediction)
-- Route map (SVG)
-- Market scanner
-- Limit order simulation
-- Active position management
-- Energy auto-buy
-- eAgent sweep events
+## Phase 3 - App Store Candidate (2026-05-25 -> 2026-06-14)
 
-## Phase 3 - Endgame & Territory (weeks 9-11, 2026-06-14 -> 2026-07-04)
+Status: **Upcoming**
 
-**Goal**: PantheonOS unlock + territory + crew.
+Goal: reach a submission-quality candidate.
 
-- Rank 20 OS upgrade ceremony
-- 3D Neon Void city map (SVG -> Three.js if feasible)
-- Territory control + faction overlays (flagged)
-- Crew formation
-- Advanced raids (flagged until stable)
-- Pantheon memory shard storyline
-- Seasonal leaderboard
+Required:
 
-## Phase 4 - Soft launch (weeks 12-13, 2026-07-05 -> 2026-07-18)
+- App Store screenshots.
+- App preview video.
+- Store description, keywords, support URL, privacy policy copy, age rating notes.
+- Legal/security review of $OBOL naming, simulated trading, wallet flags, and data handling.
+- Final economy tuning.
+- Regression suite green.
+- AI Council store-readiness sign-off.
 
-- Beta with ~100 players (invite)
-- Economy tuning via ElizaOS swarm + real-player data
-- Bug bash
-- Legal review of $OBOL mint path
-- App Store + Play Store submission
+Primary owners: Zoro, Reel, Palette, Cipher, Kite, Oracle, Compass.
 
-## Phase 5 - Public launch (TBD, target 2026-08)
+## Phase 4 - Closed Beta (2026-06-15 -> 2026-07-12)
 
-- Seasonal events live
-- Creator program (if legal)
-- Regional rollout
+Status: **Upcoming**
 
-## Long-term backlog (post-launch)
+Goal: run a small controlled beta and tune from real play.
 
-- Cross-faction treaty / betrayal events
-- Pantheon memory shard story chapters (seasonal)
-- Optional non-loot-box cosmetic marketplace
-- Community moderation + reporting tools
-- $OBOL regional availability expansion (per jurisdiction)
+Required:
 
-## Council checkpoints
+- 20-100 invited players.
+- Crash-free sessions above 99%.
+- D1 retention baseline.
+- Feedback intake loop.
+- Economy stress reports from Hydra/ElizaOS and real beta data.
+- Store listing refinements.
 
-Convene every Sunday at phase end. Standing agenda: hit/miss, blocker triage, next week scope.
+Primary owners: Axiom, Compass, Hydra, Oracle, Ghost, Zoro.
 
-## Escalation triggers
+## Phase 5 - Public Launch (target 2026-08)
 
-- Any slip > 3 days on a milestone -> PM drafts recovery plan -> council -> Ghost
-- Any legal/regulatory finding -> immediate escalation (no council)
-- Any economy change > 10% affecting existing players -> council mandatory
+Status: **Upcoming**
 
-## Living doc
+Goal: public launch after store approval and beta hardening.
 
-This roadmap is updated at each council checkpoint. Diffs preserved in git.
+Required:
+
+- App Store approval.
+- Play Store approval.
+- Launch trailer and screenshots live.
+- Support/feedback path active.
+- First real player cohort monitored.
+
+## Autonomous Team Cadence
+
+- Zara: recurring implementation scout and asset/ops executor.
+- Zyra: recurring PM/QA watcher and deployment monitor.
+- Codex automations: task truth, status sync, and bounded implementation/QA support.
+- AI Council: weekly store-readiness checkpoint.
+
+Autonomous agents may push directly when checks pass and the change is reversible. No force-push, no secrets, no on-chain actions, no production data deletion.
+
+## Escalation Triggers
+
+- Store policy/legal uncertainty -> Cipher/Kite/Ghost.
+- Build fails twice consecutively -> Axiom/Rune/Ghost.
+- Economy tuning causes soft-locks or impossible starts -> Oracle/Nyx/Ghost.
+- Autonomous agent pushes a breaking change -> Talon triggers rollback protocol.
+
+## Living Doc Rule
+
+This roadmap changes whenever the product truth changes. Update the matching web data file at `web/src/data/roadmap.ts` in the same commit.

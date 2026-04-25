@@ -1,0 +1,175 @@
+# CyberTrader v6 App Store Readiness Task Map
+
+Updated: 2026-04-25
+
+## Mission
+
+Take `CyberTrader-Age-of-Pantheon-v6` from current playable prototype to App Store / Play Store submission readiness.
+
+- Active game repo: `https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6`
+- Live web deployment: `https://cyber-trader-age-of-pantheon-v6.vercel.app`
+- Control plane: this Dev Lab repo
+
+The Dev Lab 3D office is now a completed studio milestone. New work should improve the actual game unless explicitly marked as studio operations.
+
+## Release Gates
+
+### Gate A - Reliable Demo
+- Web export passes.
+- Browser smoke passes: intro -> login -> terminal -> buy -> sell -> inventory/profile/settings.
+- No blank screens, dead-end routes, or raw console errors.
+- First profitable sell can be completed without developer guidance.
+
+### Gate B - Native Internal Testing
+- EAS preview/internal profiles exist.
+- iOS simulator smoke passes.
+- Android emulator smoke passes.
+- Device storage reset/recovery exists.
+- Crash/log capture path exists.
+
+### Gate C - Store Candidate
+- App icon, splash, screenshots, preview video, age rating notes, privacy copy, and support URL are ready.
+- SupabaseAuthority scope is either complete behind a feature flag or explicitly deferred.
+- Legal/security notes cover simulated trading, $OBOL naming, wallet flags, and privacy.
+- App Store and Play Store internal builds are submitted.
+
+## Owner Map
+
+### Ghost - Lead Developer
+- Define release gates and direct-push automation criteria.
+- Audit v6 architecture for Expo/EAS/store risk.
+- Approve the first TestFlight and Play Internal Testing build plan.
+- Decide SupabaseAuthority launch scope.
+- Review autonomous commits daily until release branch stabilizes.
+
+### Zoro - Creative Lead
+- Review the first 10-minute player journey.
+- Approve store screenshot and preview video direction.
+- Art-direct commodity, faction, and OS upgrade presentation.
+- Tighten tutorial copy and mood.
+- Reject any screen that feels like a generic dashboard instead of a cyberdeck.
+
+### Game Designer Agent / Nyx
+- Tighten first-session flow from intro to first profitable sell.
+- Tune Energy, Heat, raid, courier, and bounty pressure for a 10-minute demo.
+- Design Phase 2 faction choice and AgentOS unlock requirements.
+- Produce player archetypes for first beta tuning.
+
+### UI/UX & Cyberpunk Aesthetic / Vex
+- Polish mobile HUD readability and one-hand ergonomics.
+- Run responsive pass for web, small phone, large phone, and tablet.
+- Create error, empty, offline, and loading states.
+- Make every screen feel diegetic.
+
+### Frontend/Mobile / Rune
+- Run technical audit: typecheck, tests, export, route map, dependency review.
+- Harden Expo Router navigation and back paths.
+- Implement native-safe persistence hydration and reset controls.
+- Create EAS build profiles for preview, internal, and store candidates.
+- Add crash/log capture suitable for TestFlight and Play Internal Testing.
+
+### Backend/Web3 / Kite
+- Implement SupabaseAuthority behind a feature flag.
+- Define launch-safe identity and account recovery.
+- Prepare Supabase migrations for ledger, positions, player state, and events.
+- Write security review for $OBOL naming, wallet flags, and store-safe claims.
+
+### Economy & Trading / Oracle
+- Build a 1000-seed deterministic replay harness.
+- Tune volatility, Heat, Energy, raid, bounty, and courier thresholds.
+- Produce economy reports that drive concrete tuning patches.
+
+### Cinematic & Animation / Reel
+- Create App Store preview storyboard and capture plan.
+- Polish intro handoff timing and skip behavior.
+- Prepare launch trailer script.
+
+### Brand & Asset / Palette
+- Audit all v6 assets for resolution, ownership, and store safety.
+- Create missing faction, OS tier, badge, notification, icon, and screenshot assets.
+- Create screenshot-safe visual state presets.
+
+### Research & Best Practices / Cipher
+- Verify 2026 Apple/Google store submission requirements.
+- Research privacy, simulated trading, token naming, and age-rating risks.
+- Find relevant ClawdHub/OpenClaw skills for coding, QA, and release ops.
+
+### QA & Testing / Axiom
+- Run Web/iOS/Android QA.
+- Create store-submission regression checklist.
+- Define cold-start, memory, bundle, and interaction-latency budgets.
+- Add an automated smoke path.
+
+### Project Manager / Compass
+- Keep roadmap/task map/status in sync.
+- Create v6 GitHub issue batches from this task map.
+- Run weekly AI Council app-store readiness checkpoint.
+
+### OpenClaw Governance / Talon
+- Configure Zara/Zyra autonomous loops.
+- Enforce no-force-push/no-secrets/no-on-chain safety rails.
+- Maintain rollback and incident protocol.
+
+### ElizaOS Swarm / Hydra
+- Build market swarm simulation scenarios.
+- Prototype synthetic retention/churn scenarios for beta.
+
+### Zara - OpenClaw Asset/Implementation Ops
+- Keep OpenClaw current on `brucewayne@100.117.148.52`.
+- Maintain the clean v6 workspace and task-runner prompt binding.
+- Run recurring implementation scout loop against v6 P0/P1 tasks.
+- Build asset optimization queue for Expo mobile assets.
+
+### Zyra - OpenClaw Node Watch / PM-QA
+- Run hourly v6 repo health and task-sync loop.
+- Watch live Vercel deployment and build status.
+- Maintain autonomous run ledger.
+- Auto-pick unowned follow-up work when the board is empty.
+
+## Autonomous Work Contract
+
+Agents may work without human review when all of these are true:
+
+1. The task is in this map or is a directly necessary follow-up.
+2. The change is scoped and reversible.
+3. The agent pulls before starting.
+4. The agent runs relevant checks before pushing.
+5. The commit message includes the task ID.
+6. The task/status docs are updated in the same commit.
+
+Hard stops:
+
+- Do not force-push.
+- Do not commit secrets.
+- Do not print API keys in logs.
+- Do not perform on-chain or real-money actions.
+- Do not delete user data or production data.
+
+## Command Checklist
+
+For v6:
+
+```bash
+git pull --ff-only
+npm install
+npm run typecheck
+npm test -- --runInBand
+npx expo export --platform web
+```
+
+For Dev Lab planning sync:
+
+```bash
+git pull --ff-only
+cd web && npm run typecheck && npm run build
+git status
+```
+
+## Current Blockers
+
+- iOS and Android runtime validation are still pending.
+- SupabaseAuthority remains a stub.
+- EAS build profiles are not yet confirmed.
+- Store metadata, privacy copy, screenshots, and preview video are not ready.
+- OpenClaw Mac mini now runs `OpenClaw 2026.4.24`, but a bounded post-fix doctor still timed out after 60 seconds.
+- OpenClaw reports 38 skill requirement gaps after `doctor --fix`; Cipher/Talon should decide which ClawdHub/OpenClaw skills are required for v6 execution.

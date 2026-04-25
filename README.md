@@ -19,7 +19,7 @@ A **playground + workspace + command center** for CyberTrader: Age of Pantheon �
 - **Ghost** (founder, Lead Developer, elite human coder, final technical sign-off)
 - **Zoro** (co-founder, Creative Lead, artistic visionary, final feel/brand sign-off)
 - **The AI Team** — 12 specialized subagents coordinated by an AI Council (see [agents.md](agents.md) and [AI_Council_Charter.md](AI_Council_Charter.md))
-- **Zara + Zyra** — OpenClaw Living Agents on the secure Mac mini node (`ssh zyra-mini` over Tailscale) for local file ops, GLB processing, heartbeat checks, and long-running render queues.
+- **Zara + Zyra** — OpenClaw Living Agents on the secure Mac mini node (`ssh brucewayne@100.117.148.52` over Tailscale) for v6 implementation support, QA monitoring, task sync, and long-running automation.
 
 ## Quickstart
 
@@ -90,11 +90,11 @@ Full step-by-step for a newbie: **[SETUP.md](SETUP.md)**.
 
 Detailed profiles: [`/agents/`](agents/).
 
-## Current phase: **Phase B — Live 3D Dev Lab**
+## Current phase: **v6 App Store readiness**
 
-Phase 0 foundation is complete. The web companion now runs as a Phase B command center: `/office` is a password-gated office-game runtime with founder selection, in-world movement, local GLB avatars, React Three Fiber office traversal, OpenClaw node surfacing, persistent credit meter, and a large owner-tagged Whiteboard for Ghost, Zoro, the AI Council, Zara, and Zyra.
+Phase 0 foundation is complete and Phase B 3D Dev Lab office work is now complete. The web companion remains the command center, but it is not the product roadmap anymore.
 
-Next game phase: **Phase 1 - MVP hardening**. The core playable loop now lives in the v6 game repo; Dev Lab work should focus on validation, balancing, cross-platform QA, SupabaseAuthority, and deployment readiness. See [docs/Roadmap.md](docs/Roadmap.md), [PHASE_B.md](PHASE_B.md), and [docs/V6-Prototype-Export.md](docs/V6-Prototype-Export.md).
+The active game phase is **CyberTrader v6 App Store readiness**. The core playable loop lives in the v6 game repo; Dev Lab work now focuses on validation, balancing, native QA, SupabaseAuthority, EAS builds, store assets, automation, and launch readiness. See [docs/Roadmap.md](docs/Roadmap.md), [TASKS.md](TASKS.md), [docs/V6-App-Store-Readiness-Task-Map.md](docs/V6-App-Store-Readiness-Task-Map.md), and [docs/Autonomous-Agent-Operating-Model.md](docs/Autonomous-Agent-Operating-Model.md).
 
 ## CyberTrader v6 current state
 
@@ -102,6 +102,7 @@ The selected playable build is now:
 
 ```text
 https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
+https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
 What is in place in v6:
@@ -112,7 +113,13 @@ What is in place in v6:
 - Engagement systems: flash market events, NPC missions, dynamic district states, trade streaks, daily challenges, bounty escalation, away report, and action feedback.
 - Intro cinematic route using the shipped MP4, with browser smoke verification that `/video-intro` plays and can hand off into the intro flow.
 
-Most recent v6 verification recorded in Dev Lab: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed on the exported game.
+Most recent v6 verification recorded in Dev Lab: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed on the exported game. The live v6 Vercel deployment returned HTTP 200 during the 2026-04-25 studio cleanup.
+
+## Autonomous studio mode
+
+Ghost has authorized the AI Council, Codex automations, Zara, Zyra, and OpenClaw agents to continue v6 work proactively. They should pull before work, choose the highest-priority unblocked task, implement one focused change, run checks, update task/roadmap truth, commit with task ID, push, and repeat.
+
+Hard rails still apply: no force-push, no secret printing/committing, no on-chain or real-money actions, no production data deletion, and no dependency upgrade without relevant verification.
 
 ## Prototype lineup
 

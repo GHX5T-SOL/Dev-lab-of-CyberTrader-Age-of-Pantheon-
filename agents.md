@@ -94,14 +94,14 @@ The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rot
 These are not extra Council votes by default. They are concrete physical-layer agents surfaced in the Dev Lab and task board.
 
 ### Zara — OpenClaw Asset Ops
-- **Node**: `ssh zyra-mini` over Tailscale (`Bruces-Mac-mini.local`)
-- **Role**: persistent local executor for GLB compression, LOD generation, Blender retargeting, large file cleanup, and render queue prep.
+- **Node**: `ssh brucewayne@100.117.148.52` over Tailscale (`Bruces-Mac-mini.local`)
+- **Role**: persistent local executor for CyberTrader v6 implementation scouting, asset optimization, build-support jobs, and App Store readiness tasks. Legacy GLB/Blender work is now only active when it supports v6 store assets or trailers.
 - **Activates when**: an asset or 3D job is too heavy, too long-running, or too local for a chat session.
 - **Hand-off to**: Talon for governance, Palette/Reel for asset review, Ghost for final approval.
 
 ### Zyra — OpenClaw Node Watch
-- **Node**: `ssh zyra-mini` over Tailscale (`Bruces-Mac-mini.local`)
-- **Role**: heartbeat watcher, GLB_Assets file watcher, preview-sync monitor, Tailscale/SSH health observer, long-running cinema queue monitor.
+- **Node**: `ssh brucewayne@100.117.148.52` over Tailscale (`Bruces-Mac-mini.local`)
+- **Role**: heartbeat watcher, v6 deployment monitor, task-map synchronizer, Tailscale/SSH health observer, and autonomous run ledger maintainer.
 - **Activates when**: the lab needs autonomous health checks, preview readiness, or background queue status.
 - **Hand-off to**: Talon for automation policy, Axiom for QA alerts, Compass for status updates.
 
