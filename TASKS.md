@@ -1,4 +1,4 @@
-# Task Board Status - 2026-04-25
+# Task Board Status - 2026-04-26
 
 > Active work tracking for the CyberTrader studio. Source of truth for the live Whiteboard is `web/src/data/tasks.ts`.
 
@@ -13,7 +13,7 @@ Repo: https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
 Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
-Current external checks on 2026-04-25:
+Current external checks on 2026-04-26:
 
 - v6 GitHub repo is public, default branch `main`, latest push `2026-04-24T18:46:34Z`.
 - v6 Vercel deployment returns HTTP 200.
@@ -21,6 +21,9 @@ Current external checks on 2026-04-25:
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
 - `ai.openclaw.gateway` is running from the 2026.4.24 runtime, and Zara/Zyra v6 cron jobs are enabled on the Mac mini.
 - `openclaw doctor --fix` completed and archived stale Zyra transcripts. A bounded post-fix doctor still timed out after 60 seconds and reported 38 skill requirement gaps, so that remains an operations follow-up.
+- `rune-p0-001` v6 technical audit is complete: `npm install`, `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web` pass locally.
+- v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
+- `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
 
@@ -36,7 +39,7 @@ Current external checks on 2026-04-25:
 
 1. **Ghost** - set the v6 app-store technical bar, audit architecture, approve EAS/TestFlight/Play build plan.
 2. **Zoro** - creative pass on first 10-minute journey and App Store screenshot/preview direction.
-3. **Rune** - v6 technical audit, route hardening, persistence recovery, EAS profiles.
+3. **Rune** - route hardening, persistence recovery, EAS profiles; v6 technical audit is complete.
 4. **Kite** - SupabaseAuthority behind a feature flag, launch-safe identity, schema/RLS.
 5. **Oracle** - 1000-seed economy replay harness and launch tuning pass.
 6. **Axiom** - Web/iOS/Android QA, store-submission regression checklist.

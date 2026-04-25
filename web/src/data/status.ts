@@ -19,11 +19,12 @@ export const STATUS: StatusBlock = {
     "Dev Lab 3D office work is complete. CyberTrader v6 is the active game repo, and the studio is now focused on App Store / Play Store submission readiness.",
   phaseId: "phase-1-v6-reliable-demo",
   nextMilestone:
-    "Make v6 a reliable Web/iOS/Android demo: rerun checks, validate native runtime, harden routing/storage, and prepare EAS internal builds.",
+    "Make v6 a reliable Web/iOS/Android demo: smoke production web, validate native runtime, harden routing/storage, and prepare EAS internal builds.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority remains a stub; LocalAuthority is the only proven authority path",
     "EAS build profiles are not yet confirmed",
+    "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Store screenshots, preview video, privacy copy, and age-rating notes are not ready",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "First Zara/Zyra autonomous v6 cron runs still need verification after the gateway restart",
@@ -33,6 +34,7 @@ export const STATUS: StatusBlock = {
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
     "CyberTrader v6 live deployment returns HTTP 200",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
+    "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -54,6 +56,11 @@ export const STATUS: StatusBlock = {
       detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200",
     },
     {
+      label: "Build checks",
+      state: "green",
+      detail: "Rune audit completed locally: npm install, typecheck, Jest, and Expo web export pass",
+    },
+    {
       label: "Native QA",
       state: "amber",
       detail: "Web has a deployed build, but iOS and Android smoke runs remain the next honest readiness gate",
@@ -62,6 +69,11 @@ export const STATUS: StatusBlock = {
       label: "SupabaseAuthority",
       state: "amber",
       detail: "LocalAuthority is proven; SupabaseAuthority needs a feature-flagged implementation or a documented deferral",
+    },
+    {
+      label: "Dependency audit",
+      state: "amber",
+      detail: "npm audit reports Expo toolchain transitive advisories; forced remediation proposes a breaking Expo change",
     },
     {
       label: "OpenClaw node",
@@ -79,5 +91,5 @@ export const STATUS: StatusBlock = {
       detail: "Screenshots, preview video, privacy copy, app metadata, and age rating notes are not yet submission-ready",
     },
   ],
-  updated: "2026-04-25",
+  updated: "2026-04-26",
 };

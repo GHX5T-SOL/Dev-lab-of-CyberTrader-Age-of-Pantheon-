@@ -24,7 +24,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-25";
+export const LAST_UPDATED = "2026-04-26";
 
 function task(input: Task): Task {
   return input;
@@ -246,11 +246,13 @@ export const TASKS: Task[] = [
     id: "rune-p0-001",
     owner: "rune",
     title: "Run v6 technical audit: typecheck, tests, export, route map, and dependency review",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "4h",
     acceptanceCriteria: ["npm run typecheck passes", "npm test passes", "npx expo export --platform web passes", "Dependency risks are logged"],
     tags: ["frontend", "qa", "v6"],
+    notes: "Completed 2026-04-26. v6 install, typecheck, Jest, and Expo web export pass; Expo toolchain dependency advisories are logged for planned remediation.",
+    links: [{ label: "v6 technical audit", href: `${v6}/blob/main/docs/release/rune-p0-001-technical-audit.md` }],
   }),
   task({
     id: "rune-p0-002",

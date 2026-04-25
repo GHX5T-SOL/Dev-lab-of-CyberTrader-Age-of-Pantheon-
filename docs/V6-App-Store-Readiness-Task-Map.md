@@ -1,6 +1,6 @@
 # CyberTrader v6 App Store Readiness Task Map
 
-Updated: 2026-04-25
+Updated: 2026-04-26
 
 ## Mission
 
@@ -165,11 +165,18 @@ cd web && npm run typecheck && npm run build
 git status
 ```
 
+## Current Progress
+
+- `rune-p0-001` is complete: v6 `npm install`, `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web` pass locally on 2026-04-26.
+- The v6 audit route map and dependency notes are logged in the v6 repo at `docs/release/rune-p0-001-technical-audit.md`.
+- The root v6 typecheck now targets the Expo app and excludes the standalone Remotion `cinematics/` package, which has its own package and TypeScript config.
+
 ## Current Blockers
 
 - iOS and Android runtime validation are still pending.
 - SupabaseAuthority remains a stub.
 - EAS build profiles are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
+- Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24`, but a bounded post-fix doctor still timed out after 60 seconds.
 - OpenClaw reports 38 skill requirement gaps after `doctor --fix`; Cipher/Talon should decide which ClawdHub/OpenClaw skills are required for v6 execution.

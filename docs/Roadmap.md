@@ -1,6 +1,6 @@
 # Roadmap - Dev Lab Control Plane and CyberTrader v6
 
-Updated: 2026-04-25
+Updated: 2026-04-26
 
 ## Reality Check
 
@@ -14,6 +14,8 @@ https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
 v6 already has the core playable loop: intro/login, LocalAuthority trades, ledger, inventory, XP/rank, locations, travel, heat/raids, couriers, news, flash events, NPC missions, district states, streaks, daily challenges, bounty, and away report.
+
+The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation.
 
 The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
@@ -50,6 +52,7 @@ Required:
 - `npm run typecheck` green.
 - `npm test -- --runInBand` green.
 - `npx expo export --platform web` green.
+- Route hardening follows the completed Rune technical audit.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
 - Android emulator smoke passes.
