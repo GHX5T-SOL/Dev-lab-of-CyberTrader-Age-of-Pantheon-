@@ -22,6 +22,7 @@
 - After successful execution, you should be able to run `ssh zyra-mini` without a password.
 - The generated private key is stored at `~/.ssh/id_ed25519` and is **not** committed to the repository (the `.ssh/` directory is now ignored via `.gitignore`).
 - Documentation for this process is kept in this `Collaboration_Protocol.md` under the **SSH Persistent Key Setup** section.
+- **Note:** Ensure `zyra-mini` resolves via Tailscale or your `/etc/hosts`. Verify connectivity before running the script.
 
 ## Information flow
 
