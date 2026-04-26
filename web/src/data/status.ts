@@ -32,7 +32,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200 and headless-renders the intro route",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, and headless-renders the intro route in Chromium",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -42,7 +42,7 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
-    "Axiom completed the store-submission regression checklist covering first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes",
+    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 54/54 Jest tests",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
@@ -63,12 +63,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200 and renders the intro route in headless Chrome",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, and renders the intro route in headless Chromium",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session tests, EAS config validation, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session tests, EAS config validation, 54/54 Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",

@@ -506,7 +506,7 @@ export const TASKS: Task[] = [
     estimate: "1d",
     acceptanceCriteria: ["First-session checklist exists", "Trading regression checklist exists", "Store metadata checklist exists"],
     tags: ["qa", "release", "checklist"],
-    notes: "Completed 2026-04-26. v6 docs/release/axiom-p0-002-regression-checklist.md delivers first-session, trading, and store metadata checklists with cross-references to rune/oracle/kite release notes; v6 typecheck, Jest (48/48 in 16 suites), and Expo web export pass.",
+    notes: "Completed 2026-04-26. v6 docs/release/axiom-p0-002-regression-checklist.md delivers first-session, trading, and store metadata checklists with cross-references to rune/oracle/kite release notes; current v6 typecheck, Jest (54/54 in 18 suites), and Expo web export pass.",
     links: [{ label: "Regression checklist", href: `${v6}/blob/main/docs/release/axiom-p0-002-regression-checklist.md` }],
   }),
   task({
@@ -692,8 +692,11 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-26: v6 live returned HTTP 200, headless Chrome rendered the intro route, and local v6 typecheck/Jest/export passed. Full login/trading browser smoke is still a Gate A follow-up.",
-    links: [{ label: "v6 deployment", href: live }],
+    notes: "Monitor pass 2026-04-26: v6 now has npm run health:live plus a release note; live returned HTTP 200, the health check passed, headless Chromium rendered the intro route, and local v6 typecheck, Jest (54/54 in 18 suites), and Expo web export passed. Full login/trading browser smoke is still a Gate A follow-up.",
+    links: [
+      { label: "v6 deployment", href: live },
+      { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
+    ],
   }),
   task({
     id: "zyra-p1-003",
