@@ -171,10 +171,12 @@ git status
 - The v6 audit route map and dependency notes are logged in the v6 repo at `docs/release/rune-p0-001-technical-audit.md`.
 - The root v6 typecheck now targets the Expo app and excludes the standalone Remotion `cinematics/` package, which has its own package and TypeScript config.
 - `rune-p0-002` is complete: protected player routes now recover after hydration when deep-linked without a local player, the `/` entry route uses shared phase-to-route logic, and menu/Android back actions use safe empty-stack fallbacks.
+- `rune-p0-003` is in progress: native storage regression tests now cover persisted session save/load, settings reset clearing, and corrupt JSON recovery.
 
 ## Current Blockers
 
 - iOS and Android runtime validation are still pending.
+- Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority remains a stub.
 - EAS build profiles are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
