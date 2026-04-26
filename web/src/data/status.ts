@@ -22,7 +22,7 @@ export const STATUS: StatusBlock = {
     "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, validate cold-launch storage, and tune from Oracle replay data.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
-    "SupabaseAuthority remains a stub; LocalAuthority is the only proven authority path",
+    "SupabaseAuthority is feature-flagged and documented, but live Supabase migrations/RLS are not validated",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Store screenshots, preview video, privacy copy, and age-rating notes are not ready",
@@ -40,6 +40,7 @@ export const STATUS: StatusBlock = {
     "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
     "Oracle completed the 1000-seed economy replay harness with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, and median PnL 48.88",
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
+    "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -63,7 +64,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, EAS config validation, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Kite authority flag checks, EAS config validation, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -73,7 +74,7 @@ export const STATUS: StatusBlock = {
     {
       label: "SupabaseAuthority",
       state: "amber",
-      detail: "LocalAuthority is proven; SupabaseAuthority needs a feature-flagged implementation or a documented deferral",
+      detail: "Feature-flagged adapter selection is tested and documented; live schema migrations and RLS validation are still pending",
     },
     {
       label: "Dependency audit",

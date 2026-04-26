@@ -15,7 +15,7 @@ https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 v6 already has the core playable loop: intro/login, LocalAuthority trades, ledger, inventory, XP/rank, locations, travel, heat/raids, couriers, news, flash events, NPC missions, district states, streaks, daily challenges, bounty, and away report.
 
-The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation. The `rune-p0-002` route hardening pass is also complete: protected routes recover after hydration, menu back actions have safe fallbacks, and Android hardware back returns safely from menu/terminal screens. The `rune-p0-003` persistence reliability pass is in progress, with storage regression coverage now verifying native save/load, reset clearing, and corrupt JSON recovery. The `rune-p0-004` EAS profile pass is complete, `oracle-p0-001` now provides a deterministic 1000-seed economy replay harness for launch tuning, and `ghost-p0-001` documents release blockers, direct-push criteria, and Gate A/B/C sign-off rules. The next native gate is running the first simulator/emulator builds.
+The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation. The `rune-p0-002` route hardening pass is also complete: protected routes recover after hydration, menu back actions have safe fallbacks, and Android hardware back returns safely from menu/terminal screens. The `rune-p0-003` persistence reliability pass is in progress, with storage regression coverage now verifying native save/load, reset clearing, and corrupt JSON recovery. The `rune-p0-004` EAS profile pass is complete, `oracle-p0-001` now provides a deterministic 1000-seed economy replay harness for launch tuning, `ghost-p0-001` documents release blockers, direct-push criteria, and Gate A/B/C sign-off rules, and `kite-p0-001` has SupabaseAuthority behind a tested feature-flag boundary. The next native gate is running the first simulator/emulator builds.
 
 The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
@@ -57,6 +57,7 @@ Required:
 - 1000-seed deterministic economy replay harness exists for soft-lock and tuning checks.
 - Economy replay reports 0 soft locks and 0 impossible states before tuning patches land.
 - Ghost release blockers, direct-push automation criteria, and Gate A/B/C sign-off rules are documented.
+- SupabaseAuthority remains off by default and is guarded by explicit flag/config tests before live validation.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
 - Android emulator smoke passes.
@@ -77,7 +78,7 @@ Required:
 - Bundle IDs, schemes, app icon, splash, permissions, and env policy documented.
 - Crash/log capture path.
 - Native persistence hydration/recovery.
-- SupabaseAuthority scope decision.
+- SupabaseAuthority live project, migrations, RLS validation, and launch-scope decision.
 - Store-safe privacy/token/trading language.
 
 Primary owners: Ghost, Rune, Kite, Axiom, Cipher, Talon.
