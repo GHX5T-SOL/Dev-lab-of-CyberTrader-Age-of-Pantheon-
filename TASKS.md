@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `e6c5da6` (`vex-p0-001`, pushed `2026-04-26`); parent `15eb8a1` completed `oracle-p0-002` launch tuning regression coverage and documentation.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `7c26869` (`vex-p0-002`, pushed `2026-04-26`); parent `e6c5da6` completed `vex-p0-001` mobile HUD readability.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the intro route in Chromium during the 2026-04-26 Zyra monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -35,6 +35,7 @@ Current external checks on 2026-04-26:
 - `nyx-p0-002` 10-minute demo pressure tuning is complete: v6 `engine/demo-pressure.ts` and `docs/release/nyx-p0-002-demo-pressure-tuning.md` codify starter, route-runner, and contraband strategy bands with zero issues, positive PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `oracle-p0-002` launch economy tuning is complete: v6 `engine/launch-tuning.ts`, `engine/__tests__/launch-tuning.test.ts`, and `docs/release/oracle-p0-002-launch-tuning.md` lock the 1000-seed survival band, Heat/raid target ranges, and low/medium/high-risk reward separation; local launch tuning output reports 1000/1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and zero strategy issues.
 - `vex-p0-001` mobile HUD readability is complete: v6 `docs/release/vex-p0-001-mobile-hud-readability.md` documents the Superdesign-backed pass; home and terminal routes now prioritize Energy/Heat/0BOL, add terminal-owned quantity telemetry near the trade ticket, scale/truncate critical labels, and use 44-52 px touch targets for the first trade command path; local `typecheck`, Jest (59/59 in 20 suites), and Expo web export pass.
+- `vex-p0-002` responsive viewport captures are complete: v6 `docs/release/vex-p0-002-responsive-viewport-pass.md` documents the Superdesign-backed pass; `npm run qa:responsive` now checks exported web `/home` and `/terminal` across web desktop, small phone, large phone, and tablet portrait viewports with no horizontal overflow, visible first-trade controls, black web shell background, and committed capture evidence.
 - `zoro-p0-001` first 10-minute creative pass is complete: v6 `docs/release/zoro-p0-001-first-journey-creative-pass.md` approves the Gate A journey with follow-up polish for cue readability, screenshot staging, and store-capture art direction.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
@@ -46,7 +47,7 @@ Current external checks on 2026-04-26:
 - 10 locations, location pricing, travel lockouts, Black Market heat reduction.
 - Heat, bounty, raids, courier shipments, deterministic news, missed-tick catch-up.
 - Flash events, NPC missions, district states, streaks, daily challenges, away report, and action feedback.
-- Current checks previously recorded: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, plus browser smoke for intro/login/trading.
+- Current checks previously recorded: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, `npm run qa:responsive`, plus browser smoke for intro/login/trading.
 
 ## Top P0 Work
 
@@ -56,7 +57,7 @@ Current external checks on 2026-04-26:
 4. **Kite** - SupabaseAuthority flag boundary is complete; launch-safe identity, schema migrations, and live RLS validation are next.
 5. **Nyx** - first-session loop map, live guidance, and 10-minute pressure tuning are complete.
 6. **Oracle** - 1000-seed economy replay harness and launch tuning bands are complete; next Oracle work is stress scenarios and beta tuning inputs.
-7. **Vex** - mobile HUD readability is complete; responsive viewport captures (`vex-p0-002`) are next.
+7. **Vex** - mobile HUD readability and responsive viewport captures are complete; error, empty, offline, and loading states are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
 9. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
 10. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.

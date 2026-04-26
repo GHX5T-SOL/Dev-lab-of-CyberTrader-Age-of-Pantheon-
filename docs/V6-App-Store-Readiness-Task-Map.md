@@ -57,7 +57,7 @@ The Dev Lab 3D office is now a completed studio milestone. New work should impro
 
 ### UI/UX & Cyberpunk Aesthetic / Vex
 - Polish mobile HUD readability and one-hand ergonomics.
-- Run responsive pass for web, small phone, large phone, and tablet.
+- Responsive pass for web, small phone, large phone, and tablet is complete.
 - Create error, empty, offline, and loading states.
 - Make every screen feel diegetic.
 
@@ -184,6 +184,7 @@ git status
 - `nyx-p0-002` is complete: v6 now has `engine/demo-pressure.ts`, `engine/__tests__/demo-pressure.test.ts`, and `docs/release/nyx-p0-002-demo-pressure-tuning.md` proving three 60-tick demo strategies stay viable with zero issues, positive realized PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `zoro-p0-001` is complete: v6 now has `docs/release/zoro-p0-001-first-journey-creative-pass.md` approving the first 10-minute Gate A journey with follow-ups for Vex, Palette, Reel, and Axiom.
 - `vex-p0-001` is complete: v6 now has `docs/release/vex-p0-001-mobile-hud-readability.md`, Superdesign-backed HUD notes, prioritized Energy/Heat/0BOL home metrics, terminal Energy/Heat/Owned/0BOL telemetry, scaled critical labels, and 44-52 px first-trade touch targets. Current local v6 `typecheck`, Jest (59/59 in 20 suites), and Expo web export pass.
+- `vex-p0-002` is complete: v6 now has `docs/release/vex-p0-002-responsive-viewport-pass.md`, committed home/terminal capture evidence for web desktop, small phone, large phone, and tablet portrait, a pinned Playwright `npm run qa:responsive` command, and a web-shell background fix. Current local v6 `typecheck`, Jest (59/59 in 20 suites), Expo web export, and responsive QA pass.
 
 ## Current Blockers
 
