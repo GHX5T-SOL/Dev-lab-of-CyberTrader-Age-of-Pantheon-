@@ -30,6 +30,7 @@ Current external checks on 2026-04-26:
 - `ghost-p0-001` release authority bar is complete: Ghost-owned release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules are documented in v6.
 - `ghost-p0-002` architecture risk audit is complete: Expo dependency advisories, storage/authority boundaries, EAS Node alignment to Expo SDK 52, and the top 10 App Store submission risks now have owners and required evidence in v6.
 - `kite-p0-001` SupabaseAuthority feature-flag boundary is complete: LocalAuthority remains the default, full SupabaseAuthority selection requires an explicit flag plus public config, and RLS/schema requirements are documented in v6.
+- `axiom-p0-002` store-submission regression checklist is complete: v6 `docs/release/axiom-p0-002-regression-checklist.md` documents the first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes; local v6 typecheck, Jest (48/48 in 16 suites), and Expo web export pass.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
@@ -49,7 +50,7 @@ Current external checks on 2026-04-26:
 3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
 4. **Kite** - SupabaseAuthority flag boundary is complete; launch-safe identity, schema migrations, and live RLS validation are next.
 5. **Oracle** - 1000-seed economy replay harness is complete; launch tuning pass is next.
-6. **Axiom** - Web/iOS/Android QA, store-submission regression checklist.
+6. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
 7. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
 8. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
 9. **Zyra** - run v6 health/task-sync loop, deployment monitor, and autonomous run ledger.

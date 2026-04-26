@@ -178,6 +178,7 @@ git status
 - `ghost-p0-001` is complete: v6 now has `docs/release/ghost-p0-001-release-authority.md` documenting release blockers, direct-to-main automation criteria, and Ghost Gate A/B/C sign-off rules.
 - `ghost-p0-002` is complete: v6 now has `docs/release/ghost-p0-002-architecture-risk-audit.md` documenting Expo dependency advisories, storage and authority boundaries, EAS Node alignment to Expo SDK 52, the top 10 App Store submission risks, owners, and required evidence.
 - `kite-p0-001` is complete: v6 keeps `LocalAuthority` as the default authority, selects `SupabaseAuthority` only when the authority feature flag and public config are present, supports an explicit authority-off override for client-only Supabase use, and documents RLS/schema requirements in `docs/release/kite-p0-001-supabase-authority.md`.
+- `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; local v6 `typecheck`, Jest (48/48 in 16 suites), and `npx expo export --platform web` pass.
 
 ## Current Blockers
 

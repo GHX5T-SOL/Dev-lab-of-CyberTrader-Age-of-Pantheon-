@@ -42,6 +42,7 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
+    "Axiom completed the store-submission regression checklist covering first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -70,7 +71,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Native QA",
       state: "amber",
-      detail: "EAS profiles exist, but iOS simulator and Android emulator smoke runs remain the next honest readiness gate",
+      detail: "EAS profiles and the Axiom store-submission regression checklist exist, but iOS simulator and Android emulator smoke runs remain the next honest readiness gate",
     },
     {
       label: "SupabaseAuthority",

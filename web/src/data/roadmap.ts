@@ -96,6 +96,7 @@ export const ROADMAP: Phase[] = [
       { label: "Ghost release authority bar", done: true },
       { label: "Ghost architecture risk audit", done: true },
       { label: "SupabaseAuthority flag boundary", done: true },
+      { label: "Axiom store-submission regression checklist", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },
