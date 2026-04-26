@@ -60,7 +60,7 @@ export const TASKS: Task[] = [
     id: "studio-p1-003",
     owner: "compass",
     title: "Keep TASKS.md and docs/V6-App-Store-Readiness-Task-Map.md in sync after every shipped task",
-    status: "done",
+    status: "todo",
     priority: "P1",
     estimate: "ongoing",
     acceptanceCriteria: ["Every completed task changes status in both sources", "Roadmap checkpoint changes are logged", "Commit message names owner agent"],

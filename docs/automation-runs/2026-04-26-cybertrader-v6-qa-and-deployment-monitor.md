@@ -14,7 +14,7 @@ Automation ID: `cybertrader-v6-qa-and-deployment-monitor`
 
 ## Results
 
-- v6 repo: pushed `219d8a5` (`zyra-p0-002 zyra: add live deployment health check`) and `b15cc8b` (`nyx-p0-002 nyx: add demo pressure audit`) after starting from `dda964c`.
+- v6 repo: pushed `219d8a5` (`zyra-p0-002 zyra: add live deployment health check`), `ca7717c` (`nyx-p0-002 nyx: codify demo pressure tuning`), and `b15cc8b` (`nyx-p0-002 nyx: add demo pressure audit`) after starting from `dda964c`.
 - Dev Lab repo: pushed status, task-map, roadmap, and automation-run sync commits; pre-existing OpenClaw recovery edits were preserved.
 - Live deployment: `https://cyber-trader-age-of-pantheon-v6.vercel.app` returned HTTP 200, passed `npm run health:live`, and rendered the intro/cinematic route in headless Chromium.
 - Local v6 checks: `npm run health:live`, `npm run typecheck`, `npm test -- --runInBand` (57/57 tests in 19 suites), and `npm run build:web` passed.
