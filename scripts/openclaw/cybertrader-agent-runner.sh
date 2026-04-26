@@ -105,7 +105,14 @@ release_locks() {
   if [[ "$$" != "$MAIN_PID" || "${BASH_SUBSHELL:-0}" != "0" ]]; then
     return 0
   fi
-  rm -rf "$LOCK_DIR/global.lock" "$LOCK_DIR/$AGENT_ID.lock"
+
+  local dir owner_pid
+  for dir in "$LOCK_DIR/global.lock" "$LOCK_DIR/$AGENT_ID.lock"; do
+    owner_pid="$(cat "$dir/pid" 2>/dev/null || true)"
+    if [[ "$owner_pid" == "$MAIN_PID" ]]; then
+      rm -rf "$dir"
+    fi
+  done
 }
 trap release_locks EXIT
 
