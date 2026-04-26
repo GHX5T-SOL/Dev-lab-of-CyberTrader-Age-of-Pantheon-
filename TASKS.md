@@ -56,7 +56,7 @@ Current external checks on 2026-04-26:
 7. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
 8. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
 9. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
-10. **Zyra** - run v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
+10. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
 
 ## Full Task Map
 
