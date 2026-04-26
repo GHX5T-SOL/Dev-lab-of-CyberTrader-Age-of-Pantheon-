@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `46b72d4` (`cipher-p0-002`, pushed `2026-04-26`); parent `b8eb823` completed `palette-p0-001` store asset audit.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `191d1ae` (`zara-p1-004`, pushed `2026-04-26`); parent `a1d3b0a` completed `talon-p1-003` rollback protocol.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors during the 2026-04-26 Codex monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -46,6 +46,7 @@ Current external checks on 2026-04-26:
 - `palette-p0-001` asset audit is complete: v6 `docs/release/palette-p0-001-asset-audit.md` and `.superdesign` context now inventory commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets; current image assets are resolution-safe for internal staging, but final store screenshots/preview still need source-provenance sign-off, missing icon/splash art, and optimization follow-ups.
 - `cipher-p0-002` privacy/token/age-rating risk matrix is complete: v6 `docs/release/cipher-p0-002-policy-risk-matrix.md` maps LocalAuthority, SupabaseAuthority, `0BOL`/`$OBOL`, wallet, simulated trading, gambling/prize, privacy, Data Safety, and age-rating risks; it lists required store/privacy/legal copy and escalation triggers before token, wallet, paid chance, or real-money features.
 - `talon-p1-003` rollback and incident protocol is complete: v6 `docs/release/talon-p1-003-rollback-incident-protocol.md` documents P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure (no force-push), TestFlight/Play/EAS native rollback (Gate B+), Ghost as sole release authority, autonomous agent obligations (stop-log-revert-document), and a post-incident note template for `docs/automation-runs/`. Zyra run 20260426T174449Z.
+- `zara-p1-004` mobile asset optimization queue is complete: v6 `scripts/optimize-assets.mjs`, `npm run optimize:assets`, `npm run optimize:assets:apply`, and `docs/release/zara-p1-004-asset-optimization-queue.md` reduce the active commodity image bundle from 21.6 MB to 1.35 MB (94% reduction) by generating 256×256 copies of all 10 commodity icon PNGs and a 384×512 copy of the Eidolon shard core in `assets/optimized/`; `commodity-row.tsx`, `commodity-art.ts`, and `signal-core.tsx` updated to use the optimized paths; Expo web export confirms optimized PNGs in bundle; 73/73 tests pass. Source originals preserved; provenance sign-off (Palette → Zoro) remains required before store submission. Zara run 20260426T182226Z.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 Current native/store readiness blockers:
@@ -78,7 +79,7 @@ Current native/store readiness blockers:
 9. **Talon** - autonomous-agent safety rails and rollback/incident protocol are complete; next Talon work is automated post-push regression detection (launchd monitor or webhook, `talon-p1-004`).
 10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skill triage and Kite legal-copy support are next.
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
-12. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
+12. **Zara** - `zara-p1-004` mobile asset optimization queue is complete (94% image bundle reduction); next Zara work is icon/splash placeholder creation (`palette-p1-002` dependency) or extended endurance economy replay (`oracle-p0-004`).
 13. **Zyra** - live deployment health check, responsive QA self-containment, and rollback protocol (talon-p1-003) are complete; next Zyra work is launchd runner verification and auto-picking the next unblocked task from the board (`zyra-p1-004`).
 
 ## Full Task Map
