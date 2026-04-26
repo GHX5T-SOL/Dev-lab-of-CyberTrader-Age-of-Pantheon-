@@ -89,7 +89,7 @@ export const TASKS: Task[] = [
     dependencies: ["rune-p0-001", "kite-p0-001"],
     acceptanceCriteria: ["Expo SDK and dependency risks are listed", "Storage/authority boundaries are reviewed", "Top 10 technical risks have owners"],
     tags: ["architecture", "audit", "v6"],
-    notes: "Completed 2026-04-26. v6 architecture risk audit documents Expo toolchain advisories, storage and authority boundaries, and the top 10 App Store submission risks with owners and required evidence.",
+    notes: "Completed 2026-04-26. v6 architecture risk audit documents Expo toolchain advisories, storage and authority boundaries, EAS Node alignment to Expo SDK 52, and the top 10 App Store submission risks with owners and required evidence.",
     links: [{ label: "Architecture risk audit", href: `${v6}/blob/main/docs/release/ghost-p0-002-architecture-risk-audit.md` }],
   }),
   task({

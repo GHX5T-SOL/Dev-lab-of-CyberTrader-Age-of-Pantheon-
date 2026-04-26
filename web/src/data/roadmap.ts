@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness, Ghost's release-authority bar and architecture risk audit, and Kite's SupabaseAuthority flag boundary are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, and Kite's SupabaseAuthority flag boundary are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
