@@ -147,7 +147,7 @@ export const TASKS: Task[] = [
     dependencies: ["reel-p0-001", "palette-p0-001"],
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
-    notes: "Reel preview storyboard and capture plan are complete; Zoro approval now waits on Palette asset audit plus Axiom evidence against the capture route.",
+    notes: "Reel preview storyboard and capture plan are complete, and Palette's current-asset audit is complete. Zoro final approval now waits on Axiom route evidence plus Palette source-provenance and icon/splash follow-ups.",
   }),
   task({
     id: "zoro-p1-003",
@@ -441,11 +441,13 @@ export const TASKS: Task[] = [
     id: "palette-p0-001",
     owner: "palette",
     title: "Audit all v6 commodity and UI assets for store-ready resolution and ownership",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     acceptanceCriteria: ["Every asset has source/ownership notes", "Low-resolution assets are flagged", "Store screenshots use approved assets only"],
     tags: ["assets", "licensing", "store"],
+    notes: "Completed 2026-04-26. v6 now has a current asset register covering commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, app icon/splash gaps, and responsive QA captures. No active low-resolution images were found; final store media still needs source-provenance sign-off plus icon/splash art.",
+    links: [{ label: "Store asset audit", href: `${v6}/blob/main/docs/release/palette-p0-001-asset-audit.md` }],
   }),
   task({
     id: "palette-p1-002",

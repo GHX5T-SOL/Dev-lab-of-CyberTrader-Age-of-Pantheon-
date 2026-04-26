@@ -190,6 +190,7 @@ git status
 - `vex-p1-003` is complete: v6 now has `components/system-state-panel.tsx`, safe system messages, route-recovery loading treatment, terminal offline/locked panels, empty-state panels for positions/news/notifications, Settings local-mode disclosure, and `docs/release/vex-p1-003-system-states.md`. Current local safety scan over `884e4b1..HEAD`, `typecheck`, Jest (64/64 in 22 suites), and Expo web export pass.
 - `reel-p0-001` is complete: v6 now has `docs/release/reel-p0-001-app-store-preview-storyboard.md`, a 30-second App Store preview beat sheet, named capture routes, store-safety rules, staged data requirements, Zoro approval checklist, and SuperDesign trailer capture board `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
 - `cipher-p0-001` is complete: v6 now has `docs/release/cipher-p0-001-store-submission-requirements.md`, official Apple/Google/Android/Expo source links, Xcode 26 / iOS 26 SDK upload requirements, Google Play API 35 target requirements, Expo SDK 52 target-SDK risk notes, and an updated Axiom store-submission checklist.
+- `palette-p0-001` is complete: v6 now has `docs/release/palette-p0-001-asset-audit.md` plus refreshed `.superdesign` context documenting all current commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets. No low-resolution active images were found, but final store media still needs source-provenance sign-off and missing icon/splash art.
 
 ## Current Blockers
 
@@ -199,7 +200,7 @@ git status
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
 - Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
-- Store metadata, privacy copy, screenshots, and final preview video are not ready; Reel's preview storyboard and capture plan are ready.
+- Store metadata, privacy copy, screenshots, final preview video, source-cleared asset provenance, and icon/splash art are not ready; Reel's preview storyboard and Palette's current-asset audit are ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - Autonomous direct-to-main release authority and local safety preflight are documented; Talon rollback and incident protocol remains pending.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24` with Zara/Zyra on external `launchd` jobs; OpenAI generation is currently quota-limited and falls through to Claude Code.

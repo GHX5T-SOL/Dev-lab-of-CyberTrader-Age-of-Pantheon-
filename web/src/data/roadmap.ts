@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, Reel's App Store preview storyboard, and Cipher's 2026 store-submission requirements are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, Reel's App Store preview storyboard, Cipher's 2026 store-submission requirements, and Palette's current-asset audit are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -90,6 +90,7 @@ export const ROADMAP: Phase[] = [
       "Live Vercel shell-marker health command",
       "App Store preview storyboard, capture route map, and Zoro approval checklist",
       "2026 Apple/Google/Expo submission requirements with Xcode 26 / iOS 26 SDK and Android API 35 gates",
+      "Palette asset audit for resolution, source-provenance gaps, icon/splash gaps, and store-capture safety",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
@@ -118,6 +119,7 @@ export const ROADMAP: Phase[] = [
       { label: "Live shell-marker health command", done: true },
       { label: "Reel preview storyboard", done: true },
       { label: "Cipher store requirements", done: true },
+      { label: "Palette asset audit", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },
@@ -155,6 +157,7 @@ export const ROADMAP: Phase[] = [
     deliverables: [
       "App Store preview storyboard and capture plan",
       "App Store screenshots and preview video",
+      "Source-cleared asset provenance, icon, splash, and screenshot-safe visual states",
       "Store description, keywords, support URL, privacy copy, and age rating notes",
       "Legal/security review of $OBOL naming, simulated trading, wallet flags, and data handling",
       "Final economy tuning",
