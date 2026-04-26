@@ -19,11 +19,11 @@ export const STATUS: StatusBlock = {
     "Dev Lab 3D office work is complete. CyberTrader v6 is the active game repo, and the studio is now focused on App Store / Play Store submission readiness.",
   phaseId: "phase-1-v6-reliable-demo",
   nextMilestone:
-    "Make v6 a reliable Web/iOS/Android demo: smoke production web, validate native runtime, harden storage, and prepare EAS internal builds.",
+    "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, and validate cold-launch storage.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority remains a stub; LocalAuthority is the only proven authority path",
-    "EAS build profiles are not yet confirmed",
+    "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Store screenshots, preview video, privacy copy, and age-rating notes are not ready",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
@@ -37,6 +37,7 @@ export const STATUS: StatusBlock = {
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
     "Rune started persistence reliability coverage: native storage save/load, reset clearing, and corrupt JSON recovery are covered by Jest and documented in v6",
+    "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -60,12 +61,12 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, and storage regression checks pass locally: typecheck, Jest, and Expo web export",
+      detail: "Rune audit, route hardening, storage regression checks, EAS config validation, and Expo web export pass locally",
     },
     {
       label: "Native QA",
       state: "amber",
-      detail: "Web has a deployed build, but iOS and Android smoke runs remain the next honest readiness gate",
+      detail: "EAS profiles exist, but iOS simulator and Android emulator smoke runs remain the next honest readiness gate",
     },
     {
       label: "SupabaseAuthority",

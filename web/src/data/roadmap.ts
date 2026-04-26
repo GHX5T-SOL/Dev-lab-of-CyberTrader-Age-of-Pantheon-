@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, and storage regression checks are green locally.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, and EAS profiles are green locally.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -110,7 +110,7 @@ export const ROADMAP: Phase[] = [
       "Store-safe privacy/token/trading language",
     ],
     milestones: [
-      { label: "EAS profiles committed", done: false },
+      { label: "EAS profiles committed", done: true },
       { label: "First TestFlight build uploaded", done: false },
       { label: "First Play Internal Testing build uploaded", done: false },
     ],

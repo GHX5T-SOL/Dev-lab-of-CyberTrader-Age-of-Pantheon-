@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest pushed head from this monitor run is `4e510d2` (`rune-p0-003`, committed `2026-04-26T00:32:48Z`).
+- v6 GitHub repo is public, default branch `main`, latest pushed head from this monitor run is `40add8d` (`rune-p0-004`, committed `2026-04-26T00:43:10Z`).
 - v6 Vercel deployment returns HTTP 200 and headless-renders the intro route in Chrome.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -25,6 +25,7 @@ Current external checks on 2026-04-26:
 - v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
 - `rune-p0-002` Expo Router hardening is complete: the app now uses a shared phase-to-route mapper, protected player routes recover after hydration when deep-linked without a local player, and menu/Android back actions fall back safely when the navigation stack is empty.
 - `rune-p0-003` persistence reliability is now in progress: native storage regression coverage verifies save/load, reset clearing, and corrupt JSON recovery, with a release note at `docs/release/rune-p0-003-persistence-coverage.md`; cold-launch device validation remains pending.
+- `rune-p0-004` EAS build profiles are complete: preview, iOS simulator, internal, store, and production profiles are committed with the EAS project link and LocalAuthority-safe env defaults.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
@@ -41,7 +42,7 @@ Current external checks on 2026-04-26:
 
 1. **Ghost** - set the v6 app-store technical bar, audit architecture, approve EAS/TestFlight/Play build plan.
 2. **Zoro** - creative pass on first 10-minute journey and App Store screenshot/preview direction.
-3. **Rune** - route hardening is complete; persistence recovery is in progress, and EAS profiles remain.
+3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
 4. **Kite** - SupabaseAuthority behind a feature flag, launch-safe identity, schema/RLS.
 5. **Oracle** - 1000-seed economy replay harness and launch tuning pass.
 6. **Axiom** - Web/iOS/Android QA, store-submission regression checklist.

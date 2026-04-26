@@ -173,13 +173,14 @@ git status
 - `rune-p0-002` is complete: protected player routes now recover after hydration when deep-linked without a local player, the `/` entry route uses shared phase-to-route logic, and menu/Android back actions use safe empty-stack fallbacks.
 - `rune-p0-003` is in progress: native storage regression tests now cover persisted session save/load, settings reset clearing, and corrupt JSON recovery, with `docs/release/rune-p0-003-persistence-coverage.md` committed in v6.
 - `zyra-p0-002` monitor pass on 2026-04-26 verified the live deployment returns HTTP 200 and headless-renders the intro route; local v6 `typecheck`, Jest, and Expo web export also passed.
+- `rune-p0-004` is complete: `eas.json` now defines preview, iOS simulator, internal, store, and production build profiles, and `docs/release/rune-p0-004-eas-profiles.md` documents bundle IDs, scheme, EAS project metadata, env policy, and EAS config validation commands.
 
 ## Current Blockers
 
 - iOS and Android runtime validation are still pending.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority remains a stub.
-- EAS build profiles are not yet confirmed.
+- Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24`, but a bounded post-fix doctor still timed out after 60 seconds.
