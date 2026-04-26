@@ -71,12 +71,13 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, and Oracle's replay harness are green locally.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness, and Ghost's release-authority bar are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
       "Native storage save/load, reset clearing, and corrupt data recovery covered by Jest",
       "1000-seed deterministic economy replay harness for soft-lock and tuning checks",
+      "Release blockers, direct-push criteria, and Gate A/B/C Ghost sign-off rules documented",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
@@ -90,6 +91,7 @@ export const ROADMAP: Phase[] = [
       { label: "Expo Router route hardening", done: true },
       { label: "Storage regression coverage", done: true },
       { label: "1000-seed economy replay harness", done: true },
+      { label: "Ghost release authority bar", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },

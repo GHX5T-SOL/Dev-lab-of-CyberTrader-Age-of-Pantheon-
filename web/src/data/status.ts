@@ -39,6 +39,7 @@ export const STATUS: StatusBlock = {
     "Rune started persistence reliability coverage: native storage save/load, reset clearing, and corrupt JSON recovery are covered by Jest and documented in v6",
     "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
     "Oracle completed the 1000-seed economy replay harness with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, and median PnL 48.88",
+    "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -87,7 +88,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Autonomy policy",
       state: "amber",
-      detail: "Direct-push autonomous mode is documented with safety rails; first autonomous cron runs still need commit/log verification",
+      detail: "Ghost direct-push criteria are documented; Talon rollback protocol and first autonomous cron run verification remain pending",
     },
     {
       label: "Store assets",

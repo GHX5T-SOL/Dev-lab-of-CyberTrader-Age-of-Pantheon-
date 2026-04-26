@@ -175,6 +175,7 @@ git status
 - `zyra-p0-002` monitor pass on 2026-04-26 verified the live deployment returns HTTP 200 and headless-renders the intro route; local v6 `typecheck`, Jest, and Expo web export also passed.
 - `rune-p0-004` is complete: `eas.json` now defines preview, iOS simulator, internal, store, and production build profiles, and `docs/release/rune-p0-004-eas-profiles.md` documents bundle IDs, scheme, EAS project metadata, env policy, and EAS config validation commands.
 - `oracle-p0-001` is complete: v6 now has `engine/economy-replay.ts`, a focused `npm run replay:economy` command, and `docs/release/oracle-p0-001-economy-replay-harness.md` documenting the 1000-seed deterministic replay baseline with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and median first profitable sell tick 4.
+- `ghost-p0-001` is complete: v6 now has `docs/release/ghost-p0-001-release-authority.md` documenting release blockers, direct-to-main automation criteria, and Ghost Gate A/B/C sign-off rules.
 
 ## Current Blockers
 
@@ -185,5 +186,6 @@ git status
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
+- Autonomous direct-to-main release authority is documented; Talon rollback and incident protocol remains pending.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24`, but a bounded post-fix doctor still timed out after 60 seconds.
 - OpenClaw reports 38 skill requirement gaps after `doctor --fix`; Cipher/Talon should decide which ClawdHub/OpenClaw skills are required for v6 execution.
