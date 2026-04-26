@@ -71,6 +71,11 @@ export default function FlashEventBanner({ event, nowMs }: FlashEventBannerProps
           RISK {event.riskLevel.toUpperCase()}
         </Text>
       </View>
+      {event.counterplayTags.length ? (
+        <Text style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
+          COUNTERPLAY: {event.counterplayTags.join(" / ").toUpperCase()}
+        </Text>
+      ) : null}
       </Pressable>
     </NeonBorder>
   );

@@ -13,6 +13,7 @@ const ITEMS = [
   ["SETTINGS", "/menu/settings"],
   ["INVENTORY", "/menu/inventory"],
   ["MISSIONS", "/missions"],
+  ["$ SHOP", "/shop"],
   ["PROGRESSION", "/menu/progression"],
   ["RANK / LEADERBOARD", "/menu/rank"],
   ["REWARDS", "/menu/rewards"],
@@ -69,7 +70,7 @@ export default function BurgerMenu({ visible, onClose }: BurgerMenuProps) {
             key={href}
             onPress={() => {
               onClose();
-              router.push(href);
+              router.push(href as never);
             }}
             style={({ pressed }) => ({
               height: 48,

@@ -24,6 +24,8 @@ describe("flash events", () => {
       endTimestamp: 240000,
       modifierApplied: true,
       riskLevel: "medium" as const,
+      counterplayTags: ["buy_dip"],
+      resolvedByPlayer: false,
     };
 
     const early = applyFlashEventPriceModifiers({
@@ -56,6 +58,8 @@ describe("flash events", () => {
         endTimestamp: 100,
         modifierApplied: true,
         riskLevel: "high",
+        counterplayTags: ["wait"],
+        resolvedByPlayer: false,
       }),
     ).toBe(2);
   });

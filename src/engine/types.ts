@@ -121,6 +121,17 @@ export interface TradeResult {
   realizedPnl: number;
 }
 
+export interface FirstSessionEvent {
+  stage: number;
+  timestamp: number;
+  type: string;
+  headline: string;
+  description: string;
+  actionRequired: boolean;
+  actionType?: string;
+  expiresAt?: number;
+}
+
 export type FlashEventType =
   | "volatility_spike"
   | "arbitrage_window"
@@ -145,6 +156,22 @@ export interface FlashEvent {
   riskLevel: FlashRiskLevel;
   multiplier?: number;
   amplitude?: number;
+  counterplayTags: string[];
+  resolvedByPlayer: boolean;
+  heatThreshold?: number;
+}
+
+export interface HeistMission {
+  id: string;
+  npcId: string;
+  collateralPercentage: number;
+  collateralValue: number;
+  payoutMultiplier: number;
+  startTimestamp: number;
+  endTimestamp: number;
+  flashEventsDuring: FlashEvent[];
+  status: "pending" | "active" | "success" | "failed";
+  riskRating: "moderate" | "high" | "extreme";
 }
 
 export type MissionType = "delivery" | "buy_request" | "hold" | "intel_drop";
@@ -184,6 +211,79 @@ export interface Mission {
 export interface NpcReputation {
   npcId: string;
   reputation: number;
+}
+
+export interface NPCRelationship {
+  npcId: string;
+  reputation: number;
+  completedMissions: number;
+  failedMissions: number;
+  specialMessages: string[];
+  unlockedPerks: string[];
+}
+
+export interface ShopItem {
+  id: string;
+  name: string;
+  description: string;
+  category: "convenience" | "cosmetic" | "recovery" | "access";
+  obolPrice: number;
+  fiatEquivalent: string;
+  zeroBolAlternative?: string;
+  available: boolean;
+  purchaseLimit?: string;
+}
+
+export interface PlayerRiskProfile {
+  heat: number;
+  bountyLevel: number;
+  recentProfitVelocity: number;
+  recentIllegalVolume: number;
+  scannerAttention: number;
+  raidImmunityUntil: number | null;
+}
+
+export interface MarketWhisper {
+  id: string;
+  createdAt: number;
+  message: string;
+  locationId?: string;
+  ticker?: string;
+}
+
+export interface PantheonShardCliffhanger {
+  detectedAt: number;
+  expiresAt: number;
+  requiredRank: number;
+  headline: string;
+  description: string;
+}
+
+export interface PlayerLoreShard {
+  id: string;
+  rankLevel: number;
+  title: string;
+  body: string;
+  unlockedAt: number;
+  read: boolean;
+}
+
+export interface MissedPeakLogEntry {
+  id: string;
+  ticker: string;
+  quantity: number;
+  sellPrice: number;
+  peakPrice: number;
+  missedValue: number;
+  createdAt: number;
+}
+
+export interface RaidRecoveryWindow {
+  id: string;
+  raidAt: number;
+  expiresAt: number;
+  lostInventory: Record<string, number>;
+  restored: boolean;
 }
 
 export type DailyChallengeType =
@@ -244,6 +344,69 @@ export interface BountySnapshot {
   raidProbabilityDivisor: number;
 }
 
+export type DecisionUrgency = "low" | "medium" | "high" | "critical";
+
+export type DecisionActionType =
+  | "trade"
+  | "travel"
+  | "reduce_heat"
+  | "mission"
+  | "courier"
+  | "claim"
+  | "challenge"
+  | "rank"
+  | "plan";
+
+export interface DecisionSignal {
+  id: string;
+  title: string;
+  description: string;
+  actionType: DecisionActionType;
+  actionLabel: string;
+  urgency: DecisionUrgency;
+  expiresAt: number | null;
+  ticker?: string;
+  locationId?: string;
+}
+
+export interface DecisionContext {
+  opportunity: DecisionSignal;
+  risk: DecisionSignal;
+  recommendedAction: DecisionSignal;
+  urgency: DecisionUrgency;
+  expiresAt: number | null;
+  generatedAt: number;
+  isSafeStop: boolean;
+}
+
+export type HeatPressureStage = 0 | 1 | 2 | 3;
+
+export interface HeatPressureState {
+  stage: HeatPressureStage;
+  status: "CLEAR" | "WARNING" | "TRACKING" | "SCAN_LOCK";
+  scanLockAt: number | null;
+  lastConsequenceAt: number | null;
+  lastMessage: string | null;
+}
+
+export interface HeatPressureConsequence {
+  id: string;
+  stage: HeatPressureStage;
+  heatDelta: number;
+  message: string;
+  tone: "warning" | "danger";
+  lockTrading: boolean;
+  lockDurationMs: number;
+}
+
+export interface MicroReward {
+  id: string;
+  label: string;
+  value: string;
+  tone: "profit" | "xp" | "risk" | "info";
+  createdAt: number;
+}
+
 export interface AwayReportItem {
   id: string;
   tone: "success" | "warning" | "danger" | "info";
@@ -253,8 +416,14 @@ export interface AwayReportItem {
 
 export interface AwayReport {
   id: string;
+  generatedAt: number;
   createdAt: number;
   minutesAway: number;
+  courierResults: { id: string; result: "arrived" | "lost"; ticker: string; quantity: number }[];
+  expiredMissions: { id: string; title: string }[];
+  districtChanges: { locationId: string; oldState: string; newState: string }[];
+  newContacts: { npcId: string; message: string }[];
+  claimables: { type: string; reward: string }[];
   items: AwayReportItem[];
   dismissed: boolean;
 }
@@ -298,6 +467,11 @@ export interface Authority {
     cost: number,
     heatReduction: number,
   ): Promise<{ resources: Resources; ledger: LedgerEntry[] }>;
+  applyHeatDelta?(
+    playerId: string,
+    heatDelta: number,
+    reason: string,
+  ): Promise<Resources>;
   transferPositionToShipment?(
     playerId: string,
     ticker: string,
@@ -314,11 +488,32 @@ export interface Authority {
     playerId: string,
     losses: Record<string, number>,
   ): Promise<{ positions: Position[]; resources: Resources }>;
+  restoreRaidLoss?(
+    playerId: string,
+    recovered: Record<string, { quantity: number; avgEntry: number }>,
+    cost: number,
+    currency: Currency,
+  ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }>;
   grantReward?(
     playerId: string,
     amount: number,
     reason: string,
   ): Promise<LedgerEntry[]>;
+  spendCurrency?(
+    playerId: string,
+    amount: number,
+    currency: Currency,
+    reason: string,
+  ): Promise<LedgerEntry[]>;
+  applyHeistCollateral?(
+    playerId: string,
+    collateralValue: number,
+  ): Promise<LedgerEntry[]>;
+  updateNpcReputation?(
+    playerId: string,
+    npcId: string,
+    delta: number,
+  ): Promise<NPCRelationship>;
 
   getActiveNews(tick: number): Promise<MarketNews[]>;
 

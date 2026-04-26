@@ -66,17 +66,15 @@ export default function LocationBanner({
       </View>
       <Pressable
         onPress={onTravelPress}
-        disabled={travelling}
         style={{
           borderWidth: 1,
-          borderColor: travelling ? terminalColors.borderDim : terminalColors.cyan,
+          borderColor: terminalColors.cyan,
           paddingHorizontal: 10,
           paddingVertical: 7,
-          opacity: travelling ? 0.45 : 1,
         }}
       >
         <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
-          [TRAVEL]
+          {travelling ? "[ROUTE]" : "[TRAVEL]"}
         </Text>
       </Pressable>
     </View>

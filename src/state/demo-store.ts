@@ -11,18 +11,21 @@ import {
   LOCATIONS,
   getCourierService,
   getLocation,
+  getUnlockedLocations,
   type CourierService,
   type LocationInventoryMap,
   type TransitShipment,
 } from "@/data/locations";
 import {
   DEFAULT_TRADE_QUANTITY,
+  DEMO_COMMODITIES,
   DEMO_STARTING_BALANCE,
   FIRST_TRADE_HINT_TICKER,
   applyLocationPriceModifiers,
   createInitialChanges,
   createInitialPrices,
   formatDelta,
+  formatObol,
   getCommodity,
   roundCurrency,
   type ChangeMap,
@@ -34,12 +37,29 @@ import {
   claimDailyChallenge as claimDailyChallengeEngine,
   getDailyChallengeDayKey,
 } from "@/engine/daily-challenges";
+import { getDecisionContext } from "@/engine/decision-context";
 import {
   getBountyByHeat,
   getBountyFlashFrequencyMultiplier,
   getBountyRaidIntervalTicks,
   getBountyRiskLabel,
 } from "@/engine/bounty";
+import { getFirstSessionEvent } from "@/engine/first-session";
+import {
+  createHeistMission,
+  getPortfolioValue,
+  resolveHeistMission,
+} from "@/engine/heist-missions";
+import {
+  ENABLE_OBOL_TOKEN,
+  MOCK_STARTING_OBOL_BALANCE,
+  getUtcWeekKey,
+  purchaseShopItem as purchaseShopItemEngine,
+} from "@/engine/obol-shop";
+import {
+  applyNpcReputationChange,
+  createInitialNpcRelationships,
+} from "@/engine/npc-relationships";
 import {
   createDistrictShift,
   createInitialDistrictStates,
@@ -68,7 +88,13 @@ import {
   getNextMissionDelay,
 } from "@/engine/mission-generator";
 import { checkRaid } from "@/engine/raid-checker";
-import { getRankSnapshot } from "@/engine/rank";
+import { MEMORY_SHARD_TEXT, getRankSnapshot, shouldUnlockMemoryShard } from "@/engine/rank";
+import {
+  advanceHeatPressure,
+  createInitialHeatPressure,
+  getStreakRiskHeatBonus,
+  makeMicroReward,
+} from "@/engine/pressure";
 import { seededStream } from "@/engine/prng";
 import {
   applySellToStreak,
@@ -79,12 +105,23 @@ import type {
   DailyChallenge,
   AwayReport,
   BountySnapshot,
+  DecisionContext,
   DistrictStateRecord,
   FlashEvent,
+  HeatPressureState,
+  HeistMission,
   MarketNews,
+  MarketWhisper,
+  MicroReward,
   Mission,
+  MissedPeakLogEntry,
+  NPCRelationship,
+  PantheonShardCliffhanger,
   PlayerProfile,
+  PlayerLoreShard,
+  PlayerRiskProfile,
   Position,
+  RaidRecoveryWindow,
   RankCelebration,
   RankSnapshot,
   Resources,
@@ -132,9 +169,11 @@ const INITIAL_PLAYER_RESOURCES: Resources = {
 const GAME_TICK_MS = 30_000;
 const MAX_CATCH_UP_TICKS = 100;
 const BLACK_MARKET_BRIBE_COST = 50_000;
+const FIRST_SESSION_BRIBE_COST = 500;
 const ENGAGEMENT_SEED = "v6-engagement";
 const BASE_COURIER_LIMIT = 3;
 const HEAT_WARNING_THRESHOLDS = [30, 50, 70, 90] as const;
+const RAID_RECOVERY_0BOL_COST = 50_000;
 
 interface DemoStoreState {
   phase: DemoPhase;
@@ -164,15 +203,40 @@ interface DemoStoreState {
   activeMission: Mission | null;
   missionHistory: Mission[];
   npcReputation: Record<string, number>;
+  npcRelationships: Record<string, NPCRelationship>;
   missionCount: number;
   nextMissionAt: number;
+  heistMissions: HeistMission[];
+  activeHeistMission: HeistMission | null;
+  heistCount: number;
   streak: TradeStreak;
   dailyChallenges: DailyChallenge[];
   dailyChallengeDayKey: string;
+  firstSessionStage: number;
+  firstSessionStartedAt: number | null;
+  firstSessionComplete: boolean;
+  firstVblmBoughtAt: number | null;
+  firstSessionMessage: string | null;
+  pantheonShard: PantheonShardCliffhanger | null;
+  obolBalance: number;
+  shopPurchases: Record<string, number[]>;
+  extraInventorySlots: number;
+  marketWhispers: MarketWhisper[];
+  marketWhisperCount: number;
+  nextMarketWhisperAt: number;
+  playerLore: PlayerLoreShard[];
+  missedPeakLog: MissedPeakLogEntry[];
+  heldPricePeaks: Record<string, number>;
+  playerRiskProfile: PlayerRiskProfile;
+  raidRecoveryWindow: RaidRecoveryWindow | null;
+  raidBuybackLastUsedWeek: string | null;
   districtStates: Record<string, DistrictStateRecord>;
   districtStateCount: number;
   nextDistrictStateAt: number;
   bounty: BountySnapshot;
+  decisionContext: DecisionContext;
+  heatPressure: HeatPressureState;
+  microRewards: MicroReward[];
   awayReport: AwayReport | null;
   tradeJuice: TradeJuice | null;
   heatWarning: { threshold: number; createdAt: number } | null;
@@ -215,10 +279,17 @@ interface DemoStoreActions {
     quantity: number;
     destinationId: string;
     courierId: CourierService["id"];
+    insured?: boolean;
   }) => Promise<void>;
   claimShipment: (shipmentId: string) => Promise<void>;
   acceptMission: () => void;
   declineMission: () => void;
+  createHeistDraft: (collateralPercentage: 25 | 50 | 75) => HeistMission | null;
+  acceptHeistMission: (collateralPercentage: 25 | 50 | 75) => Promise<void>;
+  resolveActiveHeist: (success?: boolean) => Promise<void>;
+  purchaseShopItem: (itemId: string) => Promise<void>;
+  instantTravelWithObol: () => Promise<void>;
+  buyBackRaidLoss: (currency: "0BOL" | "$OBOL") => Promise<void>;
   claimDailyChallenge: (challengeId: string) => Promise<void>;
   recordAwayReport: (nowMs: number, awayStartedAt: number) => void;
   dismissAwayReport: () => void;
@@ -232,6 +303,40 @@ function buildInitialState(): DemoStoreState {
   const basePrices = createInitialPrices();
   const prices = applyLocationPriceModifiers(basePrices, DEFAULT_LOCATION_ID);
   const dailyChallengeDayKey = getDailyChallengeDayKey(nowMs);
+  const initialProgression = getRankSnapshot(40);
+  const initialBounty = getBountyByHeat(INITIAL_PLAYER_RESOURCES.heat);
+  const initialHeatPressure = createInitialHeatPressure(nowMs, INITIAL_PLAYER_RESOURCES.heat);
+  const initialStreak = createInitialStreak();
+  const initialWhispers = [createMarketWhisper(nowMs, 0)];
+  const initialDailyChallenges = createDailyChallenges(nowMs, 1);
+  const initialDistrictStates = createInitialDistrictStates(nowMs);
+  const initialDecisionContext = getDecisionContext({
+    nowMs,
+    resources: INITIAL_PLAYER_RESOURCES,
+    bounty: initialBounty,
+    progression: initialProgression,
+    currentLocationId: DEFAULT_LOCATION_ID,
+    travelDestinationId: null,
+    travelEndTime: null,
+    positions: {},
+    prices,
+    changes: createInitialChanges(),
+    activeFlashEvent: null,
+    pendingMission: null,
+    activeMission: null,
+    marketWhispers: initialWhispers,
+    pantheonShard: null,
+    dailyChallenges: initialDailyChallenges,
+    transitShipments: [],
+    district: getActiveDistrictState(initialDistrictStates, DEFAULT_LOCATION_ID, nowMs),
+    heatPressure: initialHeatPressure,
+    streak: initialStreak,
+    nextFlashEventAt: nowMs + getNextFlashEventDelay(ENGAGEMENT_SEED, 0),
+    nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, 0),
+    nextMarketWhisperAt: nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, 1),
+    firstSessionStage: 0,
+    firstSessionComplete: false,
+  });
 
   return {
     phase: "intro",
@@ -247,7 +352,7 @@ function buildInitialState(): DemoStoreState {
     resources: { ...INITIAL_PLAYER_RESOURCES },
     positions: {},
     activeNews: [],
-    progression: getRankSnapshot(0),
+    progression: initialProgression,
     clock: {
       nowMs,
       displayTime: formatClock(nowMs),
@@ -270,15 +375,40 @@ function buildInitialState(): DemoStoreState {
     activeMission: null,
     missionHistory: [],
     npcReputation: {},
+    npcRelationships: createInitialNpcRelationships(),
     missionCount: 0,
     nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, 0),
-    streak: createInitialStreak(),
-    dailyChallenges: createDailyChallenges(nowMs, 1),
+    heistMissions: [],
+    activeHeistMission: null,
+    heistCount: 0,
+    streak: initialStreak,
+    dailyChallenges: initialDailyChallenges,
     dailyChallengeDayKey,
-    districtStates: createInitialDistrictStates(nowMs),
+    firstSessionStage: 0,
+    firstSessionStartedAt: null,
+    firstSessionComplete: false,
+    firstVblmBoughtAt: null,
+    firstSessionMessage: "Absorbed residual data from the host cyberdeck. 40/200 XP to Packet Rat.",
+    pantheonShard: null,
+    obolBalance: MOCK_STARTING_OBOL_BALANCE,
+    shopPurchases: {},
+    extraInventorySlots: 0,
+    marketWhispers: initialWhispers,
+    marketWhisperCount: 1,
+    nextMarketWhisperAt: nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, 1),
+    playerLore: [],
+    missedPeakLog: [],
+    heldPricePeaks: {},
+    playerRiskProfile: createRiskProfile(INITIAL_PLAYER_RESOURCES, initialBounty, {}),
+    raidRecoveryWindow: null,
+    raidBuybackLastUsedWeek: null,
+    districtStates: initialDistrictStates,
     districtStateCount: 0,
     nextDistrictStateAt: nowMs + getNextDistrictShiftDelay(ENGAGEMENT_SEED, 0),
-    bounty: getBountyByHeat(INITIAL_PLAYER_RESOURCES.heat),
+    bounty: initialBounty,
+    decisionContext: initialDecisionContext,
+    heatPressure: initialHeatPressure,
+    microRewards: [],
     awayReport: null,
     tradeJuice: null,
     heatWarning: null,
@@ -364,6 +494,130 @@ function addNotification(
 
 function getCourierLimit(rankLevel: number): number {
   return rankLevel >= 10 ? 5 : BASE_COURIER_LIMIT;
+}
+
+function getNextWhisperDelay(seed: string, index: number): number {
+  const stream = seededStream(`${seed}:whisper-delay:${index}`);
+  return (30 + Math.floor(stream() * 16)) * 1000;
+}
+
+function createMarketWhisper(nowMs: number, index: number): MarketWhisper {
+  const stream = seededStream(`${ENGAGEMENT_SEED}:whisper:${index}`);
+  const ticker = DEMO_COMMODITIES[Math.floor(stream() * DEMO_COMMODITIES.length)]?.ticker ?? "PGAS";
+  const location = getUnlockedLocations()[Math.floor(stream() * getUnlockedLocations().length)] ?? getLocation(DEFAULT_LOCATION_ID);
+  const templates = [
+    `Someone's moving big ${ticker} at ${location.name}...`,
+    `Unusual scanner activity near ${location.name}.`,
+    `${ticker} brokers just went quiet in ${location.name}.`,
+    `Courier chatter says ${location.name} routes are heating up.`,
+  ];
+  const message = templates[Math.floor(stream() * templates.length)] ?? templates[0]!;
+  return {
+    id: `whisper_${nowMs}_${index}`,
+    createdAt: nowMs,
+    message,
+    locationId: location.id,
+    ticker,
+  };
+}
+
+function createRiskProfile(resources: Resources, bounty: BountySnapshot, positions: Record<string, Position>): PlayerRiskProfile {
+  const illegalVolume = Object.values(positions).reduce((total, position) => {
+    const risky = ["BLCK", "AETH", "HXMD"].includes(position.ticker);
+    return total + (risky ? position.quantity : 0);
+  }, 0);
+  return {
+    heat: resources.heat,
+    bountyLevel: bounty.level,
+    recentProfitVelocity: 0,
+    recentIllegalVolume: illegalVolume,
+    scannerAttention: Math.min(100, Math.round(resources.heat * 0.75 + bounty.level * 12 + illegalVolume)),
+    raidImmunityUntil: null,
+  };
+}
+
+function buildDecisionContextForState(
+  state: DemoStoreState,
+  nowMs: number,
+  overrides: Partial<DemoStoreState> = {},
+): DecisionContext {
+  const snapshot = {
+    ...state,
+    ...overrides,
+  };
+  const currentLocationId = snapshot.world.currentLocationId;
+
+  return getDecisionContext({
+    nowMs,
+    resources: snapshot.resources,
+    bounty: snapshot.bounty,
+    progression: snapshot.progression,
+    currentLocationId,
+    travelDestinationId: snapshot.world.travelDestinationId,
+    travelEndTime: snapshot.world.travelEndTime,
+    positions: snapshot.positions,
+    prices: snapshot.prices,
+    changes: snapshot.changes,
+    activeFlashEvent: snapshot.activeFlashEvent,
+    pendingMission: snapshot.pendingMission,
+    activeMission: snapshot.activeMission,
+    marketWhispers: snapshot.marketWhispers,
+    pantheonShard: snapshot.pantheonShard,
+    dailyChallenges: snapshot.dailyChallenges,
+    transitShipments: snapshot.transitShipments,
+    district: getActiveDistrictState(snapshot.districtStates, currentLocationId, nowMs),
+    heatPressure: snapshot.heatPressure,
+    streak: snapshot.streak,
+    nextFlashEventAt: snapshot.nextFlashEventAt,
+    nextMissionAt: snapshot.nextMissionAt,
+    nextMarketWhisperAt: snapshot.nextMarketWhisperAt,
+    firstSessionStage: snapshot.firstSessionStage,
+    firstSessionComplete: snapshot.firstSessionComplete,
+  });
+}
+
+function createMemoryShard(rankLevel: number, nowMs: number): PlayerLoreShard {
+  return {
+    id: `memory_rank_${rankLevel}`,
+    rankLevel,
+    title: `Recovered Memory // Rank ${rankLevel}`,
+    body: MEMORY_SHARD_TEXT,
+    unlockedAt: nowMs,
+    read: false,
+  };
+}
+
+function maybeAddMemoryShard(
+  previous: RankSnapshot,
+  next: RankSnapshot,
+  lore: PlayerLoreShard[],
+  nowMs: number,
+): PlayerLoreShard[] {
+  const unlockLevel = shouldUnlockMemoryShard(previous.level, next.level);
+  if (!unlockLevel || lore.some((shard) => shard.rankLevel === unlockLevel)) {
+    return lore;
+  }
+  return [createMemoryShard(unlockLevel, nowMs), ...lore];
+}
+
+function buildRaidRecoveryWindow(
+  losses: Record<string, number>,
+  positionsBeforeRaid: Record<string, Position>,
+  nowMs: number,
+): RaidRecoveryWindow | null {
+  const lostInventory = Object.fromEntries(
+    Object.entries(losses).filter(([, quantity]) => quantity > 0),
+  );
+  if (!Object.keys(lostInventory).length) {
+    return null;
+  }
+  return {
+    id: `raid_recovery_${nowMs}`,
+    raidAt: nowMs,
+    expiresAt: nowMs + 24 * 60 * 60_000,
+    lostInventory,
+    restored: false,
+  };
 }
 
 function applyAllPriceModifiers(input: {
@@ -524,15 +778,39 @@ function toPersistedSession(state: DemoStoreState): PersistedDemoSession {
     activeMission: state.activeMission,
     missionHistory: state.missionHistory,
     npcReputation: state.npcReputation,
+    npcRelationships: state.npcRelationships,
     missionCount: state.missionCount,
     nextMissionAt: state.nextMissionAt,
+    heistMissions: state.heistMissions,
+    activeHeistMission: state.activeHeistMission,
+    heistCount: state.heistCount,
     streak: state.streak,
     dailyChallenges: state.dailyChallenges,
     dailyChallengeDayKey: state.dailyChallengeDayKey,
+    firstSessionStage: state.firstSessionStage,
+    firstSessionStartedAt: state.firstSessionStartedAt,
+    firstSessionComplete: state.firstSessionComplete,
+    firstVblmBoughtAt: state.firstVblmBoughtAt,
+    firstSessionMessage: state.firstSessionMessage,
+    pantheonShard: state.pantheonShard,
+    obolBalance: state.obolBalance,
+    shopPurchases: state.shopPurchases,
+    extraInventorySlots: state.extraInventorySlots,
+    marketWhispers: state.marketWhispers,
+    marketWhisperCount: state.marketWhisperCount,
+    nextMarketWhisperAt: state.nextMarketWhisperAt,
+    playerLore: state.playerLore,
+    missedPeakLog: state.missedPeakLog,
+    heldPricePeaks: state.heldPricePeaks,
+    playerRiskProfile: state.playerRiskProfile,
+    raidRecoveryWindow: state.raidRecoveryWindow,
+    raidBuybackLastUsedWeek: state.raidBuybackLastUsedWeek,
     districtStates: state.districtStates,
     districtStateCount: state.districtStateCount,
     nextDistrictStateAt: state.nextDistrictStateAt,
     bounty: state.bounty,
+    heatPressure: state.heatPressure,
+    microRewards: state.microRewards,
     awayReport: state.awayReport,
     tradeJuice: state.tradeJuice,
     heatWarning: state.heatWarning,
@@ -649,15 +927,39 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         activeMission: session.activeMission ?? null,
         missionHistory: session.missionHistory ?? [],
         npcReputation: session.npcReputation ?? {},
+        npcRelationships: session.npcRelationships ?? fallback.npcRelationships,
         missionCount: session.missionCount ?? 0,
         nextMissionAt: session.nextMissionAt ?? fallback.nextMissionAt,
+        heistMissions: session.heistMissions ?? [],
+        activeHeistMission: session.activeHeistMission ?? null,
+        heistCount: session.heistCount ?? 0,
         streak: session.streak ?? fallback.streak,
         dailyChallenges: session.dailyChallenges ?? fallback.dailyChallenges,
         dailyChallengeDayKey: session.dailyChallengeDayKey ?? fallback.dailyChallengeDayKey,
+        firstSessionStage: session.firstSessionStage ?? fallback.firstSessionStage,
+        firstSessionStartedAt: session.firstSessionStartedAt ?? (session.profile ? Date.parse(session.profile.createdAt) : fallback.firstSessionStartedAt),
+        firstSessionComplete: session.firstSessionComplete ?? false,
+        firstVblmBoughtAt: session.firstVblmBoughtAt ?? null,
+        firstSessionMessage: session.firstSessionMessage ?? fallback.firstSessionMessage,
+        pantheonShard: session.pantheonShard ?? null,
+        obolBalance: session.obolBalance ?? MOCK_STARTING_OBOL_BALANCE,
+        shopPurchases: session.shopPurchases ?? {},
+        extraInventorySlots: session.extraInventorySlots ?? 0,
+        marketWhispers: session.marketWhispers ?? [],
+        marketWhisperCount: session.marketWhisperCount ?? 0,
+        nextMarketWhisperAt: session.nextMarketWhisperAt ?? fallback.nextMarketWhisperAt,
+        playerLore: session.playerLore ?? [],
+        missedPeakLog: session.missedPeakLog ?? [],
+        heldPricePeaks: session.heldPricePeaks ?? {},
+        playerRiskProfile: session.playerRiskProfile ?? createRiskProfile(session.resources ?? fallback.resources, getBountyByHeat((session.resources ?? fallback.resources).heat), session.positions ?? {}),
+        raidRecoveryWindow: session.raidRecoveryWindow ?? null,
+        raidBuybackLastUsedWeek: session.raidBuybackLastUsedWeek ?? null,
         districtStates: session.districtStates ?? fallback.districtStates,
         districtStateCount: session.districtStateCount ?? 0,
         nextDistrictStateAt: session.nextDistrictStateAt ?? fallback.nextDistrictStateAt,
         bounty: session.bounty ?? getBountyByHeat((session.resources ?? fallback.resources).heat),
+        heatPressure: session.heatPressure ?? createInitialHeatPressure(Date.now(), (session.resources ?? fallback.resources).heat),
+        microRewards: session.microRewards ?? [],
         awayReport: session.awayReport ?? null,
         tradeJuice: session.tradeJuice ?? null,
         heatWarning: session.heatWarning ?? null,
@@ -669,6 +971,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         isBusy: false,
         isHydrated: true,
       });
+      set({ decisionContext: buildDecisionContextForState(get(), Date.now()) });
     },
     moveToHandle: () => {
       commitState({
@@ -766,20 +1069,44 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           activeMission: null,
           missionHistory: [],
           npcReputation: {},
+          npcRelationships: createInitialNpcRelationships(),
           missionCount: 0,
           nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, 0),
+          heistMissions: [],
+          activeHeistMission: null,
+          heistCount: 0,
           streak: createInitialStreak(),
           dailyChallenges: createDailyChallenges(nowMs, progression.level),
           dailyChallengeDayKey: getDailyChallengeDayKey(nowMs),
+          firstSessionStage: 0,
+          firstSessionStartedAt: nowMs,
+          firstSessionComplete: false,
+          firstVblmBoughtAt: null,
+          firstSessionMessage: "Absorbed residual data from the host cyberdeck. 40/200 XP to Packet Rat.",
+          pantheonShard: null,
+          obolBalance: MOCK_STARTING_OBOL_BALANCE,
+          shopPurchases: {},
+          extraInventorySlots: 0,
+          marketWhispers: [createMarketWhisper(nowMs, 0)],
+          marketWhisperCount: 1,
+          nextMarketWhisperAt: nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, 1),
+          playerLore: [],
+          missedPeakLog: [],
+          heldPricePeaks: {},
+          playerRiskProfile: createRiskProfile(resources, getBountyByHeat(resources.heat), {}),
+          raidRecoveryWindow: null,
+          raidBuybackLastUsedWeek: null,
           districtStates: createInitialDistrictStates(nowMs),
           districtStateCount: 0,
           nextDistrictStateAt: nowMs + getNextDistrictShiftDelay(ENGAGEMENT_SEED, 0),
+          heatPressure: createInitialHeatPressure(nowMs, resources.heat),
+          microRewards: [],
           tradeJuice: null,
           heatWarning: null,
           rankCelebration: null,
           isBusy: false,
           isHydrated: true,
-          systemMessage: "[sys] market open. start small. low heat.",
+          systemMessage: "Absorbed residual data from the host cyberdeck. 40/200 XP to Packet Rat.",
         });
         await persistCurrentState();
       } catch (error) {
@@ -868,20 +1195,44 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           activeMission: null,
           missionHistory: [],
           npcReputation: {},
+          npcRelationships: createInitialNpcRelationships(),
           missionCount: 0,
           nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, 0),
+          heistMissions: [],
+          activeHeistMission: null,
+          heistCount: 0,
           streak: createInitialStreak(),
           dailyChallenges: createDailyChallenges(nowMs, progression.level),
           dailyChallengeDayKey: getDailyChallengeDayKey(nowMs),
+          firstSessionStage: 0,
+          firstSessionStartedAt: nowMs,
+          firstSessionComplete: false,
+          firstVblmBoughtAt: null,
+          firstSessionMessage: "Absorbed residual data from the host cyberdeck. 40/200 XP to Packet Rat.",
+          pantheonShard: null,
+          obolBalance: MOCK_STARTING_OBOL_BALANCE,
+          shopPurchases: {},
+          extraInventorySlots: 0,
+          marketWhispers: [createMarketWhisper(nowMs, 0)],
+          marketWhisperCount: 1,
+          nextMarketWhisperAt: nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, 1),
+          playerLore: [],
+          missedPeakLog: [],
+          heldPricePeaks: {},
+          playerRiskProfile: createRiskProfile(resources, getBountyByHeat(resources.heat), {}),
+          raidRecoveryWindow: null,
+          raidBuybackLastUsedWeek: null,
           districtStates: createInitialDistrictStates(nowMs),
           districtStateCount: 0,
           nextDistrictStateAt: nowMs + getNextDistrictShiftDelay(ENGAGEMENT_SEED, 0),
+          heatPressure: createInitialHeatPressure(nowMs, resources.heat),
+          microRewards: [],
           tradeJuice: null,
           heatWarning: null,
           rankCelebration: null,
           isBusy: false,
           isHydrated: true,
-          systemMessage: "[sys] market open. start small. low heat.",
+          systemMessage: "Absorbed residual data from the host cyberdeck. 40/200 XP to Packet Rat.",
         });
         await persistCurrentState();
         return true;
@@ -947,7 +1298,10 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         nowMs,
         displayTime: formatClock(nowMs),
       };
-      set({ clock: baseClock });
+      set({
+        clock: baseClock,
+        decisionContext: buildDecisionContextForState(state, nowMs),
+      });
 
       if (!state.isHydrated || !state.playerId) {
         return;
@@ -966,11 +1320,32 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       let nextActiveMission = state.activeMission;
       let nextMissionHistory = state.missionHistory;
       let nextNpcReputation = state.npcReputation;
+      let nextNpcRelationships = state.npcRelationships;
       let nextMissionCount = state.missionCount;
       let nextMissionAt = state.nextMissionAt;
+      let nextHeistMissions = state.heistMissions;
+      let nextActiveHeistMission = state.activeHeistMission;
+      let nextHeistCount = state.heistCount;
       let nextStreak = expireStreakIfNeeded(state.streak, nowMs);
       let nextDailyChallenges = state.dailyChallenges;
       let nextDailyChallengeDayKey = state.dailyChallengeDayKey;
+      let nextFirstSessionStage = state.firstSessionStage;
+      let nextFirstSessionStartedAt = state.firstSessionStartedAt ?? nowMs;
+      let nextFirstSessionComplete = state.firstSessionComplete;
+      let nextFirstVblmBoughtAt = state.firstVblmBoughtAt;
+      let nextFirstSessionMessage = state.firstSessionMessage;
+      let nextPantheonShard = state.pantheonShard;
+      let nextObolBalance = state.obolBalance;
+      let nextShopPurchases = state.shopPurchases;
+      let nextMarketWhispers = state.marketWhispers;
+      let nextMarketWhisperCount = state.marketWhisperCount;
+      let nextMarketWhisperAt = state.nextMarketWhisperAt;
+      let nextPlayerLore = state.playerLore;
+      let nextMissedPeakLog = state.missedPeakLog;
+      let nextHeldPricePeaks = state.heldPricePeaks;
+      let nextPlayerRiskProfile = state.playerRiskProfile;
+      let nextRaidRecoveryWindow = state.raidRecoveryWindow;
+      let nextRaidBuybackLastUsedWeek = state.raidBuybackLastUsedWeek;
       let nextDistrictStates = normalizeDistrictStates(state.districtStates, nowMs);
       let nextDistrictStateCount = state.districtStateCount;
       let nextDistrictStateAt = state.nextDistrictStateAt;
@@ -982,6 +1357,8 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       let nextRankCelebration = state.rankCelebration;
       let nextTradeJuice = state.tradeJuice;
       let nextBounty = getBountyByHeat(nextResources.heat);
+      let nextHeatPressure = state.heatPressure;
+      let nextMicroRewards = state.microRewards.filter((reward) => nowMs - reward.createdAt < 8_000);
       let nextAwayReport = state.awayReport;
       let didMutate = nextActiveFlashEvent !== state.activeFlashEvent || nextStreak !== state.streak || nextDistrictStates !== state.districtStates;
 
@@ -990,16 +1367,18 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         nextFlashCooldownUntil = nowMs + FLASH_EVENT_COOLDOWN_MS;
         nextFlashEventAt = nextFlashCooldownUntil + getNextFlashEventDelay(ENGAGEMENT_SEED, nextFlashEventCount) * getBountyFlashFrequencyMultiplier(nextBounty.level);
         nextNotifications = addNotification(nextNotifications, `EVENT EXPIRED: ${expiredFlash.headline}.`, "info");
-        if (expiredFlash.type === "eagent_scan" && nextResources.heat > 50) {
+        if (expiredFlash.type === "eagent_scan" && nextResources.heat > (expiredFlash.heatThreshold ?? 50)) {
           const stream = seededStream(`${expiredFlash.id}:forced-raid`);
           const losses: Record<string, number> = {};
           for (const [ticker, position] of Object.entries(nextPositions)) {
             losses[ticker] = Math.max(1, Math.floor(position.quantity * (0.25 + stream() * 0.35)));
           }
           if (Object.keys(losses).length > 0 && authority.applyRaidLoss) {
+            const positionsBeforeRaid = nextPositions;
             const raidState = await authority.applyRaidLoss(state.playerId, losses);
             nextPositions = toPositionMap(raidState.positions);
             nextResources = raidState.resources;
+            nextRaidRecoveryWindow = buildRaidRecoveryWindow(losses, positionsBeforeRaid, nowMs);
           }
           const raidRank = await authority.updateXp(state.playerId, 100, "eagent_scan_raid");
           nextRankCelebration = maybeRankCelebration(nextProgression, raidRank) ?? nextRankCelebration;
@@ -1010,7 +1389,212 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         }
       }
 
-      if (!nextActiveFlashEvent && nowMs >= nextFlashEventAt && nowMs >= nextFlashCooldownUntil) {
+      if (!nextFirstSessionStartedAt) {
+        nextFirstSessionStartedAt = nowMs;
+      }
+      if (!nextFirstVblmBoughtAt && (nextPositions.VBLM?.quantity ?? 0) >= 10) {
+        nextFirstVblmBoughtAt = nowMs;
+        didMutate = true;
+      }
+
+      const firstSessionEvent = getFirstSessionEvent(
+        Math.floor((nowMs - nextFirstSessionStartedAt) / 1000),
+        {
+          firstSessionStage: nextFirstSessionStage,
+          firstSessionComplete: nextFirstSessionComplete,
+          secondsElapsed: Math.floor((nowMs - nextFirstSessionStartedAt) / 1000),
+          vblmQuantity: nextPositions.VBLM?.quantity ?? 0,
+          vblmFirstBoughtAt:
+            nextFirstVblmBoughtAt === null
+              ? null
+              : Math.floor((nextFirstVblmBoughtAt - nextFirstSessionStartedAt) / 1000),
+          currentLocationId: nextWorld.currentLocationId,
+          heat: nextResources.heat,
+          rankLevel: nextProgression.level,
+        },
+      );
+
+      if (firstSessionEvent) {
+        if (firstSessionEvent.type === "kite_first_ping") {
+          const mission: Mission = {
+            id: "first_session_buy_vblm",
+            npcId: "kite",
+            npcName: "Kite",
+            type: "buy_request",
+            title: "Kite: Buy 10 Void Bloom",
+            description: "Buy 10 VBLM. It's cheap - Kite will tell you when to sell.",
+            requiredTicker: "VBLM",
+            requiredQuantity: 10,
+            reward0Bol: 0,
+            rewardXp: 0,
+            reputationChangeOnSuccess: 10,
+            reputationChangeOnFail: 0,
+            expiresAtTimestamp: Number.MAX_SAFE_INTEGER,
+            accepted: true,
+            completed: false,
+            failed: false,
+            status: "active",
+            objective: "Buy 10 VBLM.",
+            ticker: "VBLM",
+            quantity: 10,
+            startTimestamp: nowMs,
+            endTimestamp: Number.MAX_SAFE_INTEGER,
+            acceptedAt: nowMs,
+            rewardObol: 0,
+            reputationDelta: 10,
+          };
+          nextActiveMission = mission;
+          nextFirstSessionStage = 1;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, firstSessionEvent.description, "info");
+          didMutate = true;
+        } else if (firstSessionEvent.type === "guided_vblm_profit") {
+          nextActiveFlashEvent = {
+            id: `first_vblm_spike_${nowMs}`,
+            type: "arbitrage_window",
+            headline: firstSessionEvent.headline,
+            description: firstSessionEvent.description,
+            ticker: "VBLM",
+            locationId: "neon_plaza",
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 60_000,
+            modifierApplied: true,
+            riskLevel: "low",
+            multiplier: 1.18,
+            counterplayTags: ["sell_vblm", "take_profit"],
+            resolvedByPlayer: false,
+          };
+          nextFirstSessionStage = 2;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, firstSessionEvent.description, "success");
+          didMutate = true;
+        } else if (firstSessionEvent.type === "first_eagent_scan") {
+          const blackMarket = getLocation("black_market");
+          nextActiveFlashEvent = {
+            id: `first_eagent_scan_${nowMs}`,
+            type: "eagent_scan",
+            headline: firstSessionEvent.headline,
+            description: firstSessionEvent.description,
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 120_000,
+            modifierApplied: true,
+            riskLevel: "critical",
+            heatThreshold: 30,
+            counterplayTags: ["travel_black_market", "bribe"],
+            resolvedByPlayer: false,
+          };
+          nextWorld = {
+            currentLocationId: nextWorld.currentLocationId,
+            travelDestinationId: blackMarket.id,
+            travelEndTime: nowMs + 3 * 60_000,
+          };
+          nextFirstSessionStage = 3;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, `${firstSessionEvent.description} Kite opened a 3 minute Black Market route.`, "danger");
+          didMutate = true;
+        } else if (firstSessionEvent.type === "librarian_delivery") {
+          const mission: Mission = {
+            id: "first_session_librarian_ngls",
+            npcId: "librarian",
+            npcName: "The Librarian",
+            type: "delivery",
+            title: "The Librarian: Deliver 20 NGLS",
+            description: firstSessionEvent.description,
+            requiredTicker: "NGLS",
+            requiredQuantity: 20,
+            destinationLocationId: "tech_valley",
+            reward0Bol: Math.round((state.prices.NGLS ?? 73) * 20 * 2),
+            rewardXp: 180,
+            reputationChangeOnSuccess: 15,
+            reputationChangeOnFail: -5,
+            expiresAtTimestamp: nowMs + 12 * 60_000,
+            accepted: true,
+            completed: false,
+            failed: false,
+            status: "active",
+            objective: "Deliver 20 NGLS to Tech Valley within 12 minutes.",
+            ticker: "NGLS",
+            quantity: 20,
+            destinationId: "tech_valley",
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 12 * 60_000,
+            acceptedAt: nowMs,
+            rewardObol: Math.round((state.prices.NGLS ?? 73) * 20 * 2),
+            reputationDelta: 15,
+          };
+          nextActiveMission = mission;
+          nextActiveFlashEvent = {
+            id: `first_fdst_vol_${nowMs}`,
+            type: "volatility_spike",
+            headline: "FDST volatility spike in The Port",
+            description: "FDST volatility spike in The Port - +/-30% for 3 minutes.",
+            ticker: "FDST",
+            locationId: "the_port",
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 3 * 60_000,
+            modifierApplied: true,
+            riskLevel: "high",
+            amplitude: 0.3,
+            counterplayTags: ["travel_port", "avoid_if_heat_high"],
+            resolvedByPlayer: false,
+          };
+          nextFirstSessionStage = 4;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, firstSessionEvent.description, "info");
+          didMutate = true;
+        } else if (firstSessionEvent.type === "first_lockdown") {
+          const destination = getUnlockedLocations().find((location) => location.id !== nextWorld.currentLocationId) ?? getLocation("tech_valley");
+          const lockdown = {
+            locationId: nextWorld.currentLocationId,
+            state: "LOCKDOWN" as const,
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 6 * 60_000,
+          };
+          nextDistrictStates = {
+            ...nextDistrictStates,
+            [lockdown.locationId]: lockdown,
+          };
+          nextWorld = {
+            currentLocationId: nextWorld.currentLocationId,
+            travelDestinationId: destination.id,
+            travelEndTime: nowMs + Math.max(1, destination.travelTime) * 60_000,
+          };
+          nextFirstSessionStage = 5;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, firstSessionEvent.description, "warning");
+          didMutate = true;
+        } else if (firstSessionEvent.type === "pantheon_cliffhanger") {
+          nextPantheonShard = {
+            detectedAt: nowMs,
+            expiresAt: nowMs + 72 * 60 * 60_000,
+            requiredRank: 10,
+            headline: firstSessionEvent.headline,
+            description: firstSessionEvent.description,
+          };
+          nextDailyChallenges = [
+            {
+              id: `${getDailyChallengeDayKey(nowMs)}_first_hour_profit`,
+              type: "daily_profit" as const,
+              title: "Earn 10,000 0BOL profit before midnight.",
+              target: 10_000,
+              progress: 0,
+              rewardObol: 10_000,
+              rewardXp: 100,
+              completed: false,
+              claimed: false,
+            },
+            ...nextDailyChallenges.filter((challenge) => challenge.type !== "daily_profit"),
+          ].slice(0, 3);
+          nextFirstSessionComplete = true;
+          nextFirstSessionMessage = firstSessionEvent.description;
+          nextNotifications = addNotification(nextNotifications, firstSessionEvent.description, "danger");
+          didMutate = true;
+        }
+      }
+
+      const firstHourPromptCap = !nextFirstSessionComplete && nextFirstSessionStage < 3;
+
+      if (!firstHourPromptCap && !nextActiveFlashEvent && nowMs >= nextFlashEventAt && nowMs >= nextFlashCooldownUntil) {
         nextActiveFlashEvent = createFlashEvent({
           nowMs,
           seed: ENGAGEMENT_SEED,
@@ -1033,7 +1617,15 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         didMutate = true;
       }
 
-      if (nowMs >= nextDistrictStateAt) {
+      if (nowMs >= nextMarketWhisperAt) {
+        const whisper = createMarketWhisper(nowMs, nextMarketWhisperCount);
+        nextMarketWhispers = [whisper, ...nextMarketWhispers].slice(0, 5);
+        nextMarketWhisperCount += 1;
+        nextMarketWhisperAt = nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, nextMarketWhisperCount);
+        didMutate = true;
+      }
+
+      if (!firstHourPromptCap && nowMs >= nextDistrictStateAt) {
         const district = createDistrictShift({
           nowMs,
           seed: ENGAGEMENT_SEED,
@@ -1061,6 +1653,35 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           travelEndTime: null,
         };
         nextNotifications = addNotification(nextNotifications, `Arrived at ${location.name}.`, "success");
+        didMutate = true;
+      }
+
+      if (
+        nextFirstSessionStage === 3 &&
+        nextWorld.currentLocationId === "black_market" &&
+        nextResources.heat > 0
+      ) {
+        const reduction = nextResources.heat;
+        if (authority.reduceHeat) {
+          const bribe = await authority.reduceHeat(state.playerId, FIRST_SESSION_BRIBE_COST, reduction);
+          nextResources = bribe.resources;
+          nextBalanceObol = latestBalance(nextBalanceObol, bribe.ledger);
+        } else {
+          nextResources = { ...nextResources, heat: 0 };
+        }
+        nextNotifications = addNotification(nextNotifications, "Kite's Black Market bribe cleared your Heat. First choice: chase The Port BOOM or stay safe.", "success");
+        nextDistrictStates = {
+          ...nextDistrictStates,
+          the_port: {
+            locationId: "the_port",
+            state: "BOOM",
+            startTimestamp: nowMs,
+            endTimestamp: nowMs + 8 * 60_000,
+          },
+        };
+        nextActiveFlashEvent = nextActiveFlashEvent?.type === "eagent_scan"
+          ? { ...nextActiveFlashEvent, resolvedByPlayer: true }
+          : nextActiveFlashEvent;
         didMutate = true;
       }
 
@@ -1106,7 +1727,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         return arrived;
       });
 
-      if (!nextPendingMission && !nextActiveMission && nowMs >= nextMissionAt) {
+      if (!firstHourPromptCap && !nextPendingMission && !nextActiveMission && nowMs >= nextMissionAt) {
         nextPendingMission = createMission({
           nowMs,
           seed: ENGAGEMENT_SEED,
@@ -1129,6 +1750,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           ...nextNpcReputation,
           [expired.npcId]: (nextNpcReputation[expired.npcId] ?? 0) + expired.reputationChangeOnFail,
         };
+        nextNpcRelationships = applyNpcReputationChange({
+          relationships: nextNpcRelationships,
+          npcId: expired.npcId,
+          delta: expired.reputationChangeOnFail,
+          missionOutcome: "failed",
+        });
         nextNotifications = addNotification(nextNotifications, `Mission from ${expired.npcName} expired.`, "warning");
         didMutate = true;
       }
@@ -1148,6 +1775,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             ...nextNpcReputation,
             [finishedMission.npcId]: (nextNpcReputation[finishedMission.npcId] ?? 0) + (completed ? finishedMission.reputationChangeOnSuccess : finishedMission.reputationChangeOnFail),
           };
+          nextNpcRelationships = applyNpcReputationChange({
+            relationships: nextNpcRelationships,
+            npcId: finishedMission.npcId,
+            delta: completed ? finishedMission.reputationChangeOnSuccess : finishedMission.reputationChangeOnFail,
+            missionOutcome: completed ? "completed" : "failed",
+          });
           nextActiveMission = null;
           nextMissionAt = nowMs + getNextMissionDelay(ENGAGEMENT_SEED, nextMissionCount);
           if (completed) {
@@ -1157,6 +1790,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             const rank = await authority.updateXp(state.playerId, finishedMission.rewardXp, "mission_complete");
             nextBalanceObol = latestBalance(nextBalanceObol, ledger);
             nextRankCelebration = maybeRankCelebration(nextProgression, rank) ?? nextRankCelebration;
+            nextPlayerLore = maybeAddMemoryShard(nextProgression, rank, nextPlayerLore, nowMs);
             nextProgression = rank;
             nextNotifications = addNotification(nextNotifications, `Mission complete: ${finishedMission.title}.`, "success");
             // AUDIO: mission_complete.wav on mission finish
@@ -1210,6 +1844,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
               probabilityDivisor: nextBounty.raidProbabilityDivisor,
             });
             if (raid.triggered) {
+              const positionsBeforeRaid = nextPositions;
               const raidState = authority.applyRaidLoss
                 ? await authority.applyRaidLoss(state.playerId, raid.losses)
                 : { positions: Object.values(nextPositions), resources: nextResources };
@@ -1217,6 +1852,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
               nextPositions = toPositionMap(raidState.positions);
               nextResources = raidState.resources;
               nextProgression = progression;
+              nextRaidRecoveryWindow = buildRaidRecoveryWindow(raid.losses, positionsBeforeRaid, nowMs);
               refresh = {
                 ...refresh,
                 positions: nextPositions,
@@ -1248,6 +1884,16 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         };
       }
 
+      const latestPrices = (refresh.prices ?? state.prices) as PriceMap;
+      for (const [ticker, position] of Object.entries(nextPositions)) {
+        if (position.quantity > 0) {
+          nextHeldPricePeaks = {
+            ...nextHeldPricePeaks,
+            [ticker]: Math.max(nextHeldPricePeaks[ticker] ?? 0, latestPrices[ticker] ?? position.avgEntry),
+          };
+        }
+      }
+
       const heatUpdate = updateHeatWarning(state.resources.heat, nextResources, nextNotifications);
       nextNotifications = heatUpdate.notifications;
       nextHeatWarning = heatUpdate.heatWarning ?? nextHeatWarning;
@@ -1255,8 +1901,121 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       const bountyUpdate = updateBountyFeedback(state.resources.heat, nextResources, nextNotifications);
       nextBounty = bountyUpdate.bounty;
       nextNotifications = bountyUpdate.notifications;
+      const pressureUpdate = advanceHeatPressure({
+        pressure: nextHeatPressure,
+        nowMs,
+        heat: nextResources.heat,
+      });
+      nextHeatPressure = pressureUpdate.pressure;
+      if (pressureUpdate.consequence) {
+        const previousHeat = nextResources.heat;
+        nextResources = authority.applyHeatDelta
+          ? await authority.applyHeatDelta(
+              state.playerId,
+              pressureUpdate.consequence.heatDelta,
+              pressureUpdate.consequence.id,
+            )
+          : {
+              ...nextResources,
+              heat: Math.min(100, nextResources.heat + pressureUpdate.consequence.heatDelta),
+            };
+        nextNotifications = addNotification(
+          nextNotifications,
+          pressureUpdate.consequence.message,
+          pressureUpdate.consequence.tone,
+        );
+        nextMicroRewards = [
+          makeMicroReward({
+            label: "Pressure consequence",
+            value: `+${pressureUpdate.consequence.heatDelta} Heat`,
+            tone: "risk",
+            nowMs,
+          }),
+          ...nextMicroRewards,
+        ].slice(0, 8);
+        if (pressureUpdate.consequence.lockTrading) {
+          nextDistrictStates = {
+            ...nextDistrictStates,
+            [nextWorld.currentLocationId]: {
+              locationId: nextWorld.currentLocationId,
+              state: "LOCKDOWN",
+              startTimestamp: nowMs,
+              endTimestamp: nowMs + pressureUpdate.consequence.lockDurationMs,
+            },
+          };
+        }
+        const pressureHeatUpdate = updateHeatWarning(previousHeat, nextResources, nextNotifications);
+        nextResources = pressureHeatUpdate.resources;
+        nextNotifications = pressureHeatUpdate.notifications;
+        nextHeatWarning = pressureHeatUpdate.heatWarning ?? nextHeatWarning;
+        const pressureBountyUpdate = updateBountyFeedback(previousHeat, nextResources, nextNotifications);
+        nextBounty = pressureBountyUpdate.bounty;
+        nextNotifications = pressureBountyUpdate.notifications;
+        didMutate = true;
+      }
+      nextPlayerRiskProfile = createRiskProfile(nextResources, nextBounty, nextPositions);
+      const nextDecisionContext = buildDecisionContextForState(state, nowMs, {
+        ...refresh,
+        world: nextWorld,
+        resources: nextResources,
+        positions: nextPositions,
+        progression: nextProgression,
+        balanceObol: nextBalanceObol,
+        activeFlashEvent: nextActiveFlashEvent,
+        pendingMission: nextPendingMission,
+        activeMission: nextActiveMission,
+        missionHistory: nextMissionHistory,
+        npcReputation: nextNpcReputation,
+        npcRelationships: nextNpcRelationships,
+        missionCount: nextMissionCount,
+        nextMissionAt,
+        heistMissions: nextHeistMissions,
+        activeHeistMission: nextActiveHeistMission,
+        heistCount: nextHeistCount,
+        streak: nextStreak,
+        dailyChallenges: nextDailyChallenges,
+        dailyChallengeDayKey: nextDailyChallengeDayKey,
+        firstSessionStage: nextFirstSessionStage,
+        firstSessionStartedAt: nextFirstSessionStartedAt,
+        firstSessionComplete: nextFirstSessionComplete,
+        firstVblmBoughtAt: nextFirstVblmBoughtAt,
+        firstSessionMessage: nextFirstSessionMessage,
+        pantheonShard: nextPantheonShard,
+        obolBalance: nextObolBalance,
+        shopPurchases: nextShopPurchases,
+        marketWhispers: nextMarketWhispers,
+        marketWhisperCount: nextMarketWhisperCount,
+        nextMarketWhisperAt: nextMarketWhisperAt,
+        playerLore: nextPlayerLore,
+        missedPeakLog: nextMissedPeakLog,
+        heldPricePeaks: nextHeldPricePeaks,
+        playerRiskProfile: nextPlayerRiskProfile,
+        raidRecoveryWindow: nextRaidRecoveryWindow,
+        raidBuybackLastUsedWeek: nextRaidBuybackLastUsedWeek,
+        districtStates: nextDistrictStates,
+        districtStateCount: nextDistrictStateCount,
+        nextDistrictStateAt,
+        bounty: nextBounty,
+        heatPressure: nextHeatPressure,
+        microRewards: nextMicroRewards,
+        awayReport: nextAwayReport,
+        tradeJuice: nextTradeJuice,
+        heatWarning: nextHeatWarning,
+        rankCelebration: nextRankCelebration,
+        transitShipments: nextShipments,
+        locationInventories: nextLocationInventories,
+        notifications: nextNotifications,
+      });
+      const heatPressureChanged =
+        nextHeatPressure.stage !== state.heatPressure.stage ||
+        nextHeatPressure.scanLockAt !== state.heatPressure.scanLockAt ||
+        nextHeatPressure.lastConsequenceAt !== state.heatPressure.lastConsequenceAt ||
+        nextHeatPressure.lastMessage !== state.heatPressure.lastMessage;
+      const microRewardsChanged =
+        nextMicroRewards.length !== state.microRewards.length ||
+        nextMicroRewards[0]?.id !== state.microRewards[0]?.id;
 
-      if (shouldReprice || didMutate || nextStreak !== state.streak || nextBounty.level !== state.bounty.level || nextAwayReport !== state.awayReport) {
+      if (shouldReprice || didMutate || nextStreak !== state.streak || nextBounty.level !== state.bounty.level || heatPressureChanged || microRewardsChanged || nextAwayReport !== state.awayReport) {
         set({
           ...refresh,
           tick: nextTick,
@@ -1273,15 +2032,39 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           activeMission: nextActiveMission,
           missionHistory: nextMissionHistory,
           npcReputation: nextNpcReputation,
+          npcRelationships: nextNpcRelationships,
           missionCount: nextMissionCount,
           nextMissionAt,
+          heistMissions: nextHeistMissions,
+          activeHeistMission: nextActiveHeistMission,
+          heistCount: nextHeistCount,
           streak: nextStreak,
           dailyChallenges: nextDailyChallenges,
           dailyChallengeDayKey: nextDailyChallengeDayKey,
+          firstSessionStage: nextFirstSessionStage,
+          firstSessionStartedAt: nextFirstSessionStartedAt,
+          firstSessionComplete: nextFirstSessionComplete,
+          firstVblmBoughtAt: nextFirstVblmBoughtAt,
+          firstSessionMessage: nextFirstSessionMessage,
+          pantheonShard: nextPantheonShard,
+          obolBalance: nextObolBalance,
+          shopPurchases: nextShopPurchases,
+          marketWhispers: nextMarketWhispers,
+          marketWhisperCount: nextMarketWhisperCount,
+          nextMarketWhisperAt: nextMarketWhisperAt,
+          playerLore: nextPlayerLore,
+          missedPeakLog: nextMissedPeakLog,
+          heldPricePeaks: nextHeldPricePeaks,
+          playerRiskProfile: nextPlayerRiskProfile,
+          raidRecoveryWindow: nextRaidRecoveryWindow,
+          raidBuybackLastUsedWeek: nextRaidBuybackLastUsedWeek,
           districtStates: nextDistrictStates,
           districtStateCount: nextDistrictStateCount,
           nextDistrictStateAt,
           bounty: nextBounty,
+          decisionContext: nextDecisionContext,
+          heatPressure: nextHeatPressure,
+          microRewards: nextMicroRewards,
           awayReport: nextAwayReport,
           tradeJuice: nextTradeJuice,
           heatWarning: nextHeatWarning,
@@ -1338,16 +2121,32 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           heatUpdate.notifications,
         );
 
+        const nextPositionsMap = toPositionMap(result.positions);
         set({
-          positions: toPositionMap(result.positions),
+          positions: nextPositionsMap,
           resources: heatUpdate.resources,
           balanceObol: latestBalance(state.balanceObol, result.ledger),
           progression: result.rank,
           bounty: bountyUpdate.bounty,
+          playerRiskProfile: createRiskProfile(heatUpdate.resources, bountyUpdate.bounty, nextPositionsMap),
           profile: state.profile ? { ...state.profile, rank: result.rank.level } : null,
+          firstVblmBoughtAt: state.firstVblmBoughtAt ?? (state.selectedTicker === "VBLM" ? state.clock.nowMs || Date.now() : null),
+          heldPricePeaks: {
+            ...state.heldPricePeaks,
+            [state.selectedTicker]: Math.max(state.heldPricePeaks[state.selectedTicker] ?? 0, price),
+          },
           dailyChallenges: advanceDailyChallengeProgress(state.dailyChallenges, {
             location_trades: state.world.currentLocationId === "neon_plaza" ? 1 : 0,
           }),
+          microRewards: [
+            makeMicroReward({
+              label: "Position opened",
+              value: `${state.selectedTicker} x${state.orderSize}`,
+              tone: "info",
+              nowMs: state.clock.nowMs || Date.now(),
+            }),
+            ...state.microRewards,
+          ].slice(0, 8),
           notifications: bountyUpdate.notifications,
           heatWarning: heatUpdate.heatWarning ?? state.heatWarning,
           rankCelebration: maybeRankCelebration(state.progression, result.rank),
@@ -1433,16 +2232,79 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           // AUDIO: trade_loss.wav on loss
         }
 
+        const peakPrice = state.heldPricePeaks[state.selectedTicker] ?? price;
+        const soldQuantity = Math.min(state.orderSize, position.quantity);
+        const missedValue = peakPrice > price
+          ? roundCurrency((peakPrice - price) * soldQuantity)
+          : 0;
+        if (missedValue > 0) {
+          nextNotifications = addNotification(
+            nextNotifications,
+            `Missed peak: +${formatObol(missedValue)} 0BOL. ${state.selectedTicker} hit ${peakPrice.toFixed(2)} earlier.`,
+            "warning",
+          );
+        }
+        const nextPositionsMap = toPositionMap(result.positions);
+        const nextLore = maybeAddMemoryShard(state.progression, nextRank, state.playerLore, state.clock.nowMs || Date.now());
+        const nowForReward = state.clock.nowMs || Date.now();
+        const nextMicroRewards = [
+          ...(totalXp > 0
+            ? [makeMicroReward({
+                label: "XP tick",
+                value: `+${totalXp} XP`,
+                tone: "xp" as const,
+                nowMs: nowForReward,
+              })]
+            : []),
+          ...(result.realizedPnl !== 0
+            ? [makeMicroReward({
+                label: result.realizedPnl > 0 ? "Profit tick" : "Loss tick",
+                value: `${result.realizedPnl > 0 ? "+" : ""}${formatObol(result.realizedPnl)} 0BOL`,
+                tone: result.realizedPnl > 0 ? "profit" as const : "risk" as const,
+                nowMs: nowForReward,
+              })]
+            : []),
+          ...(nextStreak.count >= 2
+            ? [makeMicroReward({
+                label: "Streak pressure",
+                value: `x${nextStreak.multiplier.toFixed(2)} // +${getStreakRiskHeatBonus(nextStreak)} risk`,
+                tone: "risk" as const,
+                nowMs: nowForReward,
+              })]
+            : []),
+          ...state.microRewards,
+        ].slice(0, 8);
+
         set({
-          positions: toPositionMap(result.positions),
+          positions: nextPositionsMap,
           resources: heatUpdate.resources,
           balanceObol: latestBalance(state.balanceObol, result.ledger),
           progression: nextRank,
           bounty: bountyUpdate.bounty,
+          playerRiskProfile: createRiskProfile(heatUpdate.resources, bountyUpdate.bounty, nextPositionsMap),
           profile: state.profile ? { ...state.profile, rank: nextRank.level } : null,
           lastRealizedPnl: result.realizedPnl,
           firstTradeComplete: state.firstTradeComplete || result.realizedPnl > 0,
           streak: nextStreak,
+          microRewards: nextMicroRewards,
+          playerLore: nextLore,
+          missedPeakLog: missedValue > 0
+            ? [
+                {
+                  id: `missed_peak_${Date.now()}_${state.selectedTicker}`,
+                  ticker: state.selectedTicker,
+                  quantity: soldQuantity,
+                  sellPrice: price,
+                  peakPrice,
+                  missedValue,
+                  createdAt: state.clock.nowMs || Date.now(),
+                },
+                ...state.missedPeakLog,
+              ].slice(0, 20)
+            : state.missedPeakLog,
+          heldPricePeaks: Object.fromEntries(
+            Object.entries(state.heldPricePeaks).filter(([ticker]) => nextPositionsMap[ticker]),
+          ),
           dailyChallenges: advanceDailyChallengeProgress(state.dailyChallenges, {
             daily_profit: Math.max(0, result.realizedPnl),
             location_trades: state.world.currentLocationId === "neon_plaza" ? 1 : 0,
@@ -1576,7 +2438,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         await persistCurrentState();
       }
     },
-    sendCourierShipment: async ({ ticker, quantity, destinationId, courierId }) => {
+    sendCourierShipment: async ({ ticker, quantity, destinationId, courierId, insured = false }) => {
       const state = get();
       if (!state.playerId || state.isBusy) {
         return;
@@ -1620,8 +2482,13 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           0.95,
           courier.lossChance * getDistrictCourierRiskMultiplier(currentDistrict.state) +
             getDistrictCourierRiskBonus(currentDistrict.state) +
-            state.bounty.courierRiskBonus,
+            state.bounty.courierRiskBonus +
+            getStreakRiskHeatBonus(state.streak) / 100,
         );
+        const insuranceObolCost = Math.max(2, Math.min(10, Math.ceil(riskChance * 20)));
+        if (insured && (!ENABLE_OBOL_TOKEN || state.obolBalance < insuranceObolCost)) {
+          throw new Error("Courier insurance requires $OBOL balance.");
+        }
         const effectiveCost = roundCurrency(
           courier.cost * getFlashCourierCostMultiplier(state.activeFlashEvent, state.world.currentLocationId),
         );
@@ -1642,14 +2509,17 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           arrivalTime: nowMs + destination.travelTime * 60_000 * timeMultiplier,
           courierUsed: courier.id,
           status: "transit",
-          lossChance: riskChance,
-          riskLevel: getBountyRiskLabel(riskChance),
+          lossChance: insured ? 0 : riskChance,
+          riskLevel: insured ? "low" : getBountyRiskLabel(riskChance),
           costPaid: effectiveCost,
+          insured,
+          insuranceObolCost: insured ? insuranceObolCost : undefined,
         };
 
         set({
           positions: toPositionMap(result.positions),
           balanceObol: latestBalance(state.balanceObol, result.ledger),
+          obolBalance: insured ? state.obolBalance - insuranceObolCost : state.obolBalance,
           transitShipments: [shipment, ...state.transitShipments],
           notifications: addNotification(
             state.notifications,
@@ -1760,6 +2630,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           ...state.npcReputation,
           [declined.npcId]: (state.npcReputation[declined.npcId] ?? 0) - 1,
         },
+        npcRelationships: applyNpcReputationChange({
+          relationships: state.npcRelationships,
+          npcId: declined.npcId,
+          delta: -1,
+          missionOutcome: "failed",
+        }),
         nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, state.missionCount),
         notifications: addNotification(
           state.notifications,
@@ -1768,6 +2644,253 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         ),
         systemMessage: `[mission] declined // ${declined.title}`,
       });
+    },
+    createHeistDraft: (collateralPercentage) => {
+      const state = get();
+      if (state.progression.level < 5 && state.world.currentLocationId !== "black_market") {
+        return null;
+      }
+      const portfolioValue = getPortfolioValue({
+        balance0Bol: state.balanceObol,
+        positions: state.positions,
+        prices: state.prices,
+      });
+      return createHeistMission({
+        nowMs: state.clock.nowMs || Date.now(),
+        seed: ENGAGEMENT_SEED,
+        index: state.heistCount,
+        npcId: "kite",
+        collateralPercentage,
+        portfolioValue,
+        bountyLevel: state.bounty.level,
+        districtDanger: getActiveDistrictState(state.districtStates, state.world.currentLocationId, state.clock.nowMs).state === "NORMAL" ? 1 : 3,
+      });
+    },
+    acceptHeistMission: async (collateralPercentage) => {
+      const state = get();
+      if (!state.playerId || state.isBusy) {
+        return;
+      }
+      const mission = get().createHeistDraft(collateralPercentage);
+      if (!mission) {
+        commitState({ systemMessage: "[heist] locked until Rank 5 or Black Market access." });
+        return;
+      }
+      set({ isBusy: true });
+      try {
+        const authority = getAuthority();
+        const ledger = authority.applyHeistCollateral
+          ? await authority.applyHeistCollateral(state.playerId, mission.collateralValue)
+          : [];
+        const activeMission = { ...mission, status: "active" as const };
+        set({
+          balanceObol: latestBalance(state.balanceObol, ledger),
+          heistMissions: [activeMission, ...state.heistMissions].slice(0, 10),
+          activeHeistMission: activeMission,
+          heistCount: state.heistCount + 1,
+          activeFlashEvent: activeMission.flashEventsDuring[0] ?? state.activeFlashEvent,
+          notifications: addNotification(
+            state.notifications,
+            `Heist accepted. Collateral pledged: ${mission.collateralValue} 0BOL.`,
+            "warning",
+          ),
+          isBusy: false,
+          systemMessage: `[heist] active // risk ${mission.riskRating}`,
+        });
+        await persistCurrentState();
+      } catch (error) {
+        set({
+          isBusy: false,
+          systemMessage: error instanceof Error ? `[sys] ${error.message}` : "[sys] heist failed.",
+        });
+        await persistCurrentState();
+      }
+    },
+    resolveActiveHeist: async (success) => {
+      const state = get();
+      if (!state.playerId || !state.activeHeistMission || state.isBusy) {
+        return;
+      }
+      set({ isBusy: true });
+      try {
+        const authority = getAuthority();
+        const result = success === undefined
+          ? resolveHeistMission({
+              mission: state.activeHeistMission,
+              nowMs: state.clock.nowMs || Date.now(),
+              seed: ENGAGEMENT_SEED,
+              playerStayedActive: true,
+              heat: state.resources.heat,
+            })
+          : {
+              mission: { ...state.activeHeistMission, status: success ? "success" as const : "failed" as const },
+              payout0Bol: success ? Math.round(state.activeHeistMission.collateralValue * state.activeHeistMission.payoutMultiplier) : 0,
+              reputationDelta: success ? 15 : -10,
+              rareItem: success ? "Rare routing key" : null,
+            };
+        const ledger = result.payout0Bol > 0 && authority.grantReward
+          ? await authority.grantReward(state.playerId, result.payout0Bol, "heist_success")
+          : [];
+        const relationships = applyNpcReputationChange({
+          relationships: state.npcRelationships,
+          npcId: state.activeHeistMission.npcId,
+          delta: result.reputationDelta,
+          missionOutcome: result.mission.status === "success" ? "completed" : "failed",
+        });
+        set({
+          balanceObol: latestBalance(state.balanceObol, ledger),
+          npcRelationships: relationships,
+          npcReputation: {
+            ...state.npcReputation,
+            [state.activeHeistMission.npcId]: relationships[state.activeHeistMission.npcId]?.reputation ?? 0,
+          },
+          heistMissions: state.heistMissions.map((mission) =>
+            mission.id === result.mission.id ? result.mission : mission,
+          ),
+          activeHeistMission: null,
+          notifications: addNotification(
+            state.notifications,
+            result.mission.status === "success"
+              ? `Heist success: +${result.payout0Bol} 0BOL${result.rareItem ? ` // ${result.rareItem}` : ""}.`
+              : "Heist failed. Collateral lost.",
+            result.mission.status === "success" ? "success" : "danger",
+          ),
+          isBusy: false,
+          systemMessage: `[heist] ${result.mission.status}`,
+        });
+        await persistCurrentState();
+      } catch (error) {
+        set({
+          isBusy: false,
+          systemMessage: error instanceof Error ? `[sys] ${error.message}` : "[sys] heist resolution failed.",
+        });
+        await persistCurrentState();
+      }
+    },
+    purchaseShopItem: async (itemId) => {
+      const state = get();
+      if (!state.playerId || state.isBusy) {
+        return;
+      }
+      const nowMs = state.clock.nowMs || Date.now();
+      const purchase = purchaseShopItemEngine({
+        itemId,
+        obolBalance: state.obolBalance,
+        purchasedAt: nowMs,
+        purchaseHistory: state.shopPurchases,
+      });
+      if (!purchase.ok) {
+        commitState({ systemMessage: `[shop] ${purchase.reason.replace(/_/g, " ")}` });
+        return;
+      }
+      set({
+        obolBalance: purchase.nextBalance,
+        shopPurchases: {
+          ...state.shopPurchases,
+          [itemId]: [...(state.shopPurchases[itemId] ?? []), nowMs],
+        },
+        extraInventorySlots: itemId === "extra_inventory_slot" ? state.extraInventorySlots + 1 : state.extraInventorySlots,
+        notifications: addNotification(state.notifications, `Purchased ${purchase.item.name}.`, "success"),
+        systemMessage: `[shop] purchased // ${purchase.item.name}`,
+      });
+      await persistCurrentState();
+    },
+    instantTravelWithObol: async () => {
+      const state = get();
+      if (!state.world.travelDestinationId || !state.playerId) {
+        return;
+      }
+      const purchase = purchaseShopItemEngine({
+        itemId: "instant_travel",
+        obolBalance: state.obolBalance,
+        purchasedAt: state.clock.nowMs || Date.now(),
+        purchaseHistory: state.shopPurchases,
+      });
+      if (!purchase.ok) {
+        commitState({ systemMessage: `[travel] instant travel unavailable: ${purchase.reason.replace(/_/g, " ")}` });
+        return;
+      }
+      const destination = getLocation(state.world.travelDestinationId);
+      commitState({
+        obolBalance: purchase.nextBalance,
+        shopPurchases: {
+          ...state.shopPurchases,
+          instant_travel: [...(state.shopPurchases.instant_travel ?? []), state.clock.nowMs || Date.now()],
+        },
+        world: {
+          currentLocationId: destination.id,
+          travelDestinationId: null,
+          travelEndTime: null,
+        },
+        notifications: addNotification(state.notifications, `Instant travel complete: ${destination.name}.`, "success"),
+        systemMessage: `[travel] instant // ${destination.name}`,
+      });
+    },
+    buyBackRaidLoss: async (currency) => {
+      const state = get();
+      if (!state.playerId || !state.raidRecoveryWindow || state.raidRecoveryWindow.restored) {
+        return;
+      }
+      const nowMs = state.clock.nowMs || Date.now();
+      if (nowMs > state.raidRecoveryWindow.expiresAt) {
+        commitState({ systemMessage: "[raid] recovery window expired." });
+        return;
+      }
+      const weekKey = getUtcWeekKey(nowMs);
+      if (state.raidBuybackLastUsedWeek === weekKey) {
+        commitState({ systemMessage: "[raid] weekly buyback already used." });
+        return;
+      }
+      set({ isBusy: true });
+      try {
+        const authority = getAuthority();
+        const recovered = Object.fromEntries(
+          Object.entries(state.raidRecoveryWindow.lostInventory).map(([ticker, quantity]) => [
+            ticker,
+            { quantity, avgEntry: state.positions[ticker]?.avgEntry ?? state.prices[ticker] ?? 1 },
+          ]),
+        );
+        const tokenPurchase = currency === "$OBOL"
+          ? purchaseShopItemEngine({
+              itemId: "raid_buyback",
+              obolBalance: state.obolBalance,
+              purchasedAt: nowMs,
+              purchaseHistory: state.shopPurchases,
+            })
+          : null;
+        if (tokenPurchase && !tokenPurchase.ok) {
+          set({ isBusy: false, systemMessage: `[raid] token buyback unavailable: ${tokenPurchase.reason.replace(/_/g, " ")}` });
+          await persistCurrentState();
+          return;
+        }
+        const cost = currency === "$OBOL" ? 0 : RAID_RECOVERY_0BOL_COST;
+        const result = authority.restoreRaidLoss
+          ? await authority.restoreRaidLoss(state.playerId, recovered, cost, "0BOL")
+          : { positions: Object.values(state.positions), ledger: [] };
+        set({
+          positions: toPositionMap(result.positions),
+          balanceObol: currency === "0BOL" ? latestBalance(state.balanceObol, result.ledger) : state.balanceObol,
+          obolBalance: tokenPurchase?.ok ? tokenPurchase.nextBalance : state.obolBalance,
+          shopPurchases: tokenPurchase?.ok
+            ? {
+                ...state.shopPurchases,
+                raid_buyback: [...(state.shopPurchases.raid_buyback ?? []), nowMs],
+              }
+            : state.shopPurchases,
+          raidRecoveryWindow: { ...state.raidRecoveryWindow, restored: true },
+          raidBuybackLastUsedWeek: weekKey,
+          notifications: addNotification(state.notifications, "Raid buyback restored lost inventory.", "success"),
+          isBusy: false,
+          systemMessage: "[raid] buyback complete",
+        });
+        await persistCurrentState();
+      } catch (error) {
+        set({
+          isBusy: false,
+          systemMessage: error instanceof Error ? `[sys] ${error.message}` : "[sys] buyback failed.",
+        });
+        await persistCurrentState();
+      }
     },
     claimDailyChallenge: async (challengeId) => {
       const state = get();
@@ -1804,6 +2927,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           progression: rank,
           profile: state.profile ? { ...state.profile, rank: rank.level } : null,
           rankCelebration: maybeRankCelebration(state.progression, rank),
+          playerLore: maybeAddMemoryShard(state.progression, rank, state.playerLore, state.clock.nowMs || Date.now()),
           notifications: addNotification(
             state.notifications,
             `Challenge claimed: ${claimed.title}`,
@@ -1873,8 +2997,29 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       commitState({
         awayReport: {
           id: `away_${nowMs}`,
+          generatedAt: nowMs,
           createdAt: nowMs,
           minutesAway: Math.max(2, Math.round(awayMs / 60_000)),
+          courierResults: state.transitShipments
+            .filter((shipment) => shipment.arrivalTime >= awayStartedAt && shipment.arrivalTime <= nowMs)
+            .map((shipment) => ({
+              id: shipment.id,
+              result: shipment.status === "lost" ? "lost" as const : "arrived" as const,
+              ticker: shipment.ticker,
+              quantity: shipment.quantity,
+            })),
+          expiredMissions: state.missionHistory
+            .filter((mission) => mission.failed && (mission.completedAt ?? 0) >= awayStartedAt)
+            .map((mission) => ({ id: mission.id, title: mission.title })),
+          districtChanges: Object.values(state.districtStates)
+            .filter((district) => district.startTimestamp >= awayStartedAt && district.state !== "NORMAL")
+            .map((district) => ({ locationId: district.locationId, oldState: "NORMAL", newState: district.state })),
+          newContacts: state.pendingMission && state.pendingMission.startTimestamp >= awayStartedAt
+            ? [{ npcId: state.pendingMission.npcId, message: `Mission from ${state.pendingMission.npcName} waiting.` }]
+            : [],
+          claimables: state.dailyChallenges
+            .filter((challenge) => challenge.completed && !challenge.claimed)
+            .map((challenge) => ({ type: "challenge", reward: `${challenge.rewardObol} 0BOL + ${challenge.rewardXp} XP` })),
           items: items.length
             ? items
             : [{ id: `away_quiet_${nowMs}`, tone: "info", message: "No major events. The grid kept humming." }],

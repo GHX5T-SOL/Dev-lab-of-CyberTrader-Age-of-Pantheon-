@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  web_quality_gate:
+    docker:
+      - image: cimg/node:20.20
+    working_directory: ~/project
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+            - npm-v1-
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: TypeScript
+          command: npm run typecheck
+      - run:
+          name: Tests
+          command: npm test -- --runInBand
+      - run:
+          name: Expo web export
+          command: npm run build:mobile:web
+      - store_artifacts:
+          path: src/dist
+          destination: web-export
+
+workflows:
+  build_and_test:
+    jobs:
+      - web_quality_gate

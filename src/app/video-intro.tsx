@@ -14,11 +14,13 @@ import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
 
-const INTRO_VIDEO = require("../assets/media/intro-cinematic.mp4");
+const INTRO_VIDEO = require("../assets/media/intro-cinematic-fixed.mp4");
 
 export default function VideoIntroRoute() {
   const isHydrated = useDemoBootstrap();
   const introSeen = useDemoStore((state) => state.introSeen);
+  const videoRef = React.useRef<Video>(null);
+  const finishedRef = React.useRef(false);
   const [canSkip, setCanSkip] = React.useState(false);
   const [videoReady, setVideoReady] = React.useState(false);
   const [videoFailed, setVideoFailed] = React.useState(false);
@@ -47,40 +49,60 @@ export default function VideoIntroRoute() {
       if (!videoReady) {
         setVideoFailed(true);
       }
-    }, 3500);
+    }, 10_000);
     return () => clearTimeout(timer);
   }, [videoReady]);
 
   const finish = React.useCallback(() => {
+    if (finishedRef.current) {
+      return;
+    }
+    finishedRef.current = true;
     router.replace("/intro");
+  }, []);
+
+  const playVideo = React.useCallback(() => {
+    void videoRef.current?.playAsync().catch(() => {
+      setVideoFailed(true);
+    });
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({ opacity: pulse.value }));
 
   return (
-    <View style={{ flex: 1, backgroundColor: terminalColors.background }}>
+    <View style={{ flex: 1, backgroundColor: "#000", alignItems: "center", justifyContent: "center" }}>
       {!videoFailed ? (
-        <Video
-          source={INTRO_VIDEO}
-          resizeMode={ResizeMode.COVER}
-          shouldPlay
-          isMuted
-          volume={0}
-          rate={1}
-          useNativeControls={false}
-          isLooping={false}
-          style={{ flex: 1, opacity: videoReady ? 1 : 0.35 }}
-          onReadyForDisplay={() => setVideoReady(true)}
-          onError={() => setVideoFailed(true)}
-          onPlaybackStatusUpdate={(status) => {
-            if (status.isLoaded) {
+        <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", backgroundColor: "#000" }}>
+          <Video
+            ref={videoRef}
+            source={INTRO_VIDEO}
+            resizeMode={ResizeMode.CONTAIN}
+            shouldPlay
+            isMuted
+            volume={0}
+            rate={1}
+            useNativeControls={false}
+            isLooping={false}
+            style={{ width: "100%", height: "100%", opacity: videoReady ? 1 : 0.35 }}
+            onLoad={() => {
               setVideoReady(true);
-              if (status.didJustFinish) {
-                finish();
+              playVideo();
+            }}
+            onReadyForDisplay={() => {
+              setVideoReady(true);
+              playVideo();
+            }}
+            onError={() => setVideoFailed(true)}
+            onPlaybackStatusUpdate={(status) => {
+              if (status.isLoaded) {
+                setVideoReady(true);
+                if (status.didJustFinish) {
+                  finish();
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </View>
       ) : (
         <View style={{ flex: 1, justifyContent: "center", padding: 24 }}>
           <NeonBorder active style={{ borderColor: terminalColors.cyan, padding: 18 }}>

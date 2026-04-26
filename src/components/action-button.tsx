@@ -1,5 +1,7 @@
-import { Pressable, Text } from "react-native";
+import * as React from "react";
+import { Pressable, View } from "react-native";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -9,6 +11,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface ActionButtonProps {
   label: string;
@@ -27,15 +30,28 @@ export default function ActionButton({
 }: ActionButtonProps) {
   const pulse = useSharedValue(0);
   const baseColor =
-    variant === "primary" ? terminalColors.cyan : variant === "amber" ? terminalColors.amber : terminalColors.border;
+    variant === "primary" ? terminalColors.green : variant === "amber" ? terminalColors.amber : terminalColors.border;
   const pressedColor = variant === "amber" ? terminalColors.amber : terminalColors.cyan;
+  const gradientColors: readonly [string, string] =
+    variant === "primary"
+      ? ["rgba(57,255,20,0.24)", "rgba(0,240,255,0.13)"]
+      : variant === "amber"
+        ? ["rgba(255,184,0,0.18)", "rgba(255,43,214,0.1)"]
+        : ["rgba(255,255,255,0.045)", "rgba(0,240,255,0.035)"];
 
-  pulse.value =
-    variant === "primary" && glowing && !disabled
-      ? withRepeat(withSequence(withTiming(1, { duration: 1250 }), withTiming(0, { duration: 1250 })), -1)
-      : 0;
+  React.useEffect(() => {
+    if (variant === "primary" && glowing && !disabled) {
+      pulse.value = withRepeat(
+        withSequence(withTiming(1, { duration: 1800 }), withTiming(0, { duration: 1800 })),
+        -1,
+      );
+      return;
+    }
+    pulse.value = withTiming(0, { duration: 220 });
+  }, [disabled, glowing, pulse, variant]);
 
   const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: 1 + pulse.value * 0.004 }],
     borderColor:
       disabled
         ? terminalColors.borderDim
@@ -47,14 +63,28 @@ export default function ActionButton({
       style={[
         {
           width: "100%",
-          height: 52,
+          minHeight: 56,
           borderWidth: 1,
-          backgroundColor: terminalColors.panel,
+          borderRadius: 12,
+          overflow: "hidden",
+          backgroundColor: terminalColors.glassStrong,
           opacity: disabled ? 0.4 : 1,
+          shadowColor: disabled ? "transparent" : baseColor,
+          shadowOpacity: glowing && !disabled ? 0.34 : 0.16,
+          shadowRadius: glowing && !disabled ? 16 : 7,
+          elevation: glowing && !disabled ? 8 : 2,
         },
         animatedStyle,
       ]}
     >
+      <LinearGradient
+        pointerEvents="none"
+        colors={gradientColors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
+      />
+      <View pointerEvents="none" style={{ position: "absolute", left: 10, right: 10, top: 0, height: 1, backgroundColor: "rgba(255,255,255,0.26)" }} />
       <Pressable
         disabled={disabled}
         onPress={() => {
@@ -71,10 +101,10 @@ export default function ActionButton({
         })}
       >
         {({ pressed }) => (
-          <Text
+          <CyberText
+            size={16}
             style={{
               fontFamily: terminalFont,
-              fontSize: 16,
               textTransform: "uppercase",
               letterSpacing: 2,
               color: pressed ? pressedColor : baseColor,
@@ -82,7 +112,7 @@ export default function ActionButton({
             }}
           >
             {label}
-          </Text>
+          </CyberText>
         )}
       </Pressable>
     </Animated.View>
@@ -90,4 +120,3 @@ export default function ActionButton({
 }
 
 export { ActionButton };
-

@@ -48,6 +48,7 @@ export function generateNewsForTick(tick: number, seed = "phase1-local"): Market
 
   const stream = seededStream(`${seed}:news:${tick}`);
   const template = NEWS_TEMPLATES[Math.floor(stream() * NEWS_TEMPLATES.length)] ?? NEWS_TEMPLATES[0];
+  const playerReferenced = stream() < 0.1;
   const durationTicks = 3 + Math.floor(stream() * 6);
   const magnitude = 0.05 + stream() * 0.2;
   const priceMultiplier =
@@ -58,8 +59,12 @@ export function generateNewsForTick(tick: number, seed = "phase1-local"): Market
   return [
     {
       id: `news_${seed}_${tick}_${template.affectedTickers.join("_").toLowerCase()}`,
-      headline: template.headline,
-      body: template.body,
+      headline: playerReferenced
+        ? `Unusual trading volume in ${template.affectedTickers[0] ?? "S1LKROAD"} attributed to a single Eidolon.`
+        : template.headline,
+      body: playerReferenced
+        ? "Market watchers are whispering about one handle moving the board without showing their face."
+        : template.body,
       affectedTickers: [...template.affectedTickers],
       direction: template.direction,
       credibility: roundCurrency(0.5 + stream() * 0.5),

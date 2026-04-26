@@ -28,7 +28,7 @@ export function createInitialDistrictStates(nowMs: number): Record<string, Distr
 
 export function getNextDistrictShiftDelay(seed: string, index: number): number {
   const stream = seededStream(`${seed}:district-delay:${index}`);
-  return (15 + Math.floor(stream() * 11)) * 60_000;
+  return (8 + Math.floor(stream() * 5)) * 60_000;
 }
 
 export function createDistrictShift(input: {

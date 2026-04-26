@@ -5,10 +5,20 @@ import type {
   BountySnapshot,
   DistrictStateRecord,
   FlashEvent,
+  HeatPressureState,
+  HeistMission,
   MarketNews,
+  MarketWhisper,
+  MicroReward,
   Mission,
+  MissedPeakLogEntry,
+  NPCRelationship,
+  PantheonShardCliffhanger,
   PlayerProfile,
+  PlayerLoreShard,
+  PlayerRiskProfile,
   Position,
+  RaidRecoveryWindow,
   RankCelebration,
   RankSnapshot,
   Resources,
@@ -55,15 +65,39 @@ interface PersistedDemoSession {
   activeMission?: Mission | null;
   missionHistory?: Mission[];
   npcReputation?: Record<string, number>;
+  npcRelationships?: Record<string, NPCRelationship>;
   missionCount?: number;
   nextMissionAt?: number;
+  heistMissions?: HeistMission[];
+  activeHeistMission?: HeistMission | null;
+  heistCount?: number;
   streak?: TradeStreak;
   dailyChallenges?: DailyChallenge[];
   dailyChallengeDayKey?: string;
+  firstSessionStage?: number;
+  firstSessionStartedAt?: number | null;
+  firstSessionComplete?: boolean;
+  firstVblmBoughtAt?: number | null;
+  firstSessionMessage?: string | null;
+  pantheonShard?: PantheonShardCliffhanger | null;
+  obolBalance?: number;
+  shopPurchases?: Record<string, number[]>;
+  extraInventorySlots?: number;
+  marketWhispers?: MarketWhisper[];
+  marketWhisperCount?: number;
+  nextMarketWhisperAt?: number;
+  playerLore?: PlayerLoreShard[];
+  missedPeakLog?: MissedPeakLogEntry[];
+  heldPricePeaks?: Record<string, number>;
+  playerRiskProfile?: PlayerRiskProfile;
+  raidRecoveryWindow?: RaidRecoveryWindow | null;
+  raidBuybackLastUsedWeek?: string | null;
   districtStates?: Record<string, DistrictStateRecord>;
   districtStateCount?: number;
   nextDistrictStateAt?: number;
   bounty?: BountySnapshot;
+  heatPressure?: HeatPressureState;
+  microRewards?: MicroReward[];
   awayReport?: AwayReport | null;
   tradeJuice?: TradeJuice | null;
   heatWarning?: { threshold: number; createdAt: number } | null;

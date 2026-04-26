@@ -8,7 +8,7 @@ const MISSION_TYPES: MissionType[] = ["delivery", "buy_request", "hold", "intel_
 
 export function getNextMissionDelay(seed: string, index: number): number {
   const stream = seededStream(`${seed}:mission-delay:${index}`);
-  return (10 + Math.floor(stream() * 6)) * 60_000;
+  return (5 + Math.floor(stream() * 3)) * 60_000;
 }
 
 export function createMission(input: {

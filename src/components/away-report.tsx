@@ -24,6 +24,31 @@ export default function AwayReportPanel({ report, onDismiss }: AwayReportProps) 
         </Pressable>
       </View>
       <View style={{ marginTop: 10, gap: 7 }}>
+        {report.courierResults.map((result) => (
+          <Text key={`courier-${result.id}`} style={{ fontFamily: terminalFont, color: result.result === "arrived" ? terminalColors.green : terminalColors.red, fontSize: 10 }}>
+            {result.result === "arrived" ? "✓" : "x"} COURIER: {result.quantity} {result.ticker} {result.result.toUpperCase()}
+          </Text>
+        ))}
+        {report.expiredMissions.map((mission) => (
+          <Text key={`mission-${mission.id}`} style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+            ! MISSION EXPIRED: {mission.title}
+          </Text>
+        ))}
+        {report.districtChanges.map((change) => (
+          <Text key={`district-${change.locationId}-${change.newState}`} style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 10 }}>
+            ! DISTRICT: {change.locationId} {change.oldState} {"->"} {change.newState}
+          </Text>
+        ))}
+        {report.newContacts.map((contact) => (
+          <Text key={`contact-${contact.npcId}`} style={{ fontFamily: terminalFont, color: terminalColors.green, fontSize: 10 }}>
+            ! CONTACT: {contact.message}
+          </Text>
+        ))}
+        {report.claimables.map((claimable, index) => (
+          <Text key={`claimable-${index}`} style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+            $ CLAIMABLE: {claimable.type.toUpperCase()} // {claimable.reward}
+          </Text>
+        ))}
         {report.items.map((item) => (
           <Text
             key={item.id}
@@ -48,4 +73,3 @@ export default function AwayReportPanel({ report, onDismiss }: AwayReportProps) 
 }
 
 export { AwayReportPanel };
-

@@ -15,6 +15,7 @@ import { terminalColors, terminalFont } from "@/theme/terminal";
 export default function IndexRoute() {
   const isHydrated = useDemoBootstrap();
   const phase = useDemoStore((state) => state.phase);
+  const introSeen = useDemoStore((state) => state.introSeen);
   const opacity = useSharedValue(1);
 
   React.useEffect(() => {
@@ -30,7 +31,9 @@ export default function IndexRoute() {
     }
 
     const timeout = setTimeout(() => {
-      if (phase === "boot") {
+      if (!introSeen) {
+        router.replace("/video-intro");
+      } else if (phase === "boot") {
         router.replace("/boot");
       } else if (phase === "home") {
         router.replace("/home");
@@ -39,12 +42,12 @@ export default function IndexRoute() {
       } else if (phase === "terminal") {
         router.replace("/terminal");
       } else {
-        router.replace("/video-intro");
+        router.replace("/login");
       }
     }, 250);
 
     return () => clearTimeout(timeout);
-  }, [isHydrated, phase]);
+  }, [introSeen, isHydrated, phase]);
 
   const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
 

@@ -75,7 +75,7 @@ export const DEMO_COMMODITIES: Commodity[] = [
 ];
 
 export const INITIAL_RESOURCES: DemoResources = {
-  balanceObol: 1_000_000,
+  balanceObol: 2_000,
   energySeconds: 72 * 60 * 60,
   heat: 6,
 };

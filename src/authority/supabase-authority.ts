@@ -21,6 +21,7 @@ import type {
   Trade,
   TradeResult,
   WalletSession,
+  NPCRelationship,
 } from "@/engine/types";
 import { OBOL_TOKEN_CONFIG } from "@/solana/obol-config";
 import { requireSupabase, supabase } from "@/lib/supabase";
@@ -475,6 +476,46 @@ export class SupabaseAuthority implements Authority {
       rawAmount: "0",
       uiAmount: "0",
       decimals: OBOL_TOKEN_CONFIG.decimals,
+    };
+  }
+
+  async spendCurrency(
+    _playerId: string,
+    _amount: number,
+    currency: Currency,
+    _reason: string,
+  ): Promise<LedgerEntry[]> {
+    if (currency === "$OBOL") {
+      throw new Error("$OBOL purchases are feature-flagged and not wired in Supabase mode");
+    }
+    throw new Error("Supabase spendCurrency is not wired yet");
+  }
+
+  async applyHeistCollateral(_playerId: string, _collateralValue: number): Promise<LedgerEntry[]> {
+    throw new Error("Supabase heist collateral is not wired yet");
+  }
+
+  async restoreRaidLoss(
+    _playerId: string,
+    _recovered: Record<string, { quantity: number; avgEntry: number }>,
+    _cost: number,
+    _currency: Currency,
+  ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }> {
+    throw new Error("Supabase raid buyback is not wired yet");
+  }
+
+  async updateNpcReputation(
+    _playerId: string,
+    npcId: string,
+    _delta: number,
+  ): Promise<NPCRelationship> {
+    return {
+      npcId,
+      reputation: 0,
+      completedMissions: 0,
+      failedMissions: 0,
+      specialMessages: [],
+      unlockedPerks: [],
     };
   }
 

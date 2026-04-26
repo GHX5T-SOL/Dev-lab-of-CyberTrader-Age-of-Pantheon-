@@ -1,12 +1,13 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import ActionButton from "@/components/action-button";
 import ConfirmModal from "@/components/confirm-modal";
+import CyberText from "@/components/cyber-text";
 import MenuScreen from "@/components/menu-screen";
 import NeonBorder from "@/components/neon-border";
 import { useDemoStore } from "@/state/demo-store";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
 
 export default function SettingsMenuRoute() {
   const resetDemo = useDemoStore((state) => state.resetDemo);
@@ -25,19 +26,19 @@ export default function SettingsMenuRoute() {
             router.replace("/intro");
           }}
         />
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>AUDIO: DISABLED UNTIL SOUND PACK IS FINAL</Text>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>HAPTICS: ENABLED BY ACTION BUTTONS</Text>
+        <CyberText tone="dim" size={11}>AUDIO: DISABLED UNTIL SOUND PACK IS FINAL</CyberText>
+        <CyberText tone="dim" size={11}>HAPTICS: ENABLED BY ACTION BUTTONS</CyberText>
         <Pressable onPress={resetTutorial} style={{ borderWidth: 1, borderColor: terminalColors.borderDim, padding: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>RESET TUTORIAL</Text>
+          <CyberText tone="amber" size={12}>RESET TUTORIAL</CyberText>
         </Pressable>
         <Pressable onPress={() => setConfirm(true)} style={{ borderWidth: 1, borderColor: terminalColors.red, padding: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>CLEAR LOCAL DATA</Text>
+          <CyberText tone="red" size={12}>CLEAR LOCAL DATA</CyberText>
         </Pressable>
         <View style={{ gap: 4 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>FEATURE FLAGS</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>SUPABASE AUTHORITY: OFF</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>SOLANA TOKEN MODE: DESIGN STAGE</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>APP VERSION: v0.1.3</Text>
+          <CyberText tone="muted" size={11}>FEATURE FLAGS</CyberText>
+          <CyberText tone="text" size={11}>SUPABASE AUTHORITY: OFF</CyberText>
+          <CyberText tone="text" size={11}>SOLANA TOKEN MODE: DESIGN STAGE</CyberText>
+          <CyberText tone="dim" size={11}>APP VERSION: v0.1.3</CyberText>
         </View>
       </NeonBorder>
       <ConfirmModal
@@ -52,4 +53,3 @@ export default function SettingsMenuRoute() {
     </MenuScreen>
   );
 }
-

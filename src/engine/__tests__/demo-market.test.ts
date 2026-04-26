@@ -27,7 +27,7 @@ describe("demo market loop", () => {
       resources: INITIAL_RESOURCES,
     });
 
-    expect(result.resources.balanceObol).toBe(999760);
+    expect(result.resources.balanceObol).toBe(1760);
     expect(result.resources.energySeconds).toBe(INITIAL_RESOURCES.energySeconds - 90);
     expect(result.resources.heat).toBe(INITIAL_RESOURCES.heat + 1);
     expect(result.holding.quantity).toBe(10);
@@ -50,7 +50,7 @@ describe("demo market loop", () => {
     });
 
     expect(sold.realizedPnl).toBe(30);
-    expect(sold.resources.balanceObol).toBe(1_000_030);
+    expect(sold.resources.balanceObol).toBe(2030);
   });
 
   it("blocks trades when heat or energy would break the run", () => {

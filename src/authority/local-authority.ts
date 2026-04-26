@@ -31,6 +31,7 @@ import type {
   Trade,
   TradeResult,
   WalletSession,
+  NPCRelationship,
 } from "@/engine/types";
 
 interface LocalAuthorityOptions {
@@ -47,6 +48,8 @@ interface LocalPlayerState {
   trades: Trade[];
   xp: number;
   profitableTradeDays: string[];
+  obolBalance: number;
+  npcRelationships: Record<string, NPCRelationship>;
 }
 
 export interface LocalAuthorityPlayerSnapshot {
@@ -58,6 +61,8 @@ export interface LocalAuthorityPlayerSnapshot {
   trades: Trade[];
   xp: number;
   profitableTradeDays?: string[];
+  obolBalance?: number;
+  npcRelationships?: Record<string, NPCRelationship>;
 }
 
 export interface LocalAuthoritySnapshot {
@@ -128,6 +133,8 @@ export class LocalAuthority implements Authority {
         trades: player.trades.map((trade) => ({ ...trade })),
         xp: player.xp,
         profitableTradeDays: [...(player.profitableTradeDays ?? [])],
+        obolBalance: player.obolBalance ?? 0,
+        npcRelationships: player.npcRelationships ?? {},
       });
     }
   }
@@ -152,6 +159,8 @@ export class LocalAuthority implements Authority {
         trades: state.trades.map((trade) => ({ ...trade })),
         xp: state.xp,
         profitableTradeDays: [...state.profitableTradeDays],
+        obolBalance: state.obolBalance,
+        npcRelationships: state.npcRelationships,
       })),
       priceCache: [...this.priceCache.entries()].map(([tick, prices]) => [
         tick,
@@ -191,8 +200,10 @@ export class LocalAuthority implements Authority {
       ledger: [bootstrapLedger],
       openPositions: new Map(),
       trades: [],
-      xp: 0,
+      xp: 40,
       profitableTradeDays: [],
+      obolBalance: 100,
+      npcRelationships: {},
     });
 
     return this.cloneProfile(profile);
@@ -471,6 +482,20 @@ export class LocalAuthority implements Authority {
     return { resources: { ...state.resources }, ledger: [{ ...ledgerEntry }] };
   }
 
+  async applyHeatDelta(
+    playerId: string,
+    heatDelta: number,
+    _reason: string,
+  ): Promise<Resources> {
+    const state = this.requirePlayerState(playerId);
+    state.resources = {
+      ...state.resources,
+      heat: Math.max(0, Math.min(100, state.resources.heat + Math.floor(heatDelta))),
+    };
+
+    return { ...state.resources };
+  }
+
   async transferPositionToShipment(
     playerId: string,
     ticker: string,
@@ -592,6 +617,105 @@ export class LocalAuthority implements Authority {
     return [{ ...ledgerEntry }];
   }
 
+  async spendCurrency(
+    playerId: string,
+    amount: number,
+    currency: Currency,
+    reason: string,
+  ): Promise<LedgerEntry[]> {
+    const state = this.requirePlayerState(playerId);
+    const safeAmount = Math.max(0, roundCurrency(amount));
+
+    if (currency === "$OBOL") {
+      if (state.obolBalance < safeAmount) {
+        throw new Error("Insufficient $OBOL");
+      }
+      state.obolBalance = roundCurrency(state.obolBalance - safeAmount);
+      return [];
+    }
+
+    if (state.cashBalance < safeAmount) {
+      throw new Error("Insufficient 0BOL");
+    }
+    state.cashBalance = roundCurrency(state.cashBalance - safeAmount);
+    const ledgerEntry = this.createLedgerEntry({
+      playerId,
+      currency,
+      delta: -safeAmount,
+      reason,
+      balanceAfter: state.cashBalance,
+    });
+    state.ledger.push(ledgerEntry);
+    return [{ ...ledgerEntry }];
+  }
+
+  async applyHeistCollateral(
+    playerId: string,
+    collateralValue: number,
+  ): Promise<LedgerEntry[]> {
+    return this.spendCurrency(playerId, collateralValue, "0BOL", "heist_collateral");
+  }
+
+  async restoreRaidLoss(
+    playerId: string,
+    recovered: Record<string, { quantity: number; avgEntry: number }>,
+    cost: number,
+    currency: Currency,
+  ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }> {
+    const ledger = await this.spendCurrency(playerId, cost, currency, "raid_buyback");
+    const state = this.requirePlayerState(playerId);
+
+    for (const [ticker, recovery] of Object.entries(recovered)) {
+      const existing = state.openPositions.get(ticker);
+      const quantity = Math.max(1, Math.floor(recovery.quantity));
+      const currentQuantity = existing?.quantity ?? 0;
+      const nextQuantity = currentQuantity + quantity;
+      const nextAvgEntry = existing
+        ? roundCurrency((existing.avgEntry * currentQuantity + recovery.avgEntry * quantity) / nextQuantity)
+        : roundCurrency(recovery.avgEntry);
+      state.openPositions.set(ticker, {
+        id: existing?.id ?? this.nextId("position"),
+        ticker,
+        quantity: nextQuantity,
+        avgEntry: nextAvgEntry,
+        realizedPnl: existing?.realizedPnl ?? 0,
+        unrealizedPnl: 0,
+        openedAt: existing?.openedAt ?? this.nextTimestamp(),
+        closedAt: null,
+      });
+    }
+
+    return {
+      positions: await this.getOpenPositions(playerId),
+      ledger,
+    };
+  }
+
+  async updateNpcReputation(
+    playerId: string,
+    npcId: string,
+    delta: number,
+  ): Promise<NPCRelationship> {
+    const state = this.requirePlayerState(playerId);
+    const current = state.npcRelationships[npcId] ?? {
+      npcId,
+      reputation: 0,
+      completedMissions: 0,
+      failedMissions: 0,
+      specialMessages: [],
+      unlockedPerks: [],
+    };
+    const next = {
+      ...current,
+      reputation: Math.max(0, Math.min(100, current.reputation + delta)),
+    };
+    state.npcRelationships = {
+      ...state.npcRelationships,
+      [npcId]: next,
+    };
+    return next;
+  }
+
   async getActiveNews(tick: number): Promise<MarketNews[]> {
     return getActiveNewsForTick(Math.max(0, Math.floor(tick)), this.seed);
   }
@@ -617,8 +741,19 @@ export class LocalAuthority implements Authority {
     return;
   }
 
-  async getObolBalance(_playerId: string): Promise<TokenBalance | null> {
-    return null;
+  async getObolBalance(playerId: string): Promise<TokenBalance | null> {
+    const state = this.playerState.get(playerId);
+    if (!state) {
+      return null;
+    }
+
+    return {
+      symbol: "$OBOL",
+      mintAddress: "mock-obol-token",
+      rawAmount: String(state.obolBalance),
+      uiAmount: String(state.obolBalance),
+      decimals: 0,
+    };
   }
 
   private applyXp(playerId: string, xpDelta: number): RankSnapshot {

@@ -1,5 +1,10 @@
 import type { RankSnapshot } from "@/engine/types";
 
+export const MEMORY_SHARD_RANKS = [5, 10, 15, 20, 30, 40] as const;
+
+export const MEMORY_SHARD_TEXT =
+  "You remember... the Pantheon's final moment before shattering. Seven gods, one choice.";
+
 export const RANK_TABLE = [
   { level: 1, title: "Boot Ghost", xpRequired: 0, inventorySlots: 5 },
   { level: 2, title: "Packet Rat", xpRequired: 200, inventorySlots: 6 },
@@ -70,4 +75,8 @@ export function getTradeXp(input: {
   }
 
   return 5;
+}
+
+export function shouldUnlockMemoryShard(previousLevel: number, nextLevel: number): number | null {
+  return MEMORY_SHARD_RANKS.find((level) => previousLevel < level && nextLevel >= level) ?? null;
 }

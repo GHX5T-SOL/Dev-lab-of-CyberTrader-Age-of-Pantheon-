@@ -1,0 +1,87 @@
+import type { ShopItem } from "@/engine/types";
+
+export const SHOP_ITEMS: ShopItem[] = [
+  {
+    id: "instant_travel",
+    name: "Instant Travel",
+    description: "Skip the current travel timer. Same destination, no waiting.",
+    category: "convenience",
+    obolPrice: 5,
+    fiatEquivalent: "~$0.50 USD",
+    zeroBolAlternative: "Wait the real travel minutes.",
+    available: true,
+  },
+  {
+    id: "courier_insurance_basic",
+    name: "Courier Insurance",
+    description: "Guarantees one courier shipment arrives.",
+    category: "convenience",
+    obolPrice: 2,
+    fiatEquivalent: "~$0.20 USD",
+    zeroBolAlternative: "Accept the displayed courier loss risk.",
+    available: true,
+  },
+  {
+    id: "extra_inventory_slot",
+    name: "Extra Inventory Slot",
+    description: "Adds one convenience slot. Ranking up remains the normal path.",
+    category: "convenience",
+    obolPrice: 50,
+    fiatEquivalent: "~$5.00 USD",
+    zeroBolAlternative: "Rank up to earn more slots.",
+    available: true,
+    purchaseLimit: "5 lifetime",
+  },
+  {
+    id: "raid_buyback",
+    name: "Raid Buyback",
+    description: "Restore inventory lost in one recent raid.",
+    category: "recovery",
+    obolPrice: 25,
+    fiatEquivalent: "~$2.50 USD",
+    zeroBolAlternative: "Pay 50,000 0BOL once per week or rebuild through trading.",
+    available: true,
+    purchaseLimit: "1 per calendar week",
+  },
+  {
+    id: "cyberdeck_skin_cyan",
+    name: "Cyberdeck Skin",
+    description: "Cosmetic shell tint for the terminal deck.",
+    category: "cosmetic",
+    obolPrice: 20,
+    fiatEquivalent: "~$2.00 USD",
+    available: true,
+  },
+  {
+    id: "handle_color",
+    name: "Handle Color",
+    description: "Cosmetic nameplate accent.",
+    category: "cosmetic",
+    obolPrice: 10,
+    fiatEquivalent: "~$1.00 USD",
+    available: true,
+  },
+  {
+    id: "profile_badge",
+    name: "Profile Badge",
+    description: "Cosmetic profile marker for social status.",
+    category: "cosmetic",
+    obolPrice: 5,
+    fiatEquivalent: "~$0.50 USD",
+    available: true,
+  },
+  {
+    id: "premium_mission_pass",
+    name: "Premium Mission Pass",
+    description: "Adds one optional premium mission offer. Standard missions continue normally.",
+    category: "access",
+    obolPrice: 10,
+    fiatEquivalent: "~$1.00 USD",
+    zeroBolAlternative: "Play standard NPC missions.",
+    available: true,
+  },
+];
+
+export function getShopItem(id: string): ShopItem | undefined {
+  return SHOP_ITEMS.find((item) => item.id === id);
+}

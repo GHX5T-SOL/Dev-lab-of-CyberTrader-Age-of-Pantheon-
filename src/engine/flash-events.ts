@@ -17,7 +17,7 @@ const BLACKOUT_WARNING_MS = 2 * 60_000;
 
 export function getNextFlashEventDelay(seed: string, index: number): number {
   const stream = seededStream(`${seed}:flash-delay:${index}`);
-  return (3 + Math.floor(stream() * 5)) * 60_000;
+  return (60 + Math.floor(stream() * 31)) * 1000;
 }
 
 export function createFlashEvent(input: {
@@ -47,6 +47,8 @@ export function createFlashEvent(input: {
         modifierApplied: true,
         riskLevel: "high",
         amplitude,
+        counterplayTags: ["sell_fast", "travel_away"],
+        resolvedByPlayer: false,
       };
     }
     case "arbitrage_window": {
@@ -64,6 +66,8 @@ export function createFlashEvent(input: {
         modifierApplied: true,
         riskLevel: "medium",
         multiplier,
+        counterplayTags: ["travel_to_location", "sell_target_ticker"],
+        resolvedByPlayer: false,
       };
     }
     case "eagent_scan":
@@ -76,6 +80,9 @@ export function createFlashEvent(input: {
         endTimestamp: input.nowMs + 90_000,
         modifierApplied: true,
         riskLevel: "critical",
+        heatThreshold: 50,
+        counterplayTags: ["reduce_heat", "black_market_bribe", "travel"],
+        resolvedByPlayer: false,
       };
     case "district_blackout": {
       const freezeDuration = (180 + Math.floor(stream() * 121)) * 1000;
@@ -90,6 +97,8 @@ export function createFlashEvent(input: {
         endTimestamp: input.nowMs + BLACKOUT_WARNING_MS + freezeDuration,
         modifierApplied: false,
         riskLevel: "high",
+        counterplayTags: ["travel_away", "wait_out_blackout"],
+        resolvedByPlayer: false,
       };
     }
     case "flash_crash":
@@ -104,6 +113,8 @@ export function createFlashEvent(input: {
         modifierApplied: true,
         riskLevel: "medium",
         multiplier: 0.65,
+        counterplayTags: ["buy_dip", "hold_through_recovery"],
+        resolvedByPlayer: false,
       };
     case "gang_takeover":
     default:
@@ -118,6 +129,8 @@ export function createFlashEvent(input: {
         modifierApplied: true,
         riskLevel: "high",
         multiplier: 2,
+        counterplayTags: ["delay_courier", "choose_armored_conduit", "use_insurance"],
+        resolvedByPlayer: false,
       };
   }
 }

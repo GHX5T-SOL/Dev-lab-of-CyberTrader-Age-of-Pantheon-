@@ -1,4 +1,10 @@
 import * as React from "react";
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_600SemiBold,
+  JetBrainsMono_700Bold,
+  useFonts,
+} from "@expo-google-fonts/jetbrains-mono";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -11,8 +17,17 @@ import { terminalColors } from "@/theme/terminal";
 
 export default function RootLayout() {
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const [fontsLoaded] = useFonts({
+    JetBrainsMono_400Regular,
+    JetBrainsMono_600SemiBold,
+    JetBrainsMono_700Bold,
+  });
   useDemoBootstrap();
   useGameLoop();
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: terminalColors.background }}>
@@ -27,7 +42,7 @@ export default function RootLayout() {
           <Stack
             screenOptions={{
               headerShown: false,
-              contentStyle: { backgroundColor: terminalColors.background },
+              contentStyle: { backgroundColor: "transparent" },
               animation: "fade",
             }}
           />

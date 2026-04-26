@@ -2,12 +2,25 @@ import * as React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import ActionButton from "@/components/action-button";
 import AnimatedNumber from "@/components/animated-number";
 import ChartSparkline from "@/components/chart-sparkline";
 import CommodityRow from "@/components/commodity-row";
 import ConfirmModal from "@/components/confirm-modal";
+import { MetricRing } from "@/components/metric-ring";
 import NeonBorder from "@/components/neon-border";
+import OpportunityRail from "@/components/opportunity-rail";
+import ProgressRail from "@/components/progress-rail";
+import RiskRail from "@/components/risk-rail";
 import { getLocation } from "@/data/locations";
 import { getActiveDistrictState, isDistrictBuyRestricted, isDistrictSellRestricted } from "@/engine/district-state";
 import { DEMO_COMMODITIES, getTradeEnergyCost, getValueBasedTradeHeatDelta, roundCurrency } from "@/engine/demo-market";
@@ -18,6 +31,16 @@ import { terminalColors, terminalFont } from "@/theme/terminal";
 
 function pct(change: number, price: number) {
   return price ? (change / Math.max(1, price - change)) * 100 : 0;
+}
+
+function formatCountdown(expiresAt: number | null, nowMs: number): string {
+  if (!expiresAt) {
+    return "LIVE";
+  }
+  const totalSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 export default function TerminalRoute() {
@@ -34,10 +57,20 @@ export default function TerminalRoute() {
   const world = useDemoStore((state) => state.world);
   const clock = useDemoStore((state) => state.clock);
   const activeFlashEvent = useDemoStore((state) => state.activeFlashEvent);
+  const pendingMission = useDemoStore((state) => state.pendingMission);
+  const activeMission = useDemoStore((state) => state.activeMission);
+  const marketWhispers = useDemoStore((state) => state.marketWhispers);
+  const pantheonShard = useDemoStore((state) => state.pantheonShard);
   const districtStates = useDemoStore((state) => state.districtStates);
   const tradeJuice = useDemoStore((state) => state.tradeJuice);
   const resources = useDemoStore((state) => state.resources);
+  const bounty = useDemoStore((state) => state.bounty);
+  const playerRiskProfile = useDemoStore((state) => state.playerRiskProfile);
+  const progression = useDemoStore((state) => state.progression);
+  const streak = useDemoStore((state) => state.streak);
+  const missedPeakLog = useDemoStore((state) => state.missedPeakLog);
   const heatWarning = useDemoStore((state) => state.heatWarning);
+  const decisionContext = useDemoStore((state) => state.decisionContext);
   const orderSize = useDemoStore((state) => state.orderSize);
   const setOrderSize = useDemoStore((state) => state.setOrderSize);
   const buySelected = useDemoStore((state) => state.buySelected);
@@ -49,6 +82,10 @@ export default function TerminalRoute() {
   const [confirmVisible, setConfirmVisible] = React.useState(false);
   const [positionsOpen, setPositionsOpen] = React.useState(true);
   const [flash, setFlash] = React.useState<"success" | "failure" | null>(null);
+  const tradePulse = useSharedValue(0);
+  const shakeOffset = useSharedValue(0);
+  const heatPulse = useSharedValue(0);
+  const signalBreath = useSharedValue(0);
 
   React.useEffect(() => {
     if (params.ticker) {
@@ -75,6 +112,14 @@ export default function TerminalRoute() {
   const remainingMs = world.travelEndTime ? Math.max(0, world.travelEndTime - clock.nowMs) : 0;
   const etaMinutes = Math.floor(remainingMs / 60_000);
   const etaSeconds = Math.floor((remainingMs % 60_000) / 1000);
+  const energyHours = Math.floor(resources.energySeconds / 3600);
+  const energyPercent = Math.min(100, Math.round((resources.energySeconds / (72 * 3600)) * 100));
+  const signalCountdown = formatCountdown(decisionContext.expiresAt, clock.nowMs);
+  const signalColor = decisionContext.urgency === "critical"
+    ? terminalColors.red
+    : decisionContext.urgency === "high"
+      ? terminalColors.amber
+      : terminalColors.yellow;
 
   React.useEffect(() => {
     if (!tradeJuice || clock.nowMs - tradeJuice.createdAt > 2500) {
@@ -93,11 +138,77 @@ export default function TerminalRoute() {
   }, [clock.nowMs, tradeJuice]);
 
   React.useEffect(() => {
+    if (!tradeJuice || Date.now() - tradeJuice.createdAt > 5_000) {
+      return;
+    }
+    tradePulse.value = withSequence(
+      withTiming(1, { duration: 110, easing: Easing.out(Easing.quad) }),
+      withTiming(0, { duration: 900, easing: Easing.out(Easing.cubic) }),
+    );
+    if (tradeJuice.kind === "loss") {
+      shakeOffset.value = withSequence(
+        withTiming(-4, { duration: 34 }),
+        withTiming(4, { duration: 34 }),
+        withTiming(-3, { duration: 34 }),
+        withTiming(2, { duration: 34 }),
+        withTiming(0, { duration: 60 }),
+      );
+    }
+  }, [shakeOffset, tradeJuice?.createdAt, tradeJuice?.kind, tradePulse]);
+
+  React.useEffect(() => {
     if (!heatWarning || clock.nowMs - heatWarning.createdAt > 2500 || Platform.OS === "web") {
       return;
     }
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
   }, [clock.nowMs, heatWarning]);
+
+  React.useEffect(() => {
+    if (!heatWarning || clock.nowMs - heatWarning.createdAt > 2500) {
+      return;
+    }
+    heatPulse.value = withSequence(
+      withTiming(1, { duration: 110, easing: Easing.out(Easing.quad) }),
+      withTiming(0, { duration: 760, easing: Easing.out(Easing.cubic) }),
+    );
+  }, [clock.nowMs, heatPulse, heatWarning]);
+
+  React.useEffect(() => {
+    signalBreath.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 2400, easing: Easing.inOut(Easing.quad) }),
+        withTiming(0, { duration: 2600, easing: Easing.inOut(Easing.quad) }),
+      ),
+      -1,
+      false,
+    );
+  }, [signalBreath]);
+
+  const orderShakeStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: shakeOffset.value }],
+  }));
+
+  const tradeScreenFlashStyle = useAnimatedStyle(() => ({
+    opacity: tradePulse.value * 0.28,
+  }));
+
+  const tradeFeedbackFloatStyle = useAnimatedStyle(() => ({
+    opacity: tradePulse.value,
+    transform: [
+      { translateY: -14 * tradePulse.value },
+      { scale: 0.94 + tradePulse.value * 0.14 },
+    ],
+  }));
+
+  const heatFlashStyle = useAnimatedStyle(() => ({
+    opacity: Math.min(0.32, heatPulse.value * 0.28 + (resources.heat >= 90 ? 0.16 : 0)),
+  }));
+
+  const terminalSignalStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: 1 + signalBreath.value * 0.004 }],
+    shadowOpacity: 0.24 + signalBreath.value * 0.12,
+    shadowRadius: 16 + signalBreath.value * 8,
+  }));
 
   const execute = async () => {
     setConfirmVisible(false);
@@ -110,8 +221,57 @@ export default function TerminalRoute() {
     setTimeout(() => setFlash(null), 700);
   };
 
+  const followSignal = () => {
+    if (decisionContext.recommendedAction.ticker) {
+      selectTicker(decisionContext.recommendedAction.ticker);
+    }
+    if (decisionContext.recommendedAction.actionType === "mission") {
+      router.push("/missions");
+      return;
+    }
+    if (decisionContext.recommendedAction.actionType === "travel" || decisionContext.recommendedAction.actionType === "reduce_heat") {
+      router.push("/home");
+    }
+  };
+
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16, paddingBottom: 40, backgroundColor: terminalColors.background }}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 14, paddingBottom: 40, backgroundColor: "transparent" }}>
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 7,
+            backgroundColor: tradeJuice?.kind === "loss"
+              ? terminalColors.red
+              : tradeJuice?.kind === "breakeven"
+                ? terminalColors.amber
+                : terminalColors.green,
+          },
+          tradeScreenFlashStyle,
+        ]}
+      />
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 8,
+            borderWidth: resources.heat >= 90 ? 3 : 2,
+            borderColor: terminalColors.red,
+            backgroundColor: "rgba(255,49,49,0.18)",
+          },
+          heatFlashStyle,
+        ]}
+      />
       {resources.heat >= 90 ? (
         <View pointerEvents="none" style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, borderWidth: 2, borderColor: terminalColors.red, opacity: 0.35, zIndex: 5 }} />
       ) : null}
@@ -133,6 +293,59 @@ export default function TerminalRoute() {
           <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>NODE: {currentLocation.name.toUpperCase()}</Text>
         </View>
       </View>
+
+      <View style={{ flexDirection: "row", gap: 12, marginBottom: 14, alignItems: "center" }}>
+        <MetricRing label="ENERGY" value={energyPercent} displayValue={`${energyHours}h`} tone="cyan" size={96} />
+        <MetricRing label="HEAT" value={resources.heat} displayValue={`${resources.heat}%`} tone="red" size={96} active={resources.heat >= 25} />
+        <View style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.borderDim, borderRadius: 12, backgroundColor: terminalColors.glass, padding: 12 }}>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.purple, fontSize: 10, letterSpacing: 1.2 }}>STATE</Text>
+          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.text, fontSize: 15 }} numberOfLines={2}>
+            {currentLocation.name.toUpperCase()}
+          </Text>
+          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            {bounty.status} // {district.state}
+          </Text>
+        </View>
+      </View>
+
+      <Animated.View style={[{ marginBottom: 14, shadowColor: signalColor }, terminalSignalStyle]}>
+        <Pressable
+          onPress={followSignal}
+          style={{
+            borderWidth: 1,
+            borderColor: signalColor,
+            borderRadius: 14,
+            backgroundColor: terminalColors.glassStrong,
+            padding: 16,
+            overflow: "hidden",
+          }}
+        >
+          <LinearGradient
+            pointerEvents="none"
+            colors={["rgba(255,184,0,0.16)", "rgba(0,240,255,0.05)", "rgba(138,54,255,0.05)"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
+          />
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+            <Text style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.yellow, fontSize: 11, letterSpacing: 1.3 }}>
+              PRIMARY SIGNAL
+            </Text>
+            <Text style={{ fontFamily: terminalFont, color: signalColor, fontSize: 22, fontVariant: ["tabular-nums"] }}>
+              {signalCountdown}
+            </Text>
+          </View>
+          <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.text, fontSize: 22, lineHeight: 28 }}>
+            {decisionContext.recommendedAction.title.toUpperCase()}
+          </Text>
+          <Text style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12, lineHeight: 17 }}>
+            {decisionContext.recommendedAction.description}
+          </Text>
+          <View style={{ marginTop: 12 }}>
+            <ActionButton variant="primary" glowing label="[ ACT ON SIGNAL ]" onPress={followSignal} />
+          </View>
+        </Pressable>
+      </Animated.View>
 
       {travelling ? (
         <NeonBorder style={{ marginBottom: 12 }}>
@@ -156,41 +369,41 @@ export default function TerminalRoute() {
         </NeonBorder>
       ) : null}
 
-      <NeonBorder active style={{ padding: 0 }}>
-        {DEMO_COMMODITIES.map((item, index) => {
-          const itemPrice = prices[item.ticker] ?? item.basePrice;
-          return (
-            <CommodityRow
-              key={item.ticker}
-              ticker={item.ticker}
-              name={item.name}
-              price={itemPrice}
-              changePercent={pct(changes[item.ticker] ?? 0, itemPrice)}
-              index={index}
-              isSelected={item.ticker === commodity.ticker}
-              onPress={() => selectTicker(item.ticker)}
-            />
-          );
-        })}
-      </NeonBorder>
+      <OpportunityRail
+        flashEvent={activeFlashEvent}
+        pendingMission={pendingMission}
+        activeMission={activeMission}
+        shard={pantheonShard}
+        whispers={marketWhispers}
+        nowMs={clock.nowMs}
+      />
+      <RiskRail resources={resources} bounty={bounty} district={district} riskProfile={playerRiskProfile} />
+      <ProgressRail progression={progression} streak={streak} />
 
-      <View style={{ marginTop: 16 }}>
+      <View style={{ marginTop: 14 }}>
         <ChartSparkline data={priceHistory[commodity.ticker] ?? [price]} averageEntry={position?.avgEntry} />
       </View>
 
-      <NeonBorder
-        active
-        style={{
-          marginTop: 16,
-          borderColor: tradeJuice && clock.nowMs - tradeJuice.createdAt < 1500
-            ? tradeJuice.kind === "profit"
-              ? terminalColors.green
-              : tradeJuice.kind === "loss"
-                ? terminalColors.red
-                : terminalColors.amber
+      <Animated.View style={orderShakeStyle}>
+        <NeonBorder
+          active
+          style={{
+            marginTop: 16,
+            borderColor: tradeJuice && clock.nowMs - tradeJuice.createdAt < 1500
+              ? tradeJuice.kind === "profit"
+                ? terminalColors.green
+                : tradeJuice.kind === "loss"
+                  ? terminalColors.red
+                  : terminalColors.amber
             : undefined,
-        }}
-      >
+          }}
+        >
+        <Text style={{ fontFamily: terminalFont, color: terminalColors.green, fontSize: 12, letterSpacing: 1.3 }}>
+          ACTION // EXECUTE TRADE
+        </Text>
+        <Text style={{ marginTop: 4, marginBottom: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          {commodity.name.toUpperCase()} // {currentLocation.name.toUpperCase()}
+        </Text>
         <View style={{ flexDirection: "row", gap: 8 }}>
           {(["BUY", "SELL"] as const).map((ticketSide) => (
             <Pressable
@@ -207,7 +420,7 @@ export default function TerminalRoute() {
         <AnimatedNumber
           value={price}
           formatter={(value) => `${value.toFixed(2)} 0BOL`}
-          style={{ marginTop: 16, fontFamily: terminalFont, color: terminalColors.text, fontSize: 30 }}
+          style={{ marginTop: 16, fontFamily: terminalFont, color: terminalColors.text, fontSize: 30, fontVariant: ["tabular-nums"] }}
         />
         <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>QUANTITY</Text>
         <TextInput
@@ -224,9 +437,9 @@ export default function TerminalRoute() {
           ))}
         </View>
         <View style={{ marginTop: 14, gap: 4 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>EST COST: {cost.toFixed(2)} 0BOL</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11 }}>HEAT DELTA: +{heatDelta}</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 11 }}>ENERGY COST: {energyCost}s</Text>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11, fontVariant: ["tabular-nums"] }}>EST COST: {cost.toFixed(2)} 0BOL</Text>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11, fontVariant: ["tabular-nums"] }}>HEAT DELTA: +{heatDelta}</Text>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 11, fontVariant: ["tabular-nums"] }}>ENERGY COST: {energyCost}s</Text>
         </View>
         <View style={{ marginTop: 16 }}>
           <ActionButton
@@ -237,10 +450,11 @@ export default function TerminalRoute() {
             onPress={() => setConfirmVisible(true)}
           />
         </View>
-      </NeonBorder>
+        </NeonBorder>
+      </Animated.View>
 
       {tradeJuice && clock.nowMs - tradeJuice.createdAt < 2500 ? (
-        <View style={{ marginTop: 10, alignItems: "center" }}>
+        <Animated.View style={[{ marginTop: 10, alignItems: "center" }, tradeFeedbackFloatStyle]}>
           <Text
             style={{
               fontFamily: terminalFont,
@@ -261,9 +475,10 @@ export default function TerminalRoute() {
               color: tradeJuice.kind === "profit" ? terminalColors.green : tradeJuice.kind === "loss" ? terminalColors.red : terminalColors.amber,
               fontSize: tradeJuice.bigWin ? 18 : 12,
               textAlign: "center",
+              fontVariant: ["tabular-nums"],
             }}
           />
-        </View>
+        </Animated.View>
       ) : null}
 
       {flash ? (
@@ -271,7 +486,39 @@ export default function TerminalRoute() {
           {flash === "success" ? "TRADE ACKNOWLEDGED" : "TRADE REJECTED"}
         </Text>
       ) : null}
+      {missedPeakLog[0] ? (
+        <NeonBorder style={{ marginTop: 12 }}>
+          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
+            MISSED PEAK // {missedPeakLog[0].ticker}
+          </Text>
+          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            {missedPeakLog[0].ticker} HIT {missedPeakLog[0].peakPrice.toFixed(2)} EARLIER // MISSED +{missedPeakLog[0].missedValue.toFixed(2)} 0BOL
+          </Text>
+        </NeonBorder>
+      ) : null}
       <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>{systemMessage}</Text>
+
+      <NeonBorder active style={{ marginTop: 16 }}>
+        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12, letterSpacing: 1.2 }}>DATA // MARKET CARDS</Text>
+        <Text style={{ marginTop: 4, marginBottom: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          TAP A COMMODITY TO LOAD THE ACTION DECK
+        </Text>
+        {DEMO_COMMODITIES.map((item, index) => {
+          const itemPrice = prices[item.ticker] ?? item.basePrice;
+          return (
+            <CommodityRow
+              key={item.ticker}
+              ticker={item.ticker}
+              name={item.name}
+              price={itemPrice}
+              changePercent={pct(changes[item.ticker] ?? 0, itemPrice)}
+              index={index}
+              isSelected={item.ticker === commodity.ticker}
+              onPress={() => selectTicker(item.ticker)}
+            />
+          );
+        })}
+      </NeonBorder>
 
       <NeonBorder style={{ marginTop: 16 }}>
         <Pressable onPress={() => setPositionsOpen((value) => !value)} style={{ flexDirection: "row", justifyContent: "space-between" }}>

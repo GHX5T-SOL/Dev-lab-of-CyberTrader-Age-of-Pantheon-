@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
+import CyberText from "@/components/cyber-text";
 import CourierModal from "@/components/courier-modal";
 import MenuScreen from "@/components/menu-screen";
 import NeonBorder from "@/components/neon-border";
@@ -11,7 +12,7 @@ import {
   getDistrictCourierTimeMultiplier,
 } from "@/engine/district-state";
 import { useDemoStore } from "@/state/demo-store";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
 
 export default function InventoryMenuRoute() {
   const positions = Object.values(useDemoStore((state) => state.positions));
@@ -34,12 +35,12 @@ export default function InventoryMenuRoute() {
   return (
     <MenuScreen title="COMMODITY INVENTORY">
       <NeonBorder active>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>
+        <CyberText tone="muted" size={12}>
           {used}/{progression.inventorySlots} SLOTS
-        </Text>
-        <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+        </CyberText>
+        <CyberText tone="amber" size={10} style={{ marginTop: 6 }}>
           COURIERS {activeCourierCount}/{courierLimit}
-        </Text>
+        </CyberText>
         <View style={{ height: 6, backgroundColor: terminalColors.borderDim, marginTop: 8 }}>
           <View
             style={{
@@ -56,18 +57,18 @@ export default function InventoryMenuRoute() {
             const pnl = (current - position.avgEntry) * position.quantity + position.realizedPnl;
             return (
               <View key={position.id} style={{ borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 12, marginTop: 12 }}>
-                <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>{position.ticker}</Text>
-                <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
+                <CyberText tone="cyan" size={12}>{position.ticker}</CyberText>
+                <CyberText tone="text" size={11}>
                   QTY {position.quantity} AVG {position.avgEntry.toFixed(2)} VALUE {value.toFixed(2)} PNL {pnl.toFixed(2)}
-                </Text>
+                </CyberText>
                 <Pressable onPress={() => setCourierTicker(position.ticker)} style={{ marginTop: 8 }}>
-                  <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11 }}>[ SEND VIA COURIER ]</Text>
+                  <CyberText tone="amber" size={11}>[ SEND VIA COURIER ]</CyberText>
                 </Pressable>
               </View>
             );
           })
         ) : (
-          <Text style={{ marginTop: 18, fontFamily: terminalFont, color: terminalColors.dim, fontSize: 12 }}>NO COMMODITIES HELD</Text>
+          <CyberText tone="dim" size={12} style={{ marginTop: 18 }}>NO COMMODITIES HELD</CyberText>
         )}
       </NeonBorder>
       {courierPosition ? (
@@ -80,6 +81,7 @@ export default function InventoryMenuRoute() {
           arrivalTimeMultiplier={getDistrictCourierTimeMultiplier(district.state)}
           riskBonus={getDistrictCourierRiskBonus(district.state) + bounty.courierRiskBonus}
           riskMultiplier={getDistrictCourierRiskMultiplier(district.state)}
+          estimatedUnitValue={prices[courierPosition.ticker] ?? courierPosition.avgEntry}
           onClose={() => setCourierTicker(null)}
           onSend={(input) => {
             void sendCourierShipment({
@@ -87,6 +89,7 @@ export default function InventoryMenuRoute() {
               quantity: input.quantity,
               destinationId: input.destinationId,
               courierId: input.courierId,
+              insured: input.insured,
             });
             setCourierTicker(null);
           }}

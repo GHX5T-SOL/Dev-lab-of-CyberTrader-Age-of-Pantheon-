@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-04-25T22:42:43.313Z",
+  "assets": [
+    {
+      "label": "FDST",
+      "file": "src/assets/commodities/fractal_dust.png",
+      "sha12": "0fa227a3ef38",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "PGAS",
+      "file": "src/assets/commodities/plutonion_gas.png",
+      "sha12": "6ed2cbe477c5",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "NGLS",
+      "file": "src/assets/commodities/neon_glass.png",
+      "sha12": "94cf4c6e1bcd",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "HXMD",
+      "file": "src/assets/commodities/helix_mud.png",
+      "sha12": "a6dd485f74d1",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "VBLM",
+      "file": "src/assets/commodities/void_bloom.png",
+      "sha12": "8e41a7163329",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "ORRS",
+      "file": "src/assets/commodities/oracle_resin.png",
+      "sha12": "85ad9ef10704",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "SNPS",
+      "file": "src/assets/commodities/synapse_silk.png",
+      "sha12": "310936bd9252",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "MTRX",
+      "file": "src/assets/commodities/matrix_salt.png",
+      "sha12": "29f86cef7b11",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "AETH",
+      "file": "src/assets/commodities/aether_tabs.png",
+      "sha12": "51295493688a",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "BLCK",
+      "file": "src/assets/commodities/blacklight_serum.png",
+      "sha12": "fde8fff38eee",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "terminal-bg",
+      "file": "src/assets/ui/terminal-bg.png",
+      "sha12": "d768e7aa334a",
+      "source": "local-procedural-fallback"
+    },
+    {
+      "label": "neon-border",
+      "file": "src/assets/ui/neon-border.png",
+      "sha12": "532287d7e2e8",
+      "source": "local-procedural-fallback"
+    }
+  ]
+}

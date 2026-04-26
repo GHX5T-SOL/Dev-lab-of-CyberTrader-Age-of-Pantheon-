@@ -1,7 +1,8 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import Svg, { Rect } from "react-native-svg";
+import CyberText from "@/components/cyber-text";
 import NeonBorder from "@/components/neon-border";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
 
 interface MetricChipProps {
   label: string;
@@ -40,18 +41,18 @@ export default function MetricChip({
       <NeonBorder active={active} style={accentColor ? { borderColor: accentColor } : undefined}>
         <View style={{ minHeight: 116, justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 8 }}>
-            <Text style={{ fontFamily: terminalFont, fontSize: 10, color: terminalColors.muted, letterSpacing: 1, textTransform: "uppercase" }}>
+            <CyberText size={10} tone="muted" style={{ letterSpacing: 1, textTransform: "uppercase" }}>
               {label}
-            </Text>
-            {icon ? <Text style={{ color: accentColor ?? terminalColors.cyan }}>{icon}</Text> : null}
+            </CyberText>
+            {icon ? <CyberText style={{ color: accentColor ?? terminalColors.cyan }}>{icon}</CyberText> : null}
           </View>
-          <Text numberOfLines={2} style={{ fontFamily: terminalFont, fontSize: 28, color: terminalColors.text, fontWeight: "600" }}>
+          <CyberText numberOfLines={2} size={28} tone="text" weight="600">
             {value}
-          </Text>
+          </CyberText>
           {subValue ? (
-            <Text numberOfLines={1} style={{ fontFamily: terminalFont, fontSize: 10, color: terminalColors.muted }}>
+            <CyberText numberOfLines={1} size={10} tone="muted">
               {subValue}
-            </Text>
+            </CyberText>
           ) : null}
           {progressValue !== undefined ? (
             <View style={{ marginTop: 8, shadowColor: fillColor, shadowOpacity: 0.5, shadowRadius: 4 }}>
@@ -68,4 +69,3 @@ export default function MetricChip({
 }
 
 export { MetricChip };
-

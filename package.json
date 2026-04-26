@@ -15,44 +15,50 @@
   ],
   "scripts": {
     "postinstall": "echo '\\n[ok] deps installed. Run `npm run install-all-skills` to set up the AI team.\\n'",
-
     "setup": "bash scripts/bootstrap.sh",
     "bootstrap": "bash scripts/bootstrap.sh",
-
     "install-all-skills": "bash scripts/install-skills.sh",
     "install-skills:remotion": "npx skills add remotion-dev/skills",
     "install-skills:opc": "npx skills add ReScienceLab/opc-skills",
     "install-skills:hyperframes": "npx skills add heygen-com/hyperframes",
-
     "install-elizaos": "npm i -g @elizaos/cli && elizaos --version",
     "install-openclaw": "curl -fsSL https://openclaw.ai/install.sh | bash",
     "install-catchme": "bash scripts/install-catchme.sh",
-
     "dev:mobile": "cd src && npx expo start",
     "dev:mobile:web": "cd src && npx expo start --web",
     "dev:backend": "cd backend && npx supabase start",
-
     "build:mobile:ios": "cd src && eas build --platform ios",
     "build:mobile:android": "cd src && eas build --platform android",
     "build:mobile:web": "cd src && npx expo export --platform web",
-
     "generate:cinematic": "cd src/cinematics && npx remotion studio",
     "render:cinematic": "cd src/cinematics && npx remotion render",
-
+    "art:generate": "node scripts/generate-commodity-art.js",
+    "art:generate:live": "node scripts/generate-commodity-art.js --live-only",
+    "art:process": "node scripts/process-sprites.js",
+    "hf:login": "powershell -ExecutionPolicy Bypass -Command \"$env:PATH=\\\"$env:APPDATA\\\\Python\\\\Python312\\\\Scripts;$env:PATH\\\"; hf auth login\"",
+    "spritecook:setup": "npx spritecook-mcp",
+    "hyperframes": "powershell -ExecutionPolicy Bypass -File scripts/hyperframes.ps1",
+    "hyperframes:doctor": "powershell -ExecutionPolicy Bypass -File scripts/hyperframes.ps1 doctor",
+    "coderabbit:auth": "powershell -ExecutionPolicy Bypass -File scripts/coderabbit-review.ps1 -LoginOnly",
+    "coderabbit:review": "powershell -ExecutionPolicy Bypass -File scripts/coderabbit-review.ps1",
+    "tools:check": "powershell -ExecutionPolicy Bypass -File scripts/check-ai-tools.ps1",
+    "tools:check:strict": "powershell -ExecutionPolicy Bypass -File scripts/check-ai-tools.ps1 -Strict",
     "team:activate": "node scripts/team-activate.js",
     "ai-council:run": "node scripts/ai-council-run.js",
-
     "typecheck": "tsc --noEmit -p src/tsconfig.json",
     "lint": "eslint src backend --ext .ts,.tsx",
     "test": "jest --config=src/jest.config.js",
     "test:watch": "jest --watch --config=src/jest.config.js",
     "watch:glb": "node scripts/watch-glb-assets.js",
-
     "verify:phase1": "npm run typecheck && npm run lint && npm run test && echo '\\n[ok] Phase 1 verification passed.'"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "chokidar": "^3.6.0",
+    "ffmpeg-static": "^5.3.0",
+    "ffprobe-static": "^3.1.0",
+    "hyperframes": "^0.4.28",
+    "spritecook-mcp": "^0.2.13",
     "typescript": "^5.4.0"
   }
 }

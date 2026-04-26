@@ -2,6 +2,7 @@ import * as React from "react";
 import { Modal, Pressable, Text, View } from "react-native";
 import ActionButton from "@/components/action-button";
 import { COURIER_SERVICES, getUnlockedLocations, type CourierService } from "@/data/locations";
+import { ENABLE_OBOL_TOKEN } from "@/engine/obol-shop";
 import { terminalColors, terminalFont } from "@/theme/terminal";
 
 interface CourierModalProps {
@@ -13,11 +14,13 @@ interface CourierModalProps {
   arrivalTimeMultiplier?: number;
   riskBonus?: number;
   riskMultiplier?: number;
+  estimatedUnitValue?: number;
   onClose: () => void;
   onSend: (input: {
     quantity: number;
     destinationId: string;
     courierId: CourierService["id"];
+    insured?: boolean;
   }) => void;
 }
 
@@ -30,6 +33,7 @@ export default function CourierModal({
   arrivalTimeMultiplier = 1,
   riskBonus = 0,
   riskMultiplier = 1,
+  estimatedUnitValue = 0,
   onClose,
   onSend,
 }: CourierModalProps) {
@@ -37,14 +41,27 @@ export default function CourierModal({
   const [quantity, setQuantity] = React.useState(1);
   const [destinationId, setDestinationId] = React.useState(destinations[0]?.id ?? currentLocationId);
   const [courierId, setCourierId] = React.useState<CourierService["id"]>("shadow_haul");
+  const [insured, setInsured] = React.useState(false);
 
   React.useEffect(() => {
     if (visible) {
       setQuantity(Math.max(1, Math.min(maxQuantity, 1)));
       setDestinationId(destinations[0]?.id ?? currentLocationId);
       setCourierId("shadow_haul");
+      setInsured(false);
     }
   }, [currentLocationId, destinations, maxQuantity, visible]);
+
+  const selectedService = COURIER_SERVICES.find((service) => service.id === courierId) ?? COURIER_SERVICES[1]!;
+  const selectedLossChance = Math.min(0.95, selectedService.lossChance * riskMultiplier + riskBonus);
+  const selectedRiskPercent = Math.round(selectedLossChance * 100);
+  const selectedCost = Math.round(selectedService.cost * costMultiplier);
+  const selectedDestination = destinations.find((location) => location.id === destinationId);
+  const selectedEta = Math.max(1, Math.ceil((selectedDestination?.travelTime ?? 1) * arrivalTimeMultiplier));
+  const insuranceObolCost = Math.min(10, Math.max(2, Math.ceil(selectedRiskPercent / 10)));
+  const potentialLoss = Math.round(Math.max(estimatedUnitValue, 1) * quantity);
+  const potentialProfit = Math.round(potentialLoss * 0.1);
+  const effectiveRiskPercent = insured ? 0 : selectedRiskPercent;
 
   return (
     <Modal visible={visible} transparent animationType="fade">
@@ -111,11 +128,52 @@ export default function CourierModal({
             ))}
           </View>
 
+          <View style={{ marginTop: 14, borderWidth: 1, borderColor: terminalColors.borderDim, padding: 9 }}>
+            <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
+              ROUTE RISK // {effectiveRiskPercent}% LOSS PROBABILITY
+            </Text>
+            <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+              COST {selectedCost} 0BOL // ETA {selectedEta}m // POTENTIAL UPSIDE +{potentialProfit} 0BOL
+            </Text>
+            <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.red, fontSize: 10 }}>
+              POTENTIAL LOSS {potentialLoss} 0BOL IF INTERCEPTED
+            </Text>
+            <View style={{ height: 5, backgroundColor: terminalColors.borderDim, marginTop: 7 }}>
+              <View
+                style={{
+                  height: 5,
+                  width: `${effectiveRiskPercent}%`,
+                  backgroundColor: effectiveRiskPercent >= 30 ? terminalColors.red : effectiveRiskPercent >= 10 ? terminalColors.amber : terminalColors.green,
+                }}
+              />
+            </View>
+            <Pressable
+              onPress={() => ENABLE_OBOL_TOKEN && setInsured((value) => !value)}
+              style={{
+                marginTop: 9,
+                borderWidth: 1,
+                borderColor: insured ? terminalColors.green : terminalColors.borderDim,
+                padding: 8,
+                opacity: ENABLE_OBOL_TOKEN ? 1 : 0.55,
+              }}
+            >
+              <Text style={{ fontFamily: terminalFont, color: insured ? terminalColors.green : terminalColors.amber, fontSize: 10 }}>
+                {insured ? "[ INSURED ] " : "[ INSURE ] "}
+                {insuranceObolCost} $OBOL (~${(insuranceObolCost * 0.1).toFixed(2)} USD) // GUARANTEED DELIVERY
+              </Text>
+              {!ENABLE_OBOL_TOKEN ? (
+                <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
+                  TOKEN FEATURE FLAG OFF. STANDARD 0BOL ROUTE AVAILABLE.
+                </Text>
+              ) : null}
+            </Pressable>
+          </View>
+
           <View style={{ marginTop: 14 }}>
             <ActionButton
               variant="primary"
               label="[ SEND ]"
-              onPress={() => onSend({ quantity, destinationId, courierId })}
+              onPress={() => onSend({ quantity, destinationId, courierId, insured })}
             />
           </View>
           <Pressable onPress={onClose} style={{ marginTop: 12, alignItems: "center" }}>
