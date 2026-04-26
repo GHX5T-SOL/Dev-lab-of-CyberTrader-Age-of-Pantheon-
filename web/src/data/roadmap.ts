@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability and responsive viewport passes, and Zyra's repeatable live health command are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability and responsive viewport passes, Talon's autonomous safety preflight, and Zyra's repeatable live health command are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -85,6 +85,7 @@ export const ROADMAP: Phase[] = [
       "10-minute demo pressure bands for starter, route-runner, and contraband strategies",
       "Mobile HUD readability and one-hand first-trade controls",
       "Exported-web responsive viewport QA and capture evidence for web desktop, small phone, large phone, and tablet portrait",
+      "Autonomous safety preflight and full ship check command",
       "Live Vercel shell-marker health command",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
@@ -109,6 +110,7 @@ export const ROADMAP: Phase[] = [
       { label: "First-session creative pass", done: true },
       { label: "Vex mobile HUD readability", done: true },
       { label: "Vex responsive viewport captures", done: true },
+      { label: "Talon autonomous safety preflight", done: true },
       { label: "Live shell-marker health command", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },

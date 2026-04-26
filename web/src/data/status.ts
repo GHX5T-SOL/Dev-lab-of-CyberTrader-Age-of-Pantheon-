@@ -27,12 +27,12 @@ export const STATUS: StatusBlock = {
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Store screenshots, preview video, privacy copy, and age-rating notes are not ready",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
-    "First Zara/Zyra autonomous v6 cron runs still need verification after the gateway restart",
+    "OpenAI generation is currently quota-limited on the Mac mini runner, so live work falls through to Claude Code",
   ],
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, and headless-renders the intro route in Chromium",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, and headless-renders the live mobile web shell in Chromium without console/page errors",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -43,15 +43,16 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
-    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 57/57 Jest tests",
+    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 59/59 Jest tests",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
     "Vex completed the mobile HUD readability pass with prioritized Energy/Heat/0BOL telemetry, terminal owned-quantity visibility, scaled labels, and 44-52 px first-trade touch targets",
     "Vex completed exported-web responsive viewport captures and QA across web desktop, small phone, large phone, and tablet portrait",
+    "Talon completed the autonomous safety preflight and full v6 ship check command for direct-push implementation loops",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
-    "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
-    "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
+    "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
+    "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
   ],
   signals: [
     {
@@ -67,12 +68,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, and renders the intro route in headless Chromium",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, and renders the live mobile boot shell in headless Chromium without console/page errors",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD and responsive viewport validation, EAS config validation, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD and responsive viewport validation, Talon safety preflight, EAS config validation, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -92,12 +93,12 @@ export const STATUS: StatusBlock = {
     {
       label: "OpenClaw node",
       state: "amber",
-      detail: "SSH works, OpenClaw 2026.4.24 is running, v6 is cloned, and Zara/Zyra cron jobs are enabled; residual doctor skill gaps remain",
+      detail: "SSH works, OpenClaw 2026.4.24 is running, v6 is cloned, and Zara/Zyra run through external launchd jobs; residual doctor skill gaps and OpenAI quota limits remain",
     },
     {
       label: "Autonomy policy",
       state: "amber",
-      detail: "Ghost direct-push criteria are documented; Talon rollback protocol and first autonomous cron run verification remain pending",
+      detail: "Ghost direct-push criteria and Talon local safety preflight are documented; rollback protocol and first autonomous cron run verification remain pending",
     },
     {
       label: "Store assets",

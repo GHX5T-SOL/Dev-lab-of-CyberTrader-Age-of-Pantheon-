@@ -16,10 +16,11 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 Current external checks on 2026-04-26:
 
 - v6 GitHub repo is public, default branch `main`, latest implementation head is `884e4b1` (`zyra-p0-002`, pushed `2026-04-26`); parent `7c26869` completed `vex-p0-002` responsive viewport captures.
-- v6 Vercel deployment returns HTTP 200 and passes the v6 `npm run health:live` shell-marker check during the 2026-04-26 Zyra monitor pass.
+- v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors during the 2026-04-26 Codex monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
-- `ai.openclaw.gateway` is running from the 2026.4.24 runtime, and Zara/Zyra v6 cron jobs are enabled on the Mac mini.
+- `ai.openclaw.gateway` is running from the 2026.4.24 runtime with embedded cron disabled; Zara/Zyra now run through external `launchd` jobs on the Mac mini.
+- OpenClaw runner config now uses `xhigh` reasoning instead of invalid `max`; OpenAI model listing works, generation is currently quota-limited, and the runner falls through to Claude Code until credits recover.
 - `openclaw doctor --fix` completed and archived stale Zyra transcripts. A bounded post-fix doctor still timed out after 60 seconds and reported 38 skill requirement gaps, so that remains an operations follow-up.
 - `rune-p0-001` v6 technical audit is complete: `npm install`, `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web` pass locally.
 - v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
@@ -30,13 +31,14 @@ Current external checks on 2026-04-26:
 - `ghost-p0-001` release authority bar is complete: Ghost-owned release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules are documented in v6.
 - `ghost-p0-002` architecture risk audit is complete: Expo dependency advisories, storage/authority boundaries, EAS Node alignment to Expo SDK 52, and the top 10 App Store submission risks now have owners and required evidence in v6.
 - `kite-p0-001` SupabaseAuthority feature-flag boundary is complete: LocalAuthority remains the default, full SupabaseAuthority selection requires an explicit flag plus public config, and RLS/schema requirements are documented in v6.
-- `axiom-p0-002` store-submission regression checklist is complete: v6 `docs/release/axiom-p0-002-regression-checklist.md` documents the first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes; current local v6 typecheck, Jest (57/57 in 19 suites), and Expo web export pass.
+- `axiom-p0-002` store-submission regression checklist is complete: v6 `docs/release/axiom-p0-002-regression-checklist.md` documents the first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes; current local v6 typecheck, Jest (59/59 in 20 suites), and Expo web export pass.
 - `nyx-p0-001` first-session loop tightening is complete: v6 `docs/release/nyx-p0-001-first-session-loop.md` maps intro-to-first-profit, adds live home/terminal first-loop guidance, adds a manual terminal market tick action, and verifies the starter profitable sell path with local tests.
 - `nyx-p0-002` 10-minute demo pressure tuning is complete: v6 `engine/demo-pressure.ts` and `docs/release/nyx-p0-002-demo-pressure-tuning.md` codify starter, route-runner, and contraband strategy bands with zero issues, positive PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `oracle-p0-002` launch economy tuning is complete: v6 `engine/launch-tuning.ts`, `engine/__tests__/launch-tuning.test.ts`, and `docs/release/oracle-p0-002-launch-tuning.md` lock the 1000-seed survival band, Heat/raid target ranges, and low/medium/high-risk reward separation; local launch tuning output reports 1000/1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and zero strategy issues.
 - `vex-p0-001` mobile HUD readability is complete: v6 `docs/release/vex-p0-001-mobile-hud-readability.md` documents the Superdesign-backed pass; home and terminal routes now prioritize Energy/Heat/0BOL, add terminal-owned quantity telemetry near the trade ticket, scale/truncate critical labels, and use 44-52 px touch targets for the first trade command path; local `typecheck`, Jest (59/59 in 20 suites), and Expo web export pass.
 - `vex-p0-002` responsive viewport captures are complete: v6 `docs/release/vex-p0-002-responsive-viewport-pass.md` documents the Superdesign-backed pass; `npm run qa:responsive` now builds the web export, then checks `/home` and `/terminal` across web desktop, small phone, large phone, and tablet portrait viewports with no horizontal overflow, visible first-trade controls, black web shell background, and committed capture evidence.
 - `zoro-p0-001` first 10-minute creative pass is complete: v6 `docs/release/zoro-p0-001-first-journey-creative-pass.md` approves the Gate A journey with follow-up polish for cue readability, screenshot staging, and store-capture art direction.
+- `talon-p0-002` autonomous safety rails are complete: v6 now has `npm run safety:autonomous` and `npm run ship:check`, with a preflight that reports only file paths/rule names while blocking secret files, concrete secret assignments, force-push/destructive reset commands, remote EAS build/submit commands, and on-chain transaction actions.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
@@ -59,9 +61,9 @@ Current external checks on 2026-04-26:
 6. **Oracle** - 1000-seed economy replay harness and launch tuning bands are complete; next Oracle work is stress scenarios and beta tuning inputs.
 7. **Vex** - mobile HUD readability and responsive viewport captures are complete; error, empty, offline, and loading states are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
-9. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
+9. **Talon** - autonomous-agent safety rails are complete; rollback and incident protocol is next.
 10. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
-11. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
+11. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, launchd runner verification, and autonomous run ledger.
 
 ## Full Task Map
 
