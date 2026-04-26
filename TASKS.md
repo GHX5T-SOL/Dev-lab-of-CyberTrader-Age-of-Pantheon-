@@ -45,6 +45,7 @@ Current external checks on 2026-04-26:
 - `oracle-p0-003` economy stress scenarios are complete: v6 `engine/economy-stress.ts`, `engine/__tests__/economy-stress.test.ts`, `npm run stress:economy`, and `docs/release/oracle-p0-003-economy-stress.md` prove zero impossible states and zero negative balances across 200 seeds each under four adversarial starting conditions: 500 0BOL floor, Heat=75 Priority Target zone, 300-second Energy floor, and Heat=88 near-ceiling. Full suite: 73/73 tests in 23 suites. Zara run 20260426T172605Z.
 - `palette-p0-001` asset audit is complete: v6 `docs/release/palette-p0-001-asset-audit.md` and `.superdesign` context now inventory commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets; current image assets are resolution-safe for internal staging, but final store screenshots/preview still need source-provenance sign-off, missing icon/splash art, and optimization follow-ups.
 - `cipher-p0-002` privacy/token/age-rating risk matrix is complete: v6 `docs/release/cipher-p0-002-policy-risk-matrix.md` maps LocalAuthority, SupabaseAuthority, `0BOL`/`$OBOL`, wallet, simulated trading, gambling/prize, privacy, Data Safety, and age-rating risks; it lists required store/privacy/legal copy and escalation triggers before token, wallet, paid chance, or real-money features.
+- `talon-p1-003` rollback and incident protocol is complete: v6 `docs/release/talon-p1-003-rollback-incident-protocol.md` documents P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure (no force-push), TestFlight/Play/EAS native rollback (Gate B+), Ghost as sole release authority, autonomous agent obligations (stop-log-revert-document), and a post-incident note template for `docs/automation-runs/`. Zyra run 20260426T174449Z.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 Current native/store readiness blockers:
@@ -74,11 +75,11 @@ Current native/store readiness blockers:
 6. **Oracle** - 1000-seed economy replay harness, launch tuning bands, and adversarial stress scenarios are complete; next Oracle work is beta tuning inputs and extended endurance replay.
 7. **Vex** - mobile HUD readability, responsive viewport captures, and app-store-safe loading/empty/offline/error states are complete; cyberdeck polish and launch screenshot staging are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist and Reel capture route (`axiom-p0-001`) is next.
-9. **Talon** - autonomous-agent safety rails are complete; rollback and incident protocol is next.
+9. **Talon** - autonomous-agent safety rails and rollback/incident protocol are complete; next Talon work is automated post-push regression detection (launchd monitor or webhook, `talon-p1-004`).
 10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skill triage and Kite legal-copy support are next.
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
 12. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
-13. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, launchd runner verification, and autonomous run ledger.
+13. **Zyra** - live deployment health check, responsive QA self-containment, and rollback protocol (talon-p1-003) are complete; next Zyra work is launchd runner verification and auto-picking the next unblocked task from the board (`zyra-p1-004`).
 
 ## Full Task Map
 

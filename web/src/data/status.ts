@@ -57,6 +57,7 @@ export const STATUS: StatusBlock = {
     "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
+    "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
     "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
@@ -109,8 +110,8 @@ export const STATUS: StatusBlock = {
     },
     {
       label: "Autonomy policy",
-      state: "amber",
-      detail: "Ghost direct-push criteria and Talon local safety preflight are documented; rollback protocol and first autonomous cron run verification remain pending",
+      state: "green",
+      detail: "Ghost direct-push criteria, Talon local safety preflight, and rollback/incident protocol are all documented; Zyra autonomous run ledger is active in docs/automation-runs/",
     },
     {
       label: "Store assets",

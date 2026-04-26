@@ -615,11 +615,13 @@ export const TASKS: Task[] = [
     id: "talon-p1-003",
     owner: "talon",
     title: "Create rollback and incident protocol for bad autonomous commits",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "3h",
     acceptanceCriteria: ["Revert command path is documented", "Bad commit detection signals exist", "Escalation channel is clear"],
     tags: ["incident", "ops", "automation"],
+    notes: "Completed 2026-04-26. v6 now has docs/release/talon-p1-003-rollback-incident-protocol.md covering P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure, TestFlight/Play/EAS native rollback (Gate B+), escalation contacts (Ghost is sole release authority), autonomous agent obligations (stop-log-revert-document), and post-incident note template in docs/automation-runs/. Validated: typecheck pass, 73/73 Jest in 23 suites, health:live HTTP 200.",
+    links: [{ label: "Rollback protocol", href: `${v6}/blob/main/docs/release/talon-p1-003-rollback-incident-protocol.md` }],
   }),
 
   task({
@@ -719,7 +721,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-26: v6 has npm run health:live plus a release note; live returned HTTP 200, the health check passed, headless Chromium rendered the live mobile boot shell with no console/page errors, and local v6 typecheck plus Jest (59/59 in 20 suites) passed. Full login/trading browser smoke is still a Gate A follow-up.",
+    notes: "Monitor pass 2026-04-26 (run 20260426T174449Z-zyra): health:live HTTP 200 Vercel cache HIT, typecheck pass, 73/73 Jest in 23 suites. talon-p1-003 (rollback protocol) shipped in same run. Full login/trading browser smoke is still a Gate A follow-up.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
@@ -729,11 +731,12 @@ export const TASKS: Task[] = [
     id: "zyra-p1-003",
     owner: "zyra",
     title: "Maintain autonomous run ledger for Zara/Zyra/Codex jobs",
-    status: "todo",
+    status: "doing",
     priority: "P1",
     estimate: "ongoing",
     acceptanceCriteria: ["Every run has start/end/status", "Commit SHAs are recorded", "Failures include next action"],
     tags: ["automation", "logging", "ops"],
+    notes: "Active: docs/automation-runs/ in Dev Lab tracks each run with status, SHAs, and next actions. Run 20260426T174449Z-zyra filed 2026-04-26.",
   }),
   task({
     id: "zyra-p1-004",

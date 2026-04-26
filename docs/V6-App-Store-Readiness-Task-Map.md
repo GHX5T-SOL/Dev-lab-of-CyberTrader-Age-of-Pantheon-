@@ -192,6 +192,7 @@ git status
 - `cipher-p0-001` is complete: v6 now has `docs/release/cipher-p0-001-store-submission-requirements.md`, official Apple/Google/Android/Expo source links, Xcode 26 / iOS 26 SDK upload requirements, Google Play API 35 target requirements, Expo SDK 52 target-SDK risk notes, and an updated Axiom store-submission checklist.
 - `palette-p0-001` is complete: v6 now has `docs/release/palette-p0-001-asset-audit.md` plus refreshed `.superdesign` context documenting current commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets. No low-resolution active images were found, but final store media still needs source-provenance sign-off, missing icon/splash art, and asset optimization follow-ups.
 - `cipher-p0-002` is complete: v6 now has `docs/release/cipher-p0-002-policy-risk-matrix.md`, a policy matrix for LocalAuthority, SupabaseAuthority, `0BOL`/`$OBOL`, wallet, simulated trading, gambling/prize, privacy, Data Safety, and age-rating risks, plus required policy copy and legal escalation triggers.
+- `talon-p1-003` is complete: v6 now has `docs/release/talon-p1-003-rollback-incident-protocol.md` covering P0/P1/P2 incident tiers, bad-commit detection signals (health:live non-200, typecheck failure, jest regression, safety-scan hit), Vercel dashboard and CLI rollback, git revert procedure (no force-push), TestFlight/Play/EAS native build rollback (Gate B+), Ghost as the sole release authority escalation contact, autonomous agent obligations (stop-log-revert-document), and a required post-incident note template for `docs/automation-runs/`. Zyra run 20260426T174449Z; typecheck pass, 73/73 Jest in 23 suites, health:live HTTP 200.
 
 ## Current Blockers
 
@@ -203,7 +204,7 @@ git status
 - Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
 - Store metadata, public privacy policy, screenshots, final preview video, source-cleared asset provenance, account-recovery copy, and icon/splash art are not ready; Reel's preview storyboard, Palette's current-asset audit, and Cipher's policy matrix are ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
-- Autonomous direct-to-main release authority and local safety preflight are documented; Talon rollback and incident protocol remains pending.
+- Autonomous direct-to-main release authority, local safety preflight, and rollback/incident protocol are all documented (talon-p1-003 complete); next automation gate is launchd runner verification and automated post-push detection.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24` with Zara/Zyra on external `launchd` jobs; OpenAI generation is currently quota-limited and falls through to Claude Code.
 - A bounded post-fix OpenClaw doctor still timed out after 60 seconds.
 - OpenClaw reports 38 skill requirement gaps after `doctor --fix`; Cipher/Talon should decide which ClawdHub/OpenClaw skills are required for v6 execution.
