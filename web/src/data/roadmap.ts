@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance, and Zoro's first-journey creative pass are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance, Zoro's first-journey creative pass, and Zyra's repeatable live health command are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -81,6 +81,7 @@ export const ROADMAP: Phase[] = [
       "Top 10 App Store architecture risks assigned to owners with evidence requirements",
       "SupabaseAuthority guarded behind explicit feature flag and public config checks",
       "First-session home/terminal guidance and manual market tick action for the starter profitable sell loop",
+      "Live Vercel shell-marker health command",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
@@ -100,6 +101,7 @@ export const ROADMAP: Phase[] = [
       { label: "Axiom store-submission regression checklist", done: true },
       { label: "Nyx first-session loop map", done: true },
       { label: "First-session creative pass", done: true },
+      { label: "Live shell-marker health command", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },
