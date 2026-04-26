@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `38965dd` (`reel-p0-001`, pushed `2026-04-26`); parent `398e19f` completed `vex-p1-003` diegetic system states.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `4aa04da` (`cipher-p0-001`, pushed `2026-04-26`); parent `38965dd` completed `reel-p0-001` App Store preview storyboard.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors during the 2026-04-26 Codex monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -41,7 +41,14 @@ Current external checks on 2026-04-26:
 - `talon-p0-002` autonomous safety rails are complete: v6 now has `npm run safety:autonomous` and `npm run ship:check`, with a preflight that reports only file paths/rule names while blocking secret files, concrete secret assignments, force-push/destructive reset commands, remote EAS build/submit commands, and on-chain transaction actions.
 - `vex-p1-003` diegetic system states are complete: v6 `docs/release/vex-p1-003-system-states.md` documents shared loading, empty, offline, and error panels; route recovery, login validation, terminal locks, empty positions/news/notifications, Settings local-mode disclosure, and safe store catch messages now avoid raw technical copy. Validation recorded in v6: `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web`.
 - `reel-p0-001` App Store preview storyboard is complete: v6 `docs/release/reel-p0-001-app-store-preview-storyboard.md` defines the 30-second beat sheet, named capture routes, store-safety rules, staged data needs, and Zoro approval checklist. SuperDesign capture board: `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
+- `cipher-p0-001` store submission requirements research is complete: v6 `docs/release/cipher-p0-001-store-submission-requirements.md` cites current Apple, Google, Android Developers, and Expo requirements; the Axiom store checklist now includes the Xcode 26 / iOS 26 SDK gate, Android API 35 target gate, Expo SDK 52 target-SDK risk, privacy/data safety forms, age-rating declarations, and screenshot/preview specs.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
+
+Current native/store readiness blockers:
+
+- iOS and Android runtime validation are still pending.
+- iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
+- Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
 
 ## v6 Systems Already In Place
 
@@ -64,8 +71,9 @@ Current external checks on 2026-04-26:
 7. **Vex** - mobile HUD readability, responsive viewport captures, and app-store-safe loading/empty/offline/error states are complete; cyberdeck polish and launch screenshot staging are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist and Reel capture route (`axiom-p0-001`) is next.
 9. **Talon** - autonomous-agent safety rails are complete; rollback and incident protocol is next.
-10. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
-11. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, launchd runner verification, and autonomous run ledger.
+10. **Cipher** - 2026 store submission requirements are cited; privacy/token/age-rating risk matrix (`cipher-p0-002`) is next.
+11. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
+12. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, launchd runner verification, and autonomous run ledger.
 
 ## Full Task Map
 

@@ -188,6 +188,7 @@ git status
 - `talon-p0-002` is complete: v6 now has `scripts/check-autonomous-safety.mjs`, `npm run safety:autonomous`, `npm run ship:check`, and `docs/release/talon-p0-002-autonomous-safety-rails.md`. The preflight reports only file paths and rule names while blocking secret files, concrete secret assignments, force-push/destructive reset commands, remote EAS build/submit commands, and on-chain transaction actions.
 - `vex-p1-003` is complete: v6 now has `components/system-state-panel.tsx`, safe system messages, route-recovery loading treatment, terminal offline/locked panels, empty-state panels for positions/news/notifications, Settings local-mode disclosure, and `docs/release/vex-p1-003-system-states.md`. Current local safety scan over `884e4b1..HEAD`, `typecheck`, Jest (64/64 in 22 suites), and Expo web export pass.
 - `reel-p0-001` is complete: v6 now has `docs/release/reel-p0-001-app-store-preview-storyboard.md`, a 30-second App Store preview beat sheet, named capture routes, store-safety rules, staged data requirements, Zoro approval checklist, and SuperDesign trailer capture board `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
+- `cipher-p0-001` is complete: v6 now has `docs/release/cipher-p0-001-store-submission-requirements.md`, official Apple/Google/Android/Expo source links, Xcode 26 / iOS 26 SDK upload requirements, Google Play API 35 target requirements, Expo SDK 52 target-SDK risk notes, and an updated Axiom store-submission checklist.
 
 ## Current Blockers
 
@@ -195,6 +196,8 @@ git status
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
+- iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
+- Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
 - Store metadata, privacy copy, screenshots, and final preview video are not ready; Reel's preview storyboard and capture plan are ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - Autonomous direct-to-main release authority and local safety preflight are documented; Talon rollback and incident protocol remains pending.

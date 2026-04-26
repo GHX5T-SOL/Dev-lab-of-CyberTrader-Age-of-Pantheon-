@@ -474,11 +474,14 @@ export const TASKS: Task[] = [
     id: "cipher-p0-001",
     owner: "cipher",
     title: "Research 2026 Expo/EAS App Store and Play Store submission requirements",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "4h",
     acceptanceCriteria: ["Current Apple/Google requirements are cited", "Expo SDK 52 risks are noted", "Submission checklist is updated"],
     tags: ["research", "stores", "expo"],
+    notes:
+      "Completed 2026-04-26. v6 now cites official Apple, Google, Android Developers, and Expo sources; the Axiom store checklist includes Xcode 26 / iOS 26 SDK, Android API 35 target, Expo SDK 52 target-SDK risk, privacy/data-safety, age-rating, screenshot, and preview-video gates.",
+    links: [{ label: "Store submission requirements", href: `${v6}/blob/main/docs/release/cipher-p0-001-store-submission-requirements.md` }],
   }),
   task({
     id: "cipher-p0-002",

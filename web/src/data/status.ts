@@ -24,6 +24,8 @@ export const STATUS: StatusBlock = {
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority is feature-flagged and documented, but live Supabase migrations/RLS are not validated",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
+    "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
+    "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Store screenshots, final preview video, privacy copy, and age-rating notes are not ready; Reel's preview storyboard is ready",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
@@ -52,6 +54,7 @@ export const STATUS: StatusBlock = {
     "Talon completed the autonomous safety preflight and full v6 ship check command for direct-push implementation loops",
     "Vex completed diegetic loading, empty, offline, and error states with safe system-message handling",
     "Reel completed the App Store preview storyboard, 30-second beat sheet, named capture routes, and Zoro approval checklist",
+    "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
     "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
@@ -90,7 +93,12 @@ export const STATUS: StatusBlock = {
     {
       label: "Dependency audit",
       state: "amber",
-      detail: "npm audit reports Expo toolchain transitive advisories; forced remediation proposes a breaking Expo change",
+      detail: "npm audit reports Expo toolchain transitive advisories; Expo SDK 52 also needs an Android API 35 upgrade/override proof before Play Store submission",
+    },
+    {
+      label: "Store toolchain",
+      state: "amber",
+      detail: "Cipher's requirements pass is complete; Gate B/C now needs Xcode 26 / iOS 26 SDK proof and Android targetSdkVersion 35 proof from native build artifacts",
     },
     {
       label: "OpenClaw node",
