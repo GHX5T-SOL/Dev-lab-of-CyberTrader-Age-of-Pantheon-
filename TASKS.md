@@ -4,6 +4,8 @@
 
 ## Current Truth
 
+- zyra-p1-003 status updated to **doing** on 2026-04-26
+
 The **Dev Lab 3D office work is complete**. The Dev Lab is now the studio/control plane: AI Council, docs, decisions, task ownership, automation, and OpenClaw operations.
 
 The active game is **CyberTrader: Age of Pantheon v6**:
