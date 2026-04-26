@@ -27,8 +27,7 @@ export const STATUS: StatusBlock = {
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
-    "Store screenshots, final preview video, privacy copy, and age-rating notes are not ready; Palette's asset audit is complete, but source-provenance and icon/splash evidence are still missing",
-    "A live privacy policy URL and final Apple App Privacy / Google Data Safety drafts are still pending despite Cipher's completed policy matrix",
+    "Store screenshots, final preview video, public privacy policy, final age-rating answers, source-provenance evidence, and icon/splash art are not ready; Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "OpenAI generation is currently quota-limited on the Mac mini runner, so live work falls through to Claude Code",
   ],
@@ -56,8 +55,8 @@ export const STATUS: StatusBlock = {
     "Vex completed diegetic loading, empty, offline, and error states with safe system-message handling",
     "Reel completed the App Store preview storyboard, 30-second beat sheet, named capture routes, and Zoro approval checklist",
     "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
-    "Palette completed the v6 asset audit: current images are resolution-safe for staging, while final store media still needs source-provenance sign-off and icon/splash art",
-    "Cipher completed the policy risk matrix for privacy, 0BOL/$OBOL language, simulated trading, wallet flags, age ratings, reviewer notes, and legal escalation triggers",
+    "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
+    "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
     "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
@@ -101,7 +100,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store toolchain",
       state: "amber",
-      detail: "Cipher's requirements pass is complete; Gate B/C now needs Xcode 26 / iOS 26 SDK proof and Android targetSdkVersion 35 proof from native build artifacts",
+      detail: "Cipher's requirements and policy matrix are complete; Gate B/C now needs Xcode 26 / iOS 26 SDK proof, Android targetSdkVersion 35 proof, public privacy policy, and final store declarations",
     },
     {
       label: "OpenClaw node",
@@ -116,12 +115,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "red",
-      detail: "Reel's preview storyboard and Palette's current-asset audit are ready, but final screenshots, preview video, icon/splash art, source-provenance proof, privacy copy, app metadata, and age rating notes are not submission-ready",
-    },
-    {
-      label: "Policy matrix",
-      state: "amber",
-      detail: "Cipher's risk matrix is ready; Gate C still needs a live privacy policy URL, final data-safety drafts, and Ghost's launch-scope decision",
+      detail: "Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready, but screenshots, final preview video, source-provenance proof, icon/splash assets, public privacy policy, app metadata, and age rating answers are not submission-ready",
     },
   ],
   updated: "2026-04-26",

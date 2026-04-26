@@ -446,7 +446,8 @@ export const TASKS: Task[] = [
     estimate: "1d",
     acceptanceCriteria: ["Every asset has source/ownership notes", "Low-resolution assets are flagged", "Store screenshots use approved assets only"],
     tags: ["assets", "licensing", "store"],
-    notes: "Completed 2026-04-26. v6 now has a current asset register covering commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, app icon/splash gaps, and responsive QA captures. No active low-resolution images were found; final store media still needs source-provenance sign-off plus icon/splash art.",
+    notes:
+      "Completed 2026-04-26. v6 docs/release/palette-p0-001-asset-audit.md inventories commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, icon/splash gaps, and responsive QA captures. Current resolutions are usable for staging, while provenance/license evidence, missing icon/splash assets, and optimization remain follow-ups.",
     links: [{ label: "Store asset audit", href: `${v6}/blob/main/docs/release/palette-p0-001-asset-audit.md` }],
   }),
   task({
@@ -495,7 +496,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Risk matrix exists", "Required policy copy is listed", "Legal escalation triggers are clear"],
     tags: ["legal", "privacy", "research"],
     notes:
-      "Completed 2026-04-26. v6 policy matrix covers LocalAuthority/SupabaseAuthority data posture, 0BOL/$OBOL naming, wallet flags, simulated trading, gambling/prize boundaries, age ratings, reviewer notes, policy copy inventory, and legal escalation triggers; the Axiom store checklist now references its guardrails.",
+      "Completed 2026-04-26. v6 docs/release/cipher-p0-002-policy-risk-matrix.md maps LocalAuthority, SupabaseAuthority, 0BOL/$OBOL, wallet, simulated trading, gambling/prize, privacy, Data Safety, and age-rating risks with required policy copy and legal escalation triggers.",
     links: [{ label: "Policy risk matrix", href: `${v6}/blob/main/docs/release/cipher-p0-002-policy-risk-matrix.md` }],
   }),
   task({

@@ -43,8 +43,8 @@ Current external checks on 2026-04-26:
 - `reel-p0-001` App Store preview storyboard is complete: v6 `docs/release/reel-p0-001-app-store-preview-storyboard.md` defines the 30-second beat sheet, named capture routes, store-safety rules, staged data needs, and Zoro approval checklist. SuperDesign capture board: `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
 - `cipher-p0-001` store submission requirements research is complete: v6 `docs/release/cipher-p0-001-store-submission-requirements.md` cites current Apple, Google, Android Developers, and Expo requirements; the Axiom store checklist now includes the Xcode 26 / iOS 26 SDK gate, Android API 35 target gate, Expo SDK 52 target-SDK risk, privacy/data safety forms, age-rating declarations, and screenshot/preview specs.
 - `oracle-p0-003` economy stress scenarios are complete: v6 `engine/economy-stress.ts`, `engine/__tests__/economy-stress.test.ts`, `npm run stress:economy`, and `docs/release/oracle-p0-003-economy-stress.md` prove zero impossible states and zero negative balances across 200 seeds each under four adversarial starting conditions: 500 0BOL floor, Heat=75 Priority Target zone, 300-second Energy floor, and Heat=88 near-ceiling. Full suite: 73/73 tests in 23 suites. Zara run 20260426T172605Z.
-- `palette-p0-001` asset audit is complete: v6 `docs/release/palette-p0-001-asset-audit.md` and `.superdesign` context now inventory commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets; current image assets are resolution-safe for internal staging, but final store screenshots/preview still need source-provenance sign-off and missing icon/splash art.
-- `cipher-p0-002` policy risk matrix is complete: v6 `docs/release/cipher-p0-002-policy-risk-matrix.md` maps LocalAuthority, SupabaseAuthority, `0BOL`/`$OBOL`, wallet, simulated trading, gambling/prize, age-rating, privacy-policy, reviewer-note, and third-party SDK declaration risks; the Axiom checklist now references its store-copy guardrails.
+- `palette-p0-001` asset audit is complete: v6 `docs/release/palette-p0-001-asset-audit.md` and `.superdesign` context now inventory commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets; current image assets are resolution-safe for internal staging, but final store screenshots/preview still need source-provenance sign-off, missing icon/splash art, and optimization follow-ups.
+- `cipher-p0-002` privacy/token/age-rating risk matrix is complete: v6 `docs/release/cipher-p0-002-policy-risk-matrix.md` maps LocalAuthority, SupabaseAuthority, `0BOL`/`$OBOL`, wallet, simulated trading, gambling/prize, privacy, Data Safety, and age-rating risks; it lists required store/privacy/legal copy and escalation triggers before token, wallet, paid chance, or real-money features.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 Current native/store readiness blockers:
@@ -52,7 +52,7 @@ Current native/store readiness blockers:
 - iOS and Android runtime validation are still pending.
 - iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
 - Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
-- Store-visible image/video source provenance is documented as missing; final screenshots and preview video require Palette sign-off or replacement assets.
+- Store metadata, public privacy policy, screenshots, final preview video, source-cleared asset provenance, and icon/splash art are not ready; Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready, but Axiom capture evidence and final declarations remain.
 
 ## v6 Systems Already In Place
 
@@ -75,7 +75,7 @@ Current native/store readiness blockers:
 7. **Vex** - mobile HUD readability, responsive viewport captures, and app-store-safe loading/empty/offline/error states are complete; cyberdeck polish and launch screenshot staging are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist and Reel capture route (`axiom-p0-001`) is next.
 9. **Talon** - autonomous-agent safety rails are complete; rollback and incident protocol is next.
-10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skills research (`cipher-p1-003`) is next.
+10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skill triage and Kite legal-copy support are next.
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
 12. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
 13. **Zyra** - live deployment health check command is committed; continue v6 health/task-sync loop, deployment monitor, launchd runner verification, and autonomous run ledger.
