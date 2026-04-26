@@ -277,6 +277,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Cold launch hydrates reliably", "Reset is available in settings", "Corrupt storage has recovery path"],
     tags: ["state", "storage", "reliability"],
     notes: "In progress 2026-04-26. Settings reset already exists; native storage regression tests now cover save/load, reset clearing, and corrupt JSON recovery. Cold-launch device validation remains.",
+    links: [{ label: "Persistence coverage note", href: `${v6}/blob/main/docs/release/rune-p0-003-persistence-coverage.md` }],
   }),
   task({
     id: "rune-p0-004",
@@ -675,6 +676,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
+    notes: "Monitor pass 2026-04-26: v6 live returned HTTP 200, headless Chrome rendered the intro route, and local v6 typecheck/Jest/export passed. Full login/trading browser smoke is still a Gate A follow-up.",
     links: [{ label: "v6 deployment", href: live }],
   }),
   task({

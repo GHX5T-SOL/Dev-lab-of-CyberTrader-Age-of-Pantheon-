@@ -15,8 +15,8 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest pulled head before this monitor run was `6936764` (`rune-p0-002`, committed `2026-04-25T23:38:44Z`).
-- v6 Vercel deployment returns HTTP 200.
+- v6 GitHub repo is public, default branch `main`, latest pushed head from this monitor run is `4e510d2` (`rune-p0-003`, committed `2026-04-26T00:32:48Z`).
+- v6 Vercel deployment returns HTTP 200 and headless-renders the intro route in Chrome.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
 - `ai.openclaw.gateway` is running from the 2026.4.24 runtime, and Zara/Zyra v6 cron jobs are enabled on the Mac mini.
@@ -24,7 +24,7 @@ Current external checks on 2026-04-26:
 - `rune-p0-001` v6 technical audit is complete: `npm install`, `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web` pass locally.
 - v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
 - `rune-p0-002` Expo Router hardening is complete: the app now uses a shared phase-to-route mapper, protected player routes recover after hydration when deep-linked without a local player, and menu/Android back actions fall back safely when the navigation stack is empty.
-- `rune-p0-003` persistence reliability is now in progress: native storage regression coverage verifies save/load, reset clearing, and corrupt JSON recovery; cold-launch device validation remains pending.
+- `rune-p0-003` persistence reliability is now in progress: native storage regression coverage verifies save/load, reset clearing, and corrupt JSON recovery, with a release note at `docs/release/rune-p0-003-persistence-coverage.md`; cold-launch device validation remains pending.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
