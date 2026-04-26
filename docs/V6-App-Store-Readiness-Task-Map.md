@@ -178,8 +178,9 @@ git status
 - `ghost-p0-001` is complete: v6 now has `docs/release/ghost-p0-001-release-authority.md` documenting release blockers, direct-to-main automation criteria, and Ghost Gate A/B/C sign-off rules.
 - `ghost-p0-002` is complete: v6 now has `docs/release/ghost-p0-002-architecture-risk-audit.md` documenting Expo dependency advisories, storage and authority boundaries, EAS Node alignment to Expo SDK 52, the top 10 App Store submission risks, owners, and required evidence.
 - `kite-p0-001` is complete: v6 keeps `LocalAuthority` as the default authority, selects `SupabaseAuthority` only when the authority feature flag and public config are present, supports an explicit authority-off override for client-only Supabase use, and documents RLS/schema requirements in `docs/release/kite-p0-001-supabase-authority.md`.
-- `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; current local v6 `typecheck`, Jest (54/54 in 18 suites), and `npx expo export --platform web` pass.
+- `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; current local v6 `typecheck`, Jest (57/57 in 19 suites), and `npx expo export --platform web` pass.
 - `nyx-p0-001` is complete: v6 now has `docs/release/nyx-p0-001-first-session-loop.md`, a live `FirstSessionCue` on home/terminal, a manual `WAIT MARKET TICK` terminal action, and tests proving the starter `VBLM` first-profit loop closes within the guided tick window.
+- `nyx-p0-002` is complete: v6 now has `engine/demo-pressure.ts`, `engine/__tests__/demo-pressure.test.ts`, and `docs/release/nyx-p0-002-demo-pressure-tuning.md` locking three deterministic 10-minute pressure bands with positive PnL, visible bounty escalation, high/critical courier risk at contraband pressure, and no soft locks.
 - `zoro-p0-001` is complete: v6 now has `docs/release/zoro-p0-001-first-journey-creative-pass.md` approving the first 10-minute Gate A journey with follow-ups for Vex, Palette, Reel, and Axiom.
 
 ## Current Blockers
@@ -187,7 +188,7 @@ git status
 - iOS and Android runtime validation are still pending.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
-- Launch economy tuning remains pending; Oracle now has the replay harness needed for the tuning pass.
+- Launch economy tuning remains pending; Oracle now has both the replay harness and Nyx pressure bands needed for volatility/threshold tuning.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.

@@ -42,8 +42,9 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
-    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 54/54 Jest tests",
+    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 57/57 Jest tests",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
+    "Nyx completed deterministic demo pressure bands for starter, medium-risk, and contraband strategies",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
@@ -68,7 +69,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session tests, EAS config validation, 54/54 Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure tests, EAS config validation, 57/57 Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",

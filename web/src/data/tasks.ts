@@ -60,7 +60,7 @@ export const TASKS: Task[] = [
     id: "studio-p1-003",
     owner: "compass",
     title: "Keep TASKS.md and docs/V6-App-Store-Readiness-Task-Map.md in sync after every shipped task",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "ongoing",
     acceptanceCriteria: ["Every completed task changes status in both sources", "Roadmap checkpoint changes are logged", "Commit message names owner agent"],
@@ -193,6 +193,8 @@ export const TASKS: Task[] = [
     dependencies: ["oracle-p0-001"],
     acceptanceCriteria: ["Demo cannot soft-lock", "Risk escalates visibly", "At least 3 viable strategies exist"],
     tags: ["balance", "economy", "demo"],
+    notes: "Completed 2026-04-26. v6 now has a deterministic demo pressure audit for starter, route-runner, and contraband strategies with positive PnL, visible bounty escalation, high/critical courier risk at high pressure, and no soft locks.",
+    links: [{ label: "Demo pressure tuning", href: `${v6}/blob/main/docs/release/nyx-p0-002-demo-pressure-tuning.md` }],
   }),
   task({
     id: "nyx-p1-003",
@@ -506,7 +508,7 @@ export const TASKS: Task[] = [
     estimate: "1d",
     acceptanceCriteria: ["First-session checklist exists", "Trading regression checklist exists", "Store metadata checklist exists"],
     tags: ["qa", "release", "checklist"],
-    notes: "Completed 2026-04-26. v6 docs/release/axiom-p0-002-regression-checklist.md delivers first-session, trading, and store metadata checklists with cross-references to rune/oracle/kite release notes; current v6 typecheck, Jest (54/54 in 18 suites), and Expo web export pass.",
+    notes: "Completed 2026-04-26. v6 docs/release/axiom-p0-002-regression-checklist.md delivers first-session, trading, and store metadata checklists with cross-references to rune/oracle/kite release notes; current v6 typecheck, Jest (57/57 in 19 suites), and Expo web export pass.",
     links: [{ label: "Regression checklist", href: `${v6}/blob/main/docs/release/axiom-p0-002-regression-checklist.md` }],
   }),
   task({
@@ -692,7 +694,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-26: v6 now has npm run health:live plus a release note; live returned HTTP 200, the health check passed, headless Chromium rendered the intro route, and local v6 typecheck, Jest (54/54 in 18 suites), and Expo web export passed. Full login/trading browser smoke is still a Gate A follow-up.",
+    notes: "Monitor pass 2026-04-26: v6 now has npm run health:live plus a release note; live returned HTTP 200, the health check passed, headless Chromium rendered the intro route, and local v6 typecheck, Jest (57/57 in 19 suites), and Expo web export passed. Full login/trading browser smoke is still a Gate A follow-up.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
