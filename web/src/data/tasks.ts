@@ -489,11 +489,14 @@ export const TASKS: Task[] = [
     id: "cipher-p0-002",
     owner: "cipher",
     title: "Research privacy, token naming, simulated trading, and age-rating risks",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     acceptanceCriteria: ["Risk matrix exists", "Required policy copy is listed", "Legal escalation triggers are clear"],
     tags: ["legal", "privacy", "research"],
+    notes:
+      "Completed 2026-04-26. v6 policy matrix covers LocalAuthority/SupabaseAuthority data posture, 0BOL/$OBOL naming, wallet flags, simulated trading, gambling/prize boundaries, age ratings, reviewer notes, policy copy inventory, and legal escalation triggers; the Axiom store checklist now references its guardrails.",
+    links: [{ label: "Policy risk matrix", href: `${v6}/blob/main/docs/release/cipher-p0-002-policy-risk-matrix.md` }],
   }),
   task({
     id: "cipher-p1-003",

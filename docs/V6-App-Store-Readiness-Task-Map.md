@@ -191,6 +191,7 @@ git status
 - `reel-p0-001` is complete: v6 now has `docs/release/reel-p0-001-app-store-preview-storyboard.md`, a 30-second App Store preview beat sheet, named capture routes, store-safety rules, staged data requirements, Zoro approval checklist, and SuperDesign trailer capture board `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
 - `cipher-p0-001` is complete: v6 now has `docs/release/cipher-p0-001-store-submission-requirements.md`, official Apple/Google/Android/Expo source links, Xcode 26 / iOS 26 SDK upload requirements, Google Play API 35 target requirements, Expo SDK 52 target-SDK risk notes, and an updated Axiom store-submission checklist.
 - `palette-p0-001` is complete: v6 now has `docs/release/palette-p0-001-asset-audit.md` plus refreshed `.superdesign` context documenting all current commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and responsive-capture assets. No low-resolution active images were found, but final store media still needs source-provenance sign-off and missing icon/splash art.
+- `cipher-p0-002` is complete: v6 now has `docs/release/cipher-p0-002-policy-risk-matrix.md`, covering privacy handling, `0BOL`/`$OBOL` naming, simulated trading, wallet flags, gambling/prize boundaries, age-rating declarations, reviewer notes, and legal escalation triggers; the Axiom checklist now references its copy guardrails.
 
 ## Current Blockers
 
@@ -201,6 +202,7 @@ git status
 - iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
 - Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.
 - Store metadata, privacy copy, screenshots, final preview video, source-cleared asset provenance, and icon/splash art are not ready; Reel's preview storyboard and Palette's current-asset audit are ready.
+- A live privacy policy URL and final Apple App Privacy / Google Data Safety drafts are still pending even though Cipher's policy matrix is ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - Autonomous direct-to-main release authority and local safety preflight are documented; Talon rollback and incident protocol remains pending.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24` with Zara/Zyra on external `launchd` jobs; OpenAI generation is currently quota-limited and falls through to Claude Code.
