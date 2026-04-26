@@ -113,7 +113,7 @@ What is in place in v6:
 - Engagement systems: flash market events, NPC missions, dynamic district states, trade streaks, daily challenges, bounty escalation, away report, and action feedback.
 - Intro cinematic route using the shipped MP4, with browser smoke verification that `/video-intro` plays and can hand off into the intro flow.
 
-Most recent v6 verification recorded in Dev Lab: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, and browser smoke for intro/login/trading passed on the exported game. The live v6 Vercel deployment returned HTTP 200 during the 2026-04-25 studio cleanup.
+Most recent v6 verification recorded in Dev Lab: `npm run health:live`, `npm run typecheck`, and `npm run qa:responsive` passed on 2026-04-26 after `qa:responsive` was hardened to build its own exported web shell. Earlier exported-game browser smoke for intro/login/trading passed; full live login/trading smoke remains a Gate A follow-up.
 
 ## Autonomous studio mode
 

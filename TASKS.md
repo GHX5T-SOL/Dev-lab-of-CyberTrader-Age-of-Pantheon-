@@ -15,8 +15,8 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `7c26869` (`vex-p0-002`, pushed `2026-04-26`); parent `e6c5da6` completed `vex-p0-001` mobile HUD readability.
-- v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the intro route in Chromium during the 2026-04-26 Zyra monitor pass.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `884e4b1` (`zyra-p0-002`, pushed `2026-04-26`); parent `7c26869` completed `vex-p0-002` responsive viewport captures.
+- v6 Vercel deployment returns HTTP 200 and passes the v6 `npm run health:live` shell-marker check during the 2026-04-26 Zyra monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
 - `ai.openclaw.gateway` is running from the 2026.4.24 runtime, and Zara/Zyra v6 cron jobs are enabled on the Mac mini.
@@ -35,7 +35,7 @@ Current external checks on 2026-04-26:
 - `nyx-p0-002` 10-minute demo pressure tuning is complete: v6 `engine/demo-pressure.ts` and `docs/release/nyx-p0-002-demo-pressure-tuning.md` codify starter, route-runner, and contraband strategy bands with zero issues, positive PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `oracle-p0-002` launch economy tuning is complete: v6 `engine/launch-tuning.ts`, `engine/__tests__/launch-tuning.test.ts`, and `docs/release/oracle-p0-002-launch-tuning.md` lock the 1000-seed survival band, Heat/raid target ranges, and low/medium/high-risk reward separation; local launch tuning output reports 1000/1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and zero strategy issues.
 - `vex-p0-001` mobile HUD readability is complete: v6 `docs/release/vex-p0-001-mobile-hud-readability.md` documents the Superdesign-backed pass; home and terminal routes now prioritize Energy/Heat/0BOL, add terminal-owned quantity telemetry near the trade ticket, scale/truncate critical labels, and use 44-52 px touch targets for the first trade command path; local `typecheck`, Jest (59/59 in 20 suites), and Expo web export pass.
-- `vex-p0-002` responsive viewport captures are complete: v6 `docs/release/vex-p0-002-responsive-viewport-pass.md` documents the Superdesign-backed pass; `npm run qa:responsive` now checks exported web `/home` and `/terminal` across web desktop, small phone, large phone, and tablet portrait viewports with no horizontal overflow, visible first-trade controls, black web shell background, and committed capture evidence.
+- `vex-p0-002` responsive viewport captures are complete: v6 `docs/release/vex-p0-002-responsive-viewport-pass.md` documents the Superdesign-backed pass; `npm run qa:responsive` now builds the web export, then checks `/home` and `/terminal` across web desktop, small phone, large phone, and tablet portrait viewports with no horizontal overflow, visible first-trade controls, black web shell background, and committed capture evidence.
 - `zoro-p0-001` first 10-minute creative pass is complete: v6 `docs/release/zoro-p0-001-first-journey-creative-pass.md` approves the Gate A journey with follow-up polish for cue readability, screenshot staging, and store-capture art direction.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
@@ -47,7 +47,7 @@ Current external checks on 2026-04-26:
 - 10 locations, location pricing, travel lockouts, Black Market heat reduction.
 - Heat, bounty, raids, courier shipments, deterministic news, missed-tick catch-up.
 - Flash events, NPC missions, district states, streaks, daily challenges, away report, and action feedback.
-- Current checks previously recorded: `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, `npm run qa:responsive`, plus browser smoke for intro/login/trading.
+- Current checks previously recorded: `npm run health:live`, `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, `npm run qa:responsive`, plus browser smoke for intro/login/trading.
 
 ## Top P0 Work
 

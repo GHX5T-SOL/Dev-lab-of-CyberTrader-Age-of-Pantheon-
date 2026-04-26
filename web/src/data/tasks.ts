@@ -230,7 +230,7 @@ export const TASKS: Task[] = [
     dependencies: ["rune-p0-002"],
     acceptanceCriteria: ["Four viewport captures are checked", "No overlapping panels", "Navigation remains usable"],
     tags: ["responsive", "qa", "ui"],
-    notes: "Completed 2026-04-26. v6 now has a Playwright responsive QA command and committed home/terminal captures for web desktop, small phone, large phone, and tablet portrait; checks verify no horizontal overflow, black web shell background, and visible first-trade controls.",
+    notes: "Completed 2026-04-26. v6 now has a Playwright responsive QA command that builds the web export before serving it, plus committed home/terminal captures for web desktop, small phone, large phone, and tablet portrait; checks verify no horizontal overflow, black web shell background, and visible first-trade controls.",
     links: [{ label: "Responsive viewport pass", href: `${v6}/blob/main/docs/release/vex-p0-002-responsive-viewport-pass.md` }],
   }),
   task({
@@ -699,7 +699,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-26: v6 now has npm run health:live plus a release note; live returned HTTP 200, the health check passed, headless Chromium rendered the intro route, and local v6 typecheck, Jest (57/57 in 19 suites), and Expo web export passed. Full login/trading browser smoke is still a Gate A follow-up.",
+    notes: "Monitor pass 2026-04-26: v6 now has npm run health:live plus a release note; live returned HTTP 200, the health check passed, and local v6 typecheck plus self-contained responsive QA passed. Full login/trading browser smoke is still a Gate A follow-up.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },

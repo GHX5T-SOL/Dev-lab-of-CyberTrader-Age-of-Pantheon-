@@ -28,3 +28,12 @@ Automation ID: `cybertrader-v6-qa-and-deployment-monitor`
 - SupabaseAuthority is feature-flagged and documented, but live project wiring, migrations/RLS validation, and launch identity policy remain pending.
 - Apple/Google credentials and first remote EAS builds are not confirmed.
 - Store metadata, screenshots, preview video, privacy copy, and age-rating notes are not ready.
+
+## Follow-Up Run - 2026-04-26T15:51:28Z
+
+- Pulled v6 and the clean Dev Lab checkout. The alternate Dev Lab checkout was fetched only because it has pre-existing local `Prompt_Guidelines.md` movement.
+- Live v6 deployment passed `npm run health:live`: HTTP 200, Vercel cache `HIT`, and required Expo shell markers present.
+- Local v6 `npm run typecheck` passed.
+- `npm run qa:responsive` initially failed on a clean missing-`dist/` state, so v6 commit `884e4b1` (`zyra-p0-002 zyra: make responsive qa self-contained`) now builds the web export before Playwright runs.
+- Rerun `npm run qa:responsive` passed: Expo web export completed and all 4 Chromium viewport checks passed.
+- Dev Lab readiness docs were synced to the new v6 head and current QA truth.
