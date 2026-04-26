@@ -187,6 +187,7 @@ git status
 - `vex-p0-002` is complete: v6 now has `docs/release/vex-p0-002-responsive-viewport-pass.md`, committed home/terminal capture evidence for web desktop, small phone, large phone, and tablet portrait, a pinned Playwright `npm run qa:responsive` command, and a web-shell background fix. Current local v6 `typecheck`, Jest (59/59 in 20 suites), Expo web export, and responsive QA pass; `qa:responsive` now builds the export itself before serving `dist/`.
 - `talon-p0-002` is complete: v6 now has `scripts/check-autonomous-safety.mjs`, `npm run safety:autonomous`, `npm run ship:check`, and `docs/release/talon-p0-002-autonomous-safety-rails.md`. The preflight reports only file paths and rule names while blocking secret files, concrete secret assignments, force-push/destructive reset commands, remote EAS build/submit commands, and on-chain transaction actions.
 - `vex-p1-003` is complete: v6 now has `components/system-state-panel.tsx`, safe system messages, route-recovery loading treatment, terminal offline/locked panels, empty-state panels for positions/news/notifications, Settings local-mode disclosure, and `docs/release/vex-p1-003-system-states.md`. Current local safety scan over `884e4b1..HEAD`, `typecheck`, Jest (64/64 in 22 suites), and Expo web export pass.
+- `reel-p0-001` is complete: v6 now has `docs/release/reel-p0-001-app-store-preview-storyboard.md`, a 30-second App Store preview beat sheet, named capture routes, store-safety rules, staged data requirements, Zoro approval checklist, and SuperDesign trailer capture board `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
 
 ## Current Blockers
 
@@ -194,7 +195,7 @@ git status
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
-- Store metadata, privacy copy, screenshots, and preview video are not ready.
+- Store metadata, privacy copy, screenshots, and final preview video are not ready; Reel's preview storyboard and capture plan are ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
 - Autonomous direct-to-main release authority and local safety preflight are documented; Talon rollback and incident protocol remains pending.
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.24` with Zara/Zyra on external `launchd` jobs; OpenAI generation is currently quota-limited and falls through to Claude Code.

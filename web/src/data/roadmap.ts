@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, and Zyra's repeatable live health command are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, and Reel's App Store preview storyboard are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -88,6 +88,7 @@ export const ROADMAP: Phase[] = [
       "Autonomous safety preflight and full ship check command",
       "App Store-safe loading, empty, offline, and error states",
       "Live Vercel shell-marker health command",
+      "App Store preview storyboard, capture route map, and Zoro approval checklist",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
@@ -114,6 +115,7 @@ export const ROADMAP: Phase[] = [
       { label: "Talon autonomous safety preflight", done: true },
       { label: "Vex diegetic system states", done: true },
       { label: "Live shell-marker health command", done: true },
+      { label: "Reel preview storyboard", done: true },
       { label: "Web production smoke rerun", done: false },
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },
@@ -148,6 +150,7 @@ export const ROADMAP: Phase[] = [
     status: "upcoming",
     summary: "Reach a submission-quality candidate.",
     deliverables: [
+      "App Store preview storyboard and capture plan",
       "App Store screenshots and preview video",
       "Store description, keywords, support URL, privacy copy, and age rating notes",
       "Legal/security review of $OBOL naming, simulated trading, wallet flags, and data handling",
@@ -156,6 +159,7 @@ export const ROADMAP: Phase[] = [
       "AI Council store-readiness sign-off",
     ],
     milestones: [
+      { label: "Preview storyboard and capture plan", done: true },
       { label: "Store metadata drafted", done: false },
       { label: "Preview video approved by Zoro", done: false },
       { label: "Council store-readiness sign-off", done: false },

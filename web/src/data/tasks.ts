@@ -147,6 +147,7 @@ export const TASKS: Task[] = [
     dependencies: ["reel-p0-001", "palette-p0-001"],
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
+    notes: "Reel preview storyboard and capture plan are complete; Zoro approval now waits on Palette asset audit plus Axiom evidence against the capture route.",
   }),
   task({
     id: "zoro-p1-003",
@@ -403,11 +404,16 @@ export const TASKS: Task[] = [
     id: "reel-p0-001",
     owner: "reel",
     title: "Cut App Store preview storyboard and capture plan for v6",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     acceptanceCriteria: ["30-second store preview beat sheet exists", "Capture routes are named", "Zoro approval checklist is ready"],
     tags: ["cinematic", "store-assets", "marketing"],
+    notes: "Completed 2026-04-26. v6 now has a 30-second App Store preview beat sheet, named capture route map, store-safety rules, staged data needs, and Zoro approval checklist, backed by a SuperDesign trailer capture board.",
+    links: [
+      { label: "Preview storyboard", href: `${v6}/blob/main/docs/release/reel-p0-001-app-store-preview-storyboard.md` },
+      { label: "SuperDesign capture board", href: "https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2" },
+    ],
   }),
   task({
     id: "reel-p1-002",
