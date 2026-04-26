@@ -355,7 +355,7 @@ export const TASKS: Task[] = [
     estimate: "1d",
     acceptanceCriteria: ["1000 seeds run without nondeterminism", "Soft-locks and impossible states are reported", "Median session outcomes are logged"],
     tags: ["economy", "testing", "determinism"],
-    notes: "Completed 2026-04-26. v6 replay harness runs 1000 deterministic 60-tick sessions, reports soft-lock/impossible-state counts, and logs median launch-tuning outcomes.",
+    notes: "Completed 2026-04-26. v6 replay harness runs 1000 deterministic 60-tick sessions with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, and median max Heat 60.",
     links: [{ label: "Replay harness note", href: `${v6}/blob/main/docs/release/oracle-p0-001-economy-replay-harness.md` }],
   }),
   task({
@@ -365,9 +365,10 @@ export const TASKS: Task[] = [
     status: "todo",
     priority: "P0",
     estimate: "2d",
-    dependencies: ["oracle-p0-001", "nyx-p0-002"],
+    dependencies: ["nyx-p0-002"],
     acceptanceCriteria: ["New player survival band is defined", "High-risk strategy still feels rewarding", "Tuning constants are documented"],
     tags: ["economy", "balance", "launch"],
+    notes: "Oracle replay harness is ready; launch tuning now needs Nyx's demo-survival targets.",
   }),
   task({
     id: "oracle-p1-003",

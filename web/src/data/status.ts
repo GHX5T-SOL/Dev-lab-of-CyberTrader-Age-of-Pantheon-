@@ -19,7 +19,7 @@ export const STATUS: StatusBlock = {
     "Dev Lab 3D office work is complete. CyberTrader v6 is the active game repo, and the studio is now focused on App Store / Play Store submission readiness.",
   phaseId: "phase-1-v6-reliable-demo",
   nextMilestone:
-    "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, and validate cold-launch storage.",
+    "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, validate cold-launch storage, and tune from Oracle replay data.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority remains a stub; LocalAuthority is the only proven authority path",
@@ -38,7 +38,7 @@ export const STATUS: StatusBlock = {
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
     "Rune started persistence reliability coverage: native storage save/load, reset clearing, and corrupt JSON recovery are covered by Jest and documented in v6",
     "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
-    "Oracle completed the 1000-seed deterministic economy replay harness with zero soft locks and zero impossible states in the baseline run",
+    "Oracle completed the 1000-seed economy replay harness with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, and median PnL 48.88",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",

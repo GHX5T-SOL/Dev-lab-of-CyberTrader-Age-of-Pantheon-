@@ -55,6 +55,7 @@ Required:
 - Route hardening is complete and follows the completed Rune technical audit.
 - Native storage regression coverage exists for save/load, reset clearing, and corrupt data recovery.
 - 1000-seed deterministic economy replay harness exists for soft-lock and tuning checks.
+- Economy replay reports 0 soft locks and 0 impossible states before tuning patches land.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
 - Android emulator smoke passes.
