@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `884e4b1` (`zyra-p0-002`, pushed `2026-04-26`); parent `7c26869` completed `vex-p0-002` responsive viewport captures.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `48737cc` (`talon-p0-002`, pushed `2026-04-26`); parent `884e4b1` completed `zyra-p0-002` responsive QA self-containment.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors during the 2026-04-26 Codex monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
