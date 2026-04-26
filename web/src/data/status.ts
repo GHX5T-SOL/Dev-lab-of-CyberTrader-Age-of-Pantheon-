@@ -47,6 +47,7 @@ export const STATUS: StatusBlock = {
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
+    "Vex completed the mobile HUD readability pass with prioritized Energy/Heat/0BOL telemetry, terminal owned-quantity visibility, scaled labels, and 44-52 px first-trade touch targets",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -70,7 +71,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, EAS config validation, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD typecheck/Jest/export validation, EAS config validation, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
