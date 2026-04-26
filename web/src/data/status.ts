@@ -19,7 +19,7 @@ export const STATUS: StatusBlock = {
     "Dev Lab 3D office work is complete. CyberTrader v6 is the active game repo, and the studio is now focused on App Store / Play Store submission readiness.",
   phaseId: "phase-1-v6-reliable-demo",
   nextMilestone:
-    "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, validate cold-launch storage, and run Axiom QA against the first-session loop.",
+    "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, validate cold-launch storage, and run Axiom QA against the first-session and pressure-band paths.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "SupabaseAuthority is feature-flagged and documented, but live Supabase migrations/RLS are not validated",
@@ -44,7 +44,7 @@ export const STATUS: StatusBlock = {
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
     "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 57/57 Jest tests",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
-    "Nyx completed deterministic demo pressure bands for starter, medium-risk, and contraband strategies",
+    "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
@@ -69,7 +69,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure tests, EAS config validation, 57/57 Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, EAS config validation, 57/57 Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",

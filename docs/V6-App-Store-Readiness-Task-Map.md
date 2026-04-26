@@ -172,7 +172,7 @@ git status
 - The root v6 typecheck now targets the Expo app and excludes the standalone Remotion `cinematics/` package, which has its own package and TypeScript config.
 - `rune-p0-002` is complete: protected player routes now recover after hydration when deep-linked without a local player, the `/` entry route uses shared phase-to-route logic, and menu/Android back actions use safe empty-stack fallbacks.
 - `rune-p0-003` is in progress: native storage regression tests now cover persisted session save/load, settings reset clearing, and corrupt JSON recovery, with `docs/release/rune-p0-003-persistence-coverage.md` committed in v6.
-- `zyra-p0-002` monitor pass on 2026-04-26 added `npm run health:live` in v6 and documented it at `docs/release/zyra-p0-002-live-health-check.md`; the live deployment returns HTTP 200, passes the shell-marker check, and headless-renders the intro route in Chromium; local v6 `typecheck`, Jest (54/54 in 18 suites), and Expo web export also passed.
+- `zyra-p0-002` monitor pass on 2026-04-26 added `npm run health:live` in v6 and documented it at `docs/release/zyra-p0-002-live-health-check.md`; the live deployment returns HTTP 200, passes the shell-marker check, and headless-renders the intro route in Chromium; local v6 `typecheck`, Jest (57/57 in 19 suites), and Expo web export also passed.
 - `rune-p0-004` is complete: `eas.json` now defines preview, iOS simulator, internal, store, and production build profiles, and `docs/release/rune-p0-004-eas-profiles.md` documents bundle IDs, scheme, EAS project metadata, env policy, and EAS config validation commands.
 - `oracle-p0-001` is complete: v6 now has `engine/economy-replay.ts`, a focused `npm run replay:economy` command, and `docs/release/oracle-p0-001-economy-replay-harness.md` documenting the 1000-seed deterministic replay baseline with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and median first profitable sell tick 4.
 - `ghost-p0-001` is complete: v6 now has `docs/release/ghost-p0-001-release-authority.md` documenting release blockers, direct-to-main automation criteria, and Ghost Gate A/B/C sign-off rules.
@@ -180,7 +180,7 @@ git status
 - `kite-p0-001` is complete: v6 keeps `LocalAuthority` as the default authority, selects `SupabaseAuthority` only when the authority feature flag and public config are present, supports an explicit authority-off override for client-only Supabase use, and documents RLS/schema requirements in `docs/release/kite-p0-001-supabase-authority.md`.
 - `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; current local v6 `typecheck`, Jest (57/57 in 19 suites), and `npx expo export --platform web` pass.
 - `nyx-p0-001` is complete: v6 now has `docs/release/nyx-p0-001-first-session-loop.md`, a live `FirstSessionCue` on home/terminal, a manual `WAIT MARKET TICK` terminal action, and tests proving the starter `VBLM` first-profit loop closes within the guided tick window.
-- `nyx-p0-002` is complete: v6 now has `engine/demo-pressure.ts`, `engine/__tests__/demo-pressure.test.ts`, and `docs/release/nyx-p0-002-demo-pressure-tuning.md` locking three deterministic 10-minute pressure bands with positive PnL, visible bounty escalation, high/critical courier risk at contraband pressure, and no soft locks.
+- `nyx-p0-002` is complete: v6 now has `engine/demo-pressure.ts`, `engine/__tests__/demo-pressure.test.ts`, and `docs/release/nyx-p0-002-demo-pressure-tuning.md` proving three 60-tick demo strategies stay viable with zero issues, positive realized PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `zoro-p0-001` is complete: v6 now has `docs/release/zoro-p0-001-first-journey-creative-pass.md` approving the first 10-minute Gate A journey with follow-ups for Vex, Palette, Reel, and Axiom.
 
 ## Current Blockers
@@ -188,7 +188,7 @@ git status
 - iOS and Android runtime validation are still pending.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
-- Launch economy tuning remains pending; Oracle now has both the replay harness and Nyx pressure bands needed for volatility/threshold tuning.
+- Launch economy tuning remains pending; Oracle now has both the replay harness and Nyx's demo pressure bands for the tuning pass.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
