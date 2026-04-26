@@ -2,6 +2,34 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-26 - Weekly v6 store-readiness checkpoint
+
+**Members**: Compass (facilitator), Talon, Ghost/Zoro direction, Rune, Axiom, Kite, Oracle, Nyx, Vex, Zyra, Skeptic, Pragmatist, Critic.
+
+**Topic**: Review the latest Dev Lab/v6 truth and decide whether next week should advance CyberTrader v6 toward store readiness or hold for more demo polish.
+
+**Decisions**:
+1. **Do not relabel next week as store-readiness advancement.** Phase 1 Reliable Demo remains active through 2026-05-10; Phase 2 Native Internal Testing still starts on 2026-05-11 unless the native evidence gate closes early.
+2. **Run a native evidence gate next week.** The Council prefers iOS simulator smoke, Android emulator smoke, native cold-launch persistence validation, EAS credential/build dry-run proof, and Axiom checklist execution over further web-only polish.
+3. **Accept the shipped v6 base as strong enough for native discovery.** Recent completed work covers Rune audits/routes/EAS profiles, Oracle replay and launch bands, Ghost release authority/risk audit, Kite authority flagging, Axiom regression checklist, Nyx first-session/pressure tuning, Zoro journey approval, Vex HUD/responsive passes, Zyra live health checks, and Talon safety preflight at v6 head `48737cc`.
+4. **Keep store-candidate claims blocked.** iOS/Android runtime evidence, cold-launch storage proof, live Supabase migrations/RLS, Apple/Google credentials, first remote EAS runs, screenshots/preview/privacy/age-rating, Expo advisory remediation, and Talon rollback/incident protocol are not done.
+
+**Dissent / risk**:
+- Skeptic and Critic warned that calling this a store push would hide release gaps and contradict the roadmap.
+- Pragmatist warned that more web polish will not retire native, credential, Supabase, and EAS risks.
+- Shared risk: holding can become over-polish unless the native evidence gate is treated as the top weekly scope.
+
+**Hand-off**:
+- Axiom + Rune -> run Web/iOS/Android QA against the regression checklist and capture native cold-launch persistence results.
+- Ghost + Rune -> approve and exercise the first TestFlight/Play build-plan dry run once credentials are confirmed.
+- Kite + Ghost -> decide SupabaseAuthority launch scope and validate migrations/RLS before store-candidate claims.
+- Talon + Zyra -> keep safety preflight/live health checks running and close rollback/incident protocol plus OpenClaw doctor/skill-gap follow-ups.
+- Zoro + Palette + Reel + Cipher -> prepare store screenshot, preview, privacy, age-rating, and token/trading-language evidence without blocking native smoke discovery.
+
+**Affected files**: `docs/Decision-Log.md`; `TASKS.md` was already current from the Talon v6-head sync.
+
+---
+
 ## 2026-04-25 - v6 playable systems + Dev Lab sync
 
 **Members**: Ghost direction, Compass, Rune, Kite, Oracle, Axiom, Zara, Zyra.
