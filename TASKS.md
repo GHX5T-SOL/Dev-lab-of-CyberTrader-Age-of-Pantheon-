@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `b15cc8b` (`nyx-p0-002`, pushed `2026-04-26`); parent `ca7717c` codified demo pressure tuning and `219d8a5` added the Zyra live health check.
+- v6 GitHub repo is public, default branch `main`, latest implementation head before this run was `b15cc8b` (`nyx-p0-002`, pushed `2026-04-26`); this run adds `oracle-p0-002` launch tuning regression coverage and documentation.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the intro route in Chromium during the 2026-04-26 Zyra monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -33,6 +33,7 @@ Current external checks on 2026-04-26:
 - `axiom-p0-002` store-submission regression checklist is complete: v6 `docs/release/axiom-p0-002-regression-checklist.md` documents the first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes; current local v6 typecheck, Jest (57/57 in 19 suites), and Expo web export pass.
 - `nyx-p0-001` first-session loop tightening is complete: v6 `docs/release/nyx-p0-001-first-session-loop.md` maps intro-to-first-profit, adds live home/terminal first-loop guidance, adds a manual terminal market tick action, and verifies the starter profitable sell path with local tests.
 - `nyx-p0-002` 10-minute demo pressure tuning is complete: v6 `engine/demo-pressure.ts` and `docs/release/nyx-p0-002-demo-pressure-tuning.md` codify starter, route-runner, and contraband strategy bands with zero issues, positive PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
+- `oracle-p0-002` launch economy tuning is complete: v6 `engine/launch-tuning.ts`, `engine/__tests__/launch-tuning.test.ts`, and `docs/release/oracle-p0-002-launch-tuning.md` lock the 1000-seed survival band, Heat/raid target ranges, and low/medium/high-risk reward separation; local launch tuning output reports 1000/1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and zero strategy issues.
 - `zoro-p0-001` first 10-minute creative pass is complete: v6 `docs/release/zoro-p0-001-first-journey-creative-pass.md` approves the Gate A journey with follow-up polish for cue readability, screenshot staging, and store-capture art direction.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
@@ -53,7 +54,7 @@ Current external checks on 2026-04-26:
 3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
 4. **Kite** - SupabaseAuthority flag boundary is complete; launch-safe identity, schema migrations, and live RLS validation are next.
 5. **Nyx** - first-session loop map, live guidance, and 10-minute pressure tuning are complete.
-6. **Oracle** - 1000-seed economy replay harness is complete and Nyx demo-survival bands are ready; launch tuning pass is next.
+6. **Oracle** - 1000-seed economy replay harness and launch tuning bands are complete; next Oracle work is stress scenarios and beta tuning inputs.
 7. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
 8. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
 9. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
