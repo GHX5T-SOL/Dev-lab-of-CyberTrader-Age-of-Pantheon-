@@ -28,6 +28,7 @@ Current stability policy:
 - OpenClaw thinking defaults are `xhigh`; `max` is invalid for `openai/gpt-5.5`.
 - OpenClaw sandbox mode is `off` on this Mac mini because Docker is not installed and Docker sandbox mode prevents embedded agent runs.
 - The runner uses an isolated `CODEX_HOME` under the runner root so stale ChatGPT/Aperture Codex auth cannot override API-key auth.
+- The runner's lock cleanup only runs in the top-level process, preventing timeout/watchdog helpers from clearing the global lock mid-run.
 - The runner tries Codex `gpt-5.5`, then `gpt-5.4`, then `gpt-5.4-mini`, then Claude Code fallback.
 - Each backend attempt is capped at 45 minutes so a stuck model call does not freeze a full shift.
 

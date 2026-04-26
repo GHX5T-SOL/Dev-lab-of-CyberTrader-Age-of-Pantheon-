@@ -10,6 +10,7 @@ What changed:
 - OpenClaw thinking defaults were changed from invalid `max` to `xhigh`.
 - OpenClaw Docker sandbox mode was disabled because Docker is not installed on the Mac mini.
 - The runner has a global lock, a Zyra startup delay, and stale-lock cleanup to prevent git collisions.
+- Lock cleanup is guarded to the top-level runner process so timeout helper subprocesses cannot release the global lock while an agent is still working.
 - Backend calls are capped at 45 minutes to prevent frozen shifts.
 
 Provider status:

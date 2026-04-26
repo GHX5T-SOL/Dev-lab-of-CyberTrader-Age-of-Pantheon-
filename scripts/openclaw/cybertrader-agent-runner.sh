@@ -21,6 +21,7 @@ LOG_FILE="$LOG_DIR/$AGENT_ID.log"
 LAST_MESSAGE="$STATE_DIR/$AGENT_ID-last-message.md"
 AGENT_BACKEND_TIMEOUT_SECONDS="${AGENT_BACKEND_TIMEOUT_SECONDS:-2700}"
 ZYRA_START_DELAY_SECONDS="${ZYRA_START_DELAY_SECONDS:-45}"
+MAIN_PID="$$"
 if [[ "$AGENT_ID" == "zara" ]]; then
   AGENT_DISPLAY="Zara"
 else
@@ -101,6 +102,9 @@ acquire_lock() {
 }
 
 release_locks() {
+  if [[ "$$" != "$MAIN_PID" || "${BASH_SUBSHELL:-0}" != "0" ]]; then
+    return 0
+  fi
   rm -rf "$LOCK_DIR/global.lock" "$LOCK_DIR/$AGENT_ID.lock"
 }
 trap release_locks EXIT
@@ -119,6 +123,7 @@ run_with_timeout() {
   "$@" &
   local child_pid=$!
   (
+    trap - EXIT
     sleep "$seconds"
     if kill -0 "$child_pid" 2>/dev/null; then
       echo "backend timeout after ${seconds}s; terminating pid $child_pid" >&2
@@ -231,13 +236,18 @@ run_codex() {
 
 run_claude() {
   echo "--- trying claude fallback ---"
+  local output_file="$STATE_DIR/$AGENT_ID-claude-output.log"
+  local status=0
   run_with_timeout "$AGENT_BACKEND_TIMEOUT_SECONDS" claude -p \
     --model sonnet \
     --effort max \
     --permission-mode bypassPermissions \
     --add-dir "$DEVLAB_REPO" \
     --add-dir "$GAME_REPO" \
-    "$(cat "$PROMPT_FILE")" | tee "$LAST_MESSAGE"
+    "$(cat "$PROMPT_FILE")" > "$output_file" 2>&1 || status=$?
+  cat "$output_file"
+  cp "$output_file" "$LAST_MESSAGE"
+  return "$status"
 }
 
 STATUS=1
