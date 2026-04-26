@@ -15,7 +15,7 @@ https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 v6 already has the core playable loop: intro/login, LocalAuthority trades, ledger, inventory, XP/rank, locations, travel, heat/raids, couriers, news, flash events, NPC missions, district states, streaks, daily challenges, bounty, and away report.
 
-The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation. The `rune-p0-002` route hardening pass is also complete: protected routes recover after hydration, menu back actions have safe fallbacks, and Android hardware back returns safely from menu/terminal screens. The `rune-p0-003` persistence reliability pass is in progress, with storage regression coverage now verifying native save/load, reset clearing, and corrupt JSON recovery. The `rune-p0-004` EAS profile pass is complete, so the next native gate is running the first simulator/emulator builds.
+The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation. The `rune-p0-002` route hardening pass is also complete: protected routes recover after hydration, menu back actions have safe fallbacks, and Android hardware back returns safely from menu/terminal screens. The `rune-p0-003` persistence reliability pass is in progress, with storage regression coverage now verifying native save/load, reset clearing, and corrupt JSON recovery. The `rune-p0-004` EAS profile pass is complete, and `oracle-p0-001` now provides a deterministic 1000-seed economy replay harness for launch tuning. The next native gate is running the first simulator/emulator builds.
 
 The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
@@ -54,6 +54,7 @@ Required:
 - `npx expo export --platform web` green.
 - Route hardening is complete and follows the completed Rune technical audit.
 - Native storage regression coverage exists for save/load, reset clearing, and corrupt data recovery.
+- 1000-seed deterministic economy replay harness exists for soft-lock and tuning checks.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
 - Android emulator smoke passes.

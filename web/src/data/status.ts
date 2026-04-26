@@ -38,6 +38,7 @@ export const STATUS: StatusBlock = {
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
     "Rune started persistence reliability coverage: native storage save/load, reset clearing, and corrupt JSON recovery are covered by Jest and documented in v6",
     "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
+    "Oracle completed the 1000-seed deterministic economy replay harness with zero soft locks and zero impossible states in the baseline run",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra v6 cron jobs are enabled",
     "OpenClaw config on zyra-mini points primary agents at blockrun/openai/gpt-5.5 with max thinking",
@@ -61,7 +62,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, EAS config validation, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay harness, EAS config validation, and Expo web export pass locally",
     },
     {
       label: "Native QA",

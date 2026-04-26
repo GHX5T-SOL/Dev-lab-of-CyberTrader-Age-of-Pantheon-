@@ -75,7 +75,7 @@ The Dev Lab 3D office is now a completed studio milestone. New work should impro
 - Write security review for $OBOL naming, wallet flags, and store-safe claims.
 
 ### Economy & Trading / Oracle
-- Build a 1000-seed deterministic replay harness.
+- Maintain the completed 1000-seed deterministic replay harness.
 - Tune volatility, Heat, Energy, raid, bounty, and courier thresholds.
 - Produce economy reports that drive concrete tuning patches.
 
@@ -174,12 +174,14 @@ git status
 - `rune-p0-003` is in progress: native storage regression tests now cover persisted session save/load, settings reset clearing, and corrupt JSON recovery, with `docs/release/rune-p0-003-persistence-coverage.md` committed in v6.
 - `zyra-p0-002` monitor pass on 2026-04-26 verified the live deployment returns HTTP 200 and headless-renders the intro route; local v6 `typecheck`, Jest, and Expo web export also passed.
 - `rune-p0-004` is complete: `eas.json` now defines preview, iOS simulator, internal, store, and production build profiles, and `docs/release/rune-p0-004-eas-profiles.md` documents bundle IDs, scheme, EAS project metadata, env policy, and EAS config validation commands.
+- `oracle-p0-001` is complete: v6 now has `engine/economy-replay.ts`, a focused `npm run replay:economy` command, and `docs/release/oracle-p0-001-economy-replay-harness.md` documenting the 1000-seed deterministic replay baseline with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and median first profitable sell tick 4.
 
 ## Current Blockers
 
 - iOS and Android runtime validation are still pending.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority remains a stub.
+- Launch economy tuning remains pending; Oracle now has the replay harness needed for the tuning pass.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - Store metadata, privacy copy, screenshots, and preview video are not ready.
 - Expo toolchain transitive dependency advisories remain open: `npm audit --omit=dev --audit-level=high` reports 20 production advisories, and the automatic forced fix proposes a breaking Expo change.
