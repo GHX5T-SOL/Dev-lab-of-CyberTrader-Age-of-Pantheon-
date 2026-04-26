@@ -1,4 +1,4 @@
-# Task Board Status - 2026-04-26
+# Task Board Status - 2026-04-27
 
 > Active work tracking for the CyberTrader studio. Source of truth for the live Whiteboard is `web/src/data/tasks.ts`.
 
@@ -26,6 +26,7 @@ Current external checks on 2026-04-26:
 - v6 now has a committed root `package-lock.json`, root `tsconfig.json` excludes the standalone Remotion `cinematics/` package, and the audit is logged at `docs/release/rune-p0-001-technical-audit.md` in the v6 repo.
 - `rune-p0-002` Expo Router hardening is complete: the app now uses a shared phase-to-route mapper, protected player routes recover after hydration when deep-linked without a local player, and menu/Android back actions fall back safely when the navigation stack is empty.
 - `rune-p0-003` persistence reliability is now in progress: native storage regression coverage verifies save/load, reset clearing, and corrupt JSON recovery, with a release note at `docs/release/rune-p0-003-persistence-coverage.md`; cold-launch device validation remains pending.
+- `talon-p1-004` automated post-push regression detection is complete: v6 `scripts/regression-monitor.mjs`, `npm run regression:check` (force mode), and `npm run regression:monitor` (skip-if-no-new-commits mode) run typecheck + jest + health:live and persist state in `.git/regression-state.json`; `scripts/launchd/com.cybertrader.v6.regression-monitor.plist.template` provides Mac mini LaunchAgent wiring on a 15-minute interval; force mode: typecheck clean, 109/109 jest, health:live HTTP 200 — OK; skip-mode confirmed on second invocation. Zyra run 20260426T222020Z.
 - `rune-p0-004` EAS build profiles are complete: preview, iOS simulator, internal, store, and production profiles are committed with the EAS project link and LocalAuthority-safe env defaults.
 - `oracle-p0-001` deterministic economy replay harness is complete: 1000 seeded sessions run deterministically, with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, and median max Heat 60 in the local baseline.
 - `ghost-p0-001` release authority bar is complete: Ghost-owned release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules are documented in v6.
@@ -81,11 +82,11 @@ Current native/store readiness blockers:
 6. **Oracle** - 1000-seed economy replay harness, launch tuning bands, adversarial stress scenarios, extended endurance replay (oracle-p0-004, 300 ticks), player archetype strategy reports (oracle-p0-005), and beta tuning parameter adjustments (oracle-p0-006) are complete; next Oracle work is applying tuned parameters to in-game strategy guidance and NPC hint text (Vex/Nyx handoff).
 7. **Vex** - mobile HUD readability, responsive viewport captures, and app-store-safe loading/empty/offline/error states are complete; cyberdeck polish and launch screenshot staging are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); web-surface QA automation is complete (`zyra-p1-004`); iOS Simulator and Android Emulator QA execution and Reel capture route evidence (`axiom-p0-001`) remain next for Axiom.
-9. **Talon** - autonomous-agent safety rails and rollback/incident protocol are complete; next Talon work is automated post-push regression detection (launchd monitor or webhook, `talon-p1-004`).
+9. **Talon** - autonomous-agent safety rails, rollback/incident protocol, and automated post-push regression detection (`talon-p1-004`) are complete; next Talon work is Mac mini launchd installation of the regression monitor and a follow-up webhook-based detection path (`talon-p1-005`).
 10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skill triage and Kite legal-copy support are next.
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
 12. **Zara** - `zara-p1-004` mobile asset optimization queue, `oracle-p0-005` player archetype strategy reports, `oracle-p0-006` beta tuning parameter adjustments, and `palette-p1-002` icon/splash placeholder creation are complete; next Zara work is automated post-push regression detection (`talon-p1-004`) or screenshot-safe visual state presets (`palette-p1-003`, after Axiom QA capture route confirmed).
-13. **Zyra** - live deployment health check, responsive QA self-containment, rollback protocol (talon-p1-003), extended endurance economy replay (oracle-p0-004), and axiom web QA execution (`zyra-p1-004`) are complete; next Zyra work is launchd runner verification follow-up (`talon-p1-004` dependency) or automated post-push regression detection.
+13. **Zyra** - live deployment health check, responsive QA self-containment, rollback protocol (talon-p1-003), extended endurance economy replay (oracle-p0-004), axiom web QA execution (`zyra-p1-004`), and automated post-push regression detection (`talon-p1-004`) are complete; next Zyra work is verifying Mac mini launchd installation of the regression monitor or picking an unblocked P0/P1 task from the board.
 
 ## Full Task Map
 
