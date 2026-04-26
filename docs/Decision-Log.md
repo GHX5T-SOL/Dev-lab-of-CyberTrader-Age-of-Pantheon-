@@ -11,7 +11,7 @@
 **Decisions**:
 1. **Do not relabel next week as store-readiness advancement.** Phase 1 Reliable Demo remains active through 2026-05-10; Phase 2 Native Internal Testing still starts on 2026-05-11 unless the native evidence gate closes early.
 2. **Run a native evidence gate next week.** The Council prefers iOS simulator smoke, Android emulator smoke, native cold-launch persistence validation, EAS credential/build dry-run proof, and Axiom checklist execution over further web-only polish.
-3. **Accept the shipped v6 base as strong enough for native discovery.** Recent completed work covers Rune audits/routes/EAS profiles, Oracle replay and launch bands, Ghost release authority/risk audit, Kite authority flagging, Axiom regression checklist, Nyx first-session/pressure tuning, Zoro journey approval, Vex HUD/responsive passes, Zyra live health checks, and Talon safety preflight at v6 head `48737cc`.
+3. **Accept the shipped v6 base as strong enough for native discovery.** Recent completed work covers Rune audits/routes/EAS profiles, Oracle replay and launch bands, Ghost release authority/risk audit, Kite authority flagging, Axiom regression checklist, Nyx first-session/pressure tuning, Zoro journey approval, Vex HUD/responsive/system-state passes, Zyra live health checks, and Talon safety preflight at v6 head `398e19f`.
 4. **Keep store-candidate claims blocked.** iOS/Android runtime evidence, cold-launch storage proof, live Supabase migrations/RLS, Apple/Google credentials, first remote EAS runs, screenshots/preview/privacy/age-rating, Expo advisory remediation, and Talon rollback/incident protocol are not done.
 
 **Dissent / risk**:
@@ -26,7 +26,7 @@
 - Talon + Zyra -> keep safety preflight/live health checks running and close rollback/incident protocol plus OpenClaw doctor/skill-gap follow-ups.
 - Zoro + Palette + Reel + Cipher -> prepare store screenshot, preview, privacy, age-rating, and token/trading-language evidence without blocking native smoke discovery.
 
-**Affected files**: `docs/Decision-Log.md`; `TASKS.md` was already current from the Talon v6-head sync.
+**Affected files**: `TASKS.md`, `docs/Decision-Log.md`, `docs/V6-App-Store-Readiness-Task-Map.md`, `docs/Roadmap.md`, `web/src/data/tasks.ts`, `web/src/data/roadmap.ts`.
 
 ---
 

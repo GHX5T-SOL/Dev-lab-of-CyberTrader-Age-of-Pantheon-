@@ -565,11 +565,12 @@ export const TASKS: Task[] = [
     id: "compass-p1-003",
     owner: "compass",
     title: "Run weekly AI Council app-store readiness checkpoint",
-    status: "todo",
+    status: "doing",
     priority: "P1",
     estimate: "1h/week",
     acceptanceCriteria: ["Decision log updated", "Blockers rerouted", "Next-week scope is cut to what can ship"],
     tags: ["council", "cadence", "planning"],
+    notes: "Weekly run logged 2026-04-26. Next-week scope is native QA evidence, cold-launch persistence validation, build-plan approval, Supabase/policy decisions, store capture direction, and rollback protocol.",
   }),
 
   task({

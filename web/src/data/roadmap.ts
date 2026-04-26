@@ -86,7 +86,7 @@ export const ROADMAP: Phase[] = [
       "Mobile HUD readability and one-hand first-trade controls",
       "Exported-web responsive viewport QA and capture evidence for web desktop, small phone, large phone, and tablet portrait",
       "Autonomous safety preflight and full ship check command",
-      "Diegetic loading, empty, offline, and error states for active first-session surfaces",
+      "App Store-safe loading, empty, offline, and error states",
       "Live Vercel shell-marker health command",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
@@ -118,7 +118,7 @@ export const ROADMAP: Phase[] = [
       { label: "iOS simulator smoke", done: false },
       { label: "Android emulator smoke", done: false },
     ],
-    owners: ["Ghost", "Zoro", "Rune", "Vex", "Nyx", "Axiom", "Oracle"],
+    owners: ["Ghost", "Zoro", "Rune", "Vex", "Nyx", "Axiom", "Oracle", "Kite", "Talon"],
   },
   {
     id: "phase-2-native-internal-testing",

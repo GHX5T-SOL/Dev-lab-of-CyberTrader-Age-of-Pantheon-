@@ -58,7 +58,7 @@ The Dev Lab 3D office is now a completed studio milestone. New work should impro
 ### UI/UX & Cyberpunk Aesthetic / Vex
 - Polish mobile HUD readability and one-hand ergonomics.
 - Responsive pass for web, small phone, large phone, and tablet is complete.
-- Create error, empty, offline, and loading states.
+- Maintain and extend completed error, empty, offline, and loading states.
 - Make every screen feel diegetic.
 
 ### Frontend/Mobile / Rune
@@ -186,7 +186,7 @@ git status
 - `vex-p0-001` is complete: v6 now has `docs/release/vex-p0-001-mobile-hud-readability.md`, Superdesign-backed HUD notes, prioritized Energy/Heat/0BOL home metrics, terminal Energy/Heat/Owned/0BOL telemetry, scaled critical labels, and 44-52 px first-trade touch targets. Current local v6 `typecheck`, Jest (59/59 in 20 suites), and Expo web export pass.
 - `vex-p0-002` is complete: v6 now has `docs/release/vex-p0-002-responsive-viewport-pass.md`, committed home/terminal capture evidence for web desktop, small phone, large phone, and tablet portrait, a pinned Playwright `npm run qa:responsive` command, and a web-shell background fix. Current local v6 `typecheck`, Jest (59/59 in 20 suites), Expo web export, and responsive QA pass; `qa:responsive` now builds the export itself before serving `dist/`.
 - `talon-p0-002` is complete: v6 now has `scripts/check-autonomous-safety.mjs`, `npm run safety:autonomous`, `npm run ship:check`, and `docs/release/talon-p0-002-autonomous-safety-rails.md`. The preflight reports only file paths and rule names while blocking secret files, concrete secret assignments, force-push/destructive reset commands, remote EAS build/submit commands, and on-chain transaction actions.
-- `vex-p1-003` is complete: v6 now has `components/system-state-panel.tsx`, safer system-message formatting in the store, loading route recovery, empty-state panels for positions/news/notifications, offline/local-loop disclosure in Settings, and `docs/release/vex-p1-003-system-states.md`. Current local safety scan over `884e4b1..HEAD`, `typecheck`, Jest (64/64 in 22 suites), and Expo web export pass.
+- `vex-p1-003` is complete: v6 now has `components/system-state-panel.tsx`, safe system messages, route-recovery loading treatment, terminal offline/locked panels, empty-state panels for positions/news/notifications, Settings local-mode disclosure, and `docs/release/vex-p1-003-system-states.md`. Current local safety scan over `884e4b1..HEAD`, `typecheck`, Jest (64/64 in 22 suites), and Expo web export pass.
 
 ## Current Blockers
 
