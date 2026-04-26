@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-26:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head from this automation run is `03c31c4` (`ghost-p0-002`, pushed `2026-04-26`).
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `dda964c` (`zoro-p0-001`, pushed `2026-04-26`); this run's implementation commit is `cff13cb` (`nyx-p0-001`).
 - v6 Vercel deployment returns HTTP 200 and headless-renders the intro route in Chrome.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -31,6 +31,8 @@ Current external checks on 2026-04-26:
 - `ghost-p0-002` architecture risk audit is complete: Expo dependency advisories, storage/authority boundaries, EAS Node alignment to Expo SDK 52, and the top 10 App Store submission risks now have owners and required evidence in v6.
 - `kite-p0-001` SupabaseAuthority feature-flag boundary is complete: LocalAuthority remains the default, full SupabaseAuthority selection requires an explicit flag plus public config, and RLS/schema requirements are documented in v6.
 - `axiom-p0-002` store-submission regression checklist is complete: v6 `docs/release/axiom-p0-002-regression-checklist.md` documents the first-session, trading, and store metadata gates with cross-references to existing rune/oracle/kite release notes; local v6 typecheck, Jest (48/48 in 16 suites), and Expo web export pass.
+- `nyx-p0-001` first-session loop tightening is complete: v6 `docs/release/nyx-p0-001-first-session-loop.md` maps intro-to-first-profit, adds live home/terminal first-loop guidance, adds a manual terminal market tick action, and verifies the starter profitable sell path with local tests.
+- `zoro-p0-001` first 10-minute creative pass is complete: v6 `docs/release/zoro-p0-001-first-journey-creative-pass.md` approves the Gate A journey with follow-up polish for cue readability, screenshot staging, and store-capture art direction.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 ## v6 Systems Already In Place
@@ -46,14 +48,15 @@ Current external checks on 2026-04-26:
 ## Top P0 Work
 
 1. **Ghost** - release authority bar and architecture risk audit are complete; next Ghost work is first TestFlight/Play build-plan approval after Axiom QA evidence.
-2. **Zoro** - creative pass on first 10-minute journey and App Store screenshot/preview direction.
+2. **Zoro** - first 10-minute creative pass is complete; App Store screenshot/preview direction is next.
 3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
 4. **Kite** - SupabaseAuthority flag boundary is complete; launch-safe identity, schema migrations, and live RLS validation are next.
-5. **Oracle** - 1000-seed economy replay harness is complete; launch tuning pass is next.
-6. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
-7. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
-8. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
-9. **Zyra** - run v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
+5. **Nyx** - first-session loop map and guidance are complete; 10-minute pressure tuning is next.
+6. **Oracle** - 1000-seed economy replay harness is complete; launch tuning pass is next.
+7. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist (`axiom-p0-001`) is next.
+8. **Talon** - harden autonomous-agent safety rails and rollback policy beyond the initial direct-push rules.
+9. **Zara** - begin recurring implementation scout work against v6 P0/P1 tasks.
+10. **Zyra** - run v6 health/task-sync loop, deployment monitor, and autonomous run ledger.
 
 ## Full Task Map
 
