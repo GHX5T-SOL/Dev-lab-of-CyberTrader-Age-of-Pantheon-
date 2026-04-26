@@ -42,6 +42,7 @@ Current external checks on 2026-04-26:
 - `vex-p1-003` diegetic system states are complete: v6 `docs/release/vex-p1-003-system-states.md` documents shared loading, empty, offline, and error panels; route recovery, login validation, terminal locks, empty positions/news/notifications, Settings local-mode disclosure, and safe store catch messages now avoid raw technical copy. Validation recorded in v6: `npm run typecheck`, `npm test -- --runInBand`, and `npx expo export --platform web`.
 - `reel-p0-001` App Store preview storyboard is complete: v6 `docs/release/reel-p0-001-app-store-preview-storyboard.md` defines the 30-second beat sheet, named capture routes, store-safety rules, staged data needs, and Zoro approval checklist. SuperDesign capture board: `https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2`.
 - `cipher-p0-001` store submission requirements research is complete: v6 `docs/release/cipher-p0-001-store-submission-requirements.md` cites current Apple, Google, Android Developers, and Expo requirements; the Axiom store checklist now includes the Xcode 26 / iOS 26 SDK gate, Android API 35 target gate, Expo SDK 52 target-SDK risk, privacy/data safety forms, age-rating declarations, and screenshot/preview specs.
+- `oracle-p0-003` economy stress scenarios are complete: v6 `engine/economy-stress.ts`, `engine/__tests__/economy-stress.test.ts`, `npm run stress:economy`, and `docs/release/oracle-p0-003-economy-stress.md` prove zero impossible states and zero negative balances across 200 seeds each under four adversarial starting conditions: 500 0BOL floor, Heat=75 Priority Target zone, 300-second Energy floor, and Heat=88 near-ceiling. Full suite: 73/73 tests in 23 suites. Zara run 20260426T172605Z.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 Current native/store readiness blockers:
@@ -67,7 +68,7 @@ Current native/store readiness blockers:
 3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
 4. **Kite** - SupabaseAuthority flag boundary is complete; launch-safe identity, schema migrations, and live RLS validation are next.
 5. **Nyx** - first-session loop map, live guidance, and 10-minute pressure tuning are complete.
-6. **Oracle** - 1000-seed economy replay harness and launch tuning bands are complete; next Oracle work is stress scenarios and beta tuning inputs.
+6. **Oracle** - 1000-seed economy replay harness, launch tuning bands, and adversarial stress scenarios are complete; next Oracle work is beta tuning inputs and extended endurance replay.
 7. **Vex** - mobile HUD readability, responsive viewport captures, and app-store-safe loading/empty/offline/error states are complete; cyberdeck polish and launch screenshot staging are next.
 8. **Axiom** - store-submission regression checklist is complete (`axiom-p0-002`); Web/iOS/Android QA execution against the checklist and Reel capture route (`axiom-p0-001`) is next.
 9. **Talon** - autonomous-agent safety rails are complete; rollback and incident protocol is next.
