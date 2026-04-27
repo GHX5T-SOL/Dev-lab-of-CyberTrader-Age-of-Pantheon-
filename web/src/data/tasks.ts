@@ -24,7 +24,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-26";
+export const LAST_UPDATED = "2026-04-27";
 
 function task(input: Task): Task {
   return input;
@@ -628,12 +628,14 @@ export const TASKS: Task[] = [
     id: "hydra-p0-001",
     owner: "hydra",
     title: "Build market swarm simulation plan for economy tuning before launch",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     dependencies: ["oracle-p0-001"],
     acceptanceCriteria: ["Agent archetypes are defined", "Simulation inputs are deterministic", "Reports feed Oracle tuning tasks"],
     tags: ["elizaos", "simulation", "economy"],
+    notes: "Completed 2026-04-27. v6 now has deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts, using oracle-p0-006 tuned archetypes. npm run swarm:market reports 800 synthetic sessions per scenario, 100% profitable sessions, 0 no-trade sessions, 0 impossible states, and a Heat watch flag for risk-spike.",
+    links: [{ label: "Market swarm scenarios", href: `${v6}/blob/main/docs/release/hydra-p0-001-market-swarm-scenarios.md` }],
   }),
   task({
     id: "hydra-p1-002",

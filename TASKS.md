@@ -13,9 +13,9 @@ Repo: https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6
 Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 ```
 
-Current external checks on 2026-04-26:
+Current external checks on 2026-04-27:
 
-- v6 GitHub repo is public, default branch `main`, latest implementation head is `e9875d3` (`oracle-p0-004`, pushed `2026-04-26`); parent `191d1ae` completed `zara-p1-004` asset optimization.
+- v6 GitHub repo is public, default branch `main`, latest implementation head is `6f28620` (`hydra-p0-001`, pushed `2026-04-27`); parent `8d40b7b` cleaned accidental OpenClaw launchagent logs after the `talon-p1-004` regression monitor work.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors during the 2026-04-26 Codex monitor pass.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
@@ -53,6 +53,7 @@ Current external checks on 2026-04-26:
 - `zyra-p1-004` axiom web QA execution is complete: v6 `qa/axiom-web-regression.spec.ts` and `npm run qa:axiom` / `npm run qa:axiom:live` automate the web-surface subset of the `axiom-p0-002` regression checklist. Tests cover checklist sections 1.1 cold launch, 1.3 login/handle (including empty-handle rejection and no-wallet check), 1.4 terminal home (balance/energy/heat chip visibility), 1.5 market screen (order panel, execute, wait-tick), 2.2 buy execution and wait-tick cycle, 2.3 energy/heat telemetry, 2.7 menu route invariants (no blank screens across 6 menu routes), and 2.8 live Vercel deployment smoke (HTTP 200, non-blank body). Live deployment confirmed healthy: HTTP 200, Vercel cache HIT, 757 ms. All 92/92 unit tests pass; typecheck clean. iOS Simulator, Android Emulator, and store metadata sections remain manual per axiom scope. Zyra run 20260426T202012Z.
 - `oracle-p0-006` beta tuning parameter adjustments are complete: v6 `engine/beta-tuning.ts`, `engine/__tests__/beta-tuning.test.ts`, `npm run tuning:beta`, and `docs/release/oracle-p0-006-beta-tuning.md` apply targeted adjustments to three archetypes derived from oracle-p0-005 baseline; cautious-grinder VBLM qty 10→15 and profitTargetPct 0.003→0.005 (medianPnl 6.13 was too low for new-player on-ramp), heat-seeker profitTargetPct 0.012→0.010 (fixes 1/200 non-profitable edge case), speed-runner quantities [5,5,5]→[8,8,8] (amplifies frequency advantage, medianPnl 8.43 per 22 trades was too low); momentum-trader unchanged (100% profitable, medianPnl 33.50 optimal); all four tuned archetypes pass viability gates; full suite 109/109 tests in 26 suites. Zara run 20260426T205541Z.
 - `palette-p1-002` icon/splash placeholder creation is complete: v6 `assets/brand/icon.png` (1024×1024), `assets/brand/adaptive-icon.png` (1024×1024 RGBA), `assets/brand/splash.png` (1284×2778), and `assets/brand/favicon.png` (64×64) are committed with `scripts/generate-brand-assets.py` (`npm run generate:brand`) for repeatable regeneration; `app.json` now wires `expo.icon`, `splash.image`, `ios.icon`, `android.adaptiveIcon.foregroundImage`, and `web.favicon`; all assets are internally generated via Python Pillow with no external stock art — provenance clean, Zoro creative sign-off required before Gate C submission. Full suite: 109/109 tests in 26 suites; typecheck clean; Expo web export clean. Zara run 20260426T214508Z.
+- `hydra-p0-001` market swarm simulation scenarios are complete: v6 `engine/market-swarm.ts`, `engine/__tests__/market-swarm.test.ts`, `npm run swarm:market`, and `docs/release/hydra-p0-001-market-swarm-scenarios.md` define four deterministic 20-agent launch cohorts (`balanced-beta`, `novice-onramp`, `risk-spike`, `speedrun-race`) using the `oracle-p0-006` tuned archetypes. Each scenario runs 800 synthetic sessions, reports 100% profitable sessions, 0 no-trade sessions, and 0 impossible states; `risk-spike` is correctly flagged as a Heat watch scenario. Full v6 `npm run ship:check` passes with 118/118 tests in 27 suites and Expo web export. Codex run 20260427T140413Z.
 - `npm audit --omit=dev --audit-level=high` still reports 20 production advisories in Expo toolchain transitive packages; remediation needs a planned Expo SDK/override review because `npm audit fix --force` proposes a breaking Expo change.
 
 Current native/store readiness blockers:
@@ -74,7 +75,7 @@ Current native/store readiness blockers:
 
 ## Top P0 Work
 
-- **talon-p1-005** - Install and verify regression monitor LaunchAgent (complete)
+- **axiom-p0-001** - iOS/Android runtime validation and Reel capture route evidence remain the next P0 blocker.
 
 1. **Ghost** - release authority bar and architecture risk audit are complete; next Ghost work is first TestFlight/Play build-plan approval after Axiom QA evidence.
 2. **Zoro** - first 10-minute creative pass and Reel preview storyboard are complete; App Store screenshot/preview approval now waits on Axiom route evidence plus Palette source-provenance and icon/splash follow-ups.
@@ -89,6 +90,7 @@ Current native/store readiness blockers:
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
 12. **Zara** - `zara-p1-004` mobile asset optimization queue, `oracle-p0-005` player archetype strategy reports, `oracle-p0-006` beta tuning parameter adjustments, and `palette-p1-002` icon/splash placeholder creation are complete; next Zara work is automated post-push regression detection (`talon-p1-004`) or screenshot-safe visual state presets (`palette-p1-003`, after Axiom QA capture route confirmed).
 13. **Zyra** - live deployment health check, responsive QA self-containment, rollback protocol (talon-p1-003), extended endurance economy replay (oracle-p0-004), axiom web QA execution (`zyra-p1-004`), and automated post-push regression detection (`talon-p1-004`) are complete; next Zyra work is verifying Mac mini launchd installation of the regression monitor or picking an unblocked P0/P1 task from the board.
+14. **Hydra** - market swarm simulation scenarios (`hydra-p0-001`) are complete; next Hydra work is synthetic retention/churn scenarios for the first 20 beta players.
 
 ## Full Task Map
 
