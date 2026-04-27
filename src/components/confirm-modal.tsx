@@ -1,5 +1,6 @@
-import { Modal, Pressable, Text, View } from "react-native";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { Modal, Pressable, View } from "react-native";
+import CyberText from "@/components/cyber-text";
+import { terminalColors } from "@/theme/terminal";
 
 interface ConfirmModalProps {
   visible: boolean;
@@ -39,22 +40,22 @@ export default function ConfirmModal({
             padding: 20,
           }}
         >
-          <Text style={{ fontFamily: terminalFont, fontSize: 14, color: terminalColors.text, marginBottom: 16, lineHeight: 20 }}>
+          <CyberText size={14} style={{ marginBottom: 16, lineHeight: 20 }}>
             {message}
-          </Text>
+          </CyberText>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <Pressable onPress={onConfirm}>
-              <Text style={{ fontFamily: terminalFont, fontSize: 14, color: terminalColors.green }}>
+              <CyberText tone="green" size={14}>
                 [Y] {confirmLabel}
-              </Text>
+              </CyberText>
             </Pressable>
-            <Text style={{ fontFamily: terminalFont, fontSize: 14, color: terminalColors.border }}>
+            <CyberText size={14} style={{ color: terminalColors.border }}>
               |
-            </Text>
+            </CyberText>
             <Pressable onPress={onCancel}>
-              <Text style={{ fontFamily: terminalFont, fontSize: 14, color: terminalColors.red }}>
+              <CyberText tone="red" size={14}>
                 [N] {cancelLabel}
-              </Text>
+              </CyberText>
             </Pressable>
           </View>
         </View>
@@ -64,4 +65,3 @@ export default function ConfirmModal({
 }
 
 export { ConfirmModal };
-

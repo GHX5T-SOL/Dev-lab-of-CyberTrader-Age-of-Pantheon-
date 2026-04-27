@@ -1,5 +1,5 @@
-import { Text } from "react-native";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface AsciiDividerProps {
   label?: string;
@@ -8,9 +8,8 @@ interface AsciiDividerProps {
 export default function AsciiDivider({ label }: AsciiDividerProps) {
   const content = label ? `──────── ${label} ────────` : "─────────────────────────────";
   return (
-    <Text
+    <CyberText
       style={{
-        fontFamily: terminalFont,
         fontSize: 10,
         color: terminalColors.border,
         textAlign: "center",
@@ -18,9 +17,8 @@ export default function AsciiDivider({ label }: AsciiDividerProps) {
       }}
     >
       {content}
-    </Text>
+    </CyberText>
   );
 }
 
 export { AsciiDivider };
-

@@ -1,11 +1,12 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Scanlines from "@/components/scanlines";
+import CyberText from "@/components/cyber-text";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
 
 const PARAGRAPHS = [
   "Year 2077. Echelon Dynamics controls predictive finance, cloud infrastructure, drone logistics, private policing, and most of the city-grid known as Neon Void.",
@@ -92,9 +93,8 @@ export default function IntroRoute() {
       {/* Audio cue point: low sub-bass boot drone will enter here once final sound assets are ready. */}
       <Scanlines />
       <Animated.View style={animatedStyle}>
-        <Text
+        <CyberText
           style={{
-            fontFamily: terminalFont,
             color: cyanMoment ? terminalColors.cyan : terminalColors.text,
             fontSize: 15,
             lineHeight: 24,
@@ -102,11 +102,11 @@ export default function IntroRoute() {
           }}
         >
           {display}
-        </Text>
+        </CyberText>
       </Animated.View>
       {showSkip ? (
         <Pressable onPress={finish} style={{ position: "absolute", right: 20, bottom: 22, padding: 10 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>[SKIP &gt;]</Text>
+          <CyberText tone="muted" size={12}>[SKIP &gt;]</CyberText>
         </Pressable>
       ) : null}
     </View>

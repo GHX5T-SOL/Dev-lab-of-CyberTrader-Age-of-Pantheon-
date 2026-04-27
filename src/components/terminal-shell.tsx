@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   Easing,
@@ -61,7 +61,7 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
   }));
 
   const animatedFlicker = useAnimatedStyle(() => ({
-    opacity: 0.035 + shellFlicker.value * 0.04,
+    opacity: 0.012 + shellFlicker.value * 0.018,
   }));
 
   const animatedFog = useAnimatedStyle(() => ({
@@ -69,11 +69,36 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
     transform: [{ translateX: -18 + fogShift.value * 36 }],
   }));
 
+  const animatedCity = useAnimatedStyle(() => ({
+    transform: [{ translateX: -10 + fogShift.value * 20 }, { scale: 1.05 }],
+  }));
+
   return (
     <View style={{ flex: 1, backgroundColor: terminalColors.background }}>
+      <Animated.View pointerEvents="none" style={[{ position: "absolute", top: -18, right: -18, bottom: -18, left: -18, opacity: 0.92 }, animatedCity]}>
+        <ImageBackground
+          source={require("../assets/ui/cyberpunk-city-bg.png")}
+          resizeMode="cover"
+          blurRadius={2}
+          style={{ flex: 1 }}
+        />
+      </Animated.View>
       <LinearGradient
         pointerEvents="none"
-        colors={["#05060C", "#081426", "#120A20", "#05060C"]}
+        colors={["#05070D", "rgba(5,7,13,0.52)", "#05070D"]}
+        locations={[0, 0.48, 1]}
+        style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
+      />
+      <View pointerEvents="none" style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, opacity: 0.08 }}>
+        <ImageBackground
+          source={require("../assets/ui/terminal-bg.png")}
+          resizeMode="repeat"
+          style={{ flex: 1 }}
+        />
+      </View>
+      <LinearGradient
+        pointerEvents="none"
+        colors={[terminalColors.background, "rgba(0,229,255,0.08)", "rgba(138,124,255,0.08)", terminalColors.background]}
         locations={[0, 0.38, 0.72, 1]}
         start={{ x: 0.05, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -81,7 +106,7 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
       />
       <Animated.View pointerEvents="none" style={[{ position: "absolute", top: 58, right: -70, left: -70, height: 220 }, animatedFog]}>
         <LinearGradient
-          colors={["transparent", "rgba(0,240,255,0.1)", "rgba(255,43,214,0.075)", "transparent"]}
+          colors={["transparent", "rgba(0,229,255,0.12)", "rgba(138,124,255,0.12)", "transparent"]}
           start={{ x: 0, y: 0.2 }}
           end={{ x: 1, y: 0.8 }}
           style={{ flex: 1, transform: [{ skewY: "-8deg" }] }}
@@ -97,7 +122,7 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
               bottom: 0,
               width: 2,
               height: 70 + (index % 4) * 34,
-              backgroundColor: index % 3 === 0 ? terminalColors.magenta : terminalColors.cyan,
+              backgroundColor: index % 3 === 0 ? terminalColors.purple : terminalColors.cyan,
             }}
           />
         ))}
@@ -121,7 +146,7 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
           }}
         >
           <CyberText tone="cyan" size={11}>
-            AG3NT_OS//PIRAT3
+            AG3NT_OS://PIRAT3
           </CyberText>
           <CyberText tone="muted" size={11}>
             {clock}
@@ -167,7 +192,7 @@ export function TerminalShell({ children, showStatusBar = true }: TerminalShellP
       <Animated.View
         pointerEvents="none"
         style={[
-          { position: "absolute", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: terminalColors.cyan },
+          { position: "absolute", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: terminalColors.purple },
           animatedFlicker,
         ]}
       />

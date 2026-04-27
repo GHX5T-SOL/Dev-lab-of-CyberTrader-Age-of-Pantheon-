@@ -1,10 +1,11 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import CyberText from "@/components/cyber-text";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { terminalColors } from "@/theme/terminal";
 
 const BOOT_LINES = [
   "BIOS_0X3F...................... OK",
@@ -50,14 +51,14 @@ export default function BootRoute() {
   return (
     <View style={{ flex: 1, justifyContent: "flex-end", padding: 20, backgroundColor: terminalColors.background }}>
       {visibleLines.map((line) => (
-        <Text key={line} style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 12, marginBottom: 8 }}>
+        <CyberText key={line} style={{ color: terminalColors.systemGreen, marginBottom: 8 }} size={12}>
           {line}
-        </Text>
+        </CyberText>
       ))}
       {staticNoise ? (
-        <Text style={{ position: "absolute", top: 80, left: 18, right: 18, fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
+        <CyberText tone="cyan" size={11} style={{ position: "absolute", top: 80, left: 18, right: 18 }}>
           {staticNoise}
-        </Text>
+        </CyberText>
       ) : null}
       <Animated.View pointerEvents="none" style={[{ position: "absolute", inset: 0, backgroundColor: terminalColors.text }, flashStyle]} />
     </View>

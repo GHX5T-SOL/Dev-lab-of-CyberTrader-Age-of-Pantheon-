@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { TradeStreak } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface StreakDisplayProps {
   streak: TradeStreak;
@@ -29,15 +30,15 @@ export default function StreakDisplay({ streak, nowMs }: StreakDisplayProps) {
         shadowRadius: 10,
       }}
     >
-      <Text style={{ fontFamily: terminalFont, color, fontSize: 13 }}>
+      <CyberText style={{ fontFamily: terminalFont, color, fontSize: 13 }}>
         STREAK: {streak.count} FIRE // XP x{streak.multiplier.toFixed(1)}
-      </Text>
-      <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
         PROFIT AGAIN IN {remainingMinutes}m {remainingSeconds}s OR THE CHAIN BREAKS
-      </Text>
-      <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.green, fontSize: 10 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.green, fontSize: 10 }}>
         BEST: {streak.record} TRADES // CURRENT: {streak.count} // {nextReward}
-      </Text>
+      </CyberText>
     </View>
   );
 }

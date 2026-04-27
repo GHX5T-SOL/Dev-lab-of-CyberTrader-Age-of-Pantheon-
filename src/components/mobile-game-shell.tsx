@@ -1,8 +1,9 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import { ScrollView, Text, View, useWindowDimensions } from "react-native";
+import { ScrollView, View, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -28,7 +29,7 @@ export function MobileGameShell({
         <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
           <View style={{ flex: 1, gap: 4 }}>
             {eyebrow ? (
-              <Text
+              <CyberText
                 selectable
                 style={{
                   color: palette.accent.magenta,
@@ -39,9 +40,9 @@ export function MobileGameShell({
                 }}
               >
                 {eyebrow}
-              </Text>
+              </CyberText>
             ) : null}
-            <Text
+            <CyberText
               selectable
               style={{
                 color: palette.fg.primary,
@@ -53,7 +54,7 @@ export function MobileGameShell({
               }}
             >
               {title}
-            </Text>
+            </CyberText>
           </View>
           {right}
         </View>
@@ -79,7 +80,7 @@ export function MobileGameShell({
           height: 280,
           top: -80,
           right: -110,
-          borderRadius: 999,
+          borderRadius: 0,
           backgroundColor: palette.alpha.magenta18,
         }}
       />
@@ -91,7 +92,7 @@ export function MobileGameShell({
           height: 260,
           bottom: -80,
           left: -120,
-          borderRadius: 999,
+          borderRadius: 0,
           backgroundColor: palette.alpha.cyan18,
         }}
       />

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import Animated, {
   Easing,
@@ -9,11 +8,12 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
+import { terminalColors } from "@/theme/terminal";
 
 const TONES = {
   cyan: terminalColors.cyan,
-  blue: "#42A5FF",
+  blue: terminalColors.cyan,
   red: terminalColors.red,
   green: terminalColors.green,
   amber: terminalColors.amber,
@@ -78,9 +78,9 @@ export function MetricRing({
           alignItems: "center",
           justifyContent: "center",
           borderRadius: size / 2,
-          backgroundColor: terminalColors.glass,
+          backgroundColor: "rgba(5,7,13,0.58)",
           shadowColor: color,
-          shadowRadius: 18,
+          shadowRadius: 22,
           elevation: 7,
         },
         pulseStyle,
@@ -109,30 +109,28 @@ export function MetricRing({
           origin={`${center}, ${center}`}
         />
       </Svg>
-      <Text
+      <CyberText
         selectable
         style={{
           color: terminalColors.text,
           fontSize: size >= 110 ? 22 : 18,
           fontWeight: "800",
-          fontFamily: terminalFont,
           fontVariant: ["tabular-nums"],
         }}
       >
         {displayValue ?? `${Math.round(value)}${suffix}`}
-      </Text>
-      <Text
+      </CyberText>
+      <CyberText
         selectable
         style={{
           color,
           fontSize: size >= 110 ? 10 : 9,
           letterSpacing: 1.4,
           textTransform: "uppercase",
-          fontFamily: terminalFont,
         }}
       >
         {label}
-      </Text>
+      </CyberText>
     </Animated.View>
   );
 }

@@ -1,7 +1,8 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { MarketNews } from "@/engine/types";
 import { HoloPanel } from "@/components/holo-panel";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -15,9 +16,9 @@ export function NewsFeed({ news }: NewsFeedProps) {
   return (
     <HoloPanel eyebrow="signal_feed" title="market rumors" tone={visibleNews.length ? "amber" : "cyan"}>
       {visibleNews.length === 0 ? (
-        <Text selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
+        <CyberText selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
           No clean rumors on this tick. The tape is moving on raw flow.
-        </Text>
+        </CyberText>
       ) : (
         <View style={{ gap: 10 }}>
           {visibleNews.map((item) => (
@@ -31,10 +32,10 @@ export function NewsFeed({ news }: NewsFeedProps) {
                 gap: 4,
               }}
             >
-              <Text selectable style={{ color: palette.fg.primary, lineHeight: 20 }}>
+              <CyberText selectable style={{ color: palette.fg.primary, lineHeight: 20 }}>
                 {item.headline}
-              </Text>
-              <Text
+              </CyberText>
+              <CyberText
                 selectable
                 style={{
                   color: palette.fg.muted,
@@ -45,7 +46,7 @@ export function NewsFeed({ news }: NewsFeedProps) {
                 }}
               >
                 {item.affectedTickers.join(" / ")} // credibility {item.credibility}%
-              </Text>
+              </CyberText>
             </View>
           ))}
         </View>

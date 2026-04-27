@@ -1,6 +1,7 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import type { ShopItem } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface ShopItemCardProps {
   item: ShopItem;
@@ -23,25 +24,25 @@ export default function ShopItemCard({ item, disabled, onPress }: ShopItemCardPr
       }}
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}>
-        <Text style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.text, fontSize: 12 }}>
+        <CyberText style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.text, fontSize: 12 }}>
           {item.name.toUpperCase()}
-        </Text>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
+        </CyberText>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
           {item.obolPrice} $OBOL ({item.fiatEquivalent})
-        </Text>
+        </CyberText>
       </View>
-      <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+      <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
         {item.description}
-      </Text>
+      </CyberText>
       {item.zeroBolAlternative ? (
-        <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
+        <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
           0BOL / FREE PATH: {item.zeroBolAlternative}
-        </Text>
+        </CyberText>
       ) : null}
       {item.purchaseLimit ? (
-        <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 9 }}>
+        <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 9 }}>
           LIMIT: {item.purchaseLimit}
-        </Text>
+        </CyberText>
       ) : null}
     </Pressable>
   );

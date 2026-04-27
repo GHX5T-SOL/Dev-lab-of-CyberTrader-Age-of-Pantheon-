@@ -11,7 +11,7 @@ interface NeonBorderProps {
 }
 
 export default function NeonBorder({ children, active = false, style }: NeonBorderProps) {
-  const borderColor = active ? terminalColors.cyan : terminalColors.border;
+  const borderColor = active ? terminalColors.cyan : terminalColors.borderDim;
 
   return (
     <View
@@ -19,14 +19,14 @@ export default function NeonBorder({ children, active = false, style }: NeonBord
         {
           borderWidth: 1,
           borderColor,
-          borderRadius: 12,
+          borderRadius: 0,
           overflow: "hidden",
           backgroundColor: terminalColors.glass,
-          shadowColor: active ? terminalColors.cyan : "#000000",
+          shadowColor: active ? terminalColors.cyan : terminalColors.purple,
           shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: active ? 0.28 : 0.16,
-          shadowRadius: active ? 14 : 8,
-          elevation: active ? 8 : 3,
+          shadowOpacity: active ? 0.42 : 0.12,
+          shadowRadius: active ? 12 : 5,
+          elevation: active ? 4 : 2,
         },
         style,
       ]}
@@ -34,9 +34,9 @@ export default function NeonBorder({ children, active = false, style }: NeonBord
       <LinearGradient
         pointerEvents="none"
         colors={[
-          active ? "rgba(0,240,255,0.12)" : "rgba(255,255,255,0.032)",
+          active ? "rgba(0,229,255,0.14)" : "rgba(255,255,255,0.032)",
           "rgba(255,255,255,0.01)",
-          active ? "rgba(138,54,255,0.075)" : "rgba(0,0,0,0.06)",
+          active ? "rgba(138,124,255,0.12)" : "rgba(0,0,0,0.06)",
         ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}

@@ -6,10 +6,10 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#050608",
+    "backgroundColor": "#0B0C10",
     "newArchEnabled": true,
     "splash": {
-      "backgroundColor": "#050608",
+      "backgroundColor": "#0B0C10",
       "resizeMode": "contain"
     },
     "ios": {
@@ -19,7 +19,7 @@
     "android": {
       "package": "ai.cybertrader.app",
       "adaptiveIcon": {
-        "backgroundColor": "#050608"
+        "backgroundColor": "#0B0C10"
       }
     },
     "web": {

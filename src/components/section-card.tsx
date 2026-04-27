@@ -1,6 +1,7 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const TONES = {
   cyan: palette.accent.cyan,
@@ -33,7 +34,7 @@ export function SectionCard({
         gap: 12,
         borderWidth: 1,
         borderColor: `${accent}55`,
-        borderRadius: 24,
+        borderRadius: 0,
         borderCurve: "continuous",
         backgroundColor: palette.bg.terminal,
         padding: 18,
@@ -48,7 +49,7 @@ export function SectionCard({
         }}
       >
         <View style={{ flex: 1, gap: 4 }}>
-          <Text
+          <CyberText
             selectable
             style={{
               color: accent,
@@ -59,8 +60,8 @@ export function SectionCard({
             }}
           >
             {eyebrow}
-          </Text>
-          <Text
+          </CyberText>
+          <CyberText
             selectable
             style={{
               color: palette.fg.primary,
@@ -69,7 +70,7 @@ export function SectionCard({
             }}
           >
             {title}
-          </Text>
+          </CyberText>
         </View>
         {right}
       </View>

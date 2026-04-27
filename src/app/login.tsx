@@ -1,9 +1,10 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, TextInput, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from "react-native-reanimated";
 import ActionButton from "@/components/action-button";
 import AsciiDivider from "@/components/ascii-divider";
+import CyberText from "@/components/cyber-text";
 import Scanlines from "@/components/scanlines";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
@@ -47,10 +48,10 @@ export default function LoginRoute() {
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ minHeight: "100%", paddingHorizontal: 24, backgroundColor: terminalColors.background }}>
       <Scanlines />
       <View style={{ alignItems: "center", marginTop: 80 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11, lineHeight: 14 }}>{LOGO}</Text>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10, letterSpacing: 3, textAlign: "center" }}>
+        <CyberText tone="cyan" size={11} style={{ lineHeight: 14 }}>{LOGO}</CyberText>
+        <CyberText tone="muted" size={10} style={{ letterSpacing: 3, textAlign: "center" }}>
           CYBERTRADER: AGE OF PANTHEON
-        </Text>
+        </CyberText>
       </View>
       <View style={{ marginTop: 60, gap: 4 }}>
         {[
@@ -59,14 +60,14 @@ export default function LoginRoute() {
           "eAGENT CLOAK: ACTIVE (UNSTABLE)",
           "CONNECTION: LOCAL LOOP // NO UPLINK",
         ].map((line) => (
-          <Text key={line} style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 11 }}>
+          <CyberText key={line} size={11} style={{ color: terminalColors.systemGreen }}>
             {line}
-          </Text>
+          </CyberText>
         ))}
         <AsciiDivider label="LOCAL IDENTITY" />
       </View>
       <View style={{ marginTop: 24 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12, marginBottom: 8 }}>EIDOLON HANDLE:</Text>
+        <CyberText tone="muted" size={12} style={{ marginBottom: 8 }}>EIDOLON HANDLE:</CyberText>
         <View
           style={{
             borderWidth: 1,
@@ -94,17 +95,17 @@ export default function LoginRoute() {
           />
           <Animated.View style={[{ width: 7, height: 18, backgroundColor: terminalColors.cyan }, cursorStyle]} />
         </View>
-        {error ? <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 11, marginTop: 8 }}>{error}</Text> : null}
+        {error ? <CyberText tone="red" size={11} style={{ marginTop: 8 }}>{error}</CyberText> : null}
         <View style={{ marginTop: 24 }}>
           <ActionButton variant="primary" label="[ ENTER LOCAL DEMO ]" glowing onPress={enter} />
         </View>
       </View>
       <Pressable onPress={() => router.replace("/intro")} style={{ marginTop: 22, alignSelf: "center" }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.dim, fontSize: 9 }}>REPLAY INTRO SIGNAL</Text>
+        <CyberText tone="dim" size={9}>REPLAY INTRO SIGNAL</CyberText>
       </Pressable>
-      <Text style={{ fontFamily: terminalFont, color: terminalColors.dim, fontSize: 9, textAlign: "center", marginTop: 40 }}>
+      <CyberText tone="dim" size={9} style={{ textAlign: "center", marginTop: 40 }}>
         Local demo login. No wallet required. This locks your handle.
-      </Text>
+      </CyberText>
     </ScrollView>
   );
 }

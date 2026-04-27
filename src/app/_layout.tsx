@@ -5,6 +5,7 @@ import {
   JetBrainsMono_700Bold,
   useFonts,
 } from "@expo-google-fonts/jetbrains-mono";
+import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,6 +15,20 @@ import { MenuContext } from "@/context/menu-context";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useGameLoop } from "@/hooks/use-game-loop";
 import { terminalColors } from "@/theme/terminal";
+
+const cyberNavigationTheme = {
+  ...DarkTheme,
+  dark: true,
+  colors: {
+    ...DarkTheme.colors,
+    primary: terminalColors.cyan,
+    background: "transparent",
+    card: "transparent",
+    text: terminalColors.text,
+    border: terminalColors.borderDim,
+    notification: terminalColors.amber,
+  },
+};
 
 export default function RootLayout() {
   const [menuVisible, setMenuVisible] = React.useState(false);
@@ -39,13 +54,15 @@ export default function RootLayout() {
         }}
       >
         <TerminalShell>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: "transparent" },
-              animation: "fade",
-            }}
-          />
+          <ThemeProvider value={cyberNavigationTheme}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: "transparent" },
+                animation: "fade",
+              }}
+            />
+          </ThemeProvider>
           <BurgerMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
         </TerminalShell>
       </MenuContext.Provider>

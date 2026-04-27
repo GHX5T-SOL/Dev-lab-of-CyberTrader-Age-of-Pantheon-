@@ -1,5 +1,6 @@
-import { Pressable, Text } from "react-native";
+import { Pressable } from "react-native";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -36,7 +37,7 @@ export function PrimaryAction({
         alignItems: "center",
         borderWidth: 1,
         borderColor: disabled ? palette.alpha.white10 : color,
-        borderRadius: 18,
+        borderRadius: 0,
         borderCurve: "continuous",
         backgroundColor: disabled
           ? palette.alpha.white06
@@ -49,7 +50,7 @@ export function PrimaryAction({
         paddingHorizontal: 16,
       }}
     >
-      <Text
+      <CyberText
         selectable
         style={{
           color: disabled ? palette.fg.muted : color,
@@ -61,7 +62,7 @@ export function PrimaryAction({
         }}
       >
         {label}
-      </Text>
+      </CyberText>
     </Pressable>
   );
 }

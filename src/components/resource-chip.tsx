@@ -1,5 +1,6 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -30,14 +31,14 @@ export function ResourceChip({
         gap: 6,
         borderWidth: 1,
         borderColor: `${accent}40`,
-        borderRadius: 18,
+        borderRadius: 0,
         borderCurve: "continuous",
         backgroundColor: palette.bg.deepGreenBlack,
         paddingVertical: 10,
         paddingHorizontal: 12,
       }}
     >
-      <Text
+      <CyberText
         selectable
         style={{
           color: palette.fg.muted,
@@ -48,8 +49,8 @@ export function ResourceChip({
         }}
       >
         {label}
-      </Text>
-      <Text
+      </CyberText>
+      <CyberText
         selectable
         style={{
           color: accent,
@@ -60,7 +61,7 @@ export function ResourceChip({
         }}
       >
         {value}
-      </Text>
+      </CyberText>
     </View>
   );
 }

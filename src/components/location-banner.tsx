@@ -1,7 +1,8 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { getLocation } from "@/data/locations";
 import type { DistrictState } from "@/engine/types";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { displayFont, terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface LocationBannerProps {
   currentLocationId: string;
@@ -32,14 +33,13 @@ export default function LocationBanner({
     <View
       style={{
         marginTop: 12,
-        marginHorizontal: 12,
         borderWidth: 1,
         borderColor: stateColor,
-        backgroundColor: terminalColors.panel,
-        padding: 10,
+        backgroundColor: terminalColors.glass,
+        padding: 12,
         shadowColor: stateColor,
-        shadowOpacity: districtState === "NORMAL" ? 0.12 : 0.45,
-        shadowRadius: districtState === "BLACKOUT" ? 2 : 10,
+        shadowOpacity: districtState === "NORMAL" ? 0.16 : 0.45,
+        shadowRadius: districtState === "BLACKOUT" ? 4 : 12,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -47,21 +47,21 @@ export default function LocationBanner({
       }}
     >
       <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
+        <CyberText style={{ fontFamily: displayFont, color: terminalColors.muted, fontSize: 9, textTransform: "uppercase" }}>
           LOCATION
-        </Text>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 13 }}>
+        </CyberText>
+        <CyberText style={{ fontFamily: displayFont, color: terminalColors.cyan, fontSize: 14, fontWeight: "800" }}>
           {travelling
             ? `TRAVELLING TO ${destination.name.toUpperCase()}`
             : current.name.toUpperCase()}
-        </Text>
-        <Text style={{ marginTop: 3, fontFamily: terminalFont, color: stateColor, fontSize: 10 }}>
+        </CyberText>
+        <CyberText style={{ marginTop: 3, fontFamily: terminalFont, color: stateColor, fontSize: 10 }}>
           DISTRICT STATE: {districtState}
-        </Text>
+        </CyberText>
         {travelling ? (
-          <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+          <CyberText style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
             ETA {etaMinutes}m {etaSeconds}s
-          </Text>
+          </CyberText>
         ) : null}
       </View>
       <Pressable
@@ -69,13 +69,17 @@ export default function LocationBanner({
         style={{
           borderWidth: 1,
           borderColor: terminalColors.cyan,
-          paddingHorizontal: 10,
-          paddingVertical: 7,
+          paddingHorizontal: 14,
+          paddingVertical: 9,
+          backgroundColor: terminalColors.cyanFill,
+          shadowColor: terminalColors.cyan,
+          shadowOpacity: 0.22,
+          shadowRadius: 8,
         }}
       >
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
           {travelling ? "[ROUTE]" : "[TRAVEL]"}
-        </Text>
+        </CyberText>
       </Pressable>
     </View>
   );
@@ -85,10 +89,10 @@ export { LocationBanner };
 
 function getStateColor(state: DistrictState): string {
   if (state === "BOOM") {
-    return "#39FF14";
+    return terminalColors.green;
   }
   if (state === "LOCKDOWN") {
-    return "#FF3131";
+    return terminalColors.red;
   }
   if (state === "BLACKOUT") {
     return terminalColors.dim;
@@ -97,7 +101,7 @@ function getStateColor(state: DistrictState): string {
     return terminalColors.amber;
   }
   if (state === "GANG_CONTROL") {
-    return "#FF6A00";
+    return terminalColors.amber;
   }
   if (state === "MARKET_CRASH") {
     return terminalColors.red;

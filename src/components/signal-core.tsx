@@ -1,5 +1,6 @@
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -30,7 +31,7 @@ export function SignalCore({
           justifyContent: "center",
           borderWidth: 1,
           borderColor: `${palette.accent.cyan}3a`,
-          borderRadius: 32,
+          borderRadius: 0,
           borderCurve: "continuous",
           backgroundColor: palette.bg.deepGreenBlack,
           overflow: "hidden",
@@ -41,7 +42,7 @@ export function SignalCore({
             position: "absolute",
             width: frameSize - 52,
             height: frameSize - 52,
-            borderRadius: 999,
+            borderRadius: 0,
             backgroundColor: `${palette.accent.cyan}10`,
           }}
         />
@@ -51,7 +52,7 @@ export function SignalCore({
           style={{ width: imageSize, height: imageSize }}
         />
       </View>
-      <Text
+      <CyberText
         selectable
         style={{
           color: palette.accent.cyan,
@@ -62,8 +63,8 @@ export function SignalCore({
         }}
       >
         {label}
-      </Text>
-      <Text
+      </CyberText>
+      <CyberText
         selectable
         style={{
           maxWidth: size === "hero" ? 300 : 240,
@@ -74,7 +75,7 @@ export function SignalCore({
         }}
       >
         {detail}
-      </Text>
+      </CyberText>
     </View>
   );
 }

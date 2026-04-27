@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { Position } from "@/engine/types";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -65,21 +66,21 @@ export function ObjectiveStrip(props: ObjectiveStripProps) {
         alignItems: "center",
         borderWidth: 1,
         borderColor: `${accent}88`,
-        borderRadius: 20,
+        borderRadius: 0,
         backgroundColor: objective.tone === "magenta" ? palette.alpha.magenta10 : palette.alpha.cyan10,
         padding: 14,
       }}
     >
-      <Text selectable style={{ color: accent, fontSize: 28, fontWeight: "900", fontFamily: monoFamily }}>
+      <CyberText selectable style={{ color: accent, fontSize: 28, fontWeight: "900", fontFamily: monoFamily }}>
         {objective.step}
-      </Text>
+      </CyberText>
       <View style={{ flex: 1, gap: 3 }}>
-        <Text selectable style={{ color: palette.fg.primary, fontSize: 15, fontWeight: "900", textTransform: "uppercase", fontFamily: monoFamily }}>
+        <CyberText selectable style={{ color: palette.fg.primary, fontSize: 15, fontWeight: "900", textTransform: "uppercase", fontFamily: monoFamily }}>
           {objective.title}
-        </Text>
-        <Text selectable style={{ color: palette.fg.muted, fontSize: 12, lineHeight: 17 }}>
+        </CyberText>
+        <CyberText selectable style={{ color: palette.fg.muted, fontSize: 12, lineHeight: 17 }}>
           {objective.detail}
-        </Text>
+        </CyberText>
       </View>
     </View>
   );

@@ -1,8 +1,9 @@
 import { router } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import NeonBorder from "@/components/neon-border";
 import type { FlashEvent } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface FlashEventBannerProps {
   event: FlashEvent;
@@ -54,27 +55,27 @@ export default function FlashEventBanner({ event, nowMs }: FlashEventBannerProps
       }}
     >
       <Pressable onPress={navigate}>
-      <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
+      <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
         FLASH EVENT // {event.type.replace(/_/g, " ").toUpperCase()}
-      </Text>
-      <Text style={{ marginTop: 6, fontFamily: terminalFont, color, fontSize: 30 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color, fontSize: 30 }}>
         {formatCountdown(remainingMs)}
-      </Text>
-      <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 14 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 14 }}>
         {event.headline.toUpperCase()}
-      </Text>
-      <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
         {event.description}
-      </Text>
+      </CyberText>
       <View style={{ alignSelf: "flex-start", marginTop: 8, borderWidth: 1, borderColor: riskColor, paddingHorizontal: 8, paddingVertical: 3 }}>
-        <Text style={{ fontFamily: terminalFont, color: riskColor, fontSize: 9 }}>
+        <CyberText style={{ fontFamily: terminalFont, color: riskColor, fontSize: 9 }}>
           RISK {event.riskLevel.toUpperCase()}
-        </Text>
+        </CyberText>
       </View>
       {event.counterplayTags.length ? (
-        <Text style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
+        <CyberText style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
           COUNTERPLAY: {event.counterplayTags.join(" / ").toUpperCase()}
-        </Text>
+        </CyberText>
       ) : null}
       </Pressable>
     </NeonBorder>

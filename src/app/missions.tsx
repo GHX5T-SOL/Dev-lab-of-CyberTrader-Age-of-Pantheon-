@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import ActionButton from "@/components/action-button";
 import HeistModal from "@/components/heist-modal";
 import MenuScreen from "@/components/menu-screen";
@@ -9,6 +9,7 @@ import { NPCS } from "@/data/npcs";
 import { getPortfolioValue } from "@/engine/heist-missions";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 export default function MissionsRoute() {
   const clock = useDemoStore((state) => state.clock);
@@ -44,32 +45,32 @@ export default function MissionsRoute() {
         />
       ) : (
         <NeonBorder active>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>
             NO ACTIVE CONTRACT. KEEP THE DECK WARM.
-          </Text>
+          </CyberText>
         </NeonBorder>
       )}
 
       <NeonBorder style={{ marginTop: 14 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>CONTACTS</Text>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>CONTACTS</CyberText>
         {NPCS.map((npc) => {
           const locked = progression.level < npc.unlockedAtRank;
           const relationship = npcRelationships[npc.id];
           return (
             <View key={npc.id} style={{ marginTop: 12, borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 10 }}>
-              <Text style={{ fontFamily: terminalFont, color: locked ? terminalColors.dim : terminalColors.text, fontSize: 12 }}>
+              <CyberText style={{ fontFamily: terminalFont, color: locked ? terminalColors.dim : terminalColors.text, fontSize: 12 }}>
                 {npc.name.toUpperCase()} // {npc.faction.toUpperCase()}
-              </Text>
-              <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+              </CyberText>
+              <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
                 {locked ? `LOCKED RANK ${npc.unlockedAtRank}` : npc.personality}
-              </Text>
-              <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+              </CyberText>
+              <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
                 REP {relationship?.reputation ?? npcReputation[npc.id] ?? 0} // DONE {relationship?.completedMissions ?? 0} // FAIL {relationship?.failedMissions ?? 0}
-              </Text>
+              </CyberText>
               {relationship?.unlockedPerks.length ? (
-                <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
+                <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.green, fontSize: 9 }}>
                   PERK: {relationship.unlockedPerks[0]}
-                </Text>
+                </CyberText>
               ) : null}
             </View>
           );
@@ -77,18 +78,18 @@ export default function MissionsRoute() {
       </NeonBorder>
 
       <NeonBorder style={{ marginTop: 14 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>HEIST MISSIONS</Text>
-        <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>HEIST MISSIONS</CyberText>
+        <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
           OPT-IN COLLATERAL RISK ONLY. ACCESSIBLE AT RANK 5 OR THROUGH BLACK MARKET CONTACTS.
-        </Text>
+        </CyberText>
         {activeHeistMission ? (
           <View style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 10 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11 }}>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11 }}>
               ACTIVE // {activeHeistMission.riskRating.toUpperCase()} // COLLATERAL {activeHeistMission.collateralValue} 0BOL
-            </Text>
-            <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            </CyberText>
+            <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
               DEADLINE {Math.max(0, Math.ceil((activeHeistMission.endTimestamp - clock.nowMs) / 1000))}s // DANGEROUS FLASH EVENTS ATTACHED
-            </Text>
+            </CyberText>
             <View style={{ marginTop: 8 }}>
               <ActionButton variant="primary" label="[ RESOLVE HEIST RUN ]" onPress={() => void resolveActiveHeist()} />
             </View>
@@ -99,37 +100,37 @@ export default function MissionsRoute() {
           </View>
         )}
         {heistMissions.slice(0, 3).map((heist) => (
-          <Text key={heist.id} style={{ marginTop: 7, fontFamily: terminalFont, color: heist.status === "success" ? terminalColors.green : heist.status === "failed" ? terminalColors.red : terminalColors.muted, fontSize: 9 }}>
+          <CyberText key={heist.id} style={{ marginTop: 7, fontFamily: terminalFont, color: heist.status === "success" ? terminalColors.green : heist.status === "failed" ? terminalColors.red : terminalColors.muted, fontSize: 9 }}>
             {heist.status.toUpperCase()} // {heist.collateralPercentage}% COLLATERAL // {heist.riskRating.toUpperCase()}
-          </Text>
+          </CyberText>
         ))}
       </NeonBorder>
 
       <NeonBorder style={{ marginTop: 14 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>ARCHIVE</Text>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>ARCHIVE</CyberText>
         {missionHistory.length ? (
           missionHistory.slice(0, 8).map((mission) => (
             <View key={mission.id} style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 10 }}>
-              <Text style={{ fontFamily: terminalFont, color: mission.completed ? terminalColors.green : terminalColors.amber, fontSize: 11 }}>
+              <CyberText style={{ fontFamily: terminalFont, color: mission.completed ? terminalColors.green : terminalColors.amber, fontSize: 11 }}>
                 {(mission.completed ? "COMPLETED" : mission.failed ? "FAILED" : mission.status.toUpperCase())} // {mission.title}
-              </Text>
-              <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+              </CyberText>
+              <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
                 {mission.description}
-              </Text>
+              </CyberText>
             </View>
           ))
         ) : (
-          <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>NO COMPLETED CONTRACTS</Text>
+          <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>NO COMPLETED CONTRACTS</CyberText>
         )}
       </NeonBorder>
 
       {pendingMission ? (
         <View style={{ flexDirection: "row", gap: 10, marginTop: 14 }}>
           <Pressable onPress={acceptMission} style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.cyan, padding: 10 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, textAlign: "center", fontSize: 11 }}>[ ACCEPT ]</Text>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, textAlign: "center", fontSize: 11 }}>[ ACCEPT ]</CyberText>
           </Pressable>
           <Pressable onPress={declineMission} style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.borderDim, padding: 10 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, textAlign: "center", fontSize: 11 }}>[ DECLINE ]</Text>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, textAlign: "center", fontSize: 11 }}>[ DECLINE ]</CyberText>
           </Pressable>
         </View>
       ) : null}

@@ -1,11 +1,12 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, View } from "react-native";
 import ActionButton from "@/components/action-button";
 import NeonBorder from "@/components/neon-border";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 const STEPS = [
   "YOU ARE AN EIDOLON - A SHARD OF THE SHATTERED PANTHEON AI. THIS IS YOUR CYBERDECK.",
@@ -40,10 +41,10 @@ export default function TutorialRoute() {
     <Modal visible transparent animationType="fade">
       <View style={{ flex: 1, backgroundColor: terminalColors.tutorialBackdrop, justifyContent: "center", padding: 20 }}>
         <NeonBorder active style={{ alignSelf: "center", width: "100%", maxWidth: 360 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 10, marginBottom: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 10, marginBottom: 12 }}>
             TUTORIAL STEP {step + 1}/{STEPS.length}
-          </Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 15, lineHeight: 23 }}>{STEPS[step]}</Text>
+          </CyberText>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 15, lineHeight: 23 }}>{STEPS[step]}</CyberText>
           {step === STEPS.length - 1 ? (
             <View style={{ marginTop: 18 }}>
               <ActionButton variant="primary" label="[ ENTER ]" glowing onPress={complete} />
@@ -56,7 +57,7 @@ export default function TutorialRoute() {
                 style={{
                   width: 7,
                   height: 7,
-                  borderRadius: 2,
+                  borderRadius: 0,
                   backgroundColor: index === step ? terminalColors.cyan : terminalColors.border,
                 }}
               />
@@ -64,10 +65,10 @@ export default function TutorialRoute() {
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 18 }}>
             <Pressable disabled={step === 0} onPress={() => setStep((value) => Math.max(0, value - 1))} style={{ opacity: step === 0 ? 0.35 : 1, padding: 8 }}>
-              <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>[&lt; BACK]</Text>
+              <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>[&lt; BACK]</CyberText>
             </Pressable>
             <Pressable onPress={() => (step === STEPS.length - 1 ? complete() : setStep((value) => value + 1))} style={{ padding: 8 }}>
-              <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>[NEXT &gt;]</Text>
+              <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>[NEXT &gt;]</CyberText>
             </Pressable>
           </View>
         </NeonBorder>

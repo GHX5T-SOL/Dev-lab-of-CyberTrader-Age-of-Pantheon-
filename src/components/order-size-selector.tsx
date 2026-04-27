@@ -1,6 +1,7 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { ORDER_SIZES } from "@/engine/demo-market";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -23,12 +24,12 @@ export function OrderSizeSelector({ value, onChange }: OrderSizeSelectorProps) {
               alignItems: "center",
               borderWidth: 1,
               borderColor: selected ? palette.accent.magenta : palette.alpha.white16,
-              borderRadius: 14,
+              borderRadius: 0,
               backgroundColor: selected ? palette.alpha.magenta18 : palette.bg.card,
               paddingVertical: 10,
             }}
           >
-            <Text
+            <CyberText
               selectable
               style={{
                 color: selected ? palette.accent.magenta : palette.fg.muted,
@@ -39,7 +40,7 @@ export function OrderSizeSelector({ value, onChange }: OrderSizeSelectorProps) {
               }}
             >
               x{size}
-            </Text>
+            </CyberText>
           </Pressable>
         );
       })}

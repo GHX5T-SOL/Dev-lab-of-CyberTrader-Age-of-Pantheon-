@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { RankSnapshot, TradeStreak } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface ProgressRailProps {
   progression: RankSnapshot;
@@ -17,18 +18,18 @@ export default function ProgressRail({ progression, streak }: ProgressRailProps)
 
   return (
     <View style={{ marginTop: 12, marginHorizontal: 12, borderWidth: 1, borderColor: terminalColors.cyan, backgroundColor: terminalColors.panel, padding: 10 }}>
-      <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9, letterSpacing: 1.4 }}>
+      <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9, letterSpacing: 1.4 }}>
         PROGRESS RAIL
-      </Text>
-      <Text style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>
         RANK: {progression.title} {"->"} {progression.nextXpRequired === null ? "MAX" : `${nextXp} XP UNTIL NEXT`}
-      </Text>
+      </CyberText>
       <View style={{ height: 5, backgroundColor: terminalColors.borderDim, marginTop: 7 }}>
         <View style={{ height: 5, width: `${Math.max(0, Math.min(100, progressPercent))}%`, backgroundColor: terminalColors.cyan }} />
       </View>
-      <Text style={{ marginTop: 7, fontFamily: terminalFont, color: streak.count >= 5 ? terminalColors.amber : terminalColors.green, fontSize: 11 }}>
+      <CyberText style={{ marginTop: 7, fontFamily: terminalFont, color: streak.count >= 5 ? terminalColors.amber : terminalColors.green, fontSize: 11 }}>
         STREAK BEST: {streak.record} TRADES // CURRENT: {streak.count} // {nextStreakThreshold(streak.count)}
-      </Text>
+      </CyberText>
     </View>
   );
 }

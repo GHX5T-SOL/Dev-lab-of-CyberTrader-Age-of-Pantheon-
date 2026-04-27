@@ -1,7 +1,8 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -41,7 +42,7 @@ export function HoloPanel({
         gap: 12,
         borderWidth: 1,
         borderColor: accent,
-        borderRadius: 24,
+        borderRadius: 0,
         padding: 16,
       }}
     >
@@ -49,13 +50,13 @@ export function HoloPanel({
         <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
           <View style={{ flex: 1, gap: 4 }}>
             {eyebrow ? (
-              <Text selectable style={{ color: accent, fontSize: 10, letterSpacing: 1.9, textTransform: "uppercase", fontFamily: monoFamily }}>
+              <CyberText selectable style={{ color: accent, fontSize: 10, letterSpacing: 1.9, textTransform: "uppercase", fontFamily: monoFamily }}>
                 {eyebrow}
-              </Text>
+              </CyberText>
             ) : null}
-            <Text selectable style={{ color: palette.fg.primary, fontSize: 18, fontWeight: "900", textTransform: "uppercase", fontFamily: monoFamily }}>
+            <CyberText selectable style={{ color: palette.fg.primary, fontSize: 18, fontWeight: "900", textTransform: "uppercase", fontFamily: monoFamily }}>
               {title}
-            </Text>
+            </CyberText>
           </View>
           {right}
         </View>

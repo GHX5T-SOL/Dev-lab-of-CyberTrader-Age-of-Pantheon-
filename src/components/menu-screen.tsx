@@ -40,7 +40,7 @@ export default function MenuScreen({ title, children }: MenuScreenProps) {
         <NeonBorder active style={{ marginBottom: 14, borderColor: terminalColors.purple }}>
           <LinearGradient
             pointerEvents="none"
-            colors={["rgba(138,54,255,0.18)", "rgba(0,240,255,0.06)", "transparent"]}
+            colors={["rgba(138,124,255,0.18)", "rgba(0,229,255,0.08)", "transparent"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}

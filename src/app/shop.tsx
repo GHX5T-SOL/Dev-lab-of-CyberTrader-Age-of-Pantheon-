@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import ConfirmModal from "@/components/confirm-modal";
 import MenuScreen from "@/components/menu-screen";
 import NeonBorder from "@/components/neon-border";
@@ -10,6 +10,7 @@ import { ENABLE_OBOL_TOKEN } from "@/engine/obol-shop";
 import type { ShopItem } from "@/engine/types";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 export default function ShopRoute() {
   const obolBalance = useDemoStore((state) => state.obolBalance);
@@ -21,21 +22,21 @@ export default function ShopRoute() {
     <MenuScreen title="$ SHOP">
       <NeonBorder active>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
-          <Text style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>
+          <CyberText style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>
             FIXED-PRICE CONVENIENCE AND COSMETIC ITEMS
-          </Text>
+          </CyberText>
           <ObolBalanceDisplay balance={obolBalance} />
         </View>
-        <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+        <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
           THIS IS A GAME, NOT AN INVESTMENT.
-        </Text>
-        <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+        </CyberText>
+        <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
           $OBOL NEVER GATES PROGRESSION. EVERY POWER-RELEVANT OPTION HAS A 0BOL OR TIME PATH.
-        </Text>
+        </CyberText>
         {!ENABLE_OBOL_TOKEN ? (
-          <Text style={{ marginTop: 8, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          <CyberText style={{ marginTop: 8, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
             TOKEN FEATURE FLAG OFF. CATALOG SHOWN FOR DESIGN REVIEW.
-          </Text>
+          </CyberText>
         ) : null}
       </NeonBorder>
 
@@ -50,9 +51,9 @@ export default function ShopRoute() {
         ))}
       </ScrollView>
 
-      <Text style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+      <CyberText style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
         {systemMessage}
-      </Text>
+      </CyberText>
 
       <ConfirmModal
         visible={Boolean(selectedItem)}

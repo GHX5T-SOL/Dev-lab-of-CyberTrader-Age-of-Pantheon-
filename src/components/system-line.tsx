@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
-import { Text } from "react-native";
 import { palette } from "@/theme/colors";
-
-const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
+import CyberText from "@/components/cyber-text";
 
 interface SystemLineProps {
   children: ReactNode;
@@ -19,16 +17,15 @@ const TONES = {
 
 export function SystemLine({ children, tone = "cyan" }: SystemLineProps) {
   return (
-    <Text
+    <CyberText
       selectable
       style={{
         color: TONES[tone],
-        fontFamily: monoFamily,
         fontSize: 14,
         lineHeight: 21,
       }}
     >
       {children}
-    </Text>
+    </CyberText>
   );
 }

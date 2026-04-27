@@ -35,7 +35,7 @@ export function PriceSparkline({ values, tone = "cyan", compact = false }: Price
       style={{
         borderWidth: 1,
         borderColor: tone === "magenta" ? palette.alpha.magenta35 : palette.alpha.cyan35,
-        borderRadius: 12,
+        borderRadius: 0,
         backgroundColor: palette.bg.deepGreenBlack,
         padding: compact ? 4 : 8,
       }}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { router } from "expo-router";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -10,7 +10,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
+import { terminalColors } from "@/theme/terminal";
 
 export default function IndexRoute() {
   const isHydrated = useDemoBootstrap();
@@ -54,9 +55,9 @@ export default function IndexRoute() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Animated.View style={animatedStyle}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>
+        <CyberText tone="muted" size={12}>
           INITIALIZING...
-        </Text>
+        </CyberText>
       </Animated.View>
     </View>
   );

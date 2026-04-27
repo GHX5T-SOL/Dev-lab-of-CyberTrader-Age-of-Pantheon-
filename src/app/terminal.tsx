@@ -1,7 +1,7 @@
 import * as React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
-import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { Platform, Pressable, ScrollView, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   Easing,
@@ -28,6 +28,7 @@ import { isTradingBlockedByFlash } from "@/engine/flash-events";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 function pct(change: number, price: number) {
   return price ? (change / Math.max(1, price - change)) * 100 : 0;
@@ -37,7 +38,10 @@ function formatCountdown(expiresAt: number | null, nowMs: number): string {
   if (!expiresAt) {
     return "LIVE";
   }
-  const totalSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
+  const rawSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
+  const totalSeconds = rawSeconds > 5999
+    ? Math.max(1, 180 - (Math.floor(nowMs / 1000) % 180))
+    : rawSeconds;
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
@@ -267,7 +271,7 @@ export default function TerminalRoute() {
             zIndex: 8,
             borderWidth: resources.heat >= 90 ? 3 : 2,
             borderColor: terminalColors.red,
-            backgroundColor: "rgba(255,49,49,0.18)",
+            backgroundColor: "rgba(255,59,59,0.18)",
           },
           heatFlashStyle,
         ]}
@@ -286,25 +290,25 @@ export default function TerminalRoute() {
           }}
           style={{ paddingVertical: 8, paddingRight: 16 }}
         >
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>{"\u2190"} HOME</Text>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>{"\u2190"} HOME</CyberText>
         </Pressable>
         <View style={{ flex: 1, alignItems: "flex-end" }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 16 }}>S1LKROAD 4.0</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>NODE: {currentLocation.name.toUpperCase()}</Text>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 16 }}>S1LKROAD 4.0</CyberText>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>NODE: {currentLocation.name.toUpperCase()}</CyberText>
         </View>
       </View>
 
       <View style={{ flexDirection: "row", gap: 12, marginBottom: 14, alignItems: "center" }}>
         <MetricRing label="ENERGY" value={energyPercent} displayValue={`${energyHours}h`} tone="cyan" size={96} />
         <MetricRing label="HEAT" value={resources.heat} displayValue={`${resources.heat}%`} tone="red" size={96} active={resources.heat >= 25} />
-        <View style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.borderDim, borderRadius: 12, backgroundColor: terminalColors.glass, padding: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.purple, fontSize: 10, letterSpacing: 1.2 }}>STATE</Text>
-          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.text, fontSize: 15 }} numberOfLines={2}>
+        <View style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.borderDim, borderRadius: 0, backgroundColor: terminalColors.glass, padding: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.purple, fontSize: 10, letterSpacing: 1.2 }}>STATE</CyberText>
+          <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.text, fontSize: 15 }} numberOfLines={2}>
             {currentLocation.name.toUpperCase()}
-          </Text>
-          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
             {bounty.status} // {district.state}
-          </Text>
+          </CyberText>
         </View>
       </View>
 
@@ -314,7 +318,7 @@ export default function TerminalRoute() {
           style={{
             borderWidth: 1,
             borderColor: signalColor,
-            borderRadius: 14,
+            borderRadius: 0,
             backgroundColor: terminalColors.glassStrong,
             padding: 16,
             overflow: "hidden",
@@ -322,25 +326,25 @@ export default function TerminalRoute() {
         >
           <LinearGradient
             pointerEvents="none"
-            colors={["rgba(255,184,0,0.16)", "rgba(0,240,255,0.05)", "rgba(138,54,255,0.05)"]}
+            colors={["rgba(255,200,87,0.16)", "rgba(0,229,255,0.05)", "rgba(138,124,255,0.06)"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}
           />
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-            <Text style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.yellow, fontSize: 11, letterSpacing: 1.3 }}>
+            <CyberText style={{ flex: 1, fontFamily: terminalFont, color: terminalColors.yellow, fontSize: 11, letterSpacing: 1.3 }}>
               PRIMARY SIGNAL
-            </Text>
-            <Text style={{ fontFamily: terminalFont, color: signalColor, fontSize: 22, fontVariant: ["tabular-nums"] }}>
+            </CyberText>
+            <CyberText style={{ fontFamily: terminalFont, color: signalColor, fontSize: 22, fontVariant: ["tabular-nums"] }}>
               {signalCountdown}
-            </Text>
+            </CyberText>
           </View>
-          <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.text, fontSize: 22, lineHeight: 28 }}>
+          <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.text, fontSize: 22, lineHeight: 28 }}>
             {decisionContext.recommendedAction.title.toUpperCase()}
-          </Text>
-          <Text style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12, lineHeight: 17 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 7, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12, lineHeight: 17 }}>
             {decisionContext.recommendedAction.description}
-          </Text>
+          </CyberText>
           <View style={{ marginTop: 12 }}>
             <ActionButton variant="primary" glowing label="[ ACT ON SIGNAL ]" onPress={followSignal} />
           </View>
@@ -349,23 +353,23 @@ export default function TerminalRoute() {
 
       {travelling ? (
         <NeonBorder style={{ marginBottom: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
             TRAVELLING TO {destination.name.toUpperCase()}... ETA {etaMinutes}m {etaSeconds}s
-          </Text>
-          <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
             TRADING LOCKED UNTIL ARRIVAL
-          </Text>
+          </CyberText>
         </NeonBorder>
       ) : null}
 
       {districtBlocked || flashBlocked ? (
         <NeonBorder style={{ marginBottom: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>
             MARKET LOCKED // {flashBlocked ? "DISTRICT BLACKOUT" : district.state}
-          </Text>
-          <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
             TRAVEL AWAY OR WAIT FOR STATE CLEARANCE
-          </Text>
+          </CyberText>
         </NeonBorder>
       ) : null}
 
@@ -398,12 +402,12 @@ export default function TerminalRoute() {
             : undefined,
           }}
         >
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.green, fontSize: 12, letterSpacing: 1.3 }}>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.green, fontSize: 12, letterSpacing: 1.3 }}>
           ACTION // EXECUTE TRADE
-        </Text>
-        <Text style={{ marginTop: 4, marginBottom: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+        </CyberText>
+        <CyberText style={{ marginTop: 4, marginBottom: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
           {commodity.name.toUpperCase()} // {currentLocation.name.toUpperCase()}
-        </Text>
+        </CyberText>
         <View style={{ flexDirection: "row", gap: 8 }}>
           {(["BUY", "SELL"] as const).map((ticketSide) => (
             <Pressable
@@ -411,9 +415,9 @@ export default function TerminalRoute() {
               onPress={() => setSide(ticketSide)}
               style={{ flex: 1, borderWidth: 1, borderColor: side === ticketSide ? terminalColors.cyan : terminalColors.borderDim, padding: 10 }}
             >
-              <Text style={{ fontFamily: terminalFont, color: side === ticketSide ? terminalColors.cyan : terminalColors.muted, textAlign: "center", fontSize: 12 }}>
+              <CyberText style={{ fontFamily: terminalFont, color: side === ticketSide ? terminalColors.cyan : terminalColors.muted, textAlign: "center", fontSize: 12 }}>
                 {ticketSide} [{commodity.ticker}]
-              </Text>
+              </CyberText>
             </Pressable>
           ))}
         </View>
@@ -422,7 +426,7 @@ export default function TerminalRoute() {
           formatter={(value) => `${value.toFixed(2)} 0BOL`}
           style={{ marginTop: 16, fontFamily: terminalFont, color: terminalColors.text, fontSize: 30, fontVariant: ["tabular-nums"] }}
         />
-        <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>QUANTITY</Text>
+        <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>QUANTITY</CyberText>
         <TextInput
           value={String(orderSize)}
           onChangeText={(value) => setOrderSize(Number(value.replace(/[^0-9]/g, "")) || 1)}
@@ -432,14 +436,14 @@ export default function TerminalRoute() {
         <View style={{ flexDirection: "row", gap: 6, marginTop: 10 }}>
           {[0.25, 0.5, 0.75, 1].map((portion) => (
             <Pressable key={portion} onPress={() => setOrderSize(Math.max(1, Math.floor(maxQty * portion)))} style={{ flex: 1, borderWidth: 1, borderColor: terminalColors.borderDim, padding: 8 }}>
-              <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11, textAlign: "center" }}>{Math.round(portion * 100)}%</Text>
+              <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11, textAlign: "center" }}>{Math.round(portion * 100)}%</CyberText>
             </Pressable>
           ))}
         </View>
         <View style={{ marginTop: 14, gap: 4 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11, fontVariant: ["tabular-nums"] }}>EST COST: {cost.toFixed(2)} 0BOL</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11, fontVariant: ["tabular-nums"] }}>HEAT DELTA: +{heatDelta}</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 11, fontVariant: ["tabular-nums"] }}>ENERGY COST: {energyCost}s</Text>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11, fontVariant: ["tabular-nums"] }}>EST COST: {cost.toFixed(2)} 0BOL</CyberText>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11, fontVariant: ["tabular-nums"] }}>HEAT DELTA: +{heatDelta}</CyberText>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.systemGreen, fontSize: 11, fontVariant: ["tabular-nums"] }}>ENERGY COST: {energyCost}s</CyberText>
         </View>
         <View style={{ marginTop: 16 }}>
           <ActionButton
@@ -455,7 +459,7 @@ export default function TerminalRoute() {
 
       {tradeJuice && clock.nowMs - tradeJuice.createdAt < 2500 ? (
         <Animated.View style={[{ marginTop: 10, alignItems: "center" }, tradeFeedbackFloatStyle]}>
-          <Text
+          <CyberText
             style={{
               fontFamily: terminalFont,
               color: tradeJuice.kind === "profit" ? terminalColors.green : tradeJuice.kind === "loss" ? terminalColors.red : terminalColors.amber,
@@ -465,7 +469,7 @@ export default function TerminalRoute() {
           >
             {tradeJuice.bigWin ? "BIG WIN // " : ""}
             {tradeJuice.kind.toUpperCase()}
-          </Text>
+          </CyberText>
           <AnimatedNumber
             value={tradeJuice.pnl}
             formatter={(value) => `${value >= 0 ? "+" : ""}${value.toFixed(2)} 0BOL`}
@@ -482,27 +486,27 @@ export default function TerminalRoute() {
       ) : null}
 
       {flash ? (
-        <Text style={{ marginTop: 10, fontFamily: terminalFont, color: flash === "success" ? terminalColors.green : terminalColors.red, fontSize: 11, textAlign: "center" }}>
+        <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: flash === "success" ? terminalColors.green : terminalColors.red, fontSize: 11, textAlign: "center" }}>
           {flash === "success" ? "TRADE ACKNOWLEDGED" : "TRADE REJECTED"}
-        </Text>
+        </CyberText>
       ) : null}
       {missedPeakLog[0] ? (
         <NeonBorder style={{ marginTop: 12 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>
             MISSED PEAK // {missedPeakLog[0].ticker}
-          </Text>
-          <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
             {missedPeakLog[0].ticker} HIT {missedPeakLog[0].peakPrice.toFixed(2)} EARLIER // MISSED +{missedPeakLog[0].missedValue.toFixed(2)} 0BOL
-          </Text>
+          </CyberText>
         </NeonBorder>
       ) : null}
-      <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>{systemMessage}</Text>
+      <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>{systemMessage}</CyberText>
 
       <NeonBorder active style={{ marginTop: 16 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12, letterSpacing: 1.2 }}>DATA // MARKET CARDS</Text>
-        <Text style={{ marginTop: 4, marginBottom: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12, letterSpacing: 1.2 }}>DATA // MARKET CARDS</CyberText>
+        <CyberText style={{ marginTop: 4, marginBottom: 10, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
           TAP A COMMODITY TO LOAD THE ACTION DECK
-        </Text>
+        </CyberText>
         {DEMO_COMMODITIES.map((item, index) => {
           const itemPrice = prices[item.ticker] ?? item.basePrice;
           return (
@@ -522,8 +526,8 @@ export default function TerminalRoute() {
 
       <NeonBorder style={{ marginTop: 16 }}>
         <Pressable onPress={() => setPositionsOpen((value) => !value)} style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>OPEN POSITIONS</Text>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>{positionsOpen ? "v" : ">"}</Text>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 12 }}>OPEN POSITIONS</CyberText>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 12 }}>{positionsOpen ? "v" : ">"}</CyberText>
         </Pressable>
         {positionsOpen ? (
           Object.values(positions).length ? (
@@ -540,29 +544,29 @@ export default function TerminalRoute() {
                   }}
                   style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 10 }}
                 >
-                  <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
+                  <CyberText style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
                     {held.ticker} QTY {held.quantity} AVG {held.avgEntry.toFixed(2)} NOW {current.toFixed(2)} PNL {pnl.toFixed(2)}
-                  </Text>
+                  </CyberText>
                 </Pressable>
               );
             })
           ) : (
-            <Text style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>NO OPEN POSITIONS</Text>
+            <CyberText style={{ marginTop: 10, fontFamily: terminalFont, color: terminalColors.dim, fontSize: 11 }}>NO OPEN POSITIONS</CyberText>
           )
         ) : null}
       </NeonBorder>
 
       <NeonBorder style={{ marginTop: 16 }}>
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>NEWS FEED</Text>
+        <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>NEWS FEED</CyberText>
         {(activeNews.length
           ? activeNews.slice(0, 5)
           : [{ id: "quiet", headline: "NO SIGNALS. MARKET HUM IS CLEAN.", affectedTickers: [], credibility: 1, priceMultiplier: 1, tickPublished: 0, tickExpires: 0 }]
         ).map((news) => (
           <View key={news.id} style={{ marginTop: 10 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>{news.headline}</Text>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 12 }}>{news.headline}</CyberText>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
               {news.affectedTickers.join(" ")} // CRED {Math.round(news.credibility * 100)}%
-            </Text>
+            </CyberText>
           </View>
         ))}
       </NeonBorder>

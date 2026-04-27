@@ -1,7 +1,8 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { Position } from "@/engine/types";
 import { HoloPanel } from "@/components/holo-panel";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -19,10 +20,10 @@ export function PositionsPanel({ positions }: PositionsPanelProps) {
       tone={openPositions.length ? "cyan" : "amber"}
     >
       {openPositions.length === 0 ? (
-        <Text selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
+        <CyberText selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
           No open inventory. Buy one lot, let the tape move, then sell to close the
           first loop.
-        </Text>
+        </CyberText>
       ) : (
         <View style={{ gap: 10 }}>
           {openPositions.map((position) => (
@@ -31,7 +32,7 @@ export function PositionsPanel({ positions }: PositionsPanelProps) {
               style={{
                 borderWidth: 1,
                 borderColor: palette.alpha.cyan35,
-                borderRadius: 16,
+                borderRadius: 0,
                 backgroundColor: palette.alpha.black50,
                 padding: 12,
                 gap: 6,
@@ -70,7 +71,7 @@ function Row({
 
   return (
     <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 10 }}>
-      <Text
+      <CyberText
         selectable
         style={{
           color,
@@ -81,8 +82,8 @@ function Row({
         }}
       >
         {label}
-      </Text>
-      <Text
+      </CyberText>
+      <CyberText
         selectable
         style={{
           color: palette.fg.primary,
@@ -92,7 +93,7 @@ function Row({
         }}
       >
         {value}
-      </Text>
+      </CyberText>
     </View>
   );
 }

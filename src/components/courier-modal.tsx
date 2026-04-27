@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, View } from "react-native";
 import ActionButton from "@/components/action-button";
 import { COURIER_SERVICES, getUnlockedLocations, type CourierService } from "@/data/locations";
 import { ENABLE_OBOL_TOKEN } from "@/engine/obol-shop";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface CourierModalProps {
   visible: boolean;
@@ -67,20 +68,20 @@ export default function CourierModal({
     <Modal visible={visible} transparent animationType="fade">
       <View style={{ flex: 1, backgroundColor: terminalColors.modalBackdrop, alignItems: "center", justifyContent: "center", padding: 22 }}>
         <View style={{ width: "100%", maxWidth: 360, borderWidth: 1, borderColor: terminalColors.cyan, backgroundColor: terminalColors.panel, padding: 16 }}>
-          <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 13 }}>
+          <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 13 }}>
             SEND {ticker} VIA COURIER
-          </Text>
-          <Text style={{ marginTop: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
+          </CyberText>
+          <CyberText style={{ marginTop: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
             QUANTITY {quantity}/{maxQuantity}
-          </Text>
+          </CyberText>
           <View style={{ flexDirection: "row", gap: 8, marginTop: 8 }}>
             <ActionButton variant="muted" label="[ - ]" onPress={() => setQuantity((value) => Math.max(1, value - 1))} />
             <ActionButton variant="muted" label="[ + ]" onPress={() => setQuantity((value) => Math.min(maxQuantity, value + 1))} />
           </View>
 
-          <Text style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
+          <CyberText style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
             DESTINATION
-          </Text>
+          </CyberText>
           <View style={{ gap: 7, marginTop: 8 }}>
             {destinations.map((location) => (
               <Pressable
@@ -88,16 +89,16 @@ export default function CourierModal({
                 onPress={() => setDestinationId(location.id)}
                 style={{ borderWidth: 1, borderColor: destinationId === location.id ? terminalColors.cyan : terminalColors.borderDim, padding: 8 }}
               >
-                <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
+                <CyberText style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
                   {location.name.toUpperCase()} // {location.travelTime}m
-                </Text>
+                </CyberText>
               </Pressable>
             ))}
           </View>
 
-          <Text style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
+          <CyberText style={{ marginTop: 14, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>
             SERVICE
-          </Text>
+          </CyberText>
           <View style={{ gap: 7, marginTop: 8 }}>
             {COURIER_SERVICES.map((service) => (
               <Pressable
@@ -112,12 +113,12 @@ export default function CourierModal({
                   const riskColor = riskPercent >= 30 ? terminalColors.red : riskPercent >= 10 ? terminalColors.amber : terminalColors.green;
                   return (
                     <>
-                <Text style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
+                <CyberText style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>
                   {service.name.toUpperCase()} // {effectiveCost} 0BOL // RISK {riskPercent}%
-                </Text>
-                <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
+                </CyberText>
+                <CyberText style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
                   ETA x{arrivalTimeMultiplier.toFixed(1)}
-                </Text>
+                </CyberText>
                 <View style={{ height: 4, backgroundColor: terminalColors.borderDim, marginTop: 5 }}>
                   <View style={{ height: 4, width: `${riskPercent}%`, backgroundColor: riskColor }} />
                 </View>
@@ -129,15 +130,15 @@ export default function CourierModal({
           </View>
 
           <View style={{ marginTop: 14, borderWidth: 1, borderColor: terminalColors.borderDim, padding: 9 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>
               ROUTE RISK // {effectiveRiskPercent}% LOSS PROBABILITY
-            </Text>
-            <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+            </CyberText>
+            <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
               COST {selectedCost} 0BOL // ETA {selectedEta}m // POTENTIAL UPSIDE +{potentialProfit} 0BOL
-            </Text>
-            <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.red, fontSize: 10 }}>
+            </CyberText>
+            <CyberText style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.red, fontSize: 10 }}>
               POTENTIAL LOSS {potentialLoss} 0BOL IF INTERCEPTED
-            </Text>
+            </CyberText>
             <View style={{ height: 5, backgroundColor: terminalColors.borderDim, marginTop: 7 }}>
               <View
                 style={{
@@ -157,14 +158,14 @@ export default function CourierModal({
                 opacity: ENABLE_OBOL_TOKEN ? 1 : 0.55,
               }}
             >
-              <Text style={{ fontFamily: terminalFont, color: insured ? terminalColors.green : terminalColors.amber, fontSize: 10 }}>
+              <CyberText style={{ fontFamily: terminalFont, color: insured ? terminalColors.green : terminalColors.amber, fontSize: 10 }}>
                 {insured ? "[ INSURED ] " : "[ INSURE ] "}
                 {insuranceObolCost} $OBOL (~${(insuranceObolCost * 0.1).toFixed(2)} USD) // GUARANTEED DELIVERY
-              </Text>
+              </CyberText>
               {!ENABLE_OBOL_TOKEN ? (
-                <Text style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
+                <CyberText style={{ marginTop: 3, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9 }}>
                   TOKEN FEATURE FLAG OFF. STANDARD 0BOL ROUTE AVAILABLE.
-                </Text>
+                </CyberText>
               ) : null}
             </Pressable>
           </View>
@@ -177,7 +178,7 @@ export default function CourierModal({
             />
           </View>
           <Pressable onPress={onClose} style={{ marginTop: 12, alignItems: "center" }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>[ CANCEL ]</Text>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>[ CANCEL ]</CyberText>
           </Pressable>
         </View>
       </View>

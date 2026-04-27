@@ -1,6 +1,7 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import type { FlashEvent, MarketWhisper, Mission, PantheonShardCliffhanger } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface OpportunityRailProps {
   flashEvent: FlashEvent | null;
@@ -67,9 +68,9 @@ export default function OpportunityRail({
 
   return (
     <View style={{ marginTop: 14 }}>
-      <Text style={{ marginHorizontal: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9, letterSpacing: 1.4 }}>
+      <CyberText style={{ marginHorizontal: 12, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 9, letterSpacing: 1.4 }}>
         OPPORTUNITY RAIL
-      </Text>
+      </CyberText>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12, gap: 8, paddingTop: 8 }}>
         {cards.map((card) => (
           <Pressable
@@ -77,12 +78,12 @@ export default function OpportunityRail({
             onPress={onPress}
             style={{ width: 210, borderWidth: 1, borderColor: card.tone, backgroundColor: terminalColors.panel, padding: 10 }}
           >
-            <Text style={{ fontFamily: terminalFont, color: card.tone, fontSize: 11 }} numberOfLines={1}>
+            <CyberText style={{ fontFamily: terminalFont, color: card.tone, fontSize: 11 }} numberOfLines={1}>
               {card.title.toUpperCase()}
-            </Text>
-            <Text style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.text, fontSize: 10 }} numberOfLines={2}>
+            </CyberText>
+            <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.text, fontSize: 10 }} numberOfLines={2}>
               {card.detail}
-            </Text>
+            </CyberText>
           </Pressable>
         ))}
       </ScrollView>

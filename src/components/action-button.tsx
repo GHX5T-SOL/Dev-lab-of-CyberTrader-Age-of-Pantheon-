@@ -16,7 +16,7 @@ import CyberText from "@/components/cyber-text";
 interface ActionButtonProps {
   label: string;
   onPress: () => void;
-  variant: "primary" | "amber" | "muted";
+  variant: "primary" | "amber" | "danger" | "muted";
   disabled?: boolean;
   glowing?: boolean;
 }
@@ -30,14 +30,22 @@ export default function ActionButton({
 }: ActionButtonProps) {
   const pulse = useSharedValue(0);
   const baseColor =
-    variant === "primary" ? terminalColors.green : variant === "amber" ? terminalColors.amber : terminalColors.border;
-  const pressedColor = variant === "amber" ? terminalColors.amber : terminalColors.cyan;
+    variant === "primary"
+      ? terminalColors.green
+      : variant === "amber"
+        ? terminalColors.amber
+        : variant === "danger"
+          ? terminalColors.red
+          : terminalColors.border;
+  const pressedColor = variant === "danger" ? terminalColors.red : variant === "amber" ? terminalColors.amber : terminalColors.cyan;
   const gradientColors: readonly [string, string] =
     variant === "primary"
-      ? ["rgba(57,255,20,0.24)", "rgba(0,240,255,0.13)"]
+      ? [terminalColors.green, terminalColors.cyan]
       : variant === "amber"
-        ? ["rgba(255,184,0,0.18)", "rgba(255,43,214,0.1)"]
-        : ["rgba(255,255,255,0.045)", "rgba(0,240,255,0.035)"];
+        ? ["rgba(255,200,87,0.22)", "rgba(138,124,255,0.1)"]
+        : variant === "danger"
+          ? ["rgba(255,59,59,0.22)", "rgba(5,7,13,0.92)"]
+        : ["rgba(255,255,255,0.055)", "rgba(0,229,255,0.045)"];
 
   React.useEffect(() => {
     if (variant === "primary" && glowing && !disabled) {
@@ -65,14 +73,14 @@ export default function ActionButton({
           width: "100%",
           minHeight: 56,
           borderWidth: 1,
-          borderRadius: 12,
+          borderRadius: 0,
           overflow: "hidden",
           backgroundColor: terminalColors.glassStrong,
           opacity: disabled ? 0.4 : 1,
           shadowColor: disabled ? "transparent" : baseColor,
-          shadowOpacity: glowing && !disabled ? 0.34 : 0.16,
-          shadowRadius: glowing && !disabled ? 16 : 7,
-          elevation: glowing && !disabled ? 8 : 2,
+          shadowOpacity: variant === "primary" && !disabled ? 0.44 : glowing && !disabled ? 0.32 : 0.16,
+          shadowRadius: variant === "primary" && !disabled ? 14 : glowing && !disabled ? 10 : 4,
+          elevation: glowing && !disabled ? 7 : 2,
         },
         animatedStyle,
       ]}
@@ -107,7 +115,8 @@ export default function ActionButton({
               fontFamily: terminalFont,
               textTransform: "uppercase",
               letterSpacing: 2,
-              color: pressed ? pressedColor : baseColor,
+              color: variant === "primary" ? terminalColors.background : pressed ? pressedColor : baseColor,
+              fontWeight: "800",
               textAlign: "center",
             }}
           >

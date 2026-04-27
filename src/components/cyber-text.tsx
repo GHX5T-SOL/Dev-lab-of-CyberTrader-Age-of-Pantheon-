@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, type TextProps, type TextStyle } from "react-native";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import { displayFont, terminalColors } from "@/theme/terminal";
 
 interface CyberTextProps extends TextProps {
   tone?: "text" | "muted" | "dim" | "cyan" | "green" | "amber" | "red" | "purple" | "magenta" | "yellow";
@@ -16,7 +16,7 @@ export default function CyberText({
   children,
   ...props
 }: CyberTextProps) {
-  const fontFamily = weight === "700" ? "JetBrainsMono_700Bold" : weight === "600" ? "JetBrainsMono_600SemiBold" : terminalFont;
+  const fontFamily = weight === "700" || weight === "600" ? displayFont : displayFont;
 
   return (
     <Text

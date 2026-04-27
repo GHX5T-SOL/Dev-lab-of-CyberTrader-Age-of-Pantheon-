@@ -60,20 +60,19 @@ export default function CommodityRow({
         gap: 10,
         backgroundColor: pressed
           ? terminalColors.cyanPress
-          : index % 2 === 0
-            ? terminalColors.panelEven
-            : terminalColors.panelAlt,
+          : terminalColors.glass,
         borderWidth: 1,
         borderColor: isSelected ? terminalColors.cyan : terminalColors.borderDim,
-        borderRadius: 12,
+        borderRadius: 0,
         padding: 10,
         marginBottom: 8,
-        shadowColor: isSelected ? terminalColors.cyan : "#000000",
-        shadowOpacity: isSelected ? 0.34 : 0.18,
-        shadowRadius: isSelected ? 14 : 8,
+        shadowColor: isSelected ? terminalColors.cyan : terminalColors.purple,
+        shadowOpacity: pressed || isSelected ? 0.34 : 0.1,
+        shadowRadius: pressed || isSelected ? 12 : 5,
+        transform: [{ scale: pressed ? 1.02 : 1 }],
       }}
     >
-      <View style={{ width: 48, height: 48, borderRadius: 12, backgroundColor: terminalColors.cyanFill, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ width: 48, height: 48, borderWidth: 1, borderColor: terminalColors.cyan, backgroundColor: terminalColors.cyanFill, alignItems: "center", justifyContent: "center", shadowColor: terminalColors.cyan, shadowOpacity: 0.22, shadowRadius: 8 }}>
         <Image
           source={iconSource ?? COMMODITY_ICON_MAP[ticker]}
           resizeMode="contain"

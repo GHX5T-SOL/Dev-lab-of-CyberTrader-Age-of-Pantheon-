@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Svg, {
   Defs,
   LinearGradient,
@@ -8,7 +8,8 @@ import Svg, {
   Rect,
   Stop,
 } from "react-native-svg";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
+import { terminalColors } from "@/theme/terminal";
 
 interface ChartSparklineProps {
   data: number[];
@@ -32,9 +33,9 @@ export default function ChartSparkline({
         onLayout={(event) => setLayoutWidth(event.nativeEvent.layout.width)}
         style={{ height, width: "100%", alignItems: "center", justifyContent: "center" }}
       >
-        <Text style={{ fontFamily: terminalFont, color: terminalColors.muted }}>
+        <CyberText tone="muted">
           INSUFFICIENT DATA
-        </Text>
+        </CyberText>
       </View>
     );
   }
@@ -96,4 +97,3 @@ export default function ChartSparkline({
 }
 
 export { ChartSparkline };
-

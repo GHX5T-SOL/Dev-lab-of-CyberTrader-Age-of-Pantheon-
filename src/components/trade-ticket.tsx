@@ -1,10 +1,11 @@
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 import { commodityArt } from "@/assets/commodity-art";
 import { FIRST_TRADE_HINT_TICKER, formatObol } from "@/engine/demo-market";
 import type { Commodity } from "@/engine/types";
 import { PriceSparkline } from "@/components/price-sparkline";
 import { SectionCard } from "@/components/section-card";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -34,9 +35,9 @@ export function TradeTicket({
   if (!commodity || price === undefined) {
     return (
       <SectionCard eyebrow="ticket" title="Select a commodity" tone="amber">
-        <Text selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
+        <CyberText selectable style={{ color: palette.fg.muted, lineHeight: 22 }}>
           Lock a ticker to see the trade ticket. Start with {FIRST_TRADE_HINT_TICKER} if you want a lower-heat first move.
-        </Text>
+        </CyberText>
       </SectionCard>
     );
   }
@@ -57,7 +58,7 @@ export function TradeTicket({
             justifyContent: "center",
             borderWidth: 1,
             borderColor: `${palette.accent.acidGreen}35`,
-            borderRadius: 24,
+            borderRadius: 0,
             borderCurve: "continuous",
             backgroundColor: palette.bg.deepGreenBlack,
             overflow: "hidden",
@@ -129,7 +130,7 @@ function MetricRow({
         gap: 12,
       }}
     >
-      <Text
+      <CyberText
         selectable
         style={{
           color: palette.fg.muted,
@@ -140,8 +141,8 @@ function MetricRow({
         }}
       >
         {label}
-      </Text>
-      <Text
+      </CyberText>
+      <CyberText
         selectable
         style={{
           color,
@@ -151,7 +152,7 @@ function MetricRow({
         }}
       >
         {value}
-      </Text>
+      </CyberText>
     </View>
   );
 }
@@ -178,14 +179,14 @@ function TicketButton({
         alignItems: "center",
         borderWidth: 1,
         borderColor: disabled ? `${palette.fg.muted}25` : `${activeColor}60`,
-        borderRadius: 16,
+        borderRadius: 0,
         borderCurve: "continuous",
         backgroundColor: disabled ? `${palette.fg.muted}10` : `${activeColor}10`,
         paddingVertical: 12,
         paddingHorizontal: 14,
       }}
     >
-      <Text
+      <CyberText
         selectable
         style={{
           color: disabled ? palette.fg.muted : activeColor,
@@ -197,7 +198,7 @@ function TicketButton({
         }}
       >
         {label}
-      </Text>
+      </CyberText>
     </Pressable>
   );
 }

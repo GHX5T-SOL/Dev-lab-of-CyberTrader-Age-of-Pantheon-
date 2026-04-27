@@ -1,7 +1,8 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { getNpc } from "@/data/npcs";
 import type { Mission } from "@/engine/types";
 import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
 
 interface MissionBannerProps {
   mission: Mission;
@@ -39,25 +40,25 @@ export default function MissionBanner({
         padding: 12,
       }}
     >
-      <Text style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
+      <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10 }}>
         {pending ? "INCOMING CONTACT" : "ACTIVE MISSION"} // {(mission.npcName || npc.name).toUpperCase()}
-      </Text>
-      <Text style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.text, fontSize: 12 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.text, fontSize: 12 }}>
         {mission.description}
-      </Text>
-      <Text style={{ marginTop: 6, fontFamily: terminalFont, color: urgent ? terminalColors.red : terminalColors.cyan, fontSize: 16 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: urgent ? terminalColors.red : terminalColors.cyan, fontSize: 16 }}>
         ETA {formatCountdown(remainingMs)}
-      </Text>
-      <Text style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
+      </CyberText>
+      <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.muted, fontSize: 10 }}>
         REWARD {mission.reward0Bol.toFixed(0)} 0BOL // XP {mission.rewardXp}
-      </Text>
+      </CyberText>
       {pending ? (
         <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
           <Pressable onPress={onAccept} style={{ borderWidth: 1, borderColor: terminalColors.cyan, paddingHorizontal: 10, paddingVertical: 7 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>[ ACCEPT ]</Text>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.cyan, fontSize: 11 }}>[ ACCEPT ]</CyberText>
           </Pressable>
           <Pressable onPress={onDecline} style={{ borderWidth: 1, borderColor: terminalColors.borderDim, paddingHorizontal: 10, paddingVertical: 7 }}>
-            <Text style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>[ DECLINE ]</Text>
+            <CyberText style={{ fontFamily: terminalFont, color: terminalColors.muted, fontSize: 11 }}>[ DECLINE ]</CyberText>
           </Pressable>
         </View>
       ) : null}

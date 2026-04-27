@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 const monoFamily = process.env.EXPO_OS === "ios" ? "Menlo" : "monospace";
 
@@ -29,7 +30,7 @@ export function DemoPhaseShell({
     >
       <View style={{ gap: 18 }}>
         <View style={{ gap: 8 }}>
-          <Text
+          <CyberText
             selectable
             style={{
               color: palette.accent.cyan,
@@ -40,8 +41,8 @@ export function DemoPhaseShell({
             }}
           >
             {eyebrow}
-          </Text>
-          <Text
+          </CyberText>
+          <CyberText
             selectable
             style={{
               color: palette.fg.primary,
@@ -50,13 +51,13 @@ export function DemoPhaseShell({
             }}
           >
             {title}
-          </Text>
-          <Text
+          </CyberText>
+          <CyberText
             selectable
             style={{ color: palette.fg.muted, fontSize: 15, lineHeight: 22 }}
           >
             {description}
-          </Text>
+          </CyberText>
         </View>
         {children}
       </View>

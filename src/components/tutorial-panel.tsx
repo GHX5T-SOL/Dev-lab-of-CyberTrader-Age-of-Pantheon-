@@ -1,8 +1,9 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import type { Position } from "@/engine/types";
 import { SectionCard } from "@/components/section-card";
 import { SystemLine } from "@/components/system-line";
 import { palette } from "@/theme/colors";
+import CyberText from "@/components/cyber-text";
 
 interface TutorialPanelProps {
   phase: "home" | "market";
@@ -22,9 +23,9 @@ export function TutorialPanel({
 
   return (
     <SectionCard eyebrow="tutorial" title={objective.title} tone={objective.tone}>
-      <Text selectable style={{ color: palette.fg.primary, lineHeight: 22 }}>
+      <CyberText selectable style={{ color: palette.fg.primary, lineHeight: 22 }}>
         {objective.detail}
-      </Text>
+      </CyberText>
       <View style={{ gap: 6 }}>
         {objective.lines.map((line) => (
           <SystemLine key={line} tone={objective.tone}>

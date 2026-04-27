@@ -1,7 +1,8 @@
-import { Pressable, Text, View, type ViewStyle } from "react-native";
+import { Pressable, View, type ViewStyle } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { terminalColors, terminalFont } from "@/theme/terminal";
+import CyberText from "@/components/cyber-text";
+import { terminalColors } from "@/theme/terminal";
 
 interface BurgerMenuProps {
   visible: boolean;
@@ -13,6 +14,7 @@ const ITEMS = [
   ["SETTINGS", "/menu/settings"],
   ["INVENTORY", "/menu/inventory"],
   ["MISSIONS", "/missions"],
+  ["MAP", "/map"],
   ["$ SHOP", "/shop"],
   ["PROGRESSION", "/menu/progression"],
   ["RANK / LEADERBOARD", "/menu/rank"],
@@ -55,13 +57,13 @@ export default function BurgerMenu({ visible, onClose }: BurgerMenuProps) {
       }}
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-        <Text style={{ fontFamily: terminalFont, fontSize: 10, color: terminalColors.muted }}>
+        <CyberText tone="muted" size={10}>
           NAVIGATION
-        </Text>
+        </CyberText>
         <Pressable onPress={onClose}>
-          <Text style={{ fontFamily: terminalFont, fontSize: 14, color: terminalColors.muted }}>
+          <CyberText tone="muted" size={14}>
             [X]
-          </Text>
+          </CyberText>
         </Pressable>
       </View>
       <View style={{ marginTop: 18 }}>
@@ -80,15 +82,14 @@ export default function BurgerMenu({ visible, onClose }: BurgerMenuProps) {
             })}
           >
             {({ pressed }) => (
-              <Text
+              <CyberText
                 style={{
-                  fontFamily: terminalFont,
                   fontSize: 14,
                   color: pressed ? terminalColors.cyan : terminalColors.text,
                 }}
               >
                 {label}
-              </Text>
+              </CyberText>
             )}
           </Pressable>
         ))}
