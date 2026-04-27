@@ -47,3 +47,12 @@ launchctl list | grep ai.cybertrader
 ~/.openclaw/cybertrader-runners/bin/cybertrader-agent-runner.sh zara
 ~/.openclaw/cybertrader-runners/bin/cybertrader-agent-runner.sh zyra
 ```
+
+## 2026-04-27 runner routing update
+
+Zara and Zyra now use a free-first resilient provider cascade on `brucewayne@100.117.148.52`:
+
+1. Goose CLI with OpenRouter free models, currently starting with `openai/gpt-oss-120b:free` and falling back through GLM, GPT-OSS 20B, Llama, Qwen, and Hermes free models.
+2. Optional paid CLI fallbacks are disabled by default. Set `OPENCLAW_ALLOW_PAID_CLI=1` only when Claude/Codex credits are intentionally available.
+3. If model routing is unavailable or a free model no-ops, the runner performs deterministic local maintenance (`npm run regression:monitor` or `npm run typecheck`), writes an automation run note, commits, pushes, and exits cleanly.
+4. The runner prompt now tells Goose to use shell tools (`rg`, `sed`, `cat`, `find`, `npm`, `git`) and avoid unavailable pseudo-tools such as `open_file` or `search`.
