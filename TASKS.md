@@ -74,6 +74,8 @@ Current native/store readiness blockers:
 
 ## Top P0 Work
 
+- **talon-p1-005** - Install and verify regression monitor LaunchAgent (complete)
+
 1. **Ghost** - release authority bar and architecture risk audit are complete; next Ghost work is first TestFlight/Play build-plan approval after Axiom QA evidence.
 2. **Zoro** - first 10-minute creative pass and Reel preview storyboard are complete; App Store screenshot/preview approval now waits on Axiom route evidence plus Palette source-provenance and icon/splash follow-ups.
 3. **Rune** - route hardening and EAS profiles are complete; persistence recovery remains in progress pending native cold-launch validation.
