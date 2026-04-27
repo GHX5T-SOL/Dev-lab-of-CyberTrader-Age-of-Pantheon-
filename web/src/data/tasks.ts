@@ -24,7 +24,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-26";
+export const LAST_UPDATED = "2026-04-27";
 
 function task(input: Task): Task {
   return input;
@@ -628,12 +628,15 @@ export const TASKS: Task[] = [
     id: "hydra-p0-001",
     owner: "hydra",
     title: "Build market swarm simulation plan for economy tuning before launch",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     dependencies: ["oracle-p0-001"],
     acceptanceCriteria: ["Agent archetypes are defined", "Simulation inputs are deterministic", "Reports feed Oracle tuning tasks"],
     tags: ["elizaos", "simulation", "economy"],
+    notes:
+      "Completed 2026-04-27. v6 docs/release/hydra-p0-001-market-swarm-simulation-plan.md defines five NPC market archetypes (whale, hft, faction, rumor, retail), reproducible swarmSeed/archetypeMix/tickCount inputs, a determinism contract that re-uses engine/prng.ts, a default Gate A swarm mix, and a metric table mapping each output to oracle-p0-002 launch tuning, oracle-p0-006 beta tuning, oracle-p0-003 economy stress, and nyx-p0-001/nyx-p0-002 first-session/pressure tasks. Implementation gate is a follow-up task; ElizaOS runtime hookup is explicitly out of scope here.",
+    links: [{ label: "Swarm simulation plan", href: `${v6}/blob/main/docs/release/hydra-p0-001-market-swarm-simulation-plan.md` }],
   }),
   task({
     id: "hydra-p1-002",

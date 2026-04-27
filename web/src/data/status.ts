@@ -58,6 +58,7 @@ export const STATUS: StatusBlock = {
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
+    "Hydra completed the market swarm simulation plan: five NPC archetypes (whale, hft, faction, rumor, retail), reproducible swarmSeed/archetypeMix/tickCount inputs, a determinism contract on engine/prng.ts, a default Gate A swarm mix, and a metric table feeding oracle launch/beta/stress tuning and nyx first-session/pressure tasks",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
     "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
@@ -119,5 +120,5 @@ export const STATUS: StatusBlock = {
       detail: "Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready, but screenshots, final preview video, source-provenance proof, icon/splash assets, public privacy policy, app metadata, and age rating answers are not submission-ready",
     },
   ],
-  updated: "2026-04-26",
+  updated: "2026-04-27",
 };
