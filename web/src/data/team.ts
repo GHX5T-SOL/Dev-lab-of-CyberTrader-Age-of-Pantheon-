@@ -41,11 +41,11 @@ export const TEAM: TeamMember[] = [
     role: "Lead Developer",
     pronouns: "he/him",
     persona:
-      "Skull-mask face-plate, black hoodie with reactive piping, slung assault rifle across the back. Moves quietly. Reads everything. Signs off on hard decisions.",
+      "Skull-mask face-plate, black hoodie with reactive piping, slung assault rifle across the back. Moves quietly. Reads everything. Sets the engineering taste bar.",
     description:
-      "Human founder and elite coder. Owns implementation quality, architecture, final technical sign-off, and the GitHub push to main.",
-    skills: ["Lead development", "Architecture", "Code review", "Ship signoff"],
-    activatesWhen: "Always present.",
+      "Human founder and elite coder. Serves as engineering reference persona while the autonomous team implements, checks, pushes, and updates the Dev Lab without waiting for manual approval.",
+    skills: ["Lead development", "Architecture", "Code review", "Engineering taste"],
+    activatesWhen: "Reference persona for high-impact architecture and release-quality decisions.",
     avatar: "/brand/avatars/ghost.png",
     glbModelPath: "/GLB_Assets/Avatar_ghost.glb",
     accent: "#00F5FF",
@@ -61,9 +61,9 @@ export const TEAM: TeamMember[] = [
     persona:
       "Swordsman silhouette — neo-hacker variant. Green head-wrap, cyber-katana sheathed across the back, wired gloves. Direct. Fast. Ships things.",
     description:
-      "Human co-founder and artistic visionary. Owns creative direction, mood, visual canon, asset quality, and final feel.",
+      "Human co-founder and artistic visionary. Serves as creative reference persona while Palette, Reel, Vex, Zara, and the Council keep shipping visual and lore upgrades autonomously.",
     skills: ["Creative direction", "Art review", "Mood", "Lore/brand feel"],
-    activatesWhen: "Always present.",
+    activatesWhen: "Reference persona for visual ladder, lore tone, and faction-art direction.",
     avatar: "/brand/avatars/zoro.png",
     glbModelPath: "/GLB_Assets/Avatar_zoro.glb",
     accent: "#67FFB5",
@@ -81,13 +81,13 @@ export const TEAM: TeamMember[] = [
     persona:
       "Server-room operator in matte carbon gear, violet signal cable looped around one arm, always watching the asset queue.",
     description:
-      "Concrete OpenClaw Living Agent on the secure Mac mini node. Handles persistent SSH setup, GLB compression/LOD work, Blender retargeting, and offline asset processing.",
-    skills: ["OpenClaw", "Blender queue", "GLB compression", "LOD generation", "SSH ops"],
-    activatesWhen: "Large local file operations, GLB optimization, long-running render or retarget jobs.",
+      "Concrete OpenClaw Living Agent on the secure Mac mini node. Handles v6 implementation support, asset provenance, build tooling, store-media pipeline work, and long-running local jobs.",
+    skills: ["OpenClaw", "Build tooling", "Asset provenance", "Store media", "SSH ops"],
+    activatesWhen: "Implementation, asset, provenance, SDK/toolchain, or local processing work needs a persistent runner.",
     avatar: "/brand/avatars/zara.png",
     glbModelPath: "/GLB_Assets/Avatar_zara.glb",
     accent: "#7A5BFF",
-    statusLine: "zyra-mini reachable over SSH. asset queue listening.",
+    statusLine: "Mac mini runner repairing gateway, upgrading OpenClaw, and resuming v6 build tasks.",
     agentFilePath: "agents/openclaw-living.md",
     node: "zyra-mini",
   },
@@ -101,13 +101,13 @@ export const TEAM: TeamMember[] = [
     persona:
       "Holographic operations specialist with acid-green diagnostic panels orbiting her shoulders. Watches heartbeat, sync, and Tailscale drift.",
     description:
-      "Concrete OpenClaw Living Agent on the secure Mac mini node. Watches GLB asset changes, syncs preview deploy readiness, monitors heartbeat logs, and queues future cinematics.",
-    skills: ["OpenClaw", "File watching", "Preview sync", "Heartbeat cron", "Tailscale health"],
-    activatesWhen: "Node health, file watchers, preview sync, heartbeat automation, long-running cinema jobs.",
+      "Concrete OpenClaw Living Agent on the secure Mac mini node. Watches runner health, v6 deployment checks, task-map drift, run logs, and stuck-agent recovery.",
+    skills: ["OpenClaw", "QA watcher", "Run ledger", "Deployment health", "Tailscale health"],
+    activatesWhen: "Node health, deployment monitoring, task sync, regression checks, or autonomous-run recovery.",
     avatar: "/brand/avatars/zyra.png",
     glbModelPath: "/GLB_Assets/Avatar_Zyra.glb",
     accent: "#67FFB5",
-    statusLine: "mac mini heartbeat observed. cron rack in standby.",
+    statusLine: "watching v6 deployment, task ledger, and stale-run recovery.",
     agentFilePath: "agents/openclaw-living.md",
     node: "zyra-mini",
   },

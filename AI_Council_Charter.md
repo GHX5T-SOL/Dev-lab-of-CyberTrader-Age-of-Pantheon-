@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The **AI Council** is the deliberative body for decisions that shape the game's direction, architecture, or economy. It prevents single-agent tunnel vision, surfaces trade-offs early, and produces a durable decision log Ghost and Zoro can audit.
+The **AI Council** is the deliberative body for decisions that shape the game's direction, architecture, or economy. It prevents single-agent tunnel vision, surfaces trade-offs early, and produces a durable decision log Ghost and Zoro can audit later without blocking the autonomous pipeline.
 
 ## Composition
 
@@ -14,8 +14,8 @@ The **AI Council** is the deliberative body for decisions that shape the game's 
   - *New cinematic*: Cinematic, UI/UX, Brand, Frontend, PM → (5)
   - *Technical architecture*: Backend, Frontend, Research, QA, PM, ElizaOS Swarm, OpenClaw → (7)
 - **Standing members** (present in every council): **Project Manager** (facilitator) + **Research & Best-Practices** (fact-checker).
-- **Ghost** (Lead Developer) and **Zoro** (Creative Lead) are non-voting observers with override authority.
-- **Zara and Zyra** are OpenClaw physical-layer operators on `ssh zyra-mini`. They can be invited for operational evidence, but they do not count toward Council quorum unless Ghost explicitly changes that rule.
+- **Ghost** (Lead Developer) and **Zoro** (Creative Lead) are non-voting observers and founder reference personas, not manual approval gates.
+- **Zara and Zyra** are OpenClaw physical-layer operators on `ssh brucewayne@100.117.148.52`. They can be invited for operational evidence and can execute council outcomes autonomously.
 
 ## When to convene
 
@@ -30,7 +30,7 @@ The **AI Council** is the deliberative body for decisions that shape the game's 
 | Adding a utility function | No |
 | Running a test | No |
 
-Rule of thumb: **if Ghost or Zoro would care about the decision in a month, convene the council.**
+Rule of thumb: **if the decision will still matter in a month, convene the council.**
 
 ## Format (conversational, single-session)
 
@@ -67,22 +67,23 @@ Dissent noted: [agent + reason, if any]
 
 - **Preferred: consensus** (all members agree or abstain).
 - **Fallback: simple majority** (≥4 of 7, ≥3 of 5).
-- **Tie-breaker: PM + Research** jointly decide. If still split, **escalate to Ghost**.
+- **Tie-breaker: PM + Research** jointly decide. If still split, pick the smaller reversible option, log dissent, and keep shipping.
 - **Dissent is logged**, never suppressed.
 
-## Escalation to Ghost / Zoro
+## Escalation and Human-Only Items
 
-Escalate when:
-- Decision touches **scope, brand, budget, legal, or ship date**.
-- Council is split 50/50 after a full round.
-- Any agent flags a **non-reversible** action (destructive DB op, force-push, public launch, token mint).
-- Any agent flags a **legal / regulatory** concern (tokens, gambling lookalikes, user data).
+Do not block normal development for Ghost/Zoro approval. Log a human-only item in `HUMAN_ACTIONS.md` only when:
+
+- a paid-budget decision is required;
+- account-owner credentials or store-console access are required;
+- an account-owner legal/privacy declaration is required;
+- a non-reversible action would be required.
 
 Escalation format:
 ```
-[ESCALATION] topic: … | options: A / B / C | council lean: … | recommendation: …
+[HUMAN_ACTION] topic: … | needed from human: … | autonomous fallback: …
 ```
-Short, in-line, never buried.
+Short, in-line, never buried. After logging it, choose another unblocked task.
 
 ## Decision log
 

@@ -6,7 +6,7 @@ This document records the provenance of all visual assets included in the **Cybe
 - **Edited** from original source files under a permissive license and stored in the `assets/` directory.
 - **Optimized** copies stored in `assets/optimized/` created by the `scripts/optimize-assets.mjs` pipeline.
 
-All assets have been cleared for commercial distribution and require **creative sign‑off** from the Zoro lead before proceeding to Gate C (Store Candidate).
+Assets are tracked for commercial distribution review. Creative iteration is now autonomous; Zoro feedback is optional and non-blocking unless a legal/account-owner declaration is required.
 
 ## Asset List
 | Asset Path | Description | Generation Method | License | Sign‑off Required |
@@ -21,7 +21,7 @@ All assets have been cleared for commercial distribution and require **creative 
 | `web/public/GLB_Assets/...` | 3D GLB assets for cinematics | Created by the Reel team, assets owned by GHX5T | Internal | ✅ |
 
 ## Next Steps
-1. **Zoro sign‑off** – Review the assets and confirm they meet creative direction.
+1. **Autonomous creative pass** – Palette/Reel/Zara may keep improving assets and store captures without waiting for Zoro taste review.
 2. **Palette review** – Verify that all generated assets match the brand guidelines.
 3. Once signed off, update the store metadata and move to Gate C.
 

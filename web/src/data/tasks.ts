@@ -66,6 +66,84 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Every completed task changes status in both sources", "Roadmap checkpoint changes are logged", "Commit message names owner agent"],
     tags: ["project-management", "living-doc"],
   }),
+  task({
+    id: "autonomy-p0-001",
+    owner: "talon",
+    title: "Activate no-human-approval autonomous build pipeline",
+    status: "doing",
+    priority: "P0",
+    estimate: "3h",
+    dependencies: ["studio-p0-002"],
+    acceptanceCriteria: [
+      "Ghost/Zoro approval gates are removed from active task truth",
+      "HUMAN_ACTIONS.md exists for account/legal/payment-only blockers",
+      "Zara/Zyra runner prompts tell agents to ship code, push, update Dev Lab, and continue",
+      "Autonomous automations are scheduled for ship, QA, roadmap, creative, and strategy loops",
+    ],
+    tags: ["automation", "openclaw", "autonomy", "no-approval"],
+  }),
+  task({
+    id: "rune-p0-006",
+    owner: "rune",
+    title: "Upgrade v6 toward Expo SDK 54 and store-toolchain compliance",
+    status: "todo",
+    priority: "P0",
+    estimate: "2d",
+    acceptanceCriteria: [
+      "Expo SDK 54 migration path is implemented or split into checked commits",
+      "Android target SDK compliance is proven for API 35+",
+      "iOS build path can prove Xcode 26 / iOS 26 SDK output",
+      "Edge-to-edge/native layout regressions are tested",
+    ],
+    tags: ["expo", "sdk-54", "native", "stores"],
+  }),
+  task({
+    id: "nyx-p1-004",
+    owner: "nyx",
+    title: "Design and implement AgentOS rank-5 faction unlock loop",
+    status: "todo",
+    priority: "P1",
+    estimate: "2d",
+    dependencies: ["nyx-p1-003"],
+    acceptanceCriteria: [
+      "Rank-5 unlock introduces faction choice with gameplay stakes",
+      "Faction reputation and mission hooks are deterministic",
+      "UI clearly distinguishes PirateOS from AgentOS",
+      "Tests cover unlock, faction choice, and persistence",
+    ],
+    tags: ["agentos", "factions", "progression", "gameplay"],
+  }),
+  task({
+    id: "oracle-p1-007",
+    owner: "oracle",
+    title: "Build deterministic limit-order and faction-pressure economy interfaces",
+    status: "todo",
+    priority: "P1",
+    estimate: "2d",
+    dependencies: ["nyx-p1-004"],
+    acceptanceCriteria: [
+      "LimitOrder types and engine behavior are serializable and deterministic",
+      "Faction pressure can alter markets without impossible states",
+      "Regression harness covers order execution and cancellation",
+    ],
+    tags: ["economy", "limit-orders", "factions", "engine"],
+  }),
+  task({
+    id: "pantheon-p2-001",
+    owner: "hydra",
+    title: "Prototype PantheonOS rank-20 territory map and shard-memory shell",
+    status: "todo",
+    priority: "P2",
+    estimate: "3d",
+    dependencies: ["nyx-p1-004", "oracle-p1-007"],
+    acceptanceCriteria: [
+      "TerritoryNode, TerritoryEvent, Crew, and ShardMemory interfaces exist",
+      "PantheonOS route/surface is feature-flagged until playable",
+      "Territory state modifies at least one market or mission outcome",
+      "Fallback UI works on mobile without WebGL dependency",
+    ],
+    tags: ["pantheonos", "territory", "late-game", "mmorpg-lite"],
+  }),
 
   task({
     id: "ghost-p0-001",
@@ -74,9 +152,9 @@ export const TASKS: Task[] = [
     status: "done",
     priority: "P0",
     estimate: "2h",
-    acceptanceCriteria: ["Release blockers are explicit", "Direct-to-main automation criteria are accepted", "Ghost sign-off gates are documented for App Store submission"],
+    acceptanceCriteria: ["Release blockers are explicit", "Direct-to-main automation criteria are accepted", "Full-autonomy rules replace Ghost sign-off gates for implementation work"],
     tags: ["lead-dev", "release", "governance"],
-    notes: "Completed 2026-04-26. v6 release authority bar documents release blockers, direct-to-main automation criteria, blocked operations, and Gate A/B/C Ghost sign-off rules.",
+    notes: "Completed 2026-04-26 and superseded 2026-04-28 by the full-autonomy directive. v6 release authority bar documents release blockers, direct-to-main criteria, and blocked operations; implementation no longer waits for Ghost/Zoro approval.",
     links: [{ label: "Release authority bar", href: `${v6}/blob/main/docs/release/ghost-p0-001-release-authority.md` }],
   }),
   task({
@@ -132,9 +210,9 @@ export const TASKS: Task[] = [
     status: "done",
     priority: "P0",
     estimate: "1d",
-    acceptanceCriteria: ["Boot/login/tutorial/first trade tone is approved", "Weak copy or visual beats are listed", "Required art polish tasks are assigned"],
+    acceptanceCriteria: ["Boot/login/tutorial/first trade tone has a usable baseline", "Weak copy or visual beats are listed", "Required art polish tasks are assigned for autonomous execution"],
     tags: ["creative", "first-session", "v6"],
-    notes: "Completed 2026-04-26. v6 first 10-minute journey is approved for Gate A with follow-up polish for cue readability, screenshot staging, and store-capture art direction.",
+    notes: "Completed 2026-04-26. v6 first 10-minute journey has a Gate A creative baseline with follow-up polish for cue readability, screenshot staging, and store-capture art direction. Future polish does not wait for human approval.",
     links: [{ label: "Creative pass note", href: `${v6}/blob/main/docs/release/zoro-p0-001-first-journey-creative-pass.md` }],
   }),
   task({
@@ -147,7 +225,7 @@ export const TASKS: Task[] = [
     dependencies: ["reel-p0-001", "palette-p0-001"],
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
-    notes: "Reel preview storyboard and capture plan are complete, Palette's current-asset audit is complete, the Dev Lab provenance report is ready for review, and zara-p1-005 generated provenance is complete. Zoro final approval now waits on final screenshot/preview review and Palette sign-off.",
+    notes: "Reel preview storyboard and capture plan are complete, Palette's current-asset audit is complete, and the Dev Lab provenance report is ready. Agents should keep iterating screenshots/preview media; only account/legal items belong in HUMAN_ACTIONS.md.",
   }),
   task({
     id: "zoro-p1-003",
@@ -343,8 +421,9 @@ export const TASKS: Task[] = [
     dependencies: ["kite-p0-001"],
     acceptanceCriteria: ["No wallet required for first playable launch", "Recovery limitations are explicit", "Privacy review notes are captured"],
     tags: ["auth", "privacy", "stores"],
-    notes: "Completed 2026-04-28. v6 now has a shared launch identity contract, LocalAuthority-safe profile input, player-facing local recovery disclosure, and tests proving first playable launch requires no wallet, backend account, or payment method. npm run ship:check passed with safety scan, typecheck, 139/139 Jest tests in 30 suites, and Expo web export.",
-    links: [{ label: "Launch identity note", href: `${v6}/blob/main/docs/release/kite-p0-002-launch-identity-recovery.md` }],
+    notes:
+      "Completed 2026-04-28. v6 commit 747ff72 adds the shared launch identity contract, LocalAuthority-safe profile input, player-facing local recovery disclosure, legal/settings copy updates, tests, and SuperDesign context for no-wallet first launch. npm run ship:check passed with 139/139 tests in 30 suites plus Expo web export.",
+    links: [{ label: "Launch identity recovery note", href: `${v6}/blob/main/docs/release/kite-p0-002-launch-identity-recovery.md` }],
   }),
   task({
     id: "kite-p1-003",
@@ -411,9 +490,9 @@ export const TASKS: Task[] = [
     status: "done",
     priority: "P0",
     estimate: "1d",
-    acceptanceCriteria: ["30-second store preview beat sheet exists", "Capture routes are named", "Zoro approval checklist is ready"],
+    acceptanceCriteria: ["30-second store preview beat sheet exists", "Capture routes are named", "Preview can be iterated without human approval"],
     tags: ["cinematic", "store-assets", "marketing"],
-    notes: "Completed 2026-04-26. v6 now has a 30-second App Store preview beat sheet, named capture route map, store-safety rules, staged data needs, and Zoro approval checklist, backed by a SuperDesign trailer capture board.",
+    notes: "Completed 2026-04-26. v6 now has a 30-second App Store preview beat sheet, named capture route map, store-safety rules, and staged data needs, backed by a SuperDesign trailer capture board. Human feedback is optional and non-blocking.",
     links: [
       { label: "Preview storyboard", href: `${v6}/blob/main/docs/release/reel-p0-001-app-store-preview-storyboard.md` },
       { label: "SuperDesign capture board", href: "https://p.superdesign.dev/draft/e900723e-1c80-4265-8221-b9c9fe7d15b2" },
@@ -432,7 +511,7 @@ export const TASKS: Task[] = [
   task({
     id: "reel-p1-003",
     owner: "reel",
-    title: "Prepare launch trailer script using Ghost/Zoro-approved tone",
+    title: "Prepare launch trailer script using CyberTrader founder-tone references",
     status: "todo",
     priority: "P1",
     estimate: "1d",
@@ -448,10 +527,10 @@ export const TASKS: Task[] = [
     status: "done",
     priority: "P0",
     estimate: "1d",
-    acceptanceCriteria: ["Every asset has source/ownership notes", "Low-resolution assets are flagged", "Store screenshots use approved assets only"],
+    acceptanceCriteria: ["Every asset has source/ownership notes", "Low-resolution assets are flagged", "Store screenshots use provenance-clean assets"],
     tags: ["assets", "licensing", "store"],
     notes:
-      "Completed 2026-04-26. v6 docs/release/palette-p0-001-asset-audit.md inventories commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, icon/splash gaps, and responsive QA captures. Dev Lab docs/provenance-report.md and the zara-p1-005 generated provenance workflow are ready for review; final Zoro/Palette sign-off remains required before Gate C.",
+      "Completed 2026-04-26. v6 docs/release/palette-p0-001-asset-audit.md inventories commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, icon/splash gaps, and responsive QA captures. Dev Lab docs/provenance-report.md is ready; zara-p1-005 remains an AI-owned provenance workflow.",
     links: [{ label: "Store asset audit", href: `${v6}/blob/main/docs/release/palette-p0-001-asset-audit.md` }],
   }),
   task({
@@ -465,7 +544,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Asset list is complete", "Files are optimized for Expo", "Brand guidelines are updated"],
     tags: ["brand", "icons", "spritecook"],
     notes:
-      "Completed 2026-04-26. v6 now has internally generated placeholder icon, adaptive icon, splash, and favicon assets wired in app.json via npm run generate:brand. Zoro creative sign-off remains required before Gate C.",
+      "Completed 2026-04-26. v6 now has internally generated placeholder icon, adaptive icon, splash, and favicon assets wired in app.json via npm run generate:brand. Agents may replace/polish these autonomously before Gate C.",
     links: [{ label: "Icon/splash placeholder assets", href: `${v6}/tree/main/assets/brand` }],
   }),
   task({
@@ -479,7 +558,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Market, terminal, mission, inventory, and profile captures are staged", "No debug UI appears", "Copy is final enough for review"],
     tags: ["screenshots", "store", "visual-qa"],
     notes:
-      "Completed 2026-04-28. v6 commit 2d1d03c adds npm run capture:screenshots, replaces the 1x1 placeholder generator with a real Playwright capture utility, and commits six 1242x2688 PNG captures under assets/screenshots for home, terminal, market, missions, inventory, and profile; 02ea079 syncs the SuperDesign context. Final Zoro/Palette store approval remains required.",
+      "Completed 2026-04-28. v6 commit 2d1d03c adds npm run capture:screenshots, replaces the 1x1 placeholder generator with a real Playwright capture utility, and commits six 1242x2688 PNG captures under assets/screenshots for home, terminal, market, missions, inventory, and profile; 02ea079 syncs the SuperDesign context. Agents may keep improving captures without human approval.",
     links: [
       { label: "Screenshot preset note", href: `${v6}/blob/main/docs/release/palette-p1-003-screenshot-presets.md` },
       { label: "Generated captures", href: `${v6}/tree/main/assets/screenshots` },
@@ -596,10 +675,10 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["v6 issues exist for P0/P1 tasks", "Owners/labels map to agents", "Dev Lab links to v6 issues"],
     tags: ["github", "task-board", "v6"],
     notes:
-      "Completed 2026-04-28. v6 issues #2-#6 now batch the active P0/P1 App Store readiness work across native QA/build evidence, store media sign-off, authority/policy decisions, retention simulations, and automation/run-ledger operations. The repo currently has only default GitHub labels, so owner/priority mapping is recorded in each issue body.",
+      "Completed 2026-04-28. v6 issues #2-#6 now batch the active P0/P1 App Store readiness work across native QA/build evidence, store media, authority/policy decisions, retention simulations, and automation/run-ledger operations. The repo currently has only default GitHub labels, so owner/priority mapping is recorded in each issue body.",
     links: [
       { label: "Native QA/build evidence", href: `${v6}/issues/2` },
-      { label: "Store media sign-off", href: `${v6}/issues/3` },
+      { label: "Store media work", href: `${v6}/issues/3` },
       { label: "Authority and policy", href: `${v6}/issues/4` },
       { label: "Retention simulations", href: `${v6}/issues/5` },
       { label: "Automation and run ledger", href: `${v6}/issues/6` },
@@ -614,7 +693,7 @@ export const TASKS: Task[] = [
     estimate: "1h/week",
     acceptanceCriteria: ["Decision log updated", "Blockers rerouted", "Next-week scope is cut to what can ship"],
     tags: ["council", "cadence", "planning"],
-    notes: "Weekly run logged 2026-04-26. Next-week scope is native QA evidence, cold-launch persistence validation, build-plan approval, Supabase/policy decisions, store capture direction, and rollback protocol.",
+    notes: "Weekly run logged 2026-04-26. Next-week scope is native QA evidence, cold-launch persistence validation, autonomous build-plan execution, Supabase/policy decisions, store capture direction, and rollback protocol.",
   }),
 
   task({
@@ -649,7 +728,7 @@ export const TASKS: Task[] = [
     estimate: "3h",
     acceptanceCriteria: ["Revert command path is documented", "Bad commit detection signals exist", "Escalation channel is clear"],
     tags: ["incident", "ops", "automation"],
-    notes: "Completed 2026-04-26. v6 now has docs/release/talon-p1-003-rollback-incident-protocol.md covering P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure, TestFlight/Play/EAS native rollback (Gate B+), escalation contacts (Ghost is sole release authority), autonomous agent obligations (stop-log-revert-document), and post-incident note template in docs/automation-runs/. Validated: typecheck pass, 73/73 Jest in 23 suites, health:live HTTP 200.",
+    notes: "Completed 2026-04-26. v6 now has docs/release/talon-p1-003-rollback-incident-protocol.md covering P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure, TestFlight/Play/EAS native rollback (Gate B+), autonomous rollback/fix obligations, and post-incident note template in docs/automation-runs/. Validated: typecheck pass, 73/73 Jest in 23 suites, health:live HTTP 200.",
     links: [{ label: "Rollback protocol", href: `${v6}/blob/main/docs/release/talon-p1-003-rollback-incident-protocol.md` }],
   }),
   task({
@@ -690,8 +769,8 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["At least 5 player archetypes exist", "Churn triggers are logged", "Game Designer receives tuning recommendations"],
     tags: ["retention", "simulation", "soft-launch"],
     notes:
-      "Completed 2026-04-28. v6 commit 2957a6a adds npm run retention:beta, a deterministic first-20 beta retention harness, and docs/release/hydra-p1-002-retention-churn-scenarios.md. All cohorts stay above the 62% D1 floor with 0 impossible states and watch-level churn triggers for Nyx, Oracle, and Vex.",
-    links: [{ label: "Retention scenarios", href: `${v6}/blob/main/docs/release/hydra-p1-002-retention-churn-scenarios.md` }],
+      "Completed 2026-04-28. v6 commit 2957a6a adds npm run retention:beta, five first-20-player retention personas, four deterministic beta cohorts, churn trigger scoring, and Game Designer handoff recommendations. Validation: retention:beta passed; ship:check passed with 133/133 Jest tests in 29 suites and Expo web export.",
+    links: [{ label: "Retention/churn scenarios", href: `${v6}/blob/main/docs/release/hydra-p1-002-retention-churn-scenarios.md` }],
   }),
 
   task({
@@ -743,15 +822,14 @@ export const TASKS: Task[] = [
   task({
     id: "zara-p1-005",
     owner: "zara",
-    title: "Complete store-media provenance workflow for v6 assets",
+    title: "Complete repeatable store-media provenance workflow for v6 assets",
     status: "done",
     priority: "P1",
     estimate: "4h",
-    dependencies: ["palette-p0-001", "palette-p1-003", "reel-p0-001"],
-    acceptanceCriteria: ["No 3D office-only roots are active", "Store screenshot and trailer media roots are inventoried", "Zoro/Palette review hooks are explicit"],
-    tags: ["assets", "provenance", "store-assets"],
+    acceptanceCriteria: ["No 3D office-only work remains active", "Pipeline supports store screenshots/trailer", "Human feedback hooks are optional and non-blocking"],
+    tags: ["assets", "spritecook", "pipeline"],
     notes:
-      "Completed 2026-04-28. v6 commit 2549e8d adds npm run provenance:assets and npm run provenance:assets:check, expands assets/provenance.json to 37 store-relevant media records with hashes, dimensions, ownership, clearance, and store-use scope, and documents remaining Zoro/Palette sign-off gates.",
+      "Completed 2026-04-28. v6 commit 2549e8d adds recursive asset provenance generation/check scripts and 37-asset inventory coverage; follow-up a065fd3 aligns store-media clearance language with the full-autonomy policy. npm run provenance:assets:check and npm run ship:check passed.",
     links: [{ label: "Asset provenance workflow", href: `${v6}/blob/main/docs/release/zara-p1-005-asset-provenance-workflow.md` }],
   }),
 

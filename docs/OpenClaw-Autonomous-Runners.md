@@ -15,9 +15,9 @@ Jobs:
 Each cycle:
 1. Syncs both repos.
 2. Reads Dev Lab lore, AI Council docs, roadmap, and task map.
-3. Chooses one high-value unblocked task.
+3. Chooses one high-value unblocked task, or invents the next useful v6 improvement when the board is empty.
 4. Changes the v6 game repo.
-5. Updates Dev Lab task/roadmap/run notes.
+5. Updates Dev Lab task/roadmap/run notes and `HUMAN_ACTIONS.md` for account/legal/payment-only blockers.
 6. Runs relevant checks.
 7. Commits and pushes to GitHub.
 
@@ -31,6 +31,8 @@ Current stability policy:
 - The runner's lock cleanup only runs in the top-level process, preventing timeout/watchdog helpers from clearing the global lock mid-run.
 - The runner tries Codex `gpt-5.5`, then `gpt-5.4`, then `gpt-5.4-mini`, then Claude Code fallback.
 - Each backend attempt is capped at 45 minutes so a stuck model call does not freeze a full shift.
+- Ghost/Zoro/human approval is not required for normal implementation, design, lore, asset, automation, or roadmap work.
+- Human-only account, credential, legal, or payment items are logged and never stop the runners from choosing another task.
 
 Current known provider state:
 - The OpenAI API key is present and `/v1/models` succeeds.
@@ -56,3 +58,16 @@ Zara and Zyra now use a free-first resilient provider cascade on `brucewayne@100
 2. Optional paid CLI fallbacks are disabled by default. Set `OPENCLAW_ALLOW_PAID_CLI=1` only when Claude/Codex credits are intentionally available.
 3. If model routing is unavailable or a free model no-ops, the runner performs deterministic local maintenance (`npm run regression:monitor` or `npm run typecheck`), writes an automation run note, commits, pushes, and exits cleanly.
 4. The runner prompt now tells Goose to use shell tools (`rg`, `sed`, `cat`, `find`, `npm`, `git`) and avoid unavailable pseudo-tools such as `open_file` or `search`.
+
+## 2026-04-28 full-autonomy update
+
+OpenClaw latest official release is `v2026.4.26`. Any Mac mini runtime older than this must be upgraded before the next stable runner window.
+
+Zara and Zyra now target daily visible v6 upgrades:
+
+- PirateOS polish and first-session clarity.
+- AgentOS rank-5 factions, missions, route map, reputation, and limit orders.
+- PantheonOS rank-20 territory map, shard memory, crew warfare, and seasonal dominance.
+- Store-media, provenance, SDK/toolchain, QA, and deployment readiness.
+
+If a model backend fails, the runner must fall back to another free model, then deterministic local maintenance, then still update Dev Lab and exit cleanly.

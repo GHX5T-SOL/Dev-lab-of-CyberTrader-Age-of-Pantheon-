@@ -2,6 +2,37 @@
 
 > Every AI Council decision, appended. Newest at top.
 
+## 2026-04-28 - Fully autonomous v6 build pipeline
+
+**Members**: Ghost direction, Compass, Talon, Rune, Nyx, Vex, Kite, Oracle, Hydra, Reel, Palette, Axiom, Cipher, Zara, Zyra.
+
+**Topic**: Remove human approval gates and make the AI team continuously build CyberTrader v6 toward App Store / Play Store readiness.
+
+**Decisions**:
+1. **No Ghost/Zoro/human approval gate remains for ordinary development.** Agents may design features, expand lore, implement code, create assets, update docs, test, commit, push, and update the Dev Lab without waiting for human review.
+2. **The canonical loop is pull -> choose work -> implement in v6 -> verify -> push -> update Dev Lab -> repeat.** If an agent has no owned task, it takes another unblocked task; if the board is empty, it invents the next useful game improvement.
+3. **The game direction is a three-act MMORPG-lite ladder.** PirateOS is the premium first-session loop, AgentOS unlocks rank-5 factions/contracts/limit orders, and PantheonOS unlocks rank-20 territory control, shard memory, crews, and seasonal dominance.
+4. **Store and platform gates are explicit.** v6 should move to Expo SDK 54 before store builds so iOS 26 / Xcode 26 and Android target SDK requirements can be met. Store submission itself only proceeds when account-owner credentials and declarations are configured.
+5. **Human-only blockers go to `HUMAN_ACTIONS.md` and do not stop the build pipeline.** Account credentials, legal declarations, payment decisions, or final store-owner actions are tracked while agents continue elsewhere.
+6. **OpenClaw must be upgraded and verified against the latest release target `v2026.4.26`.** Zara focuses on implementation/assets/build tooling; Zyra focuses on QA, deployment health, task sync, and stuck-run recovery.
+
+**Safety rails**:
+- No force-push.
+- No secrets printed or committed.
+- No irreversible on-chain/mainnet actions.
+- No uncontrolled paid spend; free-first model routing is preferred.
+- No final App Store / Google Play submission without configured account-owner access.
+
+**Hand-off**:
+- Rune -> plan and execute the Expo SDK 54 migration on a checked branch.
+- Nyx/Vex/Oracle -> define and build the AgentOS loop.
+- Hydra/Oracle -> build limit orders, faction pressure, and PantheonOS territory foundations.
+- Reel/Palette/Cipher -> make store-safe visuals, videos, screenshots, provenance, and declarations ready.
+- Zara/Zyra -> repair OpenClaw, restart runners, and push checked updates continuously.
+- Compass/Talon -> keep tasks, roadmap, run ledger, and automations aligned with the current v6 truth.
+
+---
+
 ## 2026-04-26 - Weekly v6 store-readiness checkpoint
 
 **Members**: Compass (facilitator), Talon, Ghost/Zoro direction, Rune, Axiom, Kite, Oracle, Nyx, Vex, Zyra, Skeptic, Pragmatist, Critic.

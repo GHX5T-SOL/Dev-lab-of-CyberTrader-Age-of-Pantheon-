@@ -1,4 +1,4 @@
-# OpenClaw Mac mini Health - 2026-04-25
+# OpenClaw Mac mini Health - 2026-04-28
 
 Node: `brucewayne@100.117.148.52` over Tailscale
 Host: `Bruces-Mac-mini.local`
@@ -22,7 +22,9 @@ export PATH="/usr/local/bin:/Users/brucewayne/.local/bin:/opt/homebrew/bin:/usr/
 - Installed before update: `OpenClaw 2026.4.23 (a979721)`
 - Latest official GitHub release checked by API: `v2026.4.24`
 - Latest release URL: `https://github.com/openclaw/openclaw/releases/tag/v2026.4.24`
-- Installed after update: `OpenClaw 2026.4.24 (cbcfdf6)`
+- Latest official release checked by API on 2026-04-28: `v2026.4.26`
+- Current check before repair: Mac mini still reports `OpenClaw 2026.4.24 (cbcfdf6)` and gateway `/ready` is down.
+- Required update target: `OpenClaw 2026.4.26`
 - Runtime Node: user-local `v22.22.2`
 - Gateway ProgramArguments now point at:
   - `/Users/brucewayne/.local/node-current/bin/node`
@@ -62,8 +64,9 @@ Secrets were not printed or copied.
 
 ## Required Follow-up
 
-1. Resolve or intentionally defer the 38 OpenClaw skill requirement gaps.
-2. Run `openclaw security audit --deep` in a bounded session.
-3. Let Zara/Zyra complete first v6 cron runs and verify commits/logs.
-4. Log every autonomous run to `docs/automation-runs/YYYY-MM-DD.md`.
-5. Move long-lived secrets out of launchd-readable environment output where possible.
+1. Upgrade OpenClaw to `v2026.4.26`, restart gateway, and verify `/ready`.
+2. Restart Zara/Zyra launchd jobs and verify neither is stuck behind a stale global lock.
+3. Resolve or intentionally defer the remaining OpenClaw skill requirement gaps.
+4. Run `openclaw security audit --deep` in a bounded session.
+5. Log every autonomous run to `docs/automation-runs/YYYY-MM-DD.md`.
+6. Move long-lived secrets out of launchd-readable environment output where possible.

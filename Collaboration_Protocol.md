@@ -4,8 +4,8 @@
 
 ## The team
 
-- **Ghost** — founder, Lead Developer, elite human coder, final authority on implementation quality, architecture, and ship sign-off.
-- **Zoro** — co-founder, Creative Lead, artistic visionary, final authority on mood, brand feel, lore presentation, and visual quality.
+- **Ghost** — founder, Lead Developer, elite human coder, engineering reference persona and optional observer. Not a manual approval gate for autonomous implementation.
+- **Zoro** — co-founder, Creative Lead, artistic visionary, creative reference persona and optional observer. Not a manual approval gate for autonomous design, lore, asset, or visual work.
 - **AI Orchestrator (Claude)** — default assistant in every session; routes work to subagents, chairs councils, enforces [Prompt_Guidelines.md](Prompt_Guidelines.md).
 - **12 Subagents** — see [agents.md](agents.md).
 - **Zara + Zyra** — concrete OpenClaw Living Agents on `ssh brucewayne@100.117.148.52` over Tailscale. Zara owns v6 implementation/asset ops; Zyra owns node watch, deployment health, task sync, and autonomous run ledgers.
@@ -111,31 +111,32 @@ Council: yes (docs/Decision-Log.md#2026-04-22-fdst-event)
 
 ## Autonomous v6 execution mode
 
-As of 2026-04-25, Ghost has authorized autonomous agents to work continuously on CyberTrader v6 app-store readiness.
+As of 2026-04-28, the project runs in full-autonomous mode. Ghost and Zoro are no longer manual approval gates for normal development.
 
 Rules:
 
 - Pull before work.
-- Pick the highest-priority unblocked task from `TASKS.md` / `docs/V6-App-Store-Readiness-Task-Map.md`.
+- Pick the highest-priority unblocked task from `TASKS.md` / `docs/V6-App-Store-Readiness-Task-Map.md`. If no assigned task is available, take another agent's task; if the board is empty, invent the next useful game improvement.
 - Implement one focused change.
 - Run relevant checks.
 - Update task and roadmap truth.
 - Commit with task ID and owner.
 - Push when checks pass.
 - Continue on the next task without waiting for human review.
+- Record account-owner, legal, credential, or paid-budget blockers in `HUMAN_ACTIONS.md` and keep working elsewhere.
 
-Hard stops remain: no force-push, no secrets, no on-chain/real-money actions, no production data deletion, and no dependency upgrade without verification.
+Hard stops remain: no force-push, no secrets, no on-chain/real-money actions, no production data deletion, no uncontrolled paid spend, no final store submission without configured account credentials/declarations, and no dependency upgrade without verification.
 
 ## Branching
 
-- `main` — always deployable. Autonomous agents may push here only when checks pass and the change is reversible.
+- `main` — always deployable. Autonomous agents should push here when checks pass and the change is reversible.
 - `phase-<N>-<slug>` — active phase branches, e.g. `phase-1-pirate-os`.
 - `feat/<scope>-<slug>` — short-lived feature branches off the phase branch.
 - `experiment/<slug>` — lives in `/playground/` — never merged to main.
 
 ## Pull requests
 
-Even solo, open a PR for any change that:
+Use short-lived branches for risky work, but do not wait for human review. Open or use a PR only when it helps checks/merge hygiene for a change that:
 - Adds a screen to main nav
 - Changes a public API contract
 - Touches brand, aesthetics, or economy values
@@ -161,8 +162,8 @@ See [memory/MEMORY.md](memory/MEMORY.md) for the index.
 ## Disagreement protocol
 
 - Agents disagree → council.
-- Council splits → escalate to Ghost.
-- Ghost + Zoro disagree → document both positions, take the smaller-blast-radius option, revisit in 7 days with new data.
+- Council splits → PM + Research choose the smaller reversible option and log dissent.
+- Ghost/Zoro feedback arrives → treat it as high-value input, not a blocker, unless it includes a legal/account-owner requirement.
 
 ## Cadence
 

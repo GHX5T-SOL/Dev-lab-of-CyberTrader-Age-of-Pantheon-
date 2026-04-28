@@ -70,10 +70,10 @@ The **AI Council** (see [AI_Council_Charter.md](AI_Council_Charter.md)) is a rot
 - **Hand-off to**: the agent who owns the failing area.
 
 ### 10. Project Manager & Roadmap Agent → [`agents/project-manager.md`](agents/project-manager.md)
-- **Role**: roadmap keeping, sprint cadence, unblock routing, decision logging.
+- **Role**: roadmap keeping, sprint cadence, autonomous unblock routing, decision logging.
 - **Activates when**: planning a sprint, slipping a deadline, escalating a block.
 - **Tools/skills**: `north-star-vision`, `stakeholder-alignment`, `team-workflow`, `design-review-process`.
-- **Hand-off to**: Ghost + Zoro for final calls.
+- **Hand-off to**: the owning implementation/QA/asset agent; human-only account/legal/payment items go to `HUMAN_ACTIONS.md`.
 
 ### 11. OpenClaw Living Agent → [`agents/openclaw-living.md`](agents/openclaw-living.md)
 - **Role**: governance/coordination persona for repo-embedded executors and long-running, real-world tasks (file ops, batch renames, cron jobs, local research).
@@ -97,7 +97,7 @@ These are not extra Council votes by default. They are concrete physical-layer a
 - **Node**: `ssh brucewayne@100.117.148.52` over Tailscale (`Bruces-Mac-mini.local`)
 - **Role**: persistent local executor for CyberTrader v6 implementation scouting, asset optimization, build-support jobs, and App Store readiness tasks. Legacy GLB/Blender work is now only active when it supports v6 store assets or trailers.
 - **Activates when**: an asset or 3D job is too heavy, too long-running, or too local for a chat session.
-- **Hand-off to**: Talon for governance, Palette/Reel for asset review, Ghost for final approval.
+- **Hand-off to**: Talon for governance, Palette/Reel for asset review, and direct v6 implementation when checks pass.
 
 ### Zyra — OpenClaw Node Watch
 - **Node**: `ssh brucewayne@100.117.148.52` over Tailscale (`Bruces-Mac-mini.local`)
@@ -115,7 +115,7 @@ Full rules: [Collaboration_Protocol.md](Collaboration_Protocol.md). Short versio
 2. **Council for non-trivial decisions.** 5–7 rotating members; consensus preferred, majority fallback.
 3. **Research before claim.** No "I think" without a cite or a verified source.
 4. **Hand-offs are explicit.** Use `→ [next-agent]: [what they need]` at the end of your output.
-5. **Ghost and Zoro have final say** on scope, brand, and ship decisions.
+5. **Full autonomy is active.** Ghost and Zoro are founder reference personas and optional observers; normal work does not wait for their approval. Account/legal/payment-only items are logged in `HUMAN_ACTIONS.md`.
 
 ---
 
