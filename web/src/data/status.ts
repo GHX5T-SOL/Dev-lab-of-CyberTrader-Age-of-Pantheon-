@@ -49,6 +49,7 @@ export const STATUS: StatusBlock = {
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
     "Kite completed the launch-safe identity/recovery model: first playable launch requires only a local handle, with no wallet, backend account, or payment method",
+    "Kite completed the store-safe wallet/token boundary review: shared Legal/Settings copy now has prohibited-claims tests for real-money, investment, regulated-market, prize, and signing-material language",
     "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 139/139 Jest tests",
     "Axiom completed launch performance budgets with npm run perf:budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001",
     "Axiom completed the player smoke route: npm run qa:smoke covers intro, login, tutorial, buy, sell, inventory, and settings on the rebuilt web export",
@@ -95,7 +96,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -115,7 +116,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store toolchain",
       state: "amber",
-      detail: "Cipher's requirements and policy matrix are complete; Gate B/C now needs Xcode 26 / iOS 26 SDK proof, Android targetSdkVersion 35 proof, public privacy policy, and final store declarations",
+      detail: "Cipher's requirements and policy matrix plus Kite's store-safety guard are complete; Gate B/C now needs Xcode 26 / iOS 26 SDK proof, Android targetSdkVersion 35 proof, public privacy policy, and final store declarations",
     },
     {
       label: "OpenClaw node",

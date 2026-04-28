@@ -440,11 +440,14 @@ export const TASKS: Task[] = [
     id: "kite-p1-004",
     owner: "kite",
     title: "Write security review for $OBOL naming, wallet flags, and non-custodial boundaries",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     acceptanceCriteria: ["No misleading real-money claims", "Wallet features are feature-flagged", "Store review copy avoids regulated promises"],
     tags: ["security", "legal", "web3"],
+    notes:
+      "Completed 2026-04-28. v6 commit c895318 adds a shared store-safety contract, reviewer-safe legal/settings copy, a prohibited-claims guard for real-money/investment/regulated-market/prize/signing-material language, and wallet flag tests proving signing stays disabled unless explicitly enabled. npm run ship:check passed with 144/144 tests in 31 suites plus Expo web export.",
+    links: [{ label: "Store-safe boundary review", href: `${v6}/blob/main/docs/release/kite-p1-004-store-safe-boundaries.md` }],
   }),
 
   task({
