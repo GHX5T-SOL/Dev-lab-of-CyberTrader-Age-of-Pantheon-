@@ -26,8 +26,8 @@ export const STATUS: StatusBlock = {
     "SupabaseAuthority is feature-flagged and its migration/RPC baseline is committed, but live Supabase project application and RLS validation are not confirmed",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
-    "Android store builds must prove targetSdkVersion 35 or higher; v6 package manifest and lockfile now target Expo SDK 54, but native EAS build evidence is still pending",
-    "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
+    "Android store builds must prove targetSdkVersion 35 or higher; v6 package manifest, lockfile, and installed package graph now align with Expo SDK 54, but native EAS build evidence is still pending",
+    "Expo toolchain transitive dependency advisories remain at moderate severity and need planned SDK/override remediation",
     "Final preview video, public privacy policy, age-rating answers, and store declarations still need account-owner input or implementation; human-only items are tracked in HUMAN_ACTIONS.md and do not block daily v6 work",
     "OpenClaw doctor/security audits can still exceed bounded sessions and report skill gaps; keep these checks time-limited and non-blocking",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
@@ -36,12 +36,13 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and passed force regression:check on 44ae679 after tuned strategy guidance shipped",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through c73d733 after SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
     "Rune started persistence reliability coverage: native storage save/load, reset clearing, and corrupt JSON recovery are covered by Jest and documented in v6",
     "Rune completed EAS profiles for preview, iOS simulator, internal, store, and production build paths",
+    "Rune partially completed rune-p0-006: v6 now has an Expo SDK 54-compatible package graph with React 19, React Native 0.81.5, Expo Router 6, Reanimated 4 Worklets, and Jest Expo 54",
     "Rune completed crash/log capture hooks with redacted local diagnostics and QA session context export; v6 ship:check passes with 123/123 Jest tests",
     "Oracle completed the 1000-seed economy replay harness with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, and median PnL 48.88",
     "Oracle completed launch tuning bands with 1000/1000 profitable sessions, median max Heat 60, 81 raid sessions, and zero low/medium/high-risk strategy issues",
@@ -72,6 +73,8 @@ export const STATUS: StatusBlock = {
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
+    "Oracle completed oracle-p1-009: GLCH now participates in the deterministic momentum-trader archetype and beta-tuned mirror while retention and swarm fixtures stay green",
+    "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; post-push monitor passed on c73d733",
     "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, and 93096a5; live smoke and qa:smoke both pass",
     "Zara pushed v6 fdd7160 with Obsidian, a rank-7 Eclipse Guild NPC, after OpenClaw repair restored active work on the Mac mini",
     "Codex pushed v6 49c1e49 to repair the Expo SDK 54 lockfile, track GLCH source/optimized art, refresh 39-asset provenance, and verify ship:check plus post-push regression:monitor",
@@ -95,12 +98,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 44ae679 with force regression:check green",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through c73d733 with post-push regression:monitor green",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 155/155 Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 157/157 Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -115,7 +118,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Dependency audit",
       state: "amber",
-      detail: "v6 package manifest and lockfile now target Expo SDK 54; npm audit still reports Expo toolchain transitive advisories, and native EAS output must prove Android API 35+ before Play Store submission",
+      detail: "v6 package manifest, lockfile, and installed package graph now align with Expo SDK 54; npm audit --omit=dev --audit-level=high exits 0, while npm audit still reports 14 moderate Expo-toolchain advisories and native EAS output must prove Android API 35+ before Play Store submission",
     },
     {
       label: "Store toolchain",

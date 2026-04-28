@@ -86,7 +86,7 @@ export const TASKS: Task[] = [
     id: "rune-p0-006",
     owner: "rune",
     title: "Upgrade v6 toward Expo SDK 54 and store-toolchain compliance",
-    status: "todo",
+    status: "doing",
     priority: "P0",
     estimate: "2d",
     acceptanceCriteria: [
@@ -96,6 +96,9 @@ export const TASKS: Task[] = [
       "Edge-to-edge/native layout regressions are tested",
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
+    notes:
+      "Partial 2026-04-29 in v6 68a8f74, final verified head c73d733: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 157/157 Jest tests in 33 suites plus web export, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
+    links: [{ label: "SDK 54 package alignment", href: `${v6}/blob/main/docs/release/rune-p0-006-sdk54-package-alignment.md` }],
   }),
   task({
     id: "nyx-p1-002",
@@ -138,7 +141,25 @@ export const TASKS: Task[] = [
     tags: ["agentos", "factions", "progression", "gameplay"],
   }),
   task({
-    id: "oracle-p1-007",
+    id: "oracle-p1-009",
+    owner: "oracle",
+    title: "Admit GLCH into deterministic momentum archetype path",
+    status: "done",
+    priority: "P1",
+    estimate: "2h",
+    dependencies: ["zara-p1-006", "nyx-p1-002"],
+    acceptanceCriteria: [
+      "GLCH is included in at least one player archetype mix",
+      "Beta tuning mirrors the GLCH-enabled archetype path",
+      "Archetype, retention, and swarm fixtures still pass viability gates",
+    ],
+    tags: ["economy", "glch", "archetypes", "retention"],
+    notes:
+      "Completed 2026-04-29 in v6 68a8f74, final verified head c73d733. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
+    links: [{ label: "GLCH archetype admission", href: `${v6}/blob/main/docs/release/oracle-p1-009-glch-archetype-admission.md` }],
+  }),
+  task({
+    id: "oracle-p1-010",
     owner: "oracle",
     title: "Build deterministic limit-order and faction-pressure economy interfaces",
     status: "todo",
@@ -159,7 +180,7 @@ export const TASKS: Task[] = [
     status: "todo",
     priority: "P2",
     estimate: "3d",
-    dependencies: ["nyx-p1-004", "oracle-p1-007"],
+    dependencies: ["nyx-p1-004", "oracle-p1-010"],
     acceptanceCriteria: [
       "TerritoryNode, TerritoryEvent, Crew, and ShardMemory interfaces exist",
       "PantheonOS route/surface is feature-flagged until playable",
@@ -772,7 +793,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["New main commits trigger checks", "Monitor state avoids duplicate runs", "LaunchAgent wiring is documented"],
     tags: ["automation", "regression", "launchd"],
     notes:
-      "Completed 2026-04-26. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist .git/regression-state.json, and include a Mac mini LaunchAgent template.",
+      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor pass verified c73d733.",
     links: [{ label: "Post-push regression note", href: `${v6}/blob/main/docs/release/talon-p1-004-post-push-regression.md` }],
   }),
 
