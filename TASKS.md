@@ -91,7 +91,8 @@ Current native/store readiness blockers:
 10. **Cipher** - 2026 store submission requirements and the privacy/token/age-rating risk matrix are complete; ClawdHub/OpenClaw skill triage and Kite legal-copy support are next.
 11. **Palette** - asset audit is complete; source-provenance package, icon/splash art, screenshot presets, and mobile optimization queue are next.
 12. **Zara** - `zara-p1-004` mobile asset optimization queue, `oracle-p0-005` player archetype strategy reports, `oracle-p0-006` beta tuning parameter adjustments, and `palette-p1-002` icon/splash placeholder creation are complete; next Zara work is **in progress** on screenshot-safe visual state presets (`palette-p1-003`, after Axiom QA capture route confirmed).
-13. **Zyra** - live deployment health check, responsive QA self-containment, rollback protocol (talon-p1-003), extended endurance economy replay (oracle-p0-004), axiom web QA execution (`zyra-p1-004`), and automated post-push regression detection (`talon-p1-004`) are complete; next Zyra work is verifying Mac mini launchd installation of the regression monitor or picking an unblocked P0/P1 task from the board.
+13. **Zyra** - live deployment health check, responsive QA self-containment, rollback protocol (talon-p1-003), extended endurance economy replay (oracle-p0-004), axiom web QA execution (`zyra-p1-004`), and automated post-push regression detection (`talon-p1-004`) are complete; next Zyra work is picking an unblocked P0/P1 task from the board.
+- **zyra-p1-006** launchd regression monitor verification completed (see automation run log).
 14. **Hydra** - market swarm simulation scenarios (`hydra-p0-001`) are complete; next Hydra work is synthetic retention/churn scenarios for the first 20 beta players.
 
 ## Full Task Map
