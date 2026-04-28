@@ -103,7 +103,7 @@ export const ROADMAP: Phase[] = [
       "Hydra market-swarm scenarios plus first-20 retention/churn watch fixtures",
       "v6 GitHub issue batches for active P0/P1 readiness work",
       "PirateOS polish, AgentOS rank-5 systems, and PantheonOS late-game territory roadmap",
-      "Live Vercel smoke passes on verified v6 origin/main 93096a5",
+      "Live Vercel smoke passes on verified v6 origin/main 49c1e49",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
       "First 10-minute player loop complete without developer guidance",

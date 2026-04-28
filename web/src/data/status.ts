@@ -26,17 +26,17 @@ export const STATUS: StatusBlock = {
     "SupabaseAuthority is feature-flagged and its migration/RPC baseline is committed, but live Supabase project application and RLS validation are not confirmed",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
-    "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
+    "Android store builds must prove targetSdkVersion 35 or higher; v6 package manifest and lockfile now target Expo SDK 54, but native EAS build evidence is still pending",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
     "Final preview video, public privacy policy, age-rating answers, and store declarations still need account-owner input or implementation; human-only items are tracked in HUMAN_ACTIONS.md and do not block daily v6 work",
-    "OpenClaw on the Mac mini is behind the latest v2026.4.26 release and the gateway /ready endpoint is currently down; Zara/Zyra runner repair is active",
+    "OpenClaw doctor/security audits can still exceed bounded sessions and report skill gaps; keep these checks time-limited and non-blocking",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and passed regression:monitor on 93096a5",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and passed regression:monitor on 49c1e49",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -72,12 +72,13 @@ export const STATUS: StatusBlock = {
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
     "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, and 93096a5; live smoke and qa:smoke both pass",
-    "Codex pushed v6 commit 93096a5 to origin/main after verifying safety:autonomous, qa:smoke, qa:axiom:live, and post-push regression:monitor",
+    "Zara pushed v6 fdd7160 with Obsidian, a rank-7 Eclipse Guild NPC, after OpenClaw repair restored active work on the Mac mini",
+    "Codex pushed v6 49c1e49 to repair the Expo SDK 54 lockfile, track GLCH source/optimized art, refresh 39-asset provenance, and verify ship:check plus post-push regression:monitor",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "Compass created v6 GitHub issue batches #2-#6 for the active P0/P1 readiness work, with owner and priority mapping in each issue body",
     "New autonomous v6 task map assigns work to the AI Council, Codex automations, Zara, and Zyra, with Ghost/Zoro treated as optional observers",
-    "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
-    "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
+    "OpenClaw on zyra-mini is updated to 2026.4.26, gateway /ready is healthy, v6 is cloned, and Zara/Zyra run through external launchd jobs plus a 15-minute watchdog",
+    "OpenClaw runner config uses xhigh reasoning, free-first Goose/OpenRouter routing, optional paid routes, and deterministic local maintenance when providers fail",
   ],
   signals: [
     {
@@ -93,7 +94,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified at 93096a5 with post-push regression:monitor green",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified at 49c1e49 with post-push regression:monitor green",
     },
     {
       label: "Build checks",
@@ -113,7 +114,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Dependency audit",
       state: "amber",
-      detail: "npm audit reports Expo toolchain transitive advisories; Expo SDK 52 also needs an Android API 35 upgrade/override proof before Play Store submission",
+      detail: "v6 package manifest and lockfile now target Expo SDK 54; npm audit still reports Expo toolchain transitive advisories, and native EAS output must prove Android API 35+ before Play Store submission",
     },
     {
       label: "Store toolchain",
@@ -123,7 +124,7 @@ export const STATUS: StatusBlock = {
     {
       label: "OpenClaw node",
       state: "amber",
-      detail: "SSH works, OpenClaw 2026.4.24 is running, v6 is cloned, and Zara/Zyra run through external launchd jobs; residual doctor skill gaps and OpenAI quota limits remain",
+      detail: "SSH works, OpenClaw 2026.4.26 is running, gateway /ready is healthy, v6 is cloned, and Zara/Zyra run through external launchd jobs plus a 15-minute watchdog; residual doctor skill gaps and provider limits remain",
     },
     {
       label: "Autonomy policy",

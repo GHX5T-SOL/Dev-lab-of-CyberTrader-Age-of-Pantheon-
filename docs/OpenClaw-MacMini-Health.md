@@ -33,7 +33,7 @@ export PATH="/usr/local/bin:/Users/brucewayne/.local/bin:/opt/homebrew/bin:/usr/
 
 ## Model Config
 
-The non-secret config summary showed:
+The legacy OpenClaw gateway config summary showed:
 
 - default primary model: `blockrun/openai/gpt-5.5`
 - fallback chain includes `gpt-5.4`, Claude Opus/Sonnet, `gpt-5.3-codex`, `o3`, Gemini, Grok
@@ -42,6 +42,8 @@ The non-secret config summary showed:
 - Zyra agent exists: `Zyra - CyberTrader PM/QA`
 - cron enabled with `maxConcurrentRuns: 2`
 - current config was re-touched by OpenClaw `2026.4.24` and still keeps `thinkingDefault: max` under agent defaults
+
+The active Zara/Zyra launchd runner does not depend on that paid-first gateway chain. It runs free-first Goose/OpenRouter models, only enables paid Claude/Codex when explicit environment flags are set, and falls back to deterministic local maintenance plus Dev Lab run notes when providers fail.
 
 Secrets were not printed or copied.
 

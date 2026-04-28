@@ -33,7 +33,7 @@ Current stability policy:
 - Runner locks are capped by `RUN_LOCK_MAX_AGE_SECONDS` so stuck model/backend calls do not freeze Zara/Zyra for a full day.
 - The launchd watchdog writes `openclaw-watchdog-status.json` under the runner state directory for quick gateway/version/job inspection.
 - The launchd watchdog does not restart an active agent process; it only starts missing or idle/exited jobs so long-running work is not interrupted every watchdog tick.
-- The runner tries Codex `gpt-5.5`, then `gpt-5.4`, then `gpt-5.4-mini`, then Claude Code fallback.
+- The runner tries Goose/OpenRouter free models first. Paid Claude/Codex fallbacks are disabled unless `OPENCLAW_ALLOW_PAID_CLI=1`; Codex use also requires `OPENCLAW_USE_OPENAI_CODEX=1`.
 - Each backend attempt is capped at 45 minutes so a stuck model call does not freeze a full shift.
 - Ghost/Zoro/human approval is not required for normal implementation, design, lore, asset, automation, or roadmap work.
 - Human-only account, credential, legal, or payment items are logged and never stop the runners from choosing another task.

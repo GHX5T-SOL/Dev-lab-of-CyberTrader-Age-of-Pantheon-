@@ -656,7 +656,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Smoke path can be repeated", "Failure output is actionable", "CI-friendly command exists"],
     tags: ["automation", "qa", "smoke"],
     notes:
-      "Completed 2026-04-28 and re-hardened in v6 93096a5. npm run qa:smoke builds the Expo web export and runs an intro -> login -> tutorial -> terminal -> buy -> wait-tick -> sell -> inventory -> settings/local identity recovery Playwright route. Commits 98f1623, daa33e9, ff7b7c3, and 93096a5 add the route, harden visible-text assertions/post-execute polling/runtime-error filtering, serve the app shell for direct SPA route fallbacks, and align the Settings marker with current LocalAuthority recovery copy. Validated with safety:autonomous, regression:monitor, qa:smoke, and qa:axiom:live.",
+      "Completed 2026-04-28 and re-hardened in v6 93096a5. npm run qa:smoke builds the Expo web export and runs an intro -> login -> tutorial -> terminal -> buy -> wait-tick -> sell -> inventory -> settings/local identity recovery Playwright route. Commits 98f1623, daa33e9, ff7b7c3, and 93096a5 add the route, harden visible-text assertions/post-execute polling/runtime-error filtering, serve the app shell for direct SPA route fallbacks, and align the Settings marker with current LocalAuthority recovery copy. Latest v6 head 49c1e49 keeps the route green. Validated with safety:autonomous, regression:monitor, qa:smoke, and qa:axiom:live.",
     links: [{ label: "Player smoke route note", href: `${v6}/blob/main/docs/release/axiom-p1-004-smoke-route.md` }],
   }),
 
@@ -835,8 +835,25 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["No 3D office-only work remains active", "Pipeline supports store screenshots/trailer", "Human feedback hooks are optional and non-blocking"],
     tags: ["assets", "spritecook", "pipeline"],
     notes:
-      "Completed 2026-04-28. v6 commit 2549e8d adds recursive asset provenance generation/check scripts and 37-asset inventory coverage; follow-up a065fd3 aligns store-media clearance language with the full-autonomy policy. npm run provenance:assets:check and npm run ship:check passed.",
+      "Completed 2026-04-28. v6 commit 2549e8d adds recursive asset provenance generation/check scripts and 37-asset inventory coverage; follow-up a065fd3 aligns store-media clearance language with the full-autonomy policy. Follow-up 49c1e49 refreshes provenance to 39 assets after GLCH source/optimized art landed. npm run provenance:assets:check and npm run ship:check passed.",
     links: [{ label: "Asset provenance workflow", href: `${v6}/blob/main/docs/release/zara-p1-005-asset-provenance-workflow.md` }],
+  }),
+  task({
+    id: "zara-p1-006",
+    owner: "zara",
+    title: "Ship Obsidian NPC, GLCH commodity art, and SDK 54 lockfile repair",
+    status: "done",
+    priority: "P1",
+    estimate: "4h",
+    dependencies: ["zara-p0-003", "hydra-p0-001"],
+    acceptanceCriteria: ["New content is tracked", "Asset provenance is current", "SDK manifest and lockfile agree", "Ship checks pass"],
+    tags: ["npc", "commodity", "sdk-54", "provenance"],
+    notes:
+      "Completed 2026-04-28. Zara pushed v6 fdd7160 adding Obsidian, a rank-7 Eclipse Guild NPC, and starting the SDK 54 manifest bump. Codex follow-up 49c1e49 repaired package-lock.json for Expo 54, generated and tracked Glitch Echo source/optimized art, refreshed assets/provenance.json to 39 assets, and added the Hydra market-swarm planning note. Validation: provenance:assets:check, ship:check, health:live, qa:axiom:live, and regression:monitor passed.",
+    links: [
+      { label: "Obsidian/GLCH commit", href: `${v6}/commit/fdd71600b385a821ac72bf82c01741da03ba5c19` },
+      { label: "SDK/provenance repair", href: `${v6}/commit/49c1e49841c3e9e21f28119508c3331a64eea49b` },
+    ],
   }),
 
   task({
@@ -860,7 +877,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-28 (run 20260428T215444Z-codex): v6 head 93096a5 is live-health green; health:live returned HTTP 200 with Vercel cache HIT; qa:axiom:live passed 1/1; qa:smoke passed 1/1 on rebuilt Expo web; regression:monitor passed typecheck, Jest, and health:live. Full native iOS/Android QA remains the next Gate B blocker.",
+    notes: "Monitor pass 2026-04-28: v6 head 49c1e49 is live-health green; health:live returned HTTP 200; qa:axiom:live passed 1/1; qa:smoke remains green on rebuilt Expo web; regression:monitor passed typecheck, Jest, and health:live. Full native iOS/Android QA remains the next Gate B blocker.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
@@ -888,7 +905,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Local web regression is automated", "Live deployment smoke is automated", "Native/store metadata gaps remain explicit"],
     tags: ["qa", "web", "automation"],
     notes:
-      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke waits for visible boot-shell markers, d5a0a83 widens readiness after the Rune diagnostics merge, and commits 98f1623/daa33e9/ff7b7c3/93096a5 add and harden the axiom-p1-004 player smoke route.",
+      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke waits for visible boot-shell markers, d5a0a83 widens readiness after the Rune diagnostics merge, commits 98f1623/daa33e9/ff7b7c3/93096a5 add and harden the axiom-p1-004 player smoke route, and 49c1e49 passed post-push regression:monitor.",
     links: [{ label: "Axiom web regression", href: `${v6}/blob/main/qa/axiom-web-regression.spec.ts` }],
   }),
   task({
