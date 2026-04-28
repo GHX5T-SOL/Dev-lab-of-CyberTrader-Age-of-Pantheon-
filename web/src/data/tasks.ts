@@ -24,7 +24,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-28";
+export const LAST_UPDATED = "2026-04-29";
 
 function task(input: Task): Task {
   return input;
@@ -96,6 +96,30 @@ export const TASKS: Task[] = [
       "Edge-to-edge/native layout regressions are tested",
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
+  }),
+  task({
+    id: "nyx-p1-002",
+    owner: "nyx",
+    title: "Apply Oracle beta tuning to live strategy guidance",
+    status: "done",
+    priority: "P1",
+    estimate: "1h",
+    dependencies: ["oracle-p0-006", "nyx-p0-001"],
+    acceptanceCriteria: [
+      "First-session cue names the tuned VBLM x15 starter path",
+      "Post-profit copy points players toward safe-cycle and momentum lanes",
+      "NPC and Help copy reinforce tuned strategy without store-risk language",
+      "Smoke, responsive, typecheck, and ship checks pass",
+    ],
+    tags: ["first-session", "strategy", "economy", "ux"],
+    notes:
+      "Completed 2026-04-29. v6 commits 103d680 and 44ae679 add engine/strategy-guidance.ts, live Heat-aware Oracle route cues, VBLM x15 starter default, Help/NPC hints, GLCH icon map coverage, and SuperDesign context. ship:check passed with 155/155 tests in 33 suites; qa:smoke, qa:responsive, qa:axiom:live, cleared web export, and post-push regression:monitor passed.",
+    links: [
+      { label: "Strategy guidance commit", href: `${v6}/commit/103d680a5f6139d763c1f6f03e5f79c9ffc49391` },
+      { label: "GLCH icon follow-up", href: `${v6}/commit/44ae67980666892585affb563ec7b1945d8c39ce` },
+      { label: "Nyx release note", href: `${v6}/blob/main/docs/release/nyx-p1-002-strategy-guidance.md` },
+      { label: "Oracle release note", href: `${v6}/blob/main/docs/release/oracle-p1-008-strategy-guidance.md` },
+    ],
   }),
   task({
     id: "nyx-p1-004",
