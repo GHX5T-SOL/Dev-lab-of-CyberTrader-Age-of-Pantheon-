@@ -30,7 +30,8 @@ Player-facing changes:
 - `npm run qa:smoke` - passed 1/1 local Chromium player route.
 - `npm run qa:responsive` - passed 4/4 viewport checks.
 - `npm run build:web` after GLCH icon map - passed and bundled `glitch_echo` as asset 29.
-- `npm run regression:monitor` - passed against `44ae67980666892585affb563ec7b1945d8c39ce` with typecheck, Jest, and `health:live`.
+- `npm run regression:monitor` - surfaced one transient `health:live` timeout during deployment propagation; immediate direct/live health retry returned HTTP 200 / Vercel HIT.
+- `npm run regression:check` - force mode passed against `44ae67980666892585affb563ec7b1945d8c39ce` with typecheck, Jest, and `health:live`.
 - `npm run health:live` - passed HTTP 200 / Vercel HIT.
 - `npm run qa:axiom:live` - first attempt timed out at `page.goto`; immediate rerun passed 1/1 in Chromium.
 
@@ -44,5 +45,10 @@ Updated:
 - `web/src/data/tasks.ts`
 - `web/src/data/roadmap.ts`
 - `web/src/data/status.ts`
+
+Dev Lab verification:
+
+- `npm run typecheck` from `web/` - passed after clearing `.next`.
+- `npm run build` from `web/` - passed after clearing `.next`, generating 25 static pages.
 
 No human-only account, credential, legal, payment, or final store-owner blockers were added.
