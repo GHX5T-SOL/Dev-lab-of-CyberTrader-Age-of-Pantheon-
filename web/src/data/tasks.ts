@@ -779,7 +779,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Local web regression is automated", "Live deployment smoke is automated", "Native/store metadata gaps remain explicit"],
     tags: ["qa", "web", "automation"],
     notes:
-      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke now waits for visible boot-shell markers.",
+      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke waits for visible boot-shell markers, and d5a0a83 widens the readiness timeout after the Rune diagnostics merge.",
     links: [{ label: "Axiom web regression", href: `${v6}/blob/main/qa/axiom-web-regression.spec.ts` }],
   }),
   task({

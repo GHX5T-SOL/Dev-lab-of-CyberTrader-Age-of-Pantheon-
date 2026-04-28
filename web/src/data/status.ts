@@ -60,7 +60,7 @@ export const STATUS: StatusBlock = {
     "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
-    "Zyra/Codex hardened the live Axiom smoke in v6 commit 5481191 after a stale networkidle wait timed out on an already-rendered Vercel shell",
+    "Zyra/Codex hardened the live Axiom smoke in v6 commits 5481191 and d5a0a83 after a stale networkidle wait timed out on an already-rendered Vercel shell",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
