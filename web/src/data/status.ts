@@ -72,6 +72,7 @@ export const STATUS: StatusBlock = {
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
     "Zyra/Codex hardened the live Axiom smoke in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, and ff7b7c3; live smoke and qa:smoke both pass",
+    "Codex pushed v6 commit 15308c9 to origin/main after verifying ship:check with 149/149 Jest tests and post-push live health HTTP 200",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "Compass created v6 GitHub issue batches #2-#6 for the active P0/P1 readiness work, with owner and priority mapping in each issue body",
     "New autonomous v6 task map assigns work to the AI Council, Codex automations, Zara, and Zyra, with Ghost/Zoro treated as optional observers",
@@ -92,12 +93,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and regression:monitor passed typecheck, Jest, and health:live on a065fd3",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified at 15308c9 with ship:check green",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 149/149 Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
