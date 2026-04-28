@@ -19,6 +19,8 @@ The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typeche
 
 The 2026-04-28 Codex monitor pass pushed v6 commit `5481191` for `zyra-p1-004`, hardening the live Axiom smoke by waiting for DOM content and visible CyberTrader boot-shell markers instead of `networkidle`; `d5a0a83` widens that readiness timeout after the diagnostics merge; `98f1623` adds the `axiom-p1-004` player smoke route; `daa33e9` hardens Axiom regression assertions; `ff7b7c3` hardens local static fallback for direct menu routes. Follow-up v6 commits `2d1d03c` and `02ea079` completed `palette-p1-003` screenshot-safe visual state presets with a real Playwright capture utility, six generated 1242x2688 route captures, and refreshed SuperDesign context. Commit `9c0559e` completed `rune-p1-005` crash/log capture hooks with safe redaction and a local QA diagnostics bridge. `compass-p0-002` created v6 GitHub issue batches [#2](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/2)-[#6](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/6) for active P0/P1 readiness work. Current validation is green: `npm run health:live`, `npm run qa:axiom:live`, `npm run qa:smoke`, `npm run capture:screenshots`, `npm run ship:check` with 123/123 Jest tests in 28 suites, and `npm run build:web`.
 
+The 2026-04-28 screenshot preset pass pushed v6 commits `2d1d03c` and `02ea079` for `palette-p1-003`: six real 1242 x 2688 PNG captures are staged for home, terminal, market, missions, inventory, and profile; `npm run capture:screenshots` now builds Expo web, serves `dist/`, completes local onboarding, captures the preset routes with Playwright, and rejects missing route markers, placeholder/tiny/wrong-dimension images, or browser errors. The SuperDesign capture context is synced at `https://p.superdesign.dev/draft/b11d6241-7779-4b80-bffb-846467843d92`. Final store screenshot approval still waits on Palette/Zoro source-provenance and creative sign-off.
+
 The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
 ## Phase 0 - Foundation (2026-04-19 -> 2026-04-25)
@@ -115,7 +117,7 @@ Required:
 
 - App Store screenshot captures generated and approved.
 - App Store preview storyboard and capture plan.
-- Source-cleared asset provenance, icon, splash, and approved screenshot-safe visual states.
+- Source-cleared asset provenance, icon/splash sign-off, and approved screenshot-safe visual states.
 - App preview video.
 - Store description, keywords, support URL, privacy policy copy, age rating notes.
 - Legal/security review of $OBOL naming, simulated trading, wallet flags, and data handling, using the completed Cipher policy matrix as baseline.

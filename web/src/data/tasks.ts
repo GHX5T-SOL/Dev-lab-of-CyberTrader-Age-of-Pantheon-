@@ -481,6 +481,7 @@ export const TASKS: Task[] = [
     links: [
       { label: "Screenshot preset note", href: `${v6}/blob/main/docs/release/palette-p1-003-screenshot-presets.md` },
       { label: "Generated captures", href: `${v6}/tree/main/assets/screenshots` },
+      { label: "SuperDesign capture draft", href: "https://p.superdesign.dev/draft/b11d6241-7779-4b80-bffb-846467843d92" },
     ],
   }),
 

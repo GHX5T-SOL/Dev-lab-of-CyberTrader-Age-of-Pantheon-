@@ -58,7 +58,7 @@ export const STATUS: StatusBlock = {
     "Reel completed the App Store preview storyboard, 30-second beat sheet, named capture routes, and Zoro approval checklist",
     "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
-    "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688",
+    "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688 and synced the SuperDesign capture context",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Zyra/Codex hardened the live Axiom smoke in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, and ff7b7c3; live smoke and qa:smoke both pass",
@@ -87,7 +87,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, live Axiom smoke, Palette screenshot capture, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, live Axiom smoke, Axiom player smoke, Palette screenshot capture, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",

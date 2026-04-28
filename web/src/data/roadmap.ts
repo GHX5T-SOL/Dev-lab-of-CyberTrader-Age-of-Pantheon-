@@ -131,6 +131,7 @@ export const ROADMAP: Phase[] = [
       { label: "Cipher policy risk matrix", done: true },
       { label: "Hydra market swarm scenarios", done: true },
       { label: "Rune crash/log capture hooks", done: true },
+      { label: "Axiom player smoke route", done: true },
       { label: "v6 GitHub issue batches", done: true },
       { label: "Axiom player smoke route", done: true },
       { label: "Web production smoke rerun", done: true },
@@ -169,8 +170,9 @@ export const ROADMAP: Phase[] = [
     summary: "Reach a submission-quality candidate.",
     deliverables: [
       "App Store preview storyboard and capture plan",
-      "App Store screenshots and preview video",
-      "Source-cleared asset provenance, icon, splash, and screenshot-safe visual states",
+      "App Store screenshot captures generated and approved",
+      "App preview video",
+      "Source-cleared asset provenance, icon/splash sign-off, and approved screenshot-safe visual states",
       "Store description, keywords, support URL, privacy copy, and age rating notes",
       "Legal/security review of $OBOL naming, simulated trading, wallet flags, and data handling using the completed Cipher policy matrix",
       "Final economy tuning",
@@ -180,6 +182,7 @@ export const ROADMAP: Phase[] = [
     milestones: [
       { label: "Preview storyboard and capture plan", done: true },
       { label: "Store asset audit", done: true },
+      { label: "Screenshot-safe visual presets", done: true },
       { label: "Policy risk matrix", done: true },
       { label: "Store metadata drafted", done: false },
       { label: "Preview video approved by Zoro", done: false },
