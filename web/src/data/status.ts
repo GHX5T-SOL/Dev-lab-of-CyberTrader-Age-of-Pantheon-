@@ -28,7 +28,7 @@ export const STATUS: StatusBlock = {
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
-    "Final screenshot approval, final preview video, public privacy policy, final age-rating answers, and store declarations are not ready; Reel's storyboard, Palette's asset audit, placeholder icon/splash art, screenshot captures, Cipher's policy matrix, and the Dev Lab provenance report are ready for review, but the zara-p1-005 provenance workflow still needs run/review/integration",
+    "Final screenshot approval, final preview video, public privacy policy, final age-rating answers, and store declarations are not ready; Reel's storyboard, Palette's asset audit, placeholder icon/splash art, screenshot captures, Cipher's policy matrix, Kite's LocalAuthority identity/recovery baseline, and the Dev Lab provenance report are ready for review, but the zara-p1-005 provenance workflow still needs run/review/integration",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "OpenAI generation is currently quota-limited on the Mac mini runner, so live work falls through to Claude Code",
   ],
@@ -47,7 +47,8 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
-    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 123/123 Jest tests",
+    "Kite completed the launch-safe identity/recovery model: first playable launch requires only a local handle, with no wallet, backend account, or payment method",
+    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 139/139 Jest tests",
     "Axiom completed launch performance budgets with npm run perf:budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001",
     "Axiom completed the player smoke route: npm run qa:smoke covers intro, login, tutorial, buy, sell, inventory, and settings on the rebuilt web export",
     "Axiom completed performance budgets: npm run perf:budgets enforces web export thresholds and Gate B now has numeric native targets",
@@ -102,7 +103,7 @@ export const STATUS: StatusBlock = {
     {
       label: "SupabaseAuthority",
       state: "amber",
-      detail: "Feature-flagged adapter selection is tested and documented; live schema migrations and RLS validation are still pending",
+      detail: "Feature-flagged adapter selection and LocalAuthority launch identity/recovery are tested and documented; live schema migrations and RLS validation are still pending",
     },
     {
       label: "Dependency audit",
@@ -127,7 +128,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "red",
-      detail: "Reel's storyboard, Palette's asset audit, placeholder icon/splash art, generated screenshot captures, Cipher's policy matrix, and the Dev Lab provenance report are ready for review, but final screenshot approval, final preview video, the zara-p1-005 provenance workflow, Zoro/Palette sign-off, public privacy policy, app metadata, age rating answers, and store declarations are not submission-ready",
+      detail: "Reel's storyboard, Palette's asset audit, placeholder icon/splash art, generated screenshot captures, Cipher's policy matrix, Kite's identity/recovery baseline, and the Dev Lab provenance report are ready for review, but final screenshot approval, final preview video, the zara-p1-005 provenance workflow, Zoro/Palette sign-off, public privacy policy, app metadata, age rating answers, and store declarations are not submission-ready",
     },
   ],
   updated: "2026-04-28",

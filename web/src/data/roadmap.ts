@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, and crash/log diagnostics hooks, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, the hardened live Axiom smoke, Axiom's player smoke route and performance budgets, Reel's App Store preview storyboard, Palette's asset audit and screenshot-safe captures, Cipher's store requirements plus policy risk matrix, and Compass's v6 GitHub issue batches for active P0/P1 work are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, and crash/log diagnostics hooks, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary and LocalAuthority launch identity model, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, the hardened live Axiom smoke, Axiom's player smoke route and performance budgets, Reel's App Store preview storyboard, Palette's asset audit and screenshot-safe captures, Cipher's store requirements plus policy risk matrix, and Compass's v6 GitHub issue batches for active P0/P1 work are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -81,6 +81,7 @@ export const ROADMAP: Phase[] = [
       "Release blockers, direct-push criteria, and Gate A/B/C Ghost sign-off rules documented",
       "Top 10 App Store architecture risks assigned to owners with evidence requirements",
       "SupabaseAuthority guarded behind explicit feature flag and public config checks",
+      "Launch identity and account recovery baseline: local handle only, no wallet/backend/payment requirement, and on-device recovery limits documented",
       "First-session home/terminal guidance and manual market tick action for the starter profitable sell loop",
       "10-minute demo pressure bands for starter, route-runner, and contraband strategies",
       "Mobile HUD readability and one-hand first-trade controls",
@@ -116,6 +117,7 @@ export const ROADMAP: Phase[] = [
       { label: "Ghost release authority bar", done: true },
       { label: "Ghost architecture risk audit", done: true },
       { label: "SupabaseAuthority flag boundary", done: true },
+      { label: "Launch identity/recovery baseline", done: true },
       { label: "Axiom store-submission regression checklist", done: true },
       { label: "Nyx first-session loop map", done: true },
       { label: "Nyx demo pressure bands", done: true },
