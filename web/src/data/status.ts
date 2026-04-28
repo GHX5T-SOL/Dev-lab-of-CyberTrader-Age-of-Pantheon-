@@ -36,7 +36,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and passed regression:monitor on a065fd3",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and passed regression:monitor on 93096a5",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -53,7 +53,7 @@ export const STATUS: StatusBlock = {
     "Kite completed the store-safe wallet/token boundary review: shared Legal/Settings copy now has prohibited-claims tests for real-money, investment, regulated-market, prize, and signing-material language",
     "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 139/139 Jest tests",
     "Axiom completed launch performance budgets with npm run perf:budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001",
-    "Axiom completed the player smoke route: npm run qa:smoke covers intro, login, tutorial, buy, sell, inventory, and settings on the rebuilt web export",
+    "Axiom completed and re-hardened the player smoke route: npm run qa:smoke covers intro, login, tutorial, buy, sell, inventory, and settings/local identity recovery on the rebuilt web export",
     "Axiom completed performance budgets: npm run perf:budgets enforces web export thresholds and Gate B now has numeric native targets",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
@@ -71,8 +71,8 @@ export const STATUS: StatusBlock = {
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
-    "Zyra/Codex hardened the live Axiom smoke in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, and ff7b7c3; live smoke and qa:smoke both pass",
-    "Codex pushed v6 commit 15308c9 to origin/main after verifying ship:check with 149/149 Jest tests and post-push live health HTTP 200",
+    "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, and 93096a5; live smoke and qa:smoke both pass",
+    "Codex pushed v6 commit 93096a5 to origin/main after verifying safety:autonomous, qa:smoke, qa:axiom:live, and post-push regression:monitor",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "Compass created v6 GitHub issue batches #2-#6 for the active P0/P1 readiness work, with owner and priority mapping in each issue body",
     "New autonomous v6 task map assigns work to the AI Council, Codex automations, Zara, and Zyra, with Ghost/Zoro treated as optional observers",
@@ -93,7 +93,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified at 15308c9 with ship:check green",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified at 93096a5 with post-push regression:monitor green",
     },
     {
       label: "Build checks",
