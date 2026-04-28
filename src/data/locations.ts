@@ -7,8 +7,6 @@ export interface LocationDefinition {
   travelTime: number;
   priceMod: number;
   demandTags: string[];
-  currentState: DistrictState;
-  stateEndTimestamp: number | null;
   description: string;
   stateDescriptions: Partial<Record<DistrictState, string>>;
   special?: "heat_reduction";
@@ -104,8 +102,6 @@ function location(
     travelTime,
     priceMod,
     demandTags,
-    currentState: "NORMAL",
-    stateEndTimestamp: null,
     description,
     stateDescriptions: {
       BOOM: `${name} is booming. Buyers are loud, impatient, and overpaying.`,

@@ -4,6 +4,7 @@ import { useDemoStore } from "@/state/demo-store";
 
 export function useGameLoop() {
   const runGameLoop = useDemoStore((state) => state.runGameLoop);
+  const runExitHookCheck = useDemoStore((state) => state.runExitHookCheck);
   const recordAwayReport = useDemoStore((state) => state.recordAwayReport);
 
   React.useEffect(() => {
@@ -17,7 +18,8 @@ export function useGameLoop() {
       }
 
       busy = true;
-      void runGameLoop(Date.now()).finally(() => {
+      const nowMs = Date.now();
+      void runGameLoop(nowMs).then(() => runExitHookCheck(Date.now())).finally(() => {
         busy = false;
       });
     };
@@ -43,5 +45,5 @@ export function useGameLoop() {
       clearInterval(interval);
       subscription.remove();
     };
-  }, [recordAwayReport, runGameLoop]);
+  }, [recordAwayReport, runExitHookCheck, runGameLoop]);
 }

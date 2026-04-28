@@ -59,9 +59,9 @@ export default function OpportunityRail({
   }
   if (!cards.length) {
     cards.push({
-      id: "safe_stop",
-      title: "SAFE STOP",
-      detail: "Quiet window. Suggested move: scout one low-heat trade.",
+      id: "plan_ahead",
+      title: "PLAN AHEAD",
+      detail: "Check map, review missions, or scout the next whisper.",
       tone: terminalColors.green,
     });
   }

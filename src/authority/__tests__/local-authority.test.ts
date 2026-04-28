@@ -68,7 +68,7 @@ describe("LocalAuthority", () => {
     });
 
     const initialPrices = await authority.getTickPrices(0);
-    expect(initialPrices.VBLM).toBe(24);
+    expect(initialPrices.VBLM).toBe(14);
 
     const buy = await authority.executeTrade({
       playerId: profile.id,

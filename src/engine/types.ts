@@ -18,9 +18,6 @@ export interface PlayerProfile {
   rank: number;
   faction: Faction | null;
   createdAt: string;
-  currentLocationId?: string;
-  travelDestinationId?: string | null;
-  travelEndTime?: number | null;
 }
 
 export interface Resources {
@@ -379,7 +376,17 @@ export interface DecisionContext {
   isSafeStop: boolean;
 }
 
-export type HeatPressureStage = 0 | 1 | 2 | 3;
+export interface RecoveryPrompt {
+  id: string;
+  reason: "trade_loss" | "raid_loss" | "heist_failure";
+  lossValue: number;
+  reward0Bol: number;
+  triggerAt: number;
+  expiresAt: number;
+  createdAt: number;
+}
+
+export type HeatPressureStage = 0 | 1 | 2 | 3 | 4;
 
 export interface HeatPressureState {
   stage: HeatPressureStage;
@@ -425,6 +432,11 @@ export interface AwayReport {
   newContacts: { npcId: string; message: string }[];
   claimables: { type: string; reward: string }[];
   items: AwayReportItem[];
+  primaryAction?: {
+    label: string;
+    message: string;
+    action: AwayReportItem["action"];
+  };
   dismissed: boolean;
 }
 
@@ -444,7 +456,7 @@ export interface RankCelebration {
 export interface Authority {
   getProfile(playerId: string): Promise<PlayerProfile>;
   createProfile(input: Omit<PlayerProfile, "id" | "createdAt">): Promise<PlayerProfile>;
-  getOpenPositions(playerId: string): Promise<Position[]>;
+  getOpenPositions(playerId: string, locationId?: string): Promise<Position[]>;
   getLedger(playerId: string): Promise<LedgerEntry[]>;
 
   getMarket(): Promise<Commodity[]>;
@@ -457,6 +469,8 @@ export interface Authority {
     quantity: number;
     locationId?: string;
     priceOverride?: number;
+    streakHeatBonus?: number;
+    heatMultiplier?: number;
   }): Promise<TradeResult>;
 
   getResources(playerId: string): Promise<Resources>;
@@ -477,22 +491,26 @@ export interface Authority {
     ticker: string,
     quantity: number,
     cost: number,
+    locationId?: string,
   ): Promise<{ ledger: LedgerEntry[]; positions: Position[] }>;
   claimShipment?(
     playerId: string,
     ticker: string,
     quantity: number,
     avgEntry: number,
+    locationId?: string,
   ): Promise<Position[]>;
   applyRaidLoss?(
     playerId: string,
     losses: Record<string, number>,
+    locationId?: string,
   ): Promise<{ positions: Position[]; resources: Resources }>;
   restoreRaidLoss?(
     playerId: string,
     recovered: Record<string, { quantity: number; avgEntry: number }>,
     cost: number,
     currency: Currency,
+    locationId?: string,
   ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }>;
   grantReward?(
     playerId: string,

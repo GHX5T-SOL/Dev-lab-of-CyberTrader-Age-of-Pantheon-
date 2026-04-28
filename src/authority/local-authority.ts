@@ -8,6 +8,7 @@ import {
   createInitialPrices,
   getCommodity,
   getTradeEnergyCost,
+  normalizePriceMap,
   roundCurrency,
   type PriceMap,
 } from "@/engine/demo-market";
@@ -111,7 +112,7 @@ export class LocalAuthority implements Authority {
     this.priceCache.clear();
 
     for (const [tick, prices] of snapshot.priceCache) {
-      this.priceCache.set(tick, this.clonePrices(prices));
+      this.priceCache.set(tick, normalizePriceMap(prices));
     }
 
     if (!this.priceCache.has(0)) {
@@ -164,7 +165,7 @@ export class LocalAuthority implements Authority {
       })),
       priceCache: [...this.priceCache.entries()].map(([tick, prices]) => [
         tick,
-        this.clonePrices(prices),
+        normalizePriceMap(prices),
       ]),
     };
   }
@@ -179,9 +180,6 @@ export class LocalAuthority implements Authority {
       ...input,
       id,
       rank: 1,
-      currentLocationId: input.currentLocationId ?? DEFAULT_LOCATION_ID,
-      travelDestinationId: input.travelDestinationId ?? null,
-      travelEndTime: input.travelEndTime ?? null,
       createdAt: this.nextTimestamp(),
     };
 
@@ -209,11 +207,10 @@ export class LocalAuthority implements Authority {
     return this.cloneProfile(profile);
   }
 
-  async getOpenPositions(playerId: string): Promise<Position[]> {
-    const profile = this.requireProfile(playerId);
+  async getOpenPositions(playerId: string, locationId: string = DEFAULT_LOCATION_ID): Promise<Position[]> {
     const state = this.requirePlayerState(playerId);
     const basePrices = await this.getTickPrices(this.currentTick);
-    const prices = applyLocationPriceModifiers(basePrices, profile.currentLocationId);
+    const prices = applyLocationPriceModifiers(basePrices, locationId);
 
     return [...state.openPositions.values()]
       .sort((left, right) => left.ticker.localeCompare(right.ticker))
@@ -248,10 +245,10 @@ export class LocalAuthority implements Authority {
 
       while (cursor < targetTick) {
         cursor += 1;
-        prices = applyNewsToPrices(
+        prices = normalizePriceMap(applyNewsToPrices(
           advancePrices(prices, cursor).prices,
           generateNewsForTick(cursor, this.seed),
-        );
+        ));
         this.priceCache.set(cursor, prices);
       }
     }
@@ -267,8 +264,9 @@ export class LocalAuthority implements Authority {
     quantity: number;
     locationId?: string;
     priceOverride?: number;
+    streakHeatBonus?: number;
+    heatMultiplier?: number;
   }): Promise<TradeResult> {
-    const profile = this.requireProfile(input.playerId);
     const state = this.requirePlayerState(input.playerId);
     const commodity = getCommodity(input.ticker);
 
@@ -277,11 +275,15 @@ export class LocalAuthority implements Authority {
     }
 
     const quantity = Math.max(1, Math.floor(input.quantity));
+    const locationId = input.locationId ?? DEFAULT_LOCATION_ID;
     const price = input.priceOverride !== undefined
       ? roundCurrency(input.priceOverride)
-      : await this.getCurrentLocationPrice(input.ticker, input.locationId ?? profile.currentLocationId);
+      : await this.getCurrentLocationPrice(input.ticker, locationId);
     const tradeValue = roundCurrency(price * quantity);
-    const heatDelta = this.getValueBasedHeatDelta(input.ticker, tradeValue);
+    const baseHeatDelta = this.getValueBasedHeatDelta(input.ticker, tradeValue);
+    const rawHeatDelta = baseHeatDelta + Math.max(0, Math.floor(input.streakHeatBonus ?? 0));
+    const heatMultiplier = Math.max(0, input.heatMultiplier ?? 1);
+    const heatDelta = Math.max(0, Math.ceil(rawHeatDelta * heatMultiplier));
     const energyCost = getTradeEnergyCost(input.side, quantity);
 
     if (state.resources.energySeconds < 60) {
@@ -399,7 +401,7 @@ export class LocalAuthority implements Authority {
       position: this.clonePosition(nextPosition),
       ledger: [{ ...ledgerEntry }],
       resources: { ...state.resources },
-      positions: await this.getOpenPositions(input.playerId),
+      positions: await this.getOpenPositions(input.playerId, locationId),
       rank: await this.getRank(input.playerId),
       xpGained,
       realizedPnl,
@@ -501,6 +503,7 @@ export class LocalAuthority implements Authority {
     ticker: string,
     quantity: number,
     cost: number,
+    locationId: string = DEFAULT_LOCATION_ID,
   ): Promise<{ ledger: LedgerEntry[]; positions: Position[] }> {
     const state = this.requirePlayerState(playerId);
     const position = state.openPositions.get(ticker);
@@ -536,7 +539,7 @@ export class LocalAuthority implements Authority {
 
     return {
       ledger: [{ ...ledgerEntry }],
-      positions: await this.getOpenPositions(playerId),
+      positions: await this.getOpenPositions(playerId, locationId),
     };
   }
 
@@ -545,6 +548,7 @@ export class LocalAuthority implements Authority {
     ticker: string,
     quantity: number,
     avgEntry: number,
+    locationId: string = DEFAULT_LOCATION_ID,
   ): Promise<Position[]> {
     const state = this.requirePlayerState(playerId);
     const existing = state.openPositions.get(ticker);
@@ -568,12 +572,13 @@ export class LocalAuthority implements Authority {
       closedAt: null,
     });
 
-    return this.getOpenPositions(playerId);
+    return this.getOpenPositions(playerId, locationId);
   }
 
   async applyRaidLoss(
     playerId: string,
     losses: Record<string, number>,
+    locationId: string = DEFAULT_LOCATION_ID,
   ): Promise<{ positions: Position[]; resources: Resources }> {
     const state = this.requirePlayerState(playerId);
 
@@ -593,7 +598,7 @@ export class LocalAuthority implements Authority {
     }
 
     return {
-      positions: await this.getOpenPositions(playerId),
+      positions: await this.getOpenPositions(playerId, locationId),
       resources: { ...state.resources },
     };
   }
@@ -661,6 +666,7 @@ export class LocalAuthority implements Authority {
     recovered: Record<string, { quantity: number; avgEntry: number }>,
     cost: number,
     currency: Currency,
+    locationId: string = DEFAULT_LOCATION_ID,
   ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }> {
     const ledger = await this.spendCurrency(playerId, cost, currency, "raid_buyback");
     const state = this.requirePlayerState(playerId);
@@ -686,7 +692,7 @@ export class LocalAuthority implements Authority {
     }
 
     return {
-      positions: await this.getOpenPositions(playerId),
+      positions: await this.getOpenPositions(playerId, locationId),
       ledger,
     };
   }
@@ -837,7 +843,7 @@ export class LocalAuthority implements Authority {
   }
 
   private clonePrices(prices: PriceMap): PriceMap {
-    return Object.fromEntries(Object.entries(prices));
+    return normalizePriceMap(prices);
   }
 
   private getNearestCachedTick(targetTick: number): number {

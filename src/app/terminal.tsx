@@ -25,6 +25,7 @@ import { getLocation } from "@/data/locations";
 import { getActiveDistrictState, isDistrictBuyRestricted, isDistrictSellRestricted } from "@/engine/district-state";
 import { DEMO_COMMODITIES, getTradeEnergyCost, getValueBasedTradeHeatDelta, roundCurrency } from "@/engine/demo-market";
 import { isTradingBlockedByFlash } from "@/engine/flash-events";
+import { getNextStreakTarget, getStreakRiskHeatBonus } from "@/engine/pressure";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { terminalColors, terminalFont } from "@/theme/terminal";
@@ -38,10 +39,10 @@ function formatCountdown(expiresAt: number | null, nowMs: number): string {
   if (!expiresAt) {
     return "LIVE";
   }
-  const rawSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
-  const totalSeconds = rawSeconds > 5999
-    ? Math.max(1, 180 - (Math.floor(nowMs / 1000) % 180))
-    : rawSeconds;
+  if (!Number.isFinite(expiresAt)) {
+    return "OPEN ENDED";
+  }
+  const totalSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
@@ -50,6 +51,7 @@ function formatCountdown(expiresAt: number | null, nowMs: number): string {
 export default function TerminalRoute() {
   useDemoBootstrap();
   const params = useLocalSearchParams<{ ticker?: string }>();
+  const scrollRef = React.useRef<ScrollView>(null);
   const selectedTicker = useDemoStore((state) => state.selectedTicker);
   const selectTicker = useDemoStore((state) => state.selectTicker);
   const prices = useDemoStore((state) => state.prices);
@@ -104,7 +106,8 @@ export default function TerminalRoute() {
   const maxSell = position?.quantity ?? 0;
   const maxQty = side === "BUY" ? maxBuy : Math.max(1, maxSell);
   const cost = roundCurrency(price * orderSize);
-  const heatDelta = getValueBasedTradeHeatDelta(commodity.ticker, cost);
+  const heatDelta = getValueBasedTradeHeatDelta(commodity.ticker, cost) + getStreakRiskHeatBonus(streak);
+  const streakTarget = getNextStreakTarget(streak.count);
   const energyCost = getTradeEnergyCost(side, orderSize);
   const currentLocation = getLocation(world.currentLocationId);
   const travelling = Boolean(world.travelDestinationId && world.travelEndTime && world.travelEndTime > clock.nowMs);
@@ -225,21 +228,53 @@ export default function TerminalRoute() {
     setTimeout(() => setFlash(null), 700);
   };
 
+  const handleSelectPosition = (held: NonNullable<(typeof positions)[string]>) => {
+    selectTicker(held.ticker);
+    setSide("SELL");
+    setOrderSize(held.quantity);
+    requestAnimationFrame(() => {
+      scrollRef.current?.scrollTo({ y: 520, animated: true });
+    });
+  };
+
   const followSignal = () => {
-    if (decisionContext.recommendedAction.ticker) {
-      selectTicker(decisionContext.recommendedAction.ticker);
+    const action = decisionContext.recommendedAction;
+    if (action.ticker) {
+      selectTicker(action.ticker);
     }
-    if (decisionContext.recommendedAction.actionType === "mission") {
-      router.push("/missions");
-      return;
-    }
-    if (decisionContext.recommendedAction.actionType === "travel" || decisionContext.recommendedAction.actionType === "reduce_heat") {
-      router.push("/home");
+
+    switch (action.actionType) {
+      case "mission":
+        router.push("/missions");
+        return;
+      case "claim":
+      case "courier":
+        router.push("/menu/inventory");
+        return;
+      case "challenge":
+      case "rank":
+        router.push("/menu/progression");
+        return;
+      case "plan":
+        router.push("/map" as never);
+        return;
+      case "travel":
+      case "reduce_heat":
+        router.push("/home");
+        return;
+      case "trade":
+        if (!action.ticker) {
+          setFlash("success");
+          setTimeout(() => setFlash(null), 700);
+        }
+        return;
+      default:
+        router.push("/home");
     }
   };
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 14, paddingBottom: 40, backgroundColor: "transparent" }}>
+    <ScrollView ref={scrollRef} contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 14, paddingBottom: 40, backgroundColor: "transparent" }}>
       <Animated.View
         pointerEvents="none"
         style={[
@@ -482,6 +517,11 @@ export default function TerminalRoute() {
               fontVariant: ["tabular-nums"],
             }}
           />
+          {tradeJuice.kind === "profit" && streak.count >= 2 ? (
+            <CyberText style={{ marginTop: 5, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10, textAlign: "center" }}>
+              Don't break the streak. {streakTarget.tradesNeeded} more for {streakTarget.title}.
+            </CyberText>
+          ) : null}
         </Animated.View>
       ) : null}
 
@@ -537,11 +577,7 @@ export default function TerminalRoute() {
               return (
                 <Pressable
                   key={held.id}
-                  onPress={() => {
-                    selectTicker(held.ticker);
-                    setSide("SELL");
-                    setOrderSize(held.quantity);
-                  }}
+                  onPress={() => handleSelectPosition(held)}
                   style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: terminalColors.borderDim, paddingTop: 10 }}
                 >
                   <CyberText style={{ fontFamily: terminalFont, color: terminalColors.text, fontSize: 11 }}>

@@ -11,6 +11,7 @@ const SHIFT_STATES: Exclude<DistrictState, "NORMAL">[] = [
   "MARKET_CRASH",
 ];
 const FESTIVAL_TICKERS = ["FDST", "PGAS", "NGLS", "HXMD", "VBLM", "ORRS", "SNPS", "MTRX", "AETH", "BLCK"] as const;
+const NORMAL_DISTRICT_END_MS = 4_102_444_800_000;
 
 export function createInitialDistrictStates(nowMs: number): Record<string, DistrictStateRecord> {
   return Object.fromEntries(
@@ -20,7 +21,7 @@ export function createInitialDistrictStates(nowMs: number): Record<string, Distr
         locationId: location.id,
         state: "NORMAL" as const,
         startTimestamp: nowMs,
-        endTimestamp: Number.MAX_SAFE_INTEGER,
+        endTimestamp: NORMAL_DISTRICT_END_MS,
       },
     ]),
   );
@@ -69,7 +70,7 @@ export function normalizeDistrictStates(
         locationId: location.id,
         state: "NORMAL",
         startTimestamp: nowMs,
-        endTimestamp: Number.MAX_SAFE_INTEGER,
+        endTimestamp: NORMAL_DISTRICT_END_MS,
       };
     }
   }
@@ -89,7 +90,7 @@ export function getActiveDistrictState(
       locationId: location.id,
       state: "NORMAL",
       startTimestamp: nowMs,
-      endTimestamp: Number.MAX_SAFE_INTEGER,
+      endTimestamp: NORMAL_DISTRICT_END_MS,
     };
   }
 

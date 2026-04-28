@@ -18,6 +18,7 @@ import type {
   Resources,
   TradeStreak,
 } from "@/engine/types";
+import { getNextStreakTarget } from "@/engine/pressure";
 
 interface DecisionContextState {
   nowMs: number;
@@ -40,6 +41,8 @@ interface DecisionContextState {
   district: DistrictStateRecord;
   heatPressure: HeatPressureState;
   streak: TradeStreak;
+  recoveryOpportunity: DecisionSignal | null;
+  exitHookMessage: DecisionSignal | null;
   nextFlashEventAt: number;
   nextMissionAt: number;
   nextMarketWhisperAt: number;
@@ -68,11 +71,27 @@ export function getDecisionContext(state: DecisionContextState): DecisionContext
     urgency,
     expiresAt,
     generatedAt: state.nowMs,
-    isSafeStop: opportunity.id === "safe_stop" && risk.id === "managed_risk",
+    isSafeStop: false,
   };
 }
 
 function getOpportunitySignal(state: DecisionContextState): DecisionSignal {
+  if (state.recoveryOpportunity && state.recoveryOpportunity.expiresAt && state.recoveryOpportunity.expiresAt > state.nowMs) {
+    return {
+      ...state.recoveryOpportunity,
+      urgency: maxUrgency(state.recoveryOpportunity.urgency, "high"),
+    };
+  }
+
+  if (state.exitHookMessage && state.exitHookMessage.expiresAt && state.exitHookMessage.expiresAt > state.nowMs) {
+    return state.exitHookMessage;
+  }
+
+  const nearWin = getNearWinSignal(state);
+  if (nearWin) {
+    return nearWin;
+  }
+
   const arrivedShipment = state.transitShipments.find(
     (shipment) => shipment.status === "arrived" && shipment.destinationId === state.currentLocationId,
   );
@@ -187,15 +206,65 @@ function getOpportunitySignal(state: DecisionContextState): DecisionSignal {
   }
 
   return signal({
-    id: "safe_stop",
-    title: "Safe stop",
-    description: "Quiet window. Suggested move: scout one low-heat trade before the next signal lands.",
+    id: "market_check",
+    title: "Market Check",
+    description: "No blank window. Check prices now and scout the safest small move.",
     actionType: "trade",
-    actionLabel: "Plan next trade",
-    urgency: "low",
-    expiresAt: state.nextFlashEventAt,
+    actionLabel: "Check prices",
+    urgency: "medium",
+    expiresAt: Math.min(state.nextFlashEventAt, state.nowMs + 5_000),
     locationId: state.currentLocationId,
   });
+}
+
+function getNearWinSignal(state: DecisionContextState): DecisionSignal | null {
+  const rankSpan = state.progression.nextXpRequired === null
+    ? 0
+    : state.progression.nextXpRequired - state.progression.xpRequired;
+  const rankRemaining = state.progression.nextXpRequired === null
+    ? Number.POSITIVE_INFINITY
+    : state.progression.nextXpRequired - state.progression.xp;
+  if (rankSpan > 0 && rankRemaining >= 0 && rankRemaining < rankSpan * 0.1) {
+    return signal({
+      id: "near_rank",
+      title: "Rank up soon",
+      description: `${rankRemaining} XP until the next rank. Take a controlled profit or mission payout.`,
+      actionType: "rank",
+      actionLabel: "Push rank",
+      urgency: "high",
+      expiresAt: state.nextFlashEventAt,
+    });
+  }
+
+  const challenge = state.dailyChallenges.find(
+    (item) => !item.completed && !item.claimed && item.target > 0 && item.progress >= item.target * 0.9,
+  );
+  if (challenge) {
+    return signal({
+      id: `near_challenge_${challenge.id}`,
+      title: "Finish challenge",
+      description: `${challenge.title} is ${Math.floor((challenge.progress / challenge.target) * 100)}% complete. Claim the near win.`,
+      actionType: "challenge",
+      actionLabel: "Finish challenge",
+      urgency: "high",
+      expiresAt: nextUtcMidnight(state.nowMs),
+    });
+  }
+
+  const nextStreakTarget = getNextStreakTarget(state.streak.count);
+  if (state.streak.count > 0 && nextStreakTarget.tradesNeeded <= 2) {
+    return signal({
+      id: "near_streak",
+      title: "Streak bonus close",
+      description: `${nextStreakTarget.tradesNeeded} more profitable trade${nextStreakTarget.tradesNeeded === 1 ? "" : "s"} for ${nextStreakTarget.title}. Don't break the chain.`,
+      actionType: "trade",
+      actionLabel: "Protect streak",
+      urgency: "high",
+      expiresAt: state.streak.expiresAt ?? state.nextFlashEventAt,
+    });
+  }
+
+  return null;
 }
 
 function getRiskSignal(state: DecisionContextState): DecisionSignal {
@@ -215,13 +284,13 @@ function getRiskSignal(state: DecisionContextState): DecisionSignal {
   if (state.heatPressure.stage > 0 && state.heatPressure.scanLockAt) {
     return signal({
       id: `heat_pressure_${state.heatPressure.stage}`,
-      title: state.heatPressure.stage >= 3 ? "Scan lock forming" : state.heatPressure.status,
+      title: state.heatPressure.stage >= 4 ? "Scan lock forming" : state.heatPressure.status,
       description:
         state.heatPressure.lastMessage ??
         "Heat pressure is active. Reduce Heat before the scanner escalates.",
       actionType: "reduce_heat",
       actionLabel: state.currentLocationId === "black_market" ? "Bribe now" : "Find Black Market",
-      urgency: urgencyFromDeadline(state.heatPressure.scanLockAt - state.nowMs, state.heatPressure.stage >= 2 ? "high" : "medium"),
+      urgency: urgencyFromDeadline(state.heatPressure.scanLockAt - state.nowMs, state.heatPressure.stage >= 3 ? "high" : "medium"),
       expiresAt: state.heatPressure.scanLockAt,
     });
   }

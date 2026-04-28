@@ -6,6 +6,7 @@ import {
   buyCommodity,
   canExecuteTrade,
   createInitialPrices,
+  DEMO_STARTING_BALANCE,
   getTradeEnergyCost,
   sellCommodity,
 } from "../demo-market";
@@ -19,32 +20,47 @@ describe("demo market loop", () => {
     expect(a).toEqual(b);
   });
 
+  it("keeps tutorial commodities on their economy-design bases", () => {
+    const initial = createInitialPrices();
+
+    expect(initial.VBLM).toBe(14);
+    expect(initial.NGLS).toBe(90);
+    expect((initial.VBLM ?? 0) * 10).toBeLessThanOrEqual(DEMO_STARTING_BALANCE);
+  });
+
+  it("clamps runaway persisted prices back into playable ranges", () => {
+    const runaway = advancePrices({ ...createInitialPrices(), VBLM: 1_600_000, NGLS: 21.7 }, 42);
+
+    expect(runaway.prices.VBLM).toBeLessThanOrEqual(31.5);
+    expect(runaway.prices.NGLS).toBeGreaterThanOrEqual(49.5);
+  });
+
   it("buying a commodity updates resources and holding", () => {
     const result = buyCommodity({
       ticker: "VBLM",
       quantity: 10,
-      price: 24,
+      price: 14,
       resources: INITIAL_RESOURCES,
     });
 
-    expect(result.resources.balanceObol).toBe(1760);
+    expect(result.resources.balanceObol).toBe(1860);
     expect(result.resources.energySeconds).toBe(INITIAL_RESOURCES.energySeconds - 90);
     expect(result.resources.heat).toBe(INITIAL_RESOURCES.heat + 1);
     expect(result.holding.quantity).toBe(10);
-    expect(result.holding.avgEntry).toBe(24);
+    expect(result.holding.avgEntry).toBe(14);
   });
 
   it("selling a holding realizes pnl and restores balance", () => {
     const bought = buyCommodity({
       ticker: "VBLM",
       quantity: 10,
-      price: 24,
+      price: 14,
       resources: INITIAL_RESOURCES,
     });
 
     const sold = sellCommodity({
       ticker: "VBLM",
-      price: 27,
+      price: 17,
       resources: bought.resources,
       holding: bought.holding,
     });

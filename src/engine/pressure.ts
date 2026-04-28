@@ -11,16 +11,20 @@ const PRESSURE_DELAYS: Record<HeatPressureStage, number> = {
   1: 120_000,
   2: 90_000,
   3: 60_000,
+  4: 40_000,
 };
 
 export function getHeatPressureStage(heat: number): HeatPressureStage {
-  if (heat >= 75) {
-    return 3;
+  if (heat >= 70) {
+    return 4;
   }
   if (heat >= 50) {
+    return 3;
+  }
+  if (heat >= 30) {
     return 2;
   }
-  if (heat >= 25) {
+  if (heat >= 20) {
     return 1;
   }
   return 0;
@@ -112,6 +116,14 @@ export function getNextStreakTarget(count: number): {
   };
 }
 
+export function isStreakNearWin(streak: TradeStreak): boolean {
+  return streak.count > 0 && getNextStreakTarget(streak.count).tradesNeeded <= 2;
+}
+
+export function getStreakTimeRemaining(streak: TradeStreak, nowMs: number): number | null {
+  return streak.expiresAt ? Math.max(0, streak.expiresAt - nowMs) : null;
+}
+
 export function getStreakRiskHeatBonus(streak: TradeStreak): number {
   if (streak.count >= 10) {
     return 4;
@@ -144,42 +156,45 @@ export function makeMicroReward(input: {
 }
 
 function statusForStage(stage: HeatPressureStage): HeatPressureState["status"] {
-  if (stage >= 3) {
+  if (stage >= 4) {
     return "SCAN_LOCK";
   }
-  if (stage === 2) {
+  if (stage === 3) {
     return "TRACKING";
   }
-  if (stage === 1) {
+  if (stage >= 1) {
     return "WARNING";
   }
   return "CLEAR";
 }
 
 function messageForStage(stage: HeatPressureStage): string {
-  if (stage >= 3) {
-    return "eAgent scan lock forming. Trading may be frozen if ignored.";
+  if (stage >= 4) {
+    return "eAgent scan lock forming. Ignore it and Heat spikes again.";
   }
-  if (stage === 2) {
+  if (stage === 3) {
     return "Scanner tracking active. Heat intervention is imminent.";
   }
-  return "Random inspection window opened. Reduce Heat before scan lock.";
+  if (stage === 2) {
+    return "Random inspection window opened. Reduce Heat before scan lock.";
+  }
+  return "Gentle scanner ping. Heat pressure check queued.";
 }
 
 function consequenceForStage(stage: HeatPressureStage, nowMs: number): HeatPressureConsequence {
-  if (stage >= 3) {
+  if (stage >= 4) {
     return {
-      id: `heat_lock_${nowMs}`,
+      id: `heat_spike_${nowMs}`,
       stage,
-      heatDelta: 8,
-      message: "SCAN LOCK: eAgent froze local buy channels and raised Heat.",
+      heatDelta: 3,
+      message: "SCAN LOCK: unresolved pressure spiked Heat.",
       tone: "danger",
-      lockTrading: true,
-      lockDurationMs: 90_000,
+      lockTrading: false,
+      lockDurationMs: 0,
     };
   }
 
-  if (stage === 2) {
+  if (stage === 3) {
     return {
       id: `heat_intervention_${nowMs}`,
       stage,
@@ -191,11 +206,23 @@ function consequenceForStage(stage: HeatPressureStage, nowMs: number): HeatPress
     };
   }
 
+  if (stage === 2) {
+    return {
+      id: `heat_inspection_${nowMs}`,
+      stage,
+      heatDelta: 3,
+      message: "Random inspection: scanner residue increased Heat.",
+      tone: "warning",
+      lockTrading: false,
+      lockDurationMs: 0,
+    };
+  }
+
   return {
-    id: `heat_inspection_${nowMs}`,
+    id: `heat_gentle_${nowMs}`,
     stage,
-    heatDelta: 3,
-    message: "Random inspection: scanner residue increased Heat.",
+    heatDelta: 1,
+    message: "Scanner ping: Heat ticked upward while unmanaged.",
     tone: "warning",
     lockTrading: false,
     lockDurationMs: 0,

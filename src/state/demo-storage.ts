@@ -3,6 +3,7 @@ import type {
   DailyChallenge,
   AwayReport,
   BountySnapshot,
+  DecisionSignal,
   DistrictStateRecord,
   FlashEvent,
   HeatPressureState,
@@ -21,6 +22,7 @@ import type {
   RaidRecoveryWindow,
   RankCelebration,
   RankSnapshot,
+  RecoveryPrompt,
   Resources,
   TradeJuice,
   TradeStreak,
@@ -97,6 +99,12 @@ interface PersistedDemoSession {
   nextDistrictStateAt?: number;
   bounty?: BountySnapshot;
   heatPressure?: HeatPressureState;
+  scannerEvadeTradesRemaining?: number;
+  recoveryOpportunity?: DecisionSignal | null;
+  pendingRecoveryPrompt?: RecoveryPrompt | null;
+  exitHookMessage?: DecisionSignal | null;
+  lastInteractionAt?: number;
+  lastExitHookAt?: number;
   microRewards?: MicroReward[];
   awayReport?: AwayReport | null;
   tradeJuice?: TradeJuice | null;

@@ -14,6 +14,7 @@ import { TerminalShell } from "@/components/terminal-shell";
 import { MenuContext } from "@/context/menu-context";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useGameLoop } from "@/hooks/use-game-loop";
+import { useDemoStore } from "@/state/demo-store";
 import { terminalColors } from "@/theme/terminal";
 
 const cyberNavigationTheme = {
@@ -37,6 +38,7 @@ export default function RootLayout() {
     JetBrainsMono_600SemiBold,
     JetBrainsMono_700Bold,
   });
+  const markInteraction = useDemoStore((state) => state.markInteraction);
   useDemoBootstrap();
   useGameLoop();
 
@@ -45,7 +47,10 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: terminalColors.background }}>
+    <GestureHandlerRootView
+      onTouchStart={markInteraction}
+      style={{ flex: 1, backgroundColor: terminalColors.background }}
+    >
       <StatusBar style="light" />
       <MenuContext.Provider
         value={{

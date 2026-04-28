@@ -12,7 +12,7 @@ const FLASH_TYPES: FlashEventType[] = [
   "gang_takeover",
 ];
 
-export const FLASH_EVENT_COOLDOWN_MS = 2 * 60_000;
+export const FLASH_EVENT_COOLDOWN_MS = 0;
 const BLACKOUT_WARNING_MS = 2 * 60_000;
 
 export function getNextFlashEventDelay(seed: string, index: number): number {
@@ -34,7 +34,7 @@ export function createFlashEvent(input: {
   switch (type) {
     case "volatility_spike": {
       const duration = (90 + Math.floor(stream() * 91)) * 1000;
-      const amplitude = roundCurrency(0.15 + stream() * 0.2);
+      const amplitude = roundCurrency(0.2 + stream() * 0.15);
       return {
         id,
         type,
@@ -53,7 +53,7 @@ export function createFlashEvent(input: {
     }
     case "arbitrage_window": {
       const duration = (120 + Math.floor(stream() * 121)) * 1000;
-      const multiplier = roundCurrency(1.5 + stream());
+      const multiplier = Math.max(1.2, roundCurrency(1.5 + stream()));
       return {
         id,
         type,

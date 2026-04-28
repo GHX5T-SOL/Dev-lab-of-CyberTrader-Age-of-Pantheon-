@@ -1,5 +1,6 @@
 import {
   DEMO_COMMODITIES,
+  applyLocationPriceModifiers,
   advancePrices,
   createInitialPrices,
   getCommodity,
@@ -23,6 +24,7 @@ import type {
   WalletSession,
   NPCRelationship,
 } from "@/engine/types";
+import { DEFAULT_LOCATION_ID } from "@/data/locations";
 import { OBOL_TOKEN_CONFIG } from "@/solana/obol-config";
 import { requireSupabase, supabase } from "@/lib/supabase";
 
@@ -149,9 +151,9 @@ export class SupabaseAuthority implements Authority {
     return this.mapProfile(data as DbPlayer);
   }
 
-  async getOpenPositions(playerId: string): Promise<Position[]> {
+  async getOpenPositions(playerId: string, locationId: string = DEFAULT_LOCATION_ID): Promise<Position[]> {
     const client = await requireSupabase();
-    const prices = await this.getTickPrices(this.currentTick);
+    const prices = applyLocationPriceModifiers(await this.getTickPrices(this.currentTick), locationId);
     const { data, error } = await client
       .from("positions")
       .select("*")
@@ -253,6 +255,8 @@ export class SupabaseAuthority implements Authority {
     quantity: number;
     locationId?: string;
     priceOverride?: number;
+    streakHeatBonus?: number;
+    heatMultiplier?: number;
   }): Promise<TradeResult> {
     const commodity = getCommodity(input.ticker);
     if (!commodity) {
@@ -279,7 +283,7 @@ export class SupabaseAuthority implements Authority {
       this.getPosition(data.positionId),
       this.getLatestLedgerEntry(input.playerId),
       this.getResources(input.playerId),
-      this.getOpenPositions(input.playerId),
+      this.getOpenPositions(input.playerId, input.locationId),
       this.getRank(input.playerId),
     ]);
 
@@ -500,6 +504,7 @@ export class SupabaseAuthority implements Authority {
     _recovered: Record<string, { quantity: number; avgEntry: number }>,
     _cost: number,
     _currency: Currency,
+    _locationId?: string,
   ): Promise<{ positions: Position[]; ledger: LedgerEntry[] }> {
     throw new Error("Supabase raid buyback is not wired yet");
   }

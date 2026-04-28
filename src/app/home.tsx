@@ -53,7 +53,7 @@ import {
   roundCurrency,
 } from "@/engine/demo-market";
 import { isTradingBlockedByFlash } from "@/engine/flash-events";
-import { getNextStreakTarget, getStreakRiskHeatBonus } from "@/engine/pressure";
+import { getNextStreakTarget, getStreakRiskHeatBonus, getStreakTimeRemaining, isStreakNearWin } from "@/engine/pressure";
 import { useDemoBootstrap } from "@/hooks/use-demo-bootstrap";
 import { useDemoStore } from "@/state/demo-store";
 import { displayFont, terminalColors, terminalFont } from "@/theme/terminal";
@@ -92,17 +92,17 @@ function formatCountdown(expiresAt: number | null, nowMs: number): string {
   if (!expiresAt) {
     return "LIVE";
   }
-  const rawSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
-  const totalSeconds = rawSeconds > 5999
-    ? Math.max(1, 180 - (Math.floor(nowMs / 1000) % 180))
-    : rawSeconds;
+  if (!Number.isFinite(expiresAt)) {
+    return "OPEN ENDED";
+  }
+  const totalSeconds = Math.max(0, Math.ceil((expiresAt - nowMs) / 1000));
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 function msUntil(expiresAt: number | null, nowMs: number): number | null {
-  return expiresAt ? Math.max(0, expiresAt - nowMs) : null;
+  return expiresAt && Number.isFinite(expiresAt) ? Math.max(0, expiresAt - nowMs) : null;
 }
 
 function countdownColor(expiresAt: number | null, nowMs: number, fallback: string): string {
@@ -176,6 +176,7 @@ export default function HomeRoute() {
   const rankCelebration = useDemoStore((state) => state.rankCelebration);
   const decisionContext = useDemoStore((state) => state.decisionContext);
   const heatPressure = useDemoStore((state) => state.heatPressure);
+  const exitHookMessage = useDemoStore((state) => state.exitHookMessage);
   const microRewards = useDemoStore((state) => state.microRewards);
   const tradeJuice = useDemoStore((state) => state.tradeJuice);
   const nextFlashEventAt = useDemoStore((state) => state.nextFlashEventAt);
@@ -190,6 +191,7 @@ export default function HomeRoute() {
   const purchaseEnergyHours = useDemoStore((state) => state.purchaseEnergyHours);
   const startTravel = useDemoStore((state) => state.startTravel);
   const reduceHeatWithBribe = useDemoStore((state) => state.reduceHeatWithBribe);
+  const ignoreSignal = useDemoStore((state) => state.ignoreSignal);
   const claimShipment = useDemoStore((state) => state.claimShipment);
   const acceptMission = useDemoStore((state) => state.acceptMission);
   const declineMission = useDemoStore((state) => state.declineMission);
@@ -435,6 +437,14 @@ export default function HomeRoute() {
   const nextProfitMilestone = Math.max(1_000, Math.ceil((Math.max(0, openPnl) + 1) / 5_000) * 5_000);
   const profitRemaining = Math.max(0, nextProfitMilestone - Math.max(0, openPnl));
   const streakTarget = getNextStreakTarget(streak.count);
+  const streakRemainingMs = getStreakTimeRemaining(streak, clock.nowMs);
+  const streakFading = Boolean(streak.count >= 2 && streakRemainingMs !== null && streakRemainingMs < 10 * 60_000);
+  const rankSpan = progression.nextXpRequired === null ? 0 : progression.nextXpRequired - progression.xpRequired;
+  const rankNearWin = progression.nextXpRequired !== null && rankSpan > 0 && nextXp < rankSpan * 0.1;
+  const challengeNearWin = dailyChallenges.some((challenge) =>
+    !challenge.completed && !challenge.claimed && challenge.target > 0 && challenge.progress >= challenge.target * 0.9,
+  );
+  const progressNearWin = rankNearWin || challengeNearWin || isStreakNearWin(streak);
   const activeCourier = transitShipments
     .filter((shipment) => shipment.status === "transit")
     .sort((left, right) => left.arrivalTime - right.arrivalTime)[0];
@@ -552,6 +562,8 @@ export default function HomeRoute() {
         router.push("/menu/progression");
         break;
       case "plan":
+        router.push("/map" as never);
+        break;
       case "trade":
       default:
         if (action.ticker) {
@@ -643,6 +655,31 @@ export default function HomeRoute() {
             <ObolBalanceDisplay balance={obolBalance} />
           </View>
 
+          {exitHookMessage ? (
+            <Pressable
+              onPress={followDecision}
+              style={{
+                marginTop: 10,
+                borderWidth: 1,
+                borderColor: terminalColors.amber,
+                borderRadius: 0,
+                backgroundColor: "rgba(255,200,87,0.12)",
+                paddingHorizontal: 12,
+                paddingVertical: 9,
+                shadowColor: terminalColors.amber,
+                shadowOpacity: 0.28,
+                shadowRadius: 10,
+              }}
+            >
+              <CyberText style={{ fontFamily: terminalFont, color: terminalColors.amber, fontSize: 11 }}>
+                EXIT HOOK // {exitHookMessage.title.toUpperCase()}
+              </CyberText>
+              <CyberText style={{ marginTop: 4, fontFamily: terminalFont, color: terminalColors.text, fontSize: 11, lineHeight: 16 }}>
+                {exitHookMessage.description}
+              </CyberText>
+            </Pressable>
+          ) : null}
+
           <Animated.View style={[{ shadowColor: signalColor }, signalAnimatedStyle]}>
             <Pressable
               onPress={followDecision}
@@ -699,7 +736,14 @@ export default function HomeRoute() {
 
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 14 }}>
               <SignalButton label="ACT ON SIGNAL" color={signalColor} onPress={followDecision} />
-              <SignalButton label="IGNORE" color={terminalColors.muted} onPress={() => setIgnoredSignalId(decisionContext.recommendedAction.id)} />
+              <SignalButton
+                label="IGNORE"
+                color={terminalColors.muted}
+                onPress={() => {
+                  setIgnoredSignalId(decisionContext.recommendedAction.id);
+                  void ignoreSignal(decisionContext.recommendedAction.id);
+                }}
+              />
               {decisionContext.risk.actionType === "reduce_heat" ? (
                 <SignalButton
                   label="REDUCE HEAT"
@@ -748,11 +792,11 @@ export default function HomeRoute() {
               color={terminalColors.green}
             />
             <PressureCard
-              label="STREAK"
-              value={streakTarget.tradesNeeded === 0 ? streakTarget.title : `${streakTarget.tradesNeeded} trades`}
-              detail={streak.count > 0 ? `Current x${streak.multiplier.toFixed(2)} // Risk +${streakRiskBonus}` : "Start a profitable chain."}
+              label={streakFading ? "STREAK FADING" : "STREAK"}
+              value={streakFading && streak.expiresAt ? formatCountdown(streak.expiresAt, clock.nowMs) : streakTarget.tradesNeeded === 0 ? streakTarget.title : `${streakTarget.tradesNeeded} trades`}
+              detail={streakFading ? "Profit soon or the chain breaks." : streak.count > 0 ? `Current x${streak.multiplier.toFixed(2)} // Risk +${streakRiskBonus}` : "Start a profitable chain."}
               color={streak.count >= 5 ? terminalColors.amber : terminalColors.green}
-              urgent={streak.count >= 5}
+              urgent={streak.count >= 5 || streakFading}
             />
             {activeCourier ? (
               <PressureCard
@@ -841,7 +885,22 @@ export default function HomeRoute() {
 
           {intelOpen ? (
             <View style={{ marginTop: 8 }}>
-              <AwayReportPanel report={awayReport} onDismiss={dismissAwayReport} />
+              <AwayReportPanel
+                report={awayReport}
+                onDismiss={dismissAwayReport}
+                onPrimaryAction={(action) => {
+                  dismissAwayReport();
+                  if (action === "inventory") {
+                    router.push("/menu/inventory");
+                  } else if (action === "missions") {
+                    router.push("/missions");
+                  } else if (action === "travel") {
+                    setTravelModal(true);
+                  } else {
+                    router.push("/terminal");
+                  }
+                }}
+              />
               {pantheonShard && pantheonShard.expiresAt > clock.nowMs ? (
                 <View style={{ marginTop: 12, borderWidth: 1, borderColor: terminalColors.red, borderRadius: 0, backgroundColor: terminalColors.panel, padding: 10 }}>
                   <CyberText style={{ fontFamily: terminalFont, color: terminalColors.red, fontSize: 12 }}>
@@ -852,7 +911,7 @@ export default function HomeRoute() {
                   </CyberText>
                 </View>
               ) : null}
-              <ProgressRail progression={progression} streak={streak} />
+              <ProgressRail progression={progression} streak={streak} isNearWin={progressNearWin} />
               <RiskRail resources={resources} bounty={bounty} district={district} riskProfile={playerRiskProfile} />
               <OpportunityRail
                 flashEvent={activeFlashEvent}
@@ -1001,6 +1060,11 @@ export default function HomeRoute() {
             formatter={(value) => `${value >= 0 ? "+" : ""}${value.toFixed(2)} 0BOL`}
             style={{ marginTop: 4, fontFamily: terminalFont, color: tradeJuice.kind === "profit" ? terminalColors.green : tradeJuice.kind === "loss" ? terminalColors.red : terminalColors.amber, fontSize: tradeJuice.bigWin ? 18 : 13 }}
           />
+          {tradeJuice.kind === "profit" && streak.count >= 2 ? (
+            <CyberText style={{ marginTop: 6, fontFamily: terminalFont, color: terminalColors.amber, fontSize: 10, textAlign: "center" }}>
+              Don't break the streak. {streakTarget.tradesNeeded} more for {streakTarget.title}.
+            </CyberText>
+          ) : null}
         </Animated.View>
       ) : null}
       {streakMoment ? (

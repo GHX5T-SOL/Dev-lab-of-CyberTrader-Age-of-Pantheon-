@@ -47,31 +47,36 @@ export const MAX_ENERGY_SECONDS = 72 * 60 * 60;
 export const DORMANT_ENERGY_THRESHOLD_SECONDS = 60;
 
 const DRIFT_BIAS: Record<string, number> = {
-  VBLM: 0.0035,
-  FDST: 0.0015,
-  PGAS: 0.001,
-  NGLS: 0.0005,
-  HXMD: 0.0012,
-  ORRS: 0.0018,
-  SNPS: 0.0012,
-  MTRX: 0.0008,
-  AETH: 0.0016,
-  BLCK: 0.0022,
+  VBLM: 0.0008,
+  FDST: 0.0006,
+  PGAS: 0.0005,
+  NGLS: 0.0004,
+  HXMD: 0.0006,
+  ORRS: 0.0007,
+  SNPS: 0.0005,
+  MTRX: 0.0004,
+  AETH: 0.0008,
+  BLCK: 0.0007,
 };
+
+const PRICE_FLOOR_MULTIPLIER = 0.55;
+const PRICE_CEILING_MULTIPLIER = 2.25;
+const MEAN_REVERSION_STRENGTH = 0.08;
+const MAX_MEAN_REVERSION = 0.02;
 
 export const FIRST_TRADE_HINT_TICKER = "VBLM";
 
 export const DEMO_COMMODITIES: Commodity[] = [
-  { ticker: "FDST", name: "Fractal Dust", basePrice: 138, volatility: "high", heatRisk: "high", eventTags: ["supply_shock", "evasion"] },
-  { ticker: "PGAS", name: "Plutonion Gas", basePrice: 91, volatility: "med", heatRisk: "med", eventTags: ["infrastructure", "launch"] },
-  { ticker: "NGLS", name: "Neon Glass", basePrice: 73, volatility: "low", heatRisk: "low", eventTags: ["archivist", "memory"] },
-  { ticker: "HXMD", name: "Helix Mud", basePrice: 66, volatility: "med", heatRisk: "high", eventTags: ["biohack", "raid"] },
-  { ticker: "VBLM", name: "Void Bloom", basePrice: 24, volatility: "low", heatRisk: "very_low", eventTags: ["starter", "stabilizer"] },
-  { ticker: "ORRS", name: "Oracle Resin", basePrice: 112, volatility: "med", heatRisk: "med", eventTags: ["news", "signal"] },
-  { ticker: "SNPS", name: "Synapse Silk", basePrice: 84, volatility: "med", heatRisk: "med", eventTags: ["faction", "fiber"] },
-  { ticker: "MTRX", name: "Matrix Salt", basePrice: 58, volatility: "low", heatRisk: "low", eventTags: ["lattice", "unlock"] },
-  { ticker: "AETH", name: "Aether Tabs", basePrice: 41, volatility: "high", heatRisk: "high", eventTags: ["rumor", "pump"] },
-  { ticker: "BLCK", name: "Blacklight Serum", basePrice: 179, volatility: "very_high", heatRisk: "very_high", eventTags: ["contraband", "margin"] },
+  { ticker: "FDST", name: "Fractal Dust", basePrice: 180, volatility: "high", heatRisk: "med", eventTags: ["supply_shock", "evasion"] },
+  { ticker: "PGAS", name: "Plutonion Gas", basePrice: 520, volatility: "med", heatRisk: "low", eventTags: ["infrastructure", "launch"] },
+  { ticker: "NGLS", name: "Neon Glass", basePrice: 90, volatility: "low", heatRisk: "low", eventTags: ["archivist", "memory"] },
+  { ticker: "HXMD", name: "Helix Mud", basePrice: 240, volatility: "high", heatRisk: "high", eventTags: ["biohack", "raid"] },
+  { ticker: "VBLM", name: "Void Bloom", basePrice: 14, volatility: "low", heatRisk: "very_low", eventTags: ["starter", "stabilizer"] },
+  { ticker: "ORRS", name: "Oracle Resin", basePrice: 880, volatility: "high", heatRisk: "med", eventTags: ["news", "signal"] },
+  { ticker: "SNPS", name: "Synapse Silk", basePrice: 430, volatility: "med", heatRisk: "med", eventTags: ["faction", "fiber"] },
+  { ticker: "MTRX", name: "Matrix Salt", basePrice: 1200, volatility: "med", heatRisk: "med", eventTags: ["lattice", "unlock"] },
+  { ticker: "AETH", name: "Aether Tabs", basePrice: 70, volatility: "very_high", heatRisk: "high", eventTags: ["rumor", "pump"] },
+  { ticker: "BLCK", name: "Blacklight Serum", basePrice: 2500, volatility: "high", heatRisk: "very_high", eventTags: ["contraband", "margin"] },
 ];
 
 export const INITIAL_RESOURCES: DemoResources = {
@@ -84,6 +89,34 @@ export const DEMO_STARTING_BALANCE = INITIAL_RESOURCES.balanceObol;
 
 export function roundCurrency(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+export function normalizeCommodityPrice(ticker: string, value: number): number {
+  const commodity = getCommodity(ticker);
+  if (!commodity || !Number.isFinite(value) || value <= 0) {
+    return commodity?.basePrice ?? Math.max(1, value);
+  }
+
+  return roundCurrency(
+    clamp(
+      value,
+      commodity.basePrice * PRICE_FLOOR_MULTIPLIER,
+      commodity.basePrice * PRICE_CEILING_MULTIPLIER,
+    ),
+  );
+}
+
+export function normalizePriceMap(prices: PriceMap): PriceMap {
+  return Object.fromEntries(
+    DEMO_COMMODITIES.map((commodity) => [
+      commodity.ticker,
+      normalizeCommodityPrice(commodity.ticker, prices[commodity.ticker] ?? commodity.basePrice),
+    ]),
+  );
 }
 
 export function createInitialPrices(): PriceMap {
@@ -213,13 +246,22 @@ export function advancePrices(currentPrices: PriceMap, tick: number): { prices: 
   const changes: ChangeMap = {};
 
   for (const commodity of DEMO_COMMODITIES) {
-    const current = currentPrices[commodity.ticker] ?? commodity.basePrice;
+    const current = normalizeCommodityPrice(
+      commodity.ticker,
+      currentPrices[commodity.ticker] ?? commodity.basePrice,
+    );
     const stream = seededStream(`${commodity.ticker}:${tick}:market`);
     const noise = (stream() - 0.5) * 2;
     const drift = DRIFT_BIAS[commodity.ticker] ?? 0;
     const swing = noise * VOLATILITY_FACTOR[commodity.volatility];
-    const rawNext = current * (1 + drift + swing);
-    const next = roundCurrency(Math.max(1, rawNext));
+    const distanceFromBase = (current - commodity.basePrice) / commodity.basePrice;
+    const meanReversion = clamp(
+      distanceFromBase * MEAN_REVERSION_STRENGTH,
+      -MAX_MEAN_REVERSION,
+      MAX_MEAN_REVERSION,
+    );
+    const rawNext = current * (1 + drift + swing - meanReversion);
+    const next = normalizeCommodityPrice(commodity.ticker, rawNext);
 
     nextPrices[commodity.ticker] = next;
     changes[commodity.ticker] = roundCurrency(next - current);

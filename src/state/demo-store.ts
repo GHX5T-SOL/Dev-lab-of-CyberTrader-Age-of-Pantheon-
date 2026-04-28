@@ -27,6 +27,8 @@ import {
   formatDelta,
   formatObol,
   getCommodity,
+  normalizeCommodityPrice,
+  normalizePriceMap,
   roundCurrency,
   type ChangeMap,
   type PriceMap,
@@ -106,6 +108,7 @@ import type {
   AwayReport,
   BountySnapshot,
   DecisionContext,
+  DecisionSignal,
   DistrictStateRecord,
   FlashEvent,
   HeatPressureState,
@@ -124,6 +127,7 @@ import type {
   RaidRecoveryWindow,
   RankCelebration,
   RankSnapshot,
+  RecoveryPrompt,
   Resources,
   TradeJuice,
   TradeStreak,
@@ -172,8 +176,10 @@ const BLACK_MARKET_BRIBE_COST = 50_000;
 const FIRST_SESSION_BRIBE_COST = 500;
 const ENGAGEMENT_SEED = "v6-engagement";
 const BASE_COURIER_LIMIT = 3;
-const HEAT_WARNING_THRESHOLDS = [30, 50, 70, 90] as const;
+const HEAT_WARNING_THRESHOLDS = [20, 30, 50, 70, 90] as const;
 const RAID_RECOVERY_0BOL_COST = 50_000;
+const FALLBACK_MISSION_DEADLINE_MS = 10 * 60_000;
+const MAX_MISSION_DEADLINE_MS = 24 * 60 * 60_000;
 
 interface DemoStoreState {
   phase: DemoPhase;
@@ -236,6 +242,12 @@ interface DemoStoreState {
   bounty: BountySnapshot;
   decisionContext: DecisionContext;
   heatPressure: HeatPressureState;
+  scannerEvadeTradesRemaining: number;
+  recoveryOpportunity: DecisionSignal | null;
+  pendingRecoveryPrompt: RecoveryPrompt | null;
+  exitHookMessage: DecisionSignal | null;
+  lastInteractionAt: number;
+  lastExitHookAt: number;
   microRewards: MicroReward[];
   awayReport: AwayReport | null;
   tradeJuice: TradeJuice | null;
@@ -268,8 +280,11 @@ interface DemoStoreActions {
   setOrderSize: (quantity: number) => void;
   advanceMarket: () => Promise<void>;
   runGameLoop: (nowMs: number) => Promise<void>;
+  markInteraction: () => void;
+  runExitHookCheck: (nowMs: number) => void;
   buySelected: () => Promise<void>;
   sellSelected: () => Promise<void>;
+  ignoreSignal: (signalId: string) => Promise<void>;
   purchaseEnergyHour: () => Promise<void>;
   purchaseEnergyHours: (hours: number) => Promise<void>;
   startTravel: (destinationId: string) => void;
@@ -331,6 +346,8 @@ function buildInitialState(): DemoStoreState {
     district: getActiveDistrictState(initialDistrictStates, DEFAULT_LOCATION_ID, nowMs),
     heatPressure: initialHeatPressure,
     streak: initialStreak,
+    recoveryOpportunity: null,
+    exitHookMessage: null,
     nextFlashEventAt: nowMs + getNextFlashEventDelay(ENGAGEMENT_SEED, 0),
     nextMissionAt: nowMs + getNextMissionDelay(ENGAGEMENT_SEED, 0),
     nextMarketWhisperAt: nowMs + getNextWhisperDelay(ENGAGEMENT_SEED, 1),
@@ -408,6 +425,12 @@ function buildInitialState(): DemoStoreState {
     bounty: initialBounty,
     decisionContext: initialDecisionContext,
     heatPressure: initialHeatPressure,
+    scannerEvadeTradesRemaining: 0,
+    recoveryOpportunity: null,
+    pendingRecoveryPrompt: null,
+    exitHookMessage: null,
+    lastInteractionAt: nowMs,
+    lastExitHookAt: 0,
     microRewards: [],
     awayReport: null,
     tradeJuice: null,
@@ -450,6 +473,25 @@ function buildInitialPriceHistory(prices: PriceMap): Record<string, number[]> {
   return Object.fromEntries(Object.entries(prices).map(([ticker, price]) => [ticker, [price]]));
 }
 
+function normalizePriceHistory(history: Record<string, number[]> | undefined, prices: PriceMap): Record<string, number[]> {
+  if (!history) {
+    return buildInitialPriceHistory(prices);
+  }
+
+  return Object.fromEntries(
+    DEMO_COMMODITIES.map((commodity) => {
+      const values = history[commodity.ticker] ?? [prices[commodity.ticker] ?? commodity.basePrice];
+      const normalizedValues = values
+        .slice(-14)
+        .map((value) => normalizeCommodityPrice(commodity.ticker, value));
+      return [
+        commodity.ticker,
+        normalizedValues.length ? normalizedValues : [prices[commodity.ticker] ?? commodity.basePrice],
+      ];
+    }),
+  );
+}
+
 function appendPriceHistory(
   history: Record<string, number[]>,
   prices: PriceMap,
@@ -490,6 +532,71 @@ function addNotification(
   tone: GameNotification["tone"],
 ): GameNotification[] {
   return [makeNotification(message, tone), ...notifications].slice(0, 20);
+}
+
+function isSensibleTimestamp(
+  value: number | null | undefined,
+  nowMs: number,
+  maxWindowMs: number,
+): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 && value <= nowMs + maxWindowMs;
+}
+
+function sanitizeMissionTimer(mission: Mission | null | undefined, nowMs: number): Mission | null {
+  if (!mission) {
+    return null;
+  }
+  if (mission.completed || mission.failed || mission.status === "completed" || mission.status === "failed") {
+    const fallbackEnd = mission.completedAt ?? mission.startTimestamp + FALLBACK_MISSION_DEADLINE_MS;
+    const endTimestamp =
+      Number.isFinite(mission.endTimestamp) && mission.endTimestamp <= nowMs + MAX_MISSION_DEADLINE_MS
+        ? mission.endTimestamp
+        : fallbackEnd;
+    return {
+      ...mission,
+      expiresAtTimestamp:
+        Number.isFinite(mission.expiresAtTimestamp) &&
+        mission.expiresAtTimestamp <= nowMs + MAX_MISSION_DEADLINE_MS
+        ? mission.expiresAtTimestamp
+        : endTimestamp,
+      endTimestamp,
+    };
+  }
+
+  const expiresAtTimestamp = isSensibleTimestamp(
+    mission.expiresAtTimestamp,
+    nowMs,
+    MAX_MISSION_DEADLINE_MS,
+  )
+    ? mission.expiresAtTimestamp
+    : nowMs + FALLBACK_MISSION_DEADLINE_MS;
+  const endTimestamp = isSensibleTimestamp(mission.endTimestamp, nowMs, MAX_MISSION_DEADLINE_MS)
+    ? mission.endTimestamp
+    : expiresAtTimestamp;
+
+  return {
+    ...mission,
+    expiresAtTimestamp,
+    endTimestamp,
+  };
+}
+
+function sanitizeFlashTimer(event: FlashEvent | null | undefined, nowMs: number): FlashEvent | null {
+  if (!event || !Number.isFinite(event.endTimestamp) || event.endTimestamp <= nowMs) {
+    return null;
+  }
+  return event;
+}
+
+function sanitizeShipmentTimers(shipments: TransitShipment[] | undefined): TransitShipment[] {
+  return (shipments ?? []).filter((shipment) => Number.isFinite(shipment.arrivalTime));
+}
+
+function sanitizeHeistTimer(heist: HeistMission | null | undefined): HeistMission | null {
+  if (!heist || !Number.isFinite(heist.endTimestamp)) {
+    return null;
+  }
+  return heist;
 }
 
 function getCourierLimit(rankLevel: number): number {
@@ -568,6 +675,8 @@ function buildDecisionContextForState(
     district: getActiveDistrictState(snapshot.districtStates, currentLocationId, nowMs),
     heatPressure: snapshot.heatPressure,
     streak: snapshot.streak,
+    recoveryOpportunity: snapshot.recoveryOpportunity,
+    exitHookMessage: snapshot.exitHookMessage,
     nextFlashEventAt: snapshot.nextFlashEventAt,
     nextMissionAt: snapshot.nextMissionAt,
     nextMarketWhisperAt: snapshot.nextMarketWhisperAt,
@@ -749,6 +858,169 @@ function markMissionStatus(
   };
 }
 
+function createRecoveryPrompt(input: {
+  nowMs: number;
+  lossValue: number;
+  reason: RecoveryPrompt["reason"];
+}): RecoveryPrompt {
+  const lossValue = Math.max(0, roundCurrency(input.lossValue));
+  const reward0Bol = roundCurrency(Math.max(500, Math.min(25_000, lossValue * 0.3)));
+  return {
+    id: `recovery_${input.reason}_${input.nowMs}`,
+    reason: input.reason,
+    lossValue,
+    reward0Bol,
+    triggerAt: input.nowMs + 5_000,
+    expiresAt: input.nowMs + 5 * 60_000,
+    createdAt: input.nowMs,
+  };
+}
+
+function recoverySignalFromPrompt(prompt: RecoveryPrompt): DecisionSignal {
+  return {
+    id: `signal_${prompt.id}`,
+    title: "Rebuild - Low Risk",
+    description: `Kite has a controlled VBLM rebuild lane. Reward covers about 30% of the last hit: ${formatObol(prompt.reward0Bol)} 0BOL.`,
+    actionType: "trade",
+    actionLabel: "Start rebuild",
+    urgency: "high",
+    expiresAt: prompt.expiresAt,
+    ticker: "VBLM",
+    locationId: DEFAULT_LOCATION_ID,
+  };
+}
+
+function recoveryMissionFromPrompt(prompt: RecoveryPrompt): Mission {
+  return {
+    id: `mission_${prompt.id}`,
+    npcId: "kite",
+    npcName: "Kite",
+    type: "buy_request",
+    title: "Kite: Rebuild - Low Risk",
+    description: `Buy 1 VBLM. I'll patch ${formatObol(prompt.reward0Bol)} 0BOL back into your route.`,
+    requiredTicker: "VBLM",
+    requiredQuantity: 1,
+    reward0Bol: prompt.reward0Bol,
+    rewardXp: 20,
+    reputationChangeOnSuccess: 2,
+    reputationChangeOnFail: 0,
+    expiresAtTimestamp: prompt.expiresAt,
+    accepted: true,
+    completed: false,
+    failed: false,
+    status: "active",
+    objective: "Buy 1 VBLM to rebuild momentum.",
+    ticker: "VBLM",
+    quantity: 1,
+    startTimestamp: prompt.triggerAt,
+    endTimestamp: prompt.expiresAt,
+    acceptedAt: prompt.triggerAt,
+    rewardObol: prompt.reward0Bol,
+    reputationDelta: 2,
+  };
+}
+
+function estimateInventoryLossValue(
+  losses: Record<string, number>,
+  positions: Record<string, Position>,
+  prices: PriceMap,
+): number {
+  return roundCurrency(
+    Object.entries(losses).reduce((total, [ticker, quantity]) => {
+      const basis = positions[ticker]?.avgEntry ?? prices[ticker] ?? 1;
+      return total + basis * quantity;
+    }, 0),
+  );
+}
+
+function createExitHookSignal(state: DemoStoreState, nowMs: number): DecisionSignal | null {
+  const arrivingShipment = state.transitShipments
+    .filter((shipment) => shipment.status === "transit" && shipment.arrivalTime > nowMs)
+    .sort((left, right) => left.arrivalTime - right.arrivalTime)
+    .find((shipment) => shipment.arrivalTime - nowMs <= 5 * 60_000);
+  if (arrivingShipment) {
+    return {
+      id: `exit_courier_${arrivingShipment.id}`,
+      title: "Courier arriving soon",
+      description: `${arrivingShipment.quantity} ${arrivingShipment.ticker} lands in ${Math.ceil((arrivingShipment.arrivalTime - nowMs) / 60_000)} minutes. Stay to claim the run.`,
+      actionType: "courier",
+      actionLabel: "Track courier",
+      urgency: "high",
+      expiresAt: arrivingShipment.arrivalTime,
+      ticker: arrivingShipment.ticker,
+      locationId: arrivingShipment.destinationId,
+    };
+  }
+
+  const mission = state.activeMission ?? state.pendingMission;
+  if (mission && mission.expiresAtTimestamp > nowMs && mission.expiresAtTimestamp - nowMs <= 5 * 60_000) {
+    return {
+      id: `exit_mission_${mission.id}`,
+      title: "Mission expiring soon",
+      description: `${mission.title} is close to timing out. Finish or decline before the window closes.`,
+      actionType: "mission",
+      actionLabel: "Review mission",
+      urgency: "high",
+      expiresAt: mission.expiresAtTimestamp,
+      ticker: mission.ticker ?? mission.requiredTicker,
+      locationId: mission.destinationId ?? mission.destinationLocationId,
+    };
+  }
+
+  if (state.activeFlashEvent && state.activeFlashEvent.endTimestamp > nowMs && state.activeFlashEvent.endTimestamp - nowMs <= 2 * 60_000) {
+    return {
+      id: `exit_flash_${state.activeFlashEvent.id}`,
+      title: "Signal closing soon",
+      description: `${state.activeFlashEvent.headline} is under 2 minutes from expiry.`,
+      actionType: state.activeFlashEvent.locationId && state.activeFlashEvent.locationId !== state.world.currentLocationId ? "travel" : "trade",
+      actionLabel: "Act before close",
+      urgency: state.activeFlashEvent.riskLevel === "critical" ? "critical" : "high",
+      expiresAt: state.activeFlashEvent.endTimestamp,
+      ticker: state.activeFlashEvent.ticker,
+      locationId: state.activeFlashEvent.locationId,
+    };
+  }
+
+  return null;
+}
+
+function createAwayPrimaryAction(state: DemoStoreState, nowMs: number): NonNullable<AwayReport["primaryAction"]> {
+  const arrivedHere = state.transitShipments.find(
+    (shipment) => shipment.status === "arrived" && shipment.destinationId === state.world.currentLocationId,
+  );
+  if (arrivedHere) {
+    return {
+      label: "CHECK COURIER",
+      message: `${arrivedHere.quantity} ${arrivedHere.ticker} is ready to claim.`,
+      action: "inventory",
+    };
+  }
+
+  const claimable = state.dailyChallenges.find((challenge) => challenge.completed && !challenge.claimed);
+  if (claimable) {
+    return {
+      label: "CLAIM REWARD",
+      message: `${claimable.title} reward is waiting.`,
+      action: "missions",
+    };
+  }
+
+  const exitSignal = createExitHookSignal(state, nowMs);
+  if (exitSignal) {
+    return {
+      label: exitSignal.actionType === "mission" ? "REVIEW MISSION" : exitSignal.actionType === "courier" ? "CHECK COURIER" : "RESUME TRADING",
+      message: exitSignal.description,
+      action: exitSignal.actionType === "mission" ? "missions" : exitSignal.actionType === "courier" ? "inventory" : "terminal",
+    };
+  }
+
+  return {
+    label: "RESUME TRADING",
+    message: "The market is live. Check the next best signal.",
+    action: "terminal",
+  };
+}
+
 function toPersistedSession(state: DemoStoreState): PersistedDemoSession {
   return {
     phase: state.phase,
@@ -810,6 +1082,12 @@ function toPersistedSession(state: DemoStoreState): PersistedDemoSession {
     nextDistrictStateAt: state.nextDistrictStateAt,
     bounty: state.bounty,
     heatPressure: state.heatPressure,
+    scannerEvadeTradesRemaining: state.scannerEvadeTradesRemaining,
+    recoveryOpportunity: state.recoveryOpportunity,
+    pendingRecoveryPrompt: state.pendingRecoveryPrompt,
+    exitHookMessage: state.exitHookMessage,
+    lastInteractionAt: state.lastInteractionAt,
+    lastExitHookAt: state.lastExitHookAt,
     microRewards: state.microRewards,
     awayReport: state.awayReport,
     tradeJuice: state.tradeJuice,
@@ -837,8 +1115,21 @@ export const useDemoStore = create<DemoStore>((set, get) => {
   };
 
   const commitState = (partial: Partial<DemoStoreState>) => {
-    set(partial);
+    const nowMs = partial.clock?.nowMs ?? get().clock.nowMs ?? Date.now();
+    const snapshot = {
+      ...get(),
+      ...partial,
+    } as DemoStoreState;
+    set({
+      ...partial,
+      decisionContext: buildDecisionContextForState(snapshot, nowMs),
+    });
     void persistCurrentState();
+  };
+
+  const refreshDecisionContext = (nowMs: number = Date.now()) => {
+    const state = get();
+    set({ decisionContext: buildDecisionContextForState(state, nowMs) });
   };
 
   const refreshFromAuthority = async (
@@ -865,7 +1156,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       authority.advancePlayerClock
         ? authority.advancePlayerClock(playerId, nextTick)
         : authority.getResources(playerId),
-      authority.getOpenPositions(playerId),
+      authority.getOpenPositions(playerId, locationId),
       authority.getRank(playerId),
     ]);
 
@@ -878,6 +1169,35 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       resources,
       positions: toPositionMap(positions),
       progression,
+    };
+  };
+
+  const forcePriceRecalc = async (input: {
+    playerId: string;
+    nextTick: number;
+    locationId: string;
+    nowMs: number;
+    activeFlashEvent: FlashEvent | null;
+    districtStates: Record<string, DistrictStateRecord>;
+    previousPrices: PriceMap;
+    previousHistory: Record<string, number[]>;
+  }): Promise<Partial<DemoStoreState>> => {
+    const authority = getAuthority();
+    const basePrices = await authority.getTickPrices(input.nextTick);
+    const prices = applyAllPriceModifiers({
+      basePrices,
+      locationId: input.locationId,
+      districtStates: input.districtStates,
+      activeFlashEvent: input.activeFlashEvent,
+      nowMs: input.nowMs,
+      tick: input.nextTick,
+    });
+    const positions = await authority.getOpenPositions(input.playerId, input.locationId);
+    return {
+      prices,
+      changes: buildChangeMap(input.previousPrices, prices),
+      priceHistory: appendPriceHistory(input.previousHistory, prices),
+      positions: toPositionMap(positions),
     };
   };
 
@@ -900,38 +1220,43 @@ export const useDemoStore = create<DemoStore>((set, get) => {
 
       restoreLocalAuthority(session.authoritySnapshot);
       const fallback = buildInitialState();
-      const prices = session.prices ?? fallback.prices;
+      const prices = normalizePriceMap(session.prices ?? fallback.prices);
+      const nowMs = Date.now();
       set({
         ...fallback,
         ...session,
         prices,
         changes: session.changes ?? createInitialChanges(),
-        priceHistory: session.priceHistory ?? buildInitialPriceHistory(prices),
+        priceHistory: normalizePriceHistory(session.priceHistory, prices),
         activeNews: session.activeNews ?? [],
         progression: session.progression ?? getRankSnapshot(session.profile?.rank ?? 0),
         clock: {
           ...fallback.clock,
           ...(session.clock ?? {}),
-          nowMs: Date.now(),
-          displayTime: formatClock(Date.now()),
+          nowMs,
+          displayTime: formatClock(nowMs),
         },
         world: session.world ?? fallback.world,
         notifications: session.notifications ?? [],
-        transitShipments: session.transitShipments ?? [],
+        transitShipments: sanitizeShipmentTimers(session.transitShipments),
         locationInventories: session.locationInventories ?? {},
-        activeFlashEvent: session.activeFlashEvent ?? null,
+        activeFlashEvent: sanitizeFlashTimer(session.activeFlashEvent, nowMs),
         flashEventCount: session.flashEventCount ?? 0,
         nextFlashEventAt: session.nextFlashEventAt ?? fallback.nextFlashEventAt,
-        flashCooldownUntil: session.flashCooldownUntil ?? 0,
-        pendingMission: session.pendingMission ?? null,
-        activeMission: session.activeMission ?? null,
-        missionHistory: session.missionHistory ?? [],
+        flashCooldownUntil: 0,
+        pendingMission: sanitizeMissionTimer(session.pendingMission, nowMs),
+        activeMission: sanitizeMissionTimer(session.activeMission, nowMs),
+        missionHistory: (session.missionHistory ?? [])
+          .map((mission) => sanitizeMissionTimer(mission, nowMs))
+          .filter((mission): mission is Mission => mission !== null),
         npcReputation: session.npcReputation ?? {},
         npcRelationships: session.npcRelationships ?? fallback.npcRelationships,
         missionCount: session.missionCount ?? 0,
         nextMissionAt: session.nextMissionAt ?? fallback.nextMissionAt,
-        heistMissions: session.heistMissions ?? [],
-        activeHeistMission: session.activeHeistMission ?? null,
+        heistMissions: (session.heistMissions ?? [])
+          .map((heist) => sanitizeHeistTimer(heist))
+          .filter((heist): heist is HeistMission => heist !== null),
+        activeHeistMission: sanitizeHeistTimer(session.activeHeistMission),
         heistCount: session.heistCount ?? 0,
         streak: session.streak ?? fallback.streak,
         dailyChallenges: session.dailyChallenges ?? fallback.dailyChallenges,
@@ -958,7 +1283,19 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         districtStateCount: session.districtStateCount ?? 0,
         nextDistrictStateAt: session.nextDistrictStateAt ?? fallback.nextDistrictStateAt,
         bounty: session.bounty ?? getBountyByHeat((session.resources ?? fallback.resources).heat),
-        heatPressure: session.heatPressure ?? createInitialHeatPressure(Date.now(), (session.resources ?? fallback.resources).heat),
+        heatPressure: session.heatPressure ?? createInitialHeatPressure(nowMs, (session.resources ?? fallback.resources).heat),
+        scannerEvadeTradesRemaining: session.scannerEvadeTradesRemaining ?? 0,
+        recoveryOpportunity: session.recoveryOpportunity && session.recoveryOpportunity.expiresAt && session.recoveryOpportunity.expiresAt > nowMs
+          ? session.recoveryOpportunity
+          : null,
+        pendingRecoveryPrompt: session.pendingRecoveryPrompt && session.pendingRecoveryPrompt.expiresAt > nowMs
+          ? session.pendingRecoveryPrompt
+          : null,
+        exitHookMessage: session.exitHookMessage && session.exitHookMessage.expiresAt && session.exitHookMessage.expiresAt > nowMs
+          ? session.exitHookMessage
+          : null,
+        lastInteractionAt: session.lastInteractionAt ?? nowMs,
+        lastExitHookAt: session.lastExitHookAt ?? 0,
         microRewards: session.microRewards ?? [],
         awayReport: session.awayReport ?? null,
         tradeJuice: session.tradeJuice ?? null,
@@ -1018,9 +1355,6 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           osTier: "PIRATE",
           rank: 1,
           faction: null,
-          currentLocationId: DEFAULT_LOCATION_ID,
-          travelDestinationId: null,
-          travelEndTime: null,
         });
 
         const nowMs = Date.now();
@@ -1029,7 +1363,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         const [resources, ledger, positions, activeNews, progression] = await Promise.all([
           authority.getResources(profile.id),
           authority.getLedger(profile.id),
-          authority.getOpenPositions(profile.id),
+          authority.getOpenPositions(profile.id, DEFAULT_LOCATION_ID),
           authority.getActiveNews(0),
           authority.getRank(profile.id),
         ]);
@@ -1144,9 +1478,6 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           osTier: "PIRATE",
           rank: 1,
           faction: null,
-          currentLocationId: DEFAULT_LOCATION_ID,
-          travelDestinationId: null,
-          travelEndTime: null,
         });
 
         const nowMs = Date.now();
@@ -1155,7 +1486,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         const [resources, ledger, positions, activeNews, progression] = await Promise.all([
           authority.getResources(profile.id),
           authority.getLedger(profile.id),
-          authority.getOpenPositions(profile.id),
+          authority.getOpenPositions(profile.id, DEFAULT_LOCATION_ID),
           authority.getActiveNews(0),
           authority.getRank(profile.id),
         ]);
@@ -1358,9 +1689,46 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       let nextTradeJuice = state.tradeJuice;
       let nextBounty = getBountyByHeat(nextResources.heat);
       let nextHeatPressure = state.heatPressure;
+      let nextScannerEvadeTradesRemaining = state.scannerEvadeTradesRemaining;
+      let nextRecoveryOpportunity = state.recoveryOpportunity;
+      let nextPendingRecoveryPrompt = state.pendingRecoveryPrompt;
+      let nextExitHookMessage = state.exitHookMessage;
       let nextMicroRewards = state.microRewards.filter((reward) => nowMs - reward.createdAt < 8_000);
       let nextAwayReport = state.awayReport;
       let didMutate = nextActiveFlashEvent !== state.activeFlashEvent || nextStreak !== state.streak || nextDistrictStates !== state.districtStates;
+
+      if (
+        nextActiveHeistMission &&
+        nextActiveHeistMission.status === "active" &&
+        nowMs >= nextActiveHeistMission.endTimestamp
+      ) {
+        const failedHeist: HeistMission = { ...nextActiveHeistMission, status: "failed" };
+        nextActiveHeistMission = null;
+        nextHeistMissions = nextHeistMissions.map((mission) =>
+          mission.id === failedHeist.id ? failedHeist : mission,
+        );
+        nextNpcRelationships = applyNpcReputationChange({
+          relationships: nextNpcRelationships,
+          npcId: failedHeist.npcId,
+          delta: -10,
+          missionOutcome: "failed",
+        });
+        nextNpcReputation = {
+          ...nextNpcReputation,
+          [failedHeist.npcId]: nextNpcRelationships[failedHeist.npcId]?.reputation ?? 0,
+        };
+        nextNotifications = addNotification(
+          nextNotifications,
+          "Heist failed: deadline expired. Collateral lost.",
+          "danger",
+        );
+        nextPendingRecoveryPrompt = createRecoveryPrompt({
+          nowMs,
+          lossValue: failedHeist.collateralValue,
+          reason: "heist_failure",
+        });
+        didMutate = true;
+      }
 
       const expiredFlash = state.activeFlashEvent && !nextActiveFlashEvent ? state.activeFlashEvent : null;
       if (expiredFlash) {
@@ -1371,11 +1739,15 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           const stream = seededStream(`${expiredFlash.id}:forced-raid`);
           const losses: Record<string, number> = {};
           for (const [ticker, position] of Object.entries(nextPositions)) {
-            losses[ticker] = Math.max(1, Math.floor(position.quantity * (0.25 + stream() * 0.35)));
+            losses[ticker] = Math.max(1, Math.floor(position.quantity * (0.2 + stream() * 0.4)));
           }
+          const positionsBeforeRaid = nextPositions;
           if (Object.keys(losses).length > 0 && authority.applyRaidLoss) {
-            const positionsBeforeRaid = nextPositions;
-            const raidState = await authority.applyRaidLoss(state.playerId, losses);
+            const raidState = await authority.applyRaidLoss(
+              state.playerId,
+              losses,
+              nextWorld.currentLocationId,
+            );
             nextPositions = toPositionMap(raidState.positions);
             nextResources = raidState.resources;
             nextRaidRecoveryWindow = buildRaidRecoveryWindow(losses, positionsBeforeRaid, nowMs);
@@ -1384,9 +1756,69 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           nextRankCelebration = maybeRankCelebration(nextProgression, raidRank) ?? nextRankCelebration;
           nextProgression = raidRank;
           nextNotifications = addNotification(nextNotifications, "ALERT: eAgent RAID! Scanner lock resolved the hard way.", "danger");
+          nextPendingRecoveryPrompt = createRecoveryPrompt({
+            nowMs,
+            lossValue: estimateInventoryLossValue(losses, positionsBeforeRaid, state.prices),
+            reason: "raid_loss",
+          });
           // AUDIO: raid_warning.wav on eAgent proximity
           didMutate = true;
+        } else if (expiredFlash.type === "eagent_scan") {
+          nextScannerEvadeTradesRemaining = 2;
+          nextNotifications = addNotification(
+            nextNotifications,
+            "Scanner Evaded: next 2 trades generate 50% less Heat.",
+            "success",
+          );
+          nextMicroRewards = [
+            makeMicroReward({
+              label: "Scanner Evaded",
+              value: "2 trades -50% Heat",
+              tone: "info",
+              nowMs,
+            }),
+            ...nextMicroRewards,
+          ].slice(0, 8);
+          didMutate = true;
         }
+      }
+
+      if (nextRecoveryOpportunity?.expiresAt && nextRecoveryOpportunity.expiresAt <= nowMs) {
+        nextRecoveryOpportunity = null;
+        didMutate = true;
+      }
+
+      if (nextPendingRecoveryPrompt && nextPendingRecoveryPrompt.expiresAt <= nowMs) {
+        nextPendingRecoveryPrompt = null;
+        didMutate = true;
+      }
+
+      if (nextExitHookMessage?.expiresAt && nextExitHookMessage.expiresAt <= nowMs) {
+        nextExitHookMessage = null;
+        didMutate = true;
+      }
+
+      if (nextPendingRecoveryPrompt && nowMs >= nextPendingRecoveryPrompt.triggerAt) {
+        nextRecoveryOpportunity = recoverySignalFromPrompt(nextPendingRecoveryPrompt);
+        if (!nextActiveMission && !nextPendingMission) {
+          nextActiveMission = recoveryMissionFromPrompt(nextPendingRecoveryPrompt);
+        }
+        nextNotifications = addNotification(
+          nextNotifications,
+          `Recovery opportunity opened: ${formatObol(nextPendingRecoveryPrompt.reward0Bol)} 0BOL low-risk rebuild.`,
+          "success",
+        );
+        nextMicroRewards = [
+          makeMicroReward({
+            label: "Recovery Open",
+            value: `${formatObol(nextPendingRecoveryPrompt.reward0Bol)} 0BOL`,
+            tone: "info",
+            nowMs,
+          }),
+          ...nextMicroRewards,
+        ].slice(0, 8);
+        nextPendingRecoveryPrompt = null;
+        didMutate = true;
       }
 
       if (!nextFirstSessionStartedAt) {
@@ -1416,6 +1848,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
 
       if (firstSessionEvent) {
         if (firstSessionEvent.type === "kite_first_ping") {
+          const kiteMissionDeadline = nowMs + FALLBACK_MISSION_DEADLINE_MS;
           const mission: Mission = {
             id: "first_session_buy_vblm",
             npcId: "kite",
@@ -1429,7 +1862,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             rewardXp: 0,
             reputationChangeOnSuccess: 10,
             reputationChangeOnFail: 0,
-            expiresAtTimestamp: Number.MAX_SAFE_INTEGER,
+            expiresAtTimestamp: kiteMissionDeadline,
             accepted: true,
             completed: false,
             failed: false,
@@ -1438,7 +1871,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             ticker: "VBLM",
             quantity: 10,
             startTimestamp: nowMs,
-            endTimestamp: Number.MAX_SAFE_INTEGER,
+            endTimestamp: kiteMissionDeadline,
             acceptedAt: nowMs,
             rewardObol: 0,
             reputationDelta: 10,
@@ -1782,6 +2215,9 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             missionOutcome: completed ? "completed" : "failed",
           });
           nextActiveMission = null;
+          if (finishedMission.id.includes("recovery_")) {
+            nextRecoveryOpportunity = null;
+          }
           nextMissionAt = nowMs + getNextMissionDelay(ENGAGEMENT_SEED, nextMissionCount);
           if (completed) {
             const ledger = authority.grantReward
@@ -1846,13 +2282,22 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             if (raid.triggered) {
               const positionsBeforeRaid = nextPositions;
               const raidState = authority.applyRaidLoss
-                ? await authority.applyRaidLoss(state.playerId, raid.losses)
+                ? await authority.applyRaidLoss(
+                    state.playerId,
+                    raid.losses,
+                    nextWorld.currentLocationId,
+                  )
                 : { positions: Object.values(nextPositions), resources: nextResources };
               const progression = await authority.updateXp(state.playerId, raid.xpBonus, "raid_survived");
               nextPositions = toPositionMap(raidState.positions);
               nextResources = raidState.resources;
               nextProgression = progression;
               nextRaidRecoveryWindow = buildRaidRecoveryWindow(raid.losses, positionsBeforeRaid, nowMs);
+              nextPendingRecoveryPrompt = createRecoveryPrompt({
+                nowMs,
+                lossValue: estimateInventoryLossValue(raid.losses, positionsBeforeRaid, state.prices),
+                reason: "raid_loss",
+              });
               refresh = {
                 ...refresh,
                 positions: nextPositions,
@@ -1865,23 +2310,24 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         }
       }
 
-      const shouldReprice = didMutate || missedTicks > 0;
+      const forceRepriceTicker =
+        nextActiveFlashEvent !== state.activeFlashEvent &&
+        (nextActiveFlashEvent?.type === "volatility_spike" || nextActiveFlashEvent?.type === "flash_crash")
+          ? nextActiveFlashEvent.ticker ?? null
+          : null;
+      const shouldReprice = didMutate || Boolean(forceRepriceTicker) || missedTicks > 0;
       if (shouldReprice && missedTicks === 0) {
-        const basePrices = await authority.getTickPrices(nextTick);
-        const prices = applyAllPriceModifiers({
-          basePrices,
+        refresh = await forcePriceRecalc({
+          playerId: state.playerId,
+          nextTick,
           locationId: nextWorld.currentLocationId,
-          districtStates: nextDistrictStates,
-          activeFlashEvent: nextActiveFlashEvent,
           nowMs,
-          tick: nextTick,
+          activeFlashEvent: nextActiveFlashEvent,
+          districtStates: nextDistrictStates,
+          previousPrices: state.prices,
+          previousHistory: state.priceHistory,
         });
-        refresh = {
-          ...refresh,
-          prices,
-          changes: buildChangeMap(state.prices, prices),
-          priceHistory: appendPriceHistory(state.priceHistory, prices),
-        };
+        nextPositions = (refresh.positions ?? nextPositions) as Record<string, Position>;
       }
 
       const latestPrices = (refresh.prices ?? state.prices) as PriceMap;
@@ -1997,6 +2443,10 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         nextDistrictStateAt,
         bounty: nextBounty,
         heatPressure: nextHeatPressure,
+        scannerEvadeTradesRemaining: nextScannerEvadeTradesRemaining,
+        recoveryOpportunity: nextRecoveryOpportunity,
+        pendingRecoveryPrompt: nextPendingRecoveryPrompt,
+        exitHookMessage: nextExitHookMessage,
         microRewards: nextMicroRewards,
         awayReport: nextAwayReport,
         tradeJuice: nextTradeJuice,
@@ -2014,8 +2464,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
       const microRewardsChanged =
         nextMicroRewards.length !== state.microRewards.length ||
         nextMicroRewards[0]?.id !== state.microRewards[0]?.id;
+      const retentionHooksChanged =
+        nextRecoveryOpportunity !== state.recoveryOpportunity ||
+        nextPendingRecoveryPrompt !== state.pendingRecoveryPrompt ||
+        nextExitHookMessage !== state.exitHookMessage;
 
-      if (shouldReprice || didMutate || nextStreak !== state.streak || nextBounty.level !== state.bounty.level || heatPressureChanged || microRewardsChanged || nextAwayReport !== state.awayReport) {
+      if (shouldReprice || didMutate || nextStreak !== state.streak || nextBounty.level !== state.bounty.level || heatPressureChanged || microRewardsChanged || retentionHooksChanged || nextAwayReport !== state.awayReport) {
         set({
           ...refresh,
           tick: nextTick,
@@ -2064,6 +2518,10 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           bounty: nextBounty,
           decisionContext: nextDecisionContext,
           heatPressure: nextHeatPressure,
+          scannerEvadeTradesRemaining: nextScannerEvadeTradesRemaining,
+          recoveryOpportunity: nextRecoveryOpportunity,
+          pendingRecoveryPrompt: nextPendingRecoveryPrompt,
+          exitHookMessage: nextExitHookMessage,
           microRewards: nextMicroRewards,
           awayReport: nextAwayReport,
           tradeJuice: nextTradeJuice,
@@ -2081,6 +2539,42 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         });
         await persistCurrentState();
       }
+    },
+    markInteraction: () => {
+      const nowMs = Date.now();
+      set({
+        lastInteractionAt: nowMs,
+      });
+    },
+    runExitHookCheck: (nowMs) => {
+      const state = get();
+      if (!state.isHydrated || !state.playerId) {
+        return;
+      }
+      if (nowMs - state.lastInteractionAt < 60_000 || nowMs - state.lastExitHookAt < 60_000) {
+        return;
+      }
+      const signal = createExitHookSignal(state, nowMs);
+      if (!signal) {
+        return;
+      }
+      const nextState: Partial<DemoStoreState> = {
+        exitHookMessage: signal,
+        lastExitHookAt: nowMs,
+        notifications: addNotification(state.notifications, signal.description, signal.urgency === "critical" ? "danger" : "warning"),
+        systemMessage: `[retention] ${signal.title.toLowerCase()}`,
+      };
+      set({
+        ...nextState,
+        decisionContext: buildDecisionContextForState(
+          {
+            ...state,
+            ...nextState,
+          } as DemoStoreState,
+          nowMs,
+        ),
+      });
+      void persistCurrentState();
     },
     buySelected: async () => {
       const state = get();
@@ -2109,6 +2603,8 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           quantity: state.orderSize,
           locationId: state.world.currentLocationId,
           priceOverride: price,
+          streakHeatBonus: getStreakRiskHeatBonus(state.streak),
+          heatMultiplier: state.scannerEvadeTradesRemaining > 0 ? 0.5 : 1,
         });
         const heatUpdate = updateHeatWarning(
           state.resources.heat,
@@ -2150,10 +2646,15 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           notifications: bountyUpdate.notifications,
           heatWarning: heatUpdate.heatWarning ?? state.heatWarning,
           rankCelebration: maybeRankCelebration(state.progression, result.rank),
+          scannerEvadeTradesRemaining: Math.max(0, state.scannerEvadeTradesRemaining - 1),
+          recoveryOpportunity: null,
+          exitHookMessage: null,
+          lastInteractionAt: state.clock.nowMs || Date.now(),
           activeView: "market",
           isBusy: false,
           systemMessage: `[trade] buy committed // ${state.selectedTicker} x${state.orderSize} @ ${price.toFixed(2)}`,
         });
+        refreshDecisionContext(state.clock.nowMs || Date.now());
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2194,6 +2695,8 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           quantity: Math.min(state.orderSize, position.quantity),
           locationId: state.world.currentLocationId,
           priceOverride: price,
+          streakHeatBonus: getStreakRiskHeatBonus(state.streak),
+          heatMultiplier: state.scannerEvadeTradesRemaining > 0 ? 0.5 : 1,
         });
         const nextStreak = applySellToStreak({
           streak: state.streak,
@@ -2247,6 +2750,13 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         const nextPositionsMap = toPositionMap(result.positions);
         const nextLore = maybeAddMemoryShard(state.progression, nextRank, state.playerLore, state.clock.nowMs || Date.now());
         const nowForReward = state.clock.nowMs || Date.now();
+        const pendingRecoveryPrompt = result.realizedPnl < 0
+          ? createRecoveryPrompt({
+              nowMs: nowForReward,
+              lossValue: Math.abs(result.realizedPnl),
+              reason: "trade_loss",
+            })
+          : state.pendingRecoveryPrompt;
         const nextMicroRewards = [
           ...(totalXp > 0
             ? [makeMicroReward({
@@ -2317,11 +2827,17 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           },
           heatWarning: heatUpdate.heatWarning ?? state.heatWarning,
           rankCelebration: maybeRankCelebration(state.progression, nextRank),
+          scannerEvadeTradesRemaining: Math.max(0, state.scannerEvadeTradesRemaining - 1),
+          pendingRecoveryPrompt,
+          recoveryOpportunity: result.realizedPnl > 0 ? null : state.recoveryOpportunity,
+          exitHookMessage: null,
+          lastInteractionAt: nowForReward,
           activeView: "home",
           isBusy: false,
           notifications: nextNotifications,
           systemMessage: `[trade] sell executed // ${state.selectedTicker} ${formatDelta(result.realizedPnl)} 0BOL`,
         });
+        refreshDecisionContext(nowForReward);
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2333,6 +2849,86 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         });
         await persistCurrentState();
       }
+    },
+    ignoreSignal: async (signalId) => {
+      const state = get();
+      if (!state.playerId || state.isBusy) {
+        return;
+      }
+
+      const nowMs = state.clock.nowMs || Date.now();
+      const ignoredRiskScan =
+        state.activeFlashEvent?.type === "eagent_scan" &&
+        (signalId.includes(state.activeFlashEvent.id) ||
+          state.decisionContext.recommendedAction.actionType === "reduce_heat");
+      const heatDelta = ignoredRiskScan ? 5 : 2;
+      const authority = getAuthority();
+      const resources = authority.applyHeatDelta
+        ? await authority.applyHeatDelta(state.playerId, heatDelta, "ignored_signal")
+        : { ...state.resources, heat: Math.min(100, state.resources.heat + heatDelta) };
+      const heatUpdate = updateHeatWarning(state.resources.heat, resources, state.notifications);
+      const bountyUpdate = updateBountyFeedback(
+        state.resources.heat,
+        heatUpdate.resources,
+        heatUpdate.notifications,
+      );
+      const currentDelay = Math.max(0, state.nextFlashEventAt - nowMs);
+      const nextFlashEventAt = nowMs + Math.floor(currentDelay * 0.8);
+      const shortenedScanAt = state.heatPressure.scanLockAt && ignoredRiskScan
+        ? Math.max(nowMs + 5_000, state.heatPressure.scanLockAt - 30_000)
+        : state.heatPressure.scanLockAt;
+      const activeFlashEvent = ignoredRiskScan && state.activeFlashEvent?.type === "eagent_scan"
+        ? {
+            ...state.activeFlashEvent,
+            endTimestamp: Math.max(nowMs + 5_000, state.activeFlashEvent.endTimestamp - 30_000),
+          }
+        : state.activeFlashEvent;
+      const heatPressure = shortenedScanAt !== state.heatPressure.scanLockAt
+        ? { ...state.heatPressure, scanLockAt: shortenedScanAt }
+        : state.heatPressure;
+      const notifications = addNotification(
+        bountyUpdate.notifications,
+        ignoredRiskScan
+          ? "Ignored eAgent risk: Heat +5 and scan timer shortened."
+          : "Ignored signal: Heat +2 and next flash pressure accelerated.",
+        ignoredRiskScan ? "danger" : "warning",
+      );
+      const microRewards = [
+        makeMicroReward({
+          label: "Ignored signal",
+          value: `+${heatDelta} Heat`,
+          tone: "risk",
+          nowMs,
+        }),
+        ...state.microRewards,
+      ].slice(0, 8);
+      const nextState: Partial<DemoStoreState> = {
+        resources: heatUpdate.resources,
+        bounty: bountyUpdate.bounty,
+        playerRiskProfile: createRiskProfile(heatUpdate.resources, bountyUpdate.bounty, state.positions),
+        activeFlashEvent,
+        nextFlashEventAt,
+        heatPressure,
+        heatWarning: heatUpdate.heatWarning ?? state.heatWarning,
+        microRewards,
+        notifications,
+        exitHookMessage: null,
+        lastInteractionAt: nowMs,
+        systemMessage: ignoredRiskScan
+          ? "[signal] ignored scan // timer compressed"
+          : "[signal] ignored // grid pressure increased",
+      };
+      set({
+        ...nextState,
+        decisionContext: buildDecisionContextForState(
+          {
+            ...state,
+            ...nextState,
+          } as DemoStoreState,
+          nowMs,
+        ),
+      });
+      await persistCurrentState();
     },
     purchaseEnergyHour: async () => {
       await get().purchaseEnergyHours(1);
@@ -2423,9 +3019,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             `Black Market bribe reduced Heat by ${reduction}.`,
             "success",
           ),
+          exitHookMessage: null,
+          lastInteractionAt: state.clock.nowMs || Date.now(),
           isBusy: false,
           systemMessage: `[heat] bribe accepted // -${reduction}`,
         });
+        refreshDecisionContext(state.clock.nowMs || Date.now());
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2478,12 +3077,20 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           destination.id,
           state.clock.nowMs,
         );
+        const bountyRiskBonus = state.bounty.level >= 3
+          ? 0.3
+          : state.bounty.level >= 2
+            ? 0.15
+            : state.bounty.courierRiskBonus;
+        const heatRiskBonus = state.resources.heat > 50 ? 0.1 : 0;
+        const streakRiskBonus = state.streak.count > 5 ? 0.08 : getStreakRiskHeatBonus(state.streak) / 100;
         const riskChance = Math.min(
           0.95,
           courier.lossChance * getDistrictCourierRiskMultiplier(currentDistrict.state) +
             getDistrictCourierRiskBonus(currentDistrict.state) +
-            state.bounty.courierRiskBonus +
-            getStreakRiskHeatBonus(state.streak) / 100,
+            bountyRiskBonus +
+            heatRiskBonus +
+            streakRiskBonus,
         );
         const insuranceObolCost = Math.max(2, Math.min(10, Math.ceil(riskChance * 20)));
         if (insured && (!ENABLE_OBOL_TOKEN || state.obolBalance < insuranceObolCost)) {
@@ -2497,6 +3104,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           ticker,
           sendQuantity,
           effectiveCost,
+          state.world.currentLocationId,
         );
         const nowMs = state.clock.nowMs || Date.now();
         const timeMultiplier = getDistrictCourierTimeMultiplier(destinationDistrict.state);
@@ -2526,9 +3134,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             `${courier.name} carrying ${sendQuantity} ${ticker} to ${destination.name}.`,
             "info",
           ),
+          exitHookMessage: null,
+          lastInteractionAt: nowMs,
           isBusy: false,
           systemMessage: `[courier] ${ticker} dispatched via ${courier.name}`,
         });
+        refreshDecisionContext(nowMs);
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2564,6 +3175,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
               shipment.ticker,
               shipment.quantity,
               shipment.avgEntry,
+              state.world.currentLocationId,
             )
           : Object.values(state.positions);
 
@@ -2577,9 +3189,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             `${shipment.quantity} ${shipment.ticker} claimed.`,
             "success",
           ),
+          exitHookMessage: null,
+          lastInteractionAt: state.clock.nowMs || Date.now(),
           isBusy: false,
           systemMessage: `[courier] ${shipment.ticker} claimed`,
         });
+        refreshDecisionContext(state.clock.nowMs || Date.now());
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2612,6 +3227,8 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           `Mission accepted: ${mission.title}.`,
           "success",
         ),
+        exitHookMessage: null,
+        lastInteractionAt: state.clock.nowMs || Date.now(),
         systemMessage: `[mission] accepted // ${mission.title}`,
       });
     },
@@ -2642,6 +3259,8 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           `Mission declined: ${declined.title}.`,
           "warning",
         ),
+        exitHookMessage: null,
+        lastInteractionAt: nowMs,
         systemMessage: `[mission] declined // ${declined.title}`,
       });
     },
@@ -2694,9 +3313,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             `Heist accepted. Collateral pledged: ${mission.collateralValue} 0BOL.`,
             "warning",
           ),
+          exitHookMessage: null,
+          lastInteractionAt: state.clock.nowMs || Date.now(),
           isBusy: false,
           systemMessage: `[heist] active // risk ${mission.riskRating}`,
         });
+        refreshDecisionContext(state.clock.nowMs || Date.now());
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2737,6 +3359,14 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           delta: result.reputationDelta,
           missionOutcome: result.mission.status === "success" ? "completed" : "failed",
         });
+        const nowMs = state.clock.nowMs || Date.now();
+        const pendingRecoveryPrompt = result.mission.status === "failed"
+          ? createRecoveryPrompt({
+              nowMs,
+              lossValue: state.activeHeistMission.collateralValue,
+              reason: "heist_failure",
+            })
+          : state.pendingRecoveryPrompt;
         set({
           balanceObol: latestBalance(state.balanceObol, ledger),
           npcRelationships: relationships,
@@ -2755,9 +3385,14 @@ export const useDemoStore = create<DemoStore>((set, get) => {
               : "Heist failed. Collateral lost.",
             result.mission.status === "success" ? "success" : "danger",
           ),
+          pendingRecoveryPrompt,
+          recoveryOpportunity: result.mission.status === "success" ? null : state.recoveryOpportunity,
+          exitHookMessage: null,
+          lastInteractionAt: nowMs,
           isBusy: false,
           systemMessage: `[heist] ${result.mission.status}`,
         });
+        refreshDecisionContext(nowMs);
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2865,7 +3500,13 @@ export const useDemoStore = create<DemoStore>((set, get) => {
         }
         const cost = currency === "$OBOL" ? 0 : RAID_RECOVERY_0BOL_COST;
         const result = authority.restoreRaidLoss
-          ? await authority.restoreRaidLoss(state.playerId, recovered, cost, "0BOL")
+          ? await authority.restoreRaidLoss(
+              state.playerId,
+              recovered,
+              cost,
+              "0BOL",
+              state.world.currentLocationId,
+            )
           : { positions: Object.values(state.positions), ledger: [] };
         set({
           positions: toPositionMap(result.positions),
@@ -2880,9 +3521,14 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           raidRecoveryWindow: { ...state.raidRecoveryWindow, restored: true },
           raidBuybackLastUsedWeek: weekKey,
           notifications: addNotification(state.notifications, "Raid buyback restored lost inventory.", "success"),
+          recoveryOpportunity: null,
+          pendingRecoveryPrompt: null,
+          exitHookMessage: null,
+          lastInteractionAt: nowMs,
           isBusy: false,
           systemMessage: "[raid] buyback complete",
         });
+        refreshDecisionContext(nowMs);
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2933,9 +3579,12 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             `Challenge claimed: ${claimed.title}`,
             "success",
           ),
+          exitHookMessage: null,
+          lastInteractionAt: state.clock.nowMs || Date.now(),
           isBusy: false,
           systemMessage: `[challenge] claimed // ${claimed.rewardObol} 0BOL`,
         });
+        refreshDecisionContext(state.clock.nowMs || Date.now());
         await persistCurrentState();
       } catch (error) {
         set({
@@ -2993,8 +3642,25 @@ export const useDemoStore = create<DemoStore>((set, get) => {
             action: "travel" as const,
           })),
       ].slice(0, 8);
+      const primaryAction = createAwayPrimaryAction(state, nowMs);
+      const exitHookMessage: DecisionSignal = {
+        id: `away_resume_${nowMs}`,
+        title: primaryAction.label,
+        description: primaryAction.message,
+        actionType: primaryAction.action === "inventory"
+          ? "courier"
+          : primaryAction.action === "missions"
+            ? "mission"
+            : primaryAction.action === "travel"
+              ? "travel"
+              : "trade",
+        actionLabel: primaryAction.label,
+        urgency: "high",
+        expiresAt: nowMs + 5 * 60_000,
+      };
 
       commitState({
+        exitHookMessage,
         awayReport: {
           id: `away_${nowMs}`,
           generatedAt: nowMs,
@@ -3020,6 +3686,7 @@ export const useDemoStore = create<DemoStore>((set, get) => {
           claimables: state.dailyChallenges
             .filter((challenge) => challenge.completed && !challenge.claimed)
             .map((challenge) => ({ type: "challenge", reward: `${challenge.rewardObol} 0BOL + ${challenge.rewardXp} XP` })),
+          primaryAction,
           items: items.length
             ? items
             : [{ id: `away_quiet_${nowMs}`, tone: "info", message: "No major events. The grid kept humming." }],
