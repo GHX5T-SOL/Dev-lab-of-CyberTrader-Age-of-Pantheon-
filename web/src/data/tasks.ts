@@ -311,12 +311,14 @@ export const TASKS: Task[] = [
     id: "rune-p1-005",
     owner: "rune",
     title: "Add crash/log capture hooks suitable for TestFlight and Play Internal Testing",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["axiom-p0-002"],
     acceptanceCriteria: ["Runtime exceptions are capturable", "Logs avoid secrets", "QA can attach session context"],
     tags: ["observability", "qa", "release"],
+    notes: "Completed 2026-04-28. v6 commit 9c0559e adds local runtime diagnostics for web/native exceptions, unhandled promise rejections, and console errors; reports redact credential-shaped values and expose QA session context without raw handles or player ids. npm run ship:check passed with 123/123 Jest tests in 28 suites and Expo web export.",
+    links: [{ label: "Crash/log capture note", href: `${v6}/blob/main/docs/release/rune-p1-005-crash-log-capture.md` }],
   }),
 
   task({

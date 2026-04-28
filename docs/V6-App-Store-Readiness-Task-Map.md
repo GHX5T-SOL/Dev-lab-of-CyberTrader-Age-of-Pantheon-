@@ -1,6 +1,6 @@
 # CyberTrader v6 App Store Readiness Task Map
 
-Updated: 2026-04-28 (palette-p1-003 screenshot captures complete, Codex monitor run)
+Updated: 2026-04-28 (rune-p1-005 crash/log capture hooks complete, Codex automation run)
 
 ## Mission
 
@@ -174,6 +174,7 @@ git status
 - `rune-p0-003` is in progress: native storage regression tests now cover persisted session save/load, settings reset clearing, and corrupt JSON recovery, with `docs/release/rune-p0-003-persistence-coverage.md` committed in v6.
 - `zyra-p0-002` monitor pass on 2026-04-26 added `npm run health:live` in v6 and documented it at `docs/release/zyra-p0-002-live-health-check.md`; the live deployment returns HTTP 200, passes the shell-marker check, and headless-renders the live mobile web shell in Chromium with title `CyberTrader`, visible `AG3NT_0S//pIRAT3` boot text, and no console/page errors. A follow-up monitor pass pushed `884e4b1`, making `npm run qa:responsive` self-contained by building the web export before Playwright; current local v6 `health:live`, `typecheck`, and Jest (59/59 in 20 suites) pass.
 - `rune-p0-004` is complete: `eas.json` now defines preview, iOS simulator, internal, store, and production build profiles, and `docs/release/rune-p0-004-eas-profiles.md` documents bundle IDs, scheme, EAS project metadata, env policy, and EAS config validation commands.
+- `rune-p1-005` is complete: v6 commit `9c0559e` adds local runtime diagnostics hooks for web/native exceptions, unhandled promise rejections, and console errors; diagnostic reports redact credential-shaped values and expose QA session context through `globalThis.__CYBERTRADER_QA_DIAGNOSTICS__` without storing raw handles or player ids. Full `npm run ship:check` passed with 123/123 Jest tests in 28 suites and Expo web export.
 - `oracle-p0-001` is complete: v6 now has `engine/economy-replay.ts`, a focused `npm run replay:economy` command, and `docs/release/oracle-p0-001-economy-replay-harness.md` documenting the 1000-seed deterministic replay baseline with 1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and median first profitable sell tick 4.
 - `oracle-p0-002` is complete: v6 now has `engine/launch-tuning.ts`, `engine/__tests__/launch-tuning.test.ts`, a focused `npm run tuning:launch` command, and `docs/release/oracle-p0-002-launch-tuning.md` documenting the accepted launch survival, Heat, raid, and reward bands. The local baseline reports 1000/1000 profitable sessions, 81 raid sessions, 0 soft locks, 0 impossible states, median PnL 48.88, median max Heat 60, and zero low/medium/high-risk strategy issues.
 - `oracle-p0-003` is complete: v6 now has `engine/economy-stress.ts`, `engine/__tests__/economy-stress.test.ts`, a focused `npm run stress:economy` command, and `docs/release/oracle-p0-003-economy-stress.md` proving zero impossible states and zero negative balances across 200 seeds each for four adversarial starting conditions: 500 0BOL floor, Heat=75 Priority Target entry, 300-second Energy floor, and Heat=88 near-ceiling entry. Full suite 73/73 in 23 suites.
