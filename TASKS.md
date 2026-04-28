@@ -76,7 +76,7 @@ Current native/store readiness blockers:
 ## Top P0 Work
 - **palette-p1-003** screenshot-safe visual state presets – **Completed** (2026-04-28)
 
-- **axiom-p0-001** - iOS/Android runtime validation completed ✅. Reel capture route evidence pending. (zyra-p1-005 ✅)
+- **axiom-p0-001** - iOS/Android runtime validation pending due to missing simulator credentials. Reel capture route evidence pending. (zyra-p1-005 ✅)
 
 1. **Ghost** - release authority bar and architecture risk audit are complete; next Ghost work is first TestFlight/Play build-plan approval after Axiom QA evidence.
 2. **Zoro** - first 10-minute creative pass and Reel preview storyboard are complete; App Store screenshot/preview approval now waits on Axiom route evidence plus Palette source-provenance and icon/splash follow-ups.
