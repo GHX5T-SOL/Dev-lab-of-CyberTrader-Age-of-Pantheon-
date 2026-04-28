@@ -849,7 +849,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["New content is tracked", "Asset provenance is current", "SDK manifest and lockfile agree", "Ship checks pass"],
     tags: ["npc", "commodity", "sdk-54", "provenance"],
     notes:
-      "Completed 2026-04-28. Zara pushed v6 fdd7160 adding Obsidian, a rank-7 Eclipse Guild NPC, and starting the SDK 54 manifest bump. Codex follow-up 49c1e49 repaired package-lock.json for Expo 54, generated and tracked Glitch Echo source/optimized art, refreshed assets/provenance.json to 39 assets, and added the Hydra market-swarm planning note. Validation: provenance:assets:check, ship:check, health:live, qa:axiom:live, and regression:monitor passed.",
+      "Completed 2026-04-28. Zara pushed v6 fdd7160 adding Obsidian, a rank-7 Eclipse Guild NPC, and starting the SDK 54 manifest bump. Codex follow-up 49c1e49 repaired package-lock.json for Expo 54, generated and tracked Glitch Echo source/optimized art, refreshed assets/provenance.json to 39 assets, and added the Hydra market-swarm planning note. Nyx follow-up 4522175 documents the GLCH release. Validation: provenance:assets:check, ship:check, health:live, qa:axiom:live, and regression:monitor passed.",
     links: [
       { label: "Obsidian/GLCH commit", href: `${v6}/commit/fdd71600b385a821ac72bf82c01741da03ba5c19` },
       { label: "SDK/provenance repair", href: `${v6}/commit/49c1e49841c3e9e21f28119508c3331a64eea49b` },
