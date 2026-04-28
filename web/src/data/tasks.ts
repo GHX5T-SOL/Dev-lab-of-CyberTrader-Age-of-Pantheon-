@@ -580,12 +580,21 @@ export const TASKS: Task[] = [
     id: "compass-p0-002",
     owner: "compass",
     title: "Create GitHub issue batches in v6 from the App Store readiness task map",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "2h",
     dependencies: ["studio-p0-001"],
     acceptanceCriteria: ["v6 issues exist for P0/P1 tasks", "Owners/labels map to agents", "Dev Lab links to v6 issues"],
     tags: ["github", "task-board", "v6"],
+    notes:
+      "Completed 2026-04-28. v6 issues #2-#6 now batch the active P0/P1 App Store readiness work across native QA/build evidence, store media sign-off, authority/policy decisions, retention simulations, and automation/run-ledger operations. The repo currently has only default GitHub labels, so owner/priority mapping is recorded in each issue body.",
+    links: [
+      { label: "Native QA/build evidence", href: `${v6}/issues/2` },
+      { label: "Store media sign-off", href: `${v6}/issues/3` },
+      { label: "Authority and policy", href: `${v6}/issues/4` },
+      { label: "Retention simulations", href: `${v6}/issues/5` },
+      { label: "Automation and run ledger", href: `${v6}/issues/6` },
+    ],
   }),
   task({
     id: "compass-p1-003",

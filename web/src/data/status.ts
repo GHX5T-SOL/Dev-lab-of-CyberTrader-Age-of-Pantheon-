@@ -62,6 +62,7 @@ export const STATUS: StatusBlock = {
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Zyra/Codex hardened the live Axiom smoke in v6 commits 5481191 and d5a0a83 after a stale networkidle wait timed out on an already-rendered Vercel shell",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
+    "Compass created v6 GitHub issue batches #2-#6 for the active P0/P1 readiness work, with owner and priority mapping in each issue body",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
     "OpenClaw runner config uses xhigh reasoning; OpenAI model listing works, but generation is quota-limited and falls through to Claude Code",
@@ -75,7 +76,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Dev Lab backlog",
       state: "green",
-      detail: "Open PRs and issues in the Dev Lab repo were closed as superseded by the v6 production map",
+      detail: "Open PRs and issues in the Dev Lab repo were closed as superseded by the v6 production map; v6 now has issue batches #2-#6 for active P0/P1 readiness work",
     },
     {
       label: "v6 deployment",

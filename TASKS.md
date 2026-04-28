@@ -18,6 +18,7 @@ Current external checks on 2026-04-28:
 - v6 GitHub repo is public, default branch `main`, latest head is `d5a0a83` (`zyra-p1-004`, pushed `2026-04-28`), after `rune-p1-005` crash/log capture hooks in `9c0559e`, `palette-p1-003` screenshot capture work in `2d1d03c`/`02ea079`, and `5481191` live-smoke hardening.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and passes `npm run qa:axiom:live` after commit `5481191` hardened the live Chromium smoke away from a stale `networkidle` wait and onto visible boot-shell markers. Current monitor result: HTTP 200, Vercel cache HIT, live Playwright 1/1 passed in 3.7s.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
+- `compass-p0-002` is complete: v6 GitHub issues [#2](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/2)-[#6](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/6) batch the active P0/P1 readiness work into native QA/build evidence, store media sign-off, authority/policy decisions, retention simulations, and automation/run-ledger operations. Owner/priority mapping is recorded in each issue body because the repo currently has only default GitHub labels.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
 - `ai.openclaw.gateway` is running from the 2026.4.24 runtime with embedded cron disabled; Zara/Zyra now run through external `launchd` jobs on the Mac mini.
 - OpenClaw runner config now uses `xhigh` reasoning instead of invalid `max`; OpenAI model listing works, generation is currently quota-limited, and the runner falls through to Claude Code until credits recover.
@@ -77,6 +78,8 @@ Current native/store readiness blockers:
 
 ## Top P0 Work
 - **palette-p1-003** screenshot-safe visual state presets – **Completed** (2026-04-28)
+
+- **compass-p0-002** v6 GitHub issue batches – **Completed** (2026-04-28): issues [#2](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/2)-[#6](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/6) now carry active P0/P1 owner/priority maps.
 
 - **axiom-p0-001** - iOS/Android runtime validation pending due to missing simulator credentials. Reel capture route evidence pending. (zyra-p1-005 ✅)
 
