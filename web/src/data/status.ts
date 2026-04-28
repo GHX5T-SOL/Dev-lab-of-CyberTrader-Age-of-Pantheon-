@@ -22,6 +22,7 @@ export const STATUS: StatusBlock = {
     "Make v6 a reliable Web/iOS/Android demo: smoke production web, run native builds, validate cold-launch storage, and run Axiom QA against the first-session and pressure-band paths.",
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
+    "Current Codex host has Xcode Command Line Tools only and lacks simctl, Android Emulator, and adb, so native budget evidence needs a provisioned QA host",
     "SupabaseAuthority is feature-flagged and documented, but live Supabase migrations/RLS are not validated",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
@@ -49,6 +50,7 @@ export const STATUS: StatusBlock = {
     "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 123/123 Jest tests",
     "Axiom completed launch performance budgets with npm run perf:budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001",
     "Axiom completed the player smoke route: npm run qa:smoke covers intro, login, tutorial, buy, sell, inventory, and settings on the rebuilt web export",
+    "Axiom completed performance budgets: npm run perf:budgets enforces web export thresholds and Gate B now has numeric native targets",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
@@ -90,12 +92,12 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, Axiom performance budgets/smokes, Palette screenshot capture, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
       state: "amber",
-      detail: "EAS profiles and the Axiom store-submission regression checklist exist, but iOS simulator and Android emulator smoke runs remain the next honest readiness gate",
+      detail: "EAS profiles, Axiom checklists, and native performance budgets exist, but iOS simulator and Android emulator smoke runs remain blocked until a host with full Xcode, simctl, Android Emulator, and adb runs them",
     },
     {
       label: "SupabaseAuthority",

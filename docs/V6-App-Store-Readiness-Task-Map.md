@@ -1,6 +1,6 @@
 # CyberTrader v6 App Store Readiness Task Map
 
-Updated: 2026-04-28 (rune-p1-005 diagnostics, zyra-p1-004 live-smoke hardening, palette-p1-003 screenshots, and axiom-p1-004 player smoke complete)
+Updated: 2026-04-28 (rune-p1-005 diagnostics, zyra-p1-004 live-smoke hardening, palette-p1-003 screenshots, axiom-p1-004 player smoke, and axiom-p1-003 performance budgets complete)
 
 ## Mission
 
@@ -184,6 +184,7 @@ git status
 - `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; current local v6 `typecheck`, Jest (59/59 in 20 suites), and `npx expo export --platform web` pass.
 - `axiom-p1-003` is complete: v6 commit `3e3f0ca` adds `npm run perf:budgets`, `scripts/check-performance-budgets.mjs`, and `docs/release/axiom-p1-003-performance-budgets.md`. The web budget check covers total export size, main JS raw/gzip, intro cinematic media, and optimized active art; native cold-start, warm resume, interaction latency, memory, and runtime-error budgets are documented for the pending `axiom-p0-001` simulator/emulator pass.
 - `axiom-p1-004` is complete: v6 now has `npm run qa:smoke`, which builds the web export and runs a CI-friendly Playwright path from `/intro` through local login, tutorial, terminal entry, buy, market tick, sell, inventory, and settings/local-mode disclosure. Commit `98f1623` adds the smoke route and release note; `daa33e9` hardens visible-text assertions, post-execute responsive polling, and runtime-error filtering; `ff7b7c3` hardens the local static server's SPA fallback for direct `/menu/*` checks. Current validation: `npm run ship:check` passed with safety scan, typecheck, 123/123 Jest tests in 28 suites, and Expo web export; `npm run health:live` HTTP 200; `npm run qa:smoke` 1/1 passed; `npm run qa:axiom:live` 1/1 passed.
+- `axiom-p1-003` is complete: v6 commit `3e3f0ca` adds `npm run perf:budgets`, `scripts/check-performance-budgets.mjs`, and `docs/release/axiom-p1-003-performance-budgets.md`. The web-export budget gate currently passes with a 24.45 MiB total export, 2.12 MiB raw main JS, 538.9 KiB gzipped main JS, 21.24 MiB intro media, and 1.07 MiB optimized active art. Gate B native budgets are numeric for cold launch, warm resume, trade feedback, route transitions, memory, and raw runtime errors, with owners assigned for every miss.
 - `nyx-p0-001` is complete: v6 now has `docs/release/nyx-p0-001-first-session-loop.md`, a live `FirstSessionCue` on home/terminal, a manual `WAIT MARKET TICK` terminal action, and tests proving the starter `VBLM` first-profit loop closes within the guided tick window.
 - `nyx-p0-002` is complete: v6 now has `engine/demo-pressure.ts`, `engine/__tests__/demo-pressure.test.ts`, and `docs/release/nyx-p0-002-demo-pressure-tuning.md` proving three 60-tick demo strategies stay viable with zero issues, positive realized PnL, visible Watchlist/Priority Target escalation, and courier risk scaling.
 - `zoro-p0-001` is complete: v6 now has `docs/release/zoro-p0-001-first-journey-creative-pass.md` approving the first 10-minute Gate A journey with follow-ups for Vex, Palette, Reel, and Axiom.
@@ -212,6 +213,7 @@ git status
 ## Current Blockers
 
 - iOS and Android runtime validation are still pending.
+- This Codex host cannot produce native runtime evidence: `xcodebuild` points at Command Line Tools instead of full Xcode, `simctl` is unavailable, and Android `emulator`/`adb` are not installed.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
 - SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.

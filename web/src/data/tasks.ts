@@ -549,13 +549,13 @@ export const TASKS: Task[] = [
     id: "axiom-p1-003",
     owner: "axiom",
     title: "Define performance budgets for cold start, memory, bundle size, and interaction latency",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "4h",
     acceptanceCriteria: ["Budgets are numeric", "Measurement commands are documented", "Owners exist for every miss"],
     tags: ["performance", "mobile", "release"],
     notes:
-      "Completed 2026-04-28. v6 commit 3e3f0ca adds npm run perf:budgets, scripts/check-performance-budgets.mjs, and docs/release/axiom-p1-003-performance-budgets.md with enforced web-export budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001.",
+      "Completed 2026-04-28. v6 commit 3e3f0ca adds npm run perf:budgets, scripts/check-performance-budgets.mjs, and docs/release/axiom-p1-003-performance-budgets.md with enforced web-export budgets plus numeric Gate B native cold-start, memory, latency, and runtime-error targets for axiom-p0-001. Local native measurement remains blocked on a QA host with Xcode simctl plus Android emulator/adb.",
     links: [{ label: "Performance budgets", href: `${v6}/blob/main/docs/release/axiom-p1-003-performance-budgets.md` }],
   }),
   task({
