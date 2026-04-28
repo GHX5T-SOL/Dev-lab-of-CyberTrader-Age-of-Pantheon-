@@ -74,8 +74,7 @@ Current native/store readiness blockers:
 - Current checks previously recorded: `npm run health:live`, `npm run typecheck`, `npm test -- --runInBand`, `npx expo export --platform web`, `npm run qa:responsive`, plus browser smoke for intro/login/trading.
 
 ## Top P0 Work
-- **palette-p1-003** screenshot-safe visual state presets – **In Progress** (added script)
-- **palette-p1-003** screenshot-safe visual state presets – **In Progress**
+- **palette-p1-003** screenshot-safe visual state presets – **Completed** (2026-04-28)
 
 - **axiom-p0-001** - iOS/Android runtime validation completed ✅. Reel capture route evidence pending. (zyra-p1-005 ✅)
 
