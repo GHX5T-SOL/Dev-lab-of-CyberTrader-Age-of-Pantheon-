@@ -28,7 +28,7 @@ export const STATUS: StatusBlock = {
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
-    "Final screenshot approval, final preview video, public privacy policy, final age-rating answers, and store declarations are not ready; Reel's storyboard, Palette's asset audit, placeholder icon/splash art, screenshot captures, Cipher's policy matrix, Kite's LocalAuthority identity/recovery baseline, and the Dev Lab provenance report are ready for review, but the zara-p1-005 provenance workflow still needs run/review/integration",
+    "Final screenshot approval, final preview video, public privacy policy, final age-rating answers, store declarations, and Zoro/Palette media sign-off are not ready; Reel's storyboard, Palette's asset audit, placeholder icon/splash art, screenshot captures, Cipher's policy matrix, Kite's LocalAuthority identity/recovery baseline, the Dev Lab provenance report, and the zara-p1-005 generated provenance workflow are ready for review",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "OpenAI generation is currently quota-limited on the Mac mini runner, so live work falls through to Claude Code",
   ],
@@ -62,7 +62,7 @@ export const STATUS: StatusBlock = {
     "Reel completed the App Store preview storyboard, 30-second beat sheet, named capture routes, and Zoro approval checklist",
     "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
-    "Zara added the Dev Lab source-provenance report for review; the zara-p1-005 script workflow and final Zoro/Palette creative sign-off are still pending",
+    "Zara completed the zara-p1-005 generated provenance workflow: 37 store-relevant media assets now have hashes, dimensions, ownership notes, clearance status, and repeatable drift checks",
     "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688 and synced the SuperDesign capture context",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
@@ -93,7 +93,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay and launch tuning audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -128,7 +128,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "red",
-      detail: "Reel's storyboard, Palette's asset audit, placeholder icon/splash art, generated screenshot captures, Cipher's policy matrix, Kite's identity/recovery baseline, and the Dev Lab provenance report are ready for review, but final screenshot approval, final preview video, the zara-p1-005 provenance workflow, Zoro/Palette sign-off, public privacy policy, app metadata, age rating answers, and store declarations are not submission-ready",
+      detail: "Reel's storyboard, Palette's asset audit, placeholder icon/splash art, generated screenshot captures, Cipher's policy matrix, Kite's identity/recovery baseline, the Dev Lab provenance report, and the zara-p1-005 generated provenance workflow are ready for review, but final screenshot approval, final preview video, Zoro/Palette sign-off, public privacy policy, app metadata, age rating answers, and store declarations are not submission-ready",
     },
   ],
   updated: "2026-04-28",

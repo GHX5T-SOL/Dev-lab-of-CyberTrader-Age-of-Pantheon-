@@ -147,7 +147,7 @@ export const TASKS: Task[] = [
     dependencies: ["reel-p0-001", "palette-p0-001"],
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
-    notes: "Reel preview storyboard and capture plan are complete, Palette's current-asset audit is complete, and the Dev Lab provenance report is ready for review. Zoro final approval now waits on final screenshot/preview review, the zara-p1-005 provenance workflow, and Palette sign-off.",
+    notes: "Reel preview storyboard and capture plan are complete, Palette's current-asset audit is complete, the Dev Lab provenance report is ready for review, and zara-p1-005 generated provenance is complete. Zoro final approval now waits on final screenshot/preview review and Palette sign-off.",
   }),
   task({
     id: "zoro-p1-003",
@@ -451,7 +451,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Every asset has source/ownership notes", "Low-resolution assets are flagged", "Store screenshots use approved assets only"],
     tags: ["assets", "licensing", "store"],
     notes:
-      "Completed 2026-04-26. v6 docs/release/palette-p0-001-asset-audit.md inventories commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, icon/splash gaps, and responsive QA captures. Dev Lab docs/provenance-report.md is ready for review; the zara-p1-005 provenance workflow and final Zoro/Palette sign-off remain required before Gate C.",
+      "Completed 2026-04-26. v6 docs/release/palette-p0-001-asset-audit.md inventories commodity icons, Eidolon identity art, intro cinematic, legacy reference art, Remotion public assets, icon/splash gaps, and responsive QA captures. Dev Lab docs/provenance-report.md and the zara-p1-005 generated provenance workflow are ready for review; final Zoro/Palette sign-off remains required before Gate C.",
     links: [{ label: "Store asset audit", href: `${v6}/blob/main/docs/release/palette-p0-001-asset-audit.md` }],
   }),
   task({
@@ -743,12 +743,16 @@ export const TASKS: Task[] = [
   task({
     id: "zara-p1-005",
     owner: "zara",
-    title: "Prepare Blender/SpriteCook pipeline notes only for assets that still matter to v6",
-    status: "todo",
+    title: "Complete store-media provenance workflow for v6 assets",
+    status: "done",
     priority: "P1",
     estimate: "4h",
-    acceptanceCriteria: ["No 3D office-only work remains active", "Pipeline supports store screenshots/trailer", "Zoro review hooks are included"],
-    tags: ["assets", "spritecook", "pipeline"],
+    dependencies: ["palette-p0-001", "palette-p1-003", "reel-p0-001"],
+    acceptanceCriteria: ["No 3D office-only roots are active", "Store screenshot and trailer media roots are inventoried", "Zoro/Palette review hooks are explicit"],
+    tags: ["assets", "provenance", "store-assets"],
+    notes:
+      "Completed 2026-04-28. v6 commit 2549e8d adds npm run provenance:assets and npm run provenance:assets:check, expands assets/provenance.json to 37 store-relevant media records with hashes, dimensions, ownership, clearance, and store-use scope, and documents remaining Zoro/Palette sign-off gates.",
+    links: [{ label: "Asset provenance workflow", href: `${v6}/blob/main/docs/release/zara-p1-005-asset-provenance-workflow.md` }],
   }),
 
   task({
