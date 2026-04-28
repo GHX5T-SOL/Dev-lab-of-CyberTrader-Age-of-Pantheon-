@@ -23,7 +23,7 @@ export const STATUS: StatusBlock = {
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "Current Codex host has Xcode Command Line Tools only and lacks simctl, Android Emulator, and adb, so native budget evidence needs a provisioned QA host",
-    "SupabaseAuthority is feature-flagged and documented, but live Supabase migrations/RLS are not validated",
+    "SupabaseAuthority is feature-flagged and its migration/RPC baseline is committed, but live Supabase project application and RLS validation are not confirmed",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
@@ -49,6 +49,7 @@ export const STATUS: StatusBlock = {
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
     "Kite completed the launch-safe identity/recovery model: first playable launch requires only a local handle, with no wallet, backend account, or payment method",
+    "Kite completed SupabaseAuthority migration prep: deterministic schema/rollback SQL, RPC write gates, seeded commodities, and migration guard tests are committed in v6 15308c9",
     "Kite completed the store-safe wallet/token boundary review: shared Legal/Settings copy now has prohibited-claims tests for real-money, investment, regulated-market, prize, and signing-material language",
     "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 139/139 Jest tests",
     "Axiom completed launch performance budgets with npm run perf:budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001",
@@ -106,7 +107,7 @@ export const STATUS: StatusBlock = {
     {
       label: "SupabaseAuthority",
       state: "amber",
-      detail: "Feature-flagged adapter selection and LocalAuthority launch identity/recovery are tested and documented; live schema migrations and RLS validation are still pending",
+      detail: "Feature-flagged adapter selection, LocalAuthority launch identity/recovery, and deterministic schema/RPC migrations are committed; live project migration application and RLS validation are still pending",
     },
     {
       label: "Dependency audit",

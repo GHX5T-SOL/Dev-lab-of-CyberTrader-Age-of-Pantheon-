@@ -1,6 +1,6 @@
 # CyberTrader v6 App Store Readiness Task Map
 
-Updated: 2026-04-28 (full autonomy directive active; kite-p1-004 store-safe boundary review complete)
+Updated: 2026-04-28 (full autonomy directive active; kite-p1-003 Supabase migration prep and kite-p1-004 store-safe boundary review complete)
 
 ## Mission
 
@@ -69,7 +69,7 @@ The Dev Lab 3D office is now a completed studio milestone. New work should impro
 ### Backend/Web3 / Kite
 - Implement SupabaseAuthority behind a feature flag.
 - Define launch-safe identity and account recovery.
-- Prepare Supabase migrations for ledger, positions, player state, and events.
+- Apply and validate prepared Supabase migrations for ledger, positions, player state, and events.
 - Write security review for $OBOL naming, wallet flags, and store-safe claims.
 
 ### Economy & Trading / Oracle
@@ -198,6 +198,7 @@ These are the next high-impact tracks for daily visible improvements:
 - `kite-p0-001` is complete: v6 keeps `LocalAuthority` as the default authority, selects `SupabaseAuthority` only when the authority feature flag and public config are present, supports an explicit authority-off override for client-only Supabase use, and documents RLS/schema requirements in `docs/release/kite-p0-001-supabase-authority.md`.
 - `kite-p0-002` is complete: v6 now has `authority/launch-identity.ts`, focused Jest coverage, and `docs/release/kite-p0-002-launch-identity-recovery.md` defining the LocalAuthority-only launch identity model, no-wallet/no-backend/no-payment reviewer notes, handle validation rules, on-device recovery limits, and privacy copy implications. Validation: `npm run ship:check` passed with safety scan, typecheck, 139/139 Jest tests in 30 suites, and Expo web export.
 - `kite-p1-004` is complete: v6 commit `c895318` adds `authority/store-safety.ts`, `authority/__tests__/store-safety.test.ts`, shared Legal/Settings reviewer-safe copy, prohibited-claims checks for real-money, investment, regulated-market, prize, and signing-material language, and a release note at `docs/release/kite-p1-004-store-safe-boundaries.md`. Validation: `npm run ship:check` passed with safety scan, typecheck, 144/144 Jest tests in 31 suites, and Expo web export.
+- `kite-p1-003` is complete: v6 commit `15308c9` adds `supabase/migrations/20260428183000_kite_p1_003_authority_schema.sql`, a matching rollback script, `authority/__tests__/supabase-migrations.test.ts`, and `docs/release/kite-p1-003-supabase-migrations.md`. The migration covers players, resources, commodities, market prices/news, positions, ledger entries, trades, and authority events; seeds the launch commodity catalog; enables owner-bound RLS; and routes XP/resource writes through RPCs. Validation: focused migration test, typecheck, and `npm run ship:check` passed with 144/144 Jest tests in 31 suites plus Expo web export.
 - `axiom-p0-002` is complete: v6 now has `docs/release/axiom-p0-002-regression-checklist.md` documenting the store-submission regression test suite as three checklists - first-session (intro through first profitable sell), trading (buy/sell math, Energy/Heat, persistence, routes, cross-surface), and store metadata (bundle/identity, visual assets, copy, age rating/policy, account recovery, build artifacts) - with cross-references to the rune, oracle, and kite release notes; current local v6 `typecheck`, Jest (59/59 in 20 suites), and `npx expo export --platform web` pass.
 - `axiom-p1-003` is complete: v6 commit `3e3f0ca` adds `npm run perf:budgets`, `scripts/check-performance-budgets.mjs`, and `docs/release/axiom-p1-003-performance-budgets.md`. The web budget check covers total export size, main JS raw/gzip, intro cinematic media, and optimized active art; native cold-start, warm resume, interaction latency, memory, and runtime-error budgets are documented for the pending `axiom-p0-001` simulator/emulator pass.
 - `axiom-p1-004` is complete: v6 now has `npm run qa:smoke`, which builds the web export and runs a CI-friendly Playwright path from `/intro` through local login, tutorial, terminal entry, buy, market tick, sell, inventory, and settings/local-mode disclosure. Commit `98f1623` adds the smoke route and release note; `daa33e9` hardens visible-text assertions, post-execute responsive polling, and runtime-error filtering; `ff7b7c3` hardens the local static server's SPA fallback for direct `/menu/*` checks. Current validation: `npm run ship:check` passed with safety scan, typecheck, 123/123 Jest tests in 28 suites, and Expo web export; `npm run health:live` HTTP 200; `npm run qa:smoke` 1/1 passed; `npm run qa:axiom:live` 1/1 passed.
@@ -234,7 +235,7 @@ These are the next high-impact tracks for daily visible improvements:
 - iOS and Android runtime validation are still pending.
 - This Codex host cannot produce native runtime evidence: `xcodebuild` points at Command Line Tools instead of full Xcode, `simctl` is unavailable, and Android `emulator`/`adb` are not installed.
 - Cold-launch native persistence still needs device/simulator validation beyond the storage regression tests.
-- SupabaseAuthority is feature-flagged and documented, but a live Supabase project, migrations, and RLS validation are not yet confirmed.
+- SupabaseAuthority is feature-flagged and its migration/RPC baseline is committed, but live Supabase project application and RLS validation are not yet confirmed.
 - Apple/Google credentials and the first remote EAS build runs are not yet confirmed.
 - iOS store-candidate uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output.
 - Android store-candidate artifacts must prove `targetSdkVersion >= 35`; Expo SDK 52 defaults to target SDK 34 unless the team upgrades or verifies an override.

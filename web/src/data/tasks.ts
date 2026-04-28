@@ -429,12 +429,15 @@ export const TASKS: Task[] = [
     id: "kite-p1-003",
     owner: "kite",
     title: "Prepare Supabase schema migrations for ledger, positions, player state, and events",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "2d",
     dependencies: ["kite-p0-001"],
     acceptanceCriteria: ["Migrations are deterministic", "Rollback notes exist", "Tests cover authority writes"],
     tags: ["database", "migrations", "ledger"],
+    notes:
+      "Completed 2026-04-28. v6 commit 7feb3f1 adds deterministic Supabase migration and rollback SQL for players, resources, commodities, market prices/news, positions, ledger entries, trades, and authority events. SupabaseAuthority updateXp/updateResources now use RPCs that match the RLS boundary, and authority/__tests__/supabase-migrations.test.ts verifies tables, RLS, RPC write gates, seeded commodities, and rollback coverage. ship:check passed with 144/144 Jest tests in 31 suites plus Expo web export.",
+    links: [{ label: "Supabase migrations note", href: `${v6}/blob/main/docs/release/kite-p1-003-supabase-migrations.md` }],
   }),
   task({
     id: "kite-p1-004",
