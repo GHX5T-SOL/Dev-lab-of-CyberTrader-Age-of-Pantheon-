@@ -15,7 +15,7 @@ Live: https://cyber-trader-age-of-pantheon-v6.vercel.app
 
 Current external checks on 2026-04-28:
 
-- v6 GitHub repo is public, default branch `main`, latest head is `9c0559e` (`rune-p1-005`, pushed `2026-04-28`), after `palette-p1-003` screenshot capture work in `2d1d03c`/`02ea079` and `5481191` live-smoke hardening.
+- v6 GitHub repo is public, default branch `main`, latest head is `d5a0a83` (`zyra-p1-004`, pushed `2026-04-28`), after `rune-p1-005` crash/log capture hooks in `9c0559e`, `palette-p1-003` screenshot capture work in `2d1d03c`/`02ea079`, and `5481191` live-smoke hardening.
 - v6 Vercel deployment returns HTTP 200, passes the v6 `npm run health:live` shell-marker check, and passes `npm run qa:axiom:live` after commit `5481191` hardened the live Chromium smoke away from a stale `networkidle` wait and onto visible boot-shell markers. Current monitor result: HTTP 200, Vercel cache HIT, live Playwright 1/1 passed in 3.7s.
 - Dev Lab GitHub open PRs/issues were cleaned to zero open items. PRs #10-#14 and issues #4/#8 were closed as superseded by the completed office phase and the new v6 production task map.
 - OpenClaw latest official GitHub release is `v2026.4.24`; the Mac mini is now running `OpenClaw 2026.4.24 (cbcfdf6)` through a user-local Node runtime.
