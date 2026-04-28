@@ -854,7 +854,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-28 (run 20260428T134840Z-codex): health:live HTTP 200 Vercel cache HIT; qa:axiom:live 1/1 passed after live readiness hardening; qa:smoke 1/1 passed on the rebuilt web export; ship:check passed with safety scan, typecheck, 123/123 Jest in 28 suites, and Expo web export. Full native iOS/Android QA remains the next Gate B blocker.",
+    notes: "Monitor pass 2026-04-28 (run 20260428T172404Z-codex): v6 head a065fd3 is live-health green; health:live returned HTTP 200 with Vercel cache HIT; qa:axiom:live passed 1/1; regression:monitor passed typecheck, Jest, and health:live. Full native iOS/Android QA remains the next Gate B blocker.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
