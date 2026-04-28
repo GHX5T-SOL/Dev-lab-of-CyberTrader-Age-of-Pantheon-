@@ -454,23 +454,32 @@ export const TASKS: Task[] = [
     id: "palette-p1-002",
     owner: "palette",
     title: "Create missing faction, OS tier, badge, notification, and store icon assets",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "2d",
     dependencies: ["zoro-p1-003"],
     acceptanceCriteria: ["Asset list is complete", "Files are optimized for Expo", "Brand guidelines are updated"],
     tags: ["brand", "icons", "spritecook"],
+    notes:
+      "Completed 2026-04-26. v6 now has internally generated placeholder icon, adaptive icon, splash, and favicon assets wired in app.json via npm run generate:brand. Zoro creative sign-off remains required before Gate C.",
+    links: [{ label: "Icon/splash placeholder assets", href: `${v6}/tree/main/assets/brand` }],
   }),
   task({
     id: "palette-p1-003",
     owner: "palette",
     title: "Create screenshot-safe visual state presets for store capture",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "4h",
     dependencies: ["reel-p0-001"],
     acceptanceCriteria: ["Market, terminal, mission, inventory, and profile captures are staged", "No debug UI appears", "Copy is final enough for review"],
     tags: ["screenshots", "store", "visual-qa"],
+    notes:
+      "Completed 2026-04-28. v6 commit 2d1d03c adds npm run capture:screenshots, replaces the 1x1 placeholder generator with a real Playwright capture utility, and commits six 1242x2688 PNG captures under assets/screenshots for home, terminal, market, missions, inventory, and profile; 02ea079 syncs the SuperDesign context. Final Zoro/Palette store approval remains required.",
+    links: [
+      { label: "Screenshot preset note", href: `${v6}/blob/main/docs/release/palette-p1-003-screenshot-presets.md` },
+      { label: "Generated captures", href: `${v6}/tree/main/assets/screenshots` },
+    ],
   }),
 
   task({
@@ -623,6 +632,20 @@ export const TASKS: Task[] = [
     notes: "Completed 2026-04-26. v6 now has docs/release/talon-p1-003-rollback-incident-protocol.md covering P0/P1/P2 severity tiers, bad-commit detection signals (health:live, typecheck, jest, safety scan), Vercel dashboard and CLI rollback, git revert procedure, TestFlight/Play/EAS native rollback (Gate B+), escalation contacts (Ghost is sole release authority), autonomous agent obligations (stop-log-revert-document), and post-incident note template in docs/automation-runs/. Validated: typecheck pass, 73/73 Jest in 23 suites, health:live HTTP 200.",
     links: [{ label: "Rollback protocol", href: `${v6}/blob/main/docs/release/talon-p1-003-rollback-incident-protocol.md` }],
   }),
+  task({
+    id: "talon-p1-004",
+    owner: "talon",
+    title: "Automate post-push regression detection for v6 main",
+    status: "done",
+    priority: "P1",
+    estimate: "4h",
+    dependencies: ["talon-p0-002"],
+    acceptanceCriteria: ["New main commits trigger checks", "Monitor state avoids duplicate runs", "LaunchAgent wiring is documented"],
+    tags: ["automation", "regression", "launchd"],
+    notes:
+      "Completed 2026-04-26. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist .git/regression-state.json, and include a Mac mini LaunchAgent template.",
+    links: [{ label: "Post-push regression note", href: `${v6}/blob/main/docs/release/talon-p1-004-post-push-regression.md` }],
+  }),
 
   task({
     id: "hydra-p0-001",
@@ -684,12 +707,15 @@ export const TASKS: Task[] = [
     id: "zara-p1-004",
     owner: "zara",
     title: "Build asset optimization queue for v6 mobile assets",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["palette-p0-001"],
     acceptanceCriteria: ["Oversized assets are listed", "Compression targets are set", "Optimized assets are verified in Expo"],
     tags: ["assets", "mobile", "optimization"],
+    notes:
+      "Completed 2026-04-26. v6 optimized the active commodity image set and Eidolon shard core into assets/optimized, reducing the active commodity bundle from 21.6 MB to 1.35 MB while preserving source originals.",
+    links: [{ label: "Asset optimization note", href: `${v6}/blob/main/docs/release/zara-p1-004-asset-optimization-queue.md` }],
   }),
   task({
     id: "zara-p1-005",
@@ -742,6 +768,20 @@ export const TASKS: Task[] = [
   }),
   task({
     id: "zyra-p1-004",
+    owner: "zyra",
+    title: "Execute the Axiom web-surface regression suite",
+    status: "done",
+    priority: "P1",
+    estimate: "4h",
+    dependencies: ["axiom-p0-002"],
+    acceptanceCriteria: ["Local web regression is automated", "Live deployment smoke is automated", "Native/store metadata gaps remain explicit"],
+    tags: ["qa", "web", "automation"],
+    notes:
+      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke now waits for visible boot-shell markers.",
+    links: [{ label: "Axiom web regression", href: `${v6}/blob/main/qa/axiom-web-regression.spec.ts` }],
+  }),
+  task({
+    id: "zyra-p1-008",
     owner: "zyra",
     title: "Watch App Store readiness task map and auto-pick unowned follow-up work",
     status: "todo",

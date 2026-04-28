@@ -71,7 +71,7 @@ export const ROADMAP: Phase[] = [
     dates: "2026-04-26 -> 2026-05-10",
     status: "active",
     summary:
-      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, the hardened live Axiom smoke, Reel's App Store preview storyboard, Palette's asset audit, and Cipher's store requirements plus policy risk matrix are in place.",
+      "Make CyberTrader v6 a reliable demo across Web, iOS simulator, and Android emulator. Rune's technical audit, route hardening, storage regression checks, EAS profiles, Oracle's replay harness and launch tuning bands, Ghost's release-authority bar and architecture risk audit, EAS Node alignment, Kite's SupabaseAuthority flag boundary, Nyx's first-session loop guidance and pressure bands, Zoro's first-journey creative pass, Vex's mobile HUD readability, responsive viewport, and diegetic system-state passes, Talon's autonomous safety preflight, Zyra's repeatable live health command, the hardened live Axiom smoke, Reel's App Store preview storyboard, Palette's asset audit and screenshot-safe captures, and Cipher's store requirements plus policy risk matrix are in place.",
     deliverables: [
       "Typecheck, tests, and web export green",
       "Expo Router route recovery and Android/menu back paths hardened",
@@ -92,6 +92,7 @@ export const ROADMAP: Phase[] = [
       "App Store preview storyboard, capture route map, and Zoro approval checklist",
       "2026 Apple/Google/Expo submission requirements with Xcode 26 / iOS 26 SDK and Android API 35 gates",
       "Store-facing asset audit with resolution, ownership, provenance, and icon/splash findings",
+      "Screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile",
       "Privacy, token naming, simulated trading, wallet, Data Safety, and age-rating risk matrix",
       "Hydra market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
       "Live Vercel smoke passes",
@@ -123,6 +124,7 @@ export const ROADMAP: Phase[] = [
       { label: "Reel preview storyboard", done: true },
       { label: "Cipher store requirements", done: true },
       { label: "Palette store asset audit", done: true },
+      { label: "Palette screenshot-safe captures", done: true },
       { label: "Cipher policy risk matrix", done: true },
       { label: "Hydra market swarm scenarios", done: true },
       { label: "Web production smoke rerun", done: false },

@@ -27,7 +27,7 @@ export const STATUS: StatusBlock = {
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; Expo SDK 52 defaults to target SDK 34 without an upgrade or verified override",
     "Expo toolchain transitive dependency advisories need planned SDK/override remediation",
-    "Store screenshots, final preview video, public privacy policy, final age-rating answers, source-provenance evidence, and icon/splash art are not ready; Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready",
+    "Final screenshot approval, final preview video, public privacy policy, final age-rating answers, source-provenance evidence, and store declarations are not ready; Reel's storyboard, Palette's asset audit, placeholder icon/splash art, screenshot captures, and Cipher's policy matrix are ready for review",
     "OpenClaw post-fix doctor still times out in bounded runs and reports 38 skill requirement gaps",
     "OpenAI generation is currently quota-limited on the Mac mini runner, so live work falls through to Claude Code",
   ],
@@ -45,7 +45,7 @@ export const STATUS: StatusBlock = {
     "Ghost release authority now documents release blockers, direct-to-main automation criteria, and Gate A/B/C sign-off rules",
     "Ghost completed the architecture risk audit with Expo dependency risks, storage/authority boundary review, EAS Node aligned to Expo SDK 52, and top 10 technical risks assigned to owners",
     "Kite completed the SupabaseAuthority flag boundary: LocalAuthority stays default, flagged Supabase config is tested, and RLS requirements are documented",
-    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 59/59 Jest tests",
+    "Axiom completed the store-submission regression checklist; the current v6 local check path passes with 118/118 Jest tests",
     "Nyx completed first-session loop tightening with live home/terminal cues, a manual market tick action, and starter VBLM profit tests",
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Zoro approved the first 10-minute Gate A journey and assigned polish follow-ups for Vex, Palette, Reel, and Axiom",
@@ -56,6 +56,7 @@ export const STATUS: StatusBlock = {
     "Reel completed the App Store preview storyboard, 30-second beat sheet, named capture routes, and Zoro approval checklist",
     "Cipher completed the 2026 Apple/Google/Expo submission requirements pass and updated the Axiom store checklist with Xcode 26 and Android API 35 gates",
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
+    "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Zyra/Codex hardened the live Axiom smoke in v6 commit 5481191 after a stale networkidle wait timed out on an already-rendered Vercel shell",
@@ -83,7 +84,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, live Axiom smoke, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, live Axiom smoke, Palette screenshot capture, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -118,7 +119,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "red",
-      detail: "Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready, but screenshots, final preview video, source-provenance proof, icon/splash assets, public privacy policy, app metadata, and age rating answers are not submission-ready",
+      detail: "Reel's storyboard, Palette's asset audit, placeholder icon/splash art, generated screenshot captures, and Cipher's policy matrix are ready, but final screenshot approval, final preview video, source-provenance proof, public privacy policy, app metadata, age rating answers, and store declarations are not submission-ready",
     },
   ],
   updated: "2026-04-28",
