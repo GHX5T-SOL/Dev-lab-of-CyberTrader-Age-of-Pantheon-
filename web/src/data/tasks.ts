@@ -558,12 +558,15 @@ export const TASKS: Task[] = [
     id: "axiom-p1-004",
     owner: "axiom",
     title: "Add automated smoke route for intro, login, buy, sell, inventory, and settings",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["rune-p0-002"],
     acceptanceCriteria: ["Smoke path can be repeated", "Failure output is actionable", "CI-friendly command exists"],
     tags: ["automation", "qa", "smoke"],
+    notes:
+      "Completed 2026-04-28. v6 npm run qa:smoke builds the Expo web export and runs an intro -> login -> tutorial -> terminal -> buy -> wait-tick -> sell -> inventory -> settings Playwright route. Commits 98f1623, daa33e9, and ff7b7c3 add the route, harden visible-text assertions/post-execute polling/runtime-error filtering, and serve the app shell for direct SPA route fallbacks. Validated with ship:check, health:live, qa:smoke, and qa:axiom:live.",
+    links: [{ label: "Player smoke route note", href: `${v6}/blob/main/docs/release/axiom-p1-004-smoke-route.md` }],
   }),
 
   task({
@@ -760,7 +763,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-28 (run 20260428T112408Z-codex): health:live HTTP 200 Vercel cache HIT; qa:axiom:live 1/1 passed after v6 commit 5481191 hardened live readiness from networkidle to DOM content plus visible boot-shell markers; ship:check passed with safety scan, typecheck, 118/118 Jest in 27 suites, and Expo web export. Full native iOS/Android QA remains the next Gate B blocker.",
+    notes: "Monitor pass 2026-04-28 (run 20260428T134840Z-codex): health:live HTTP 200 Vercel cache HIT; qa:axiom:live 1/1 passed after live readiness hardening; qa:smoke 1/1 passed on the rebuilt web export; ship:check passed with safety scan, typecheck, 123/123 Jest in 28 suites, and Expo web export. Full native iOS/Android QA remains the next Gate B blocker.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
@@ -788,7 +791,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Local web regression is automated", "Live deployment smoke is automated", "Native/store metadata gaps remain explicit"],
     tags: ["qa", "web", "automation"],
     notes:
-      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke waits for visible boot-shell markers, and d5a0a83 widens the readiness timeout after the Rune diagnostics merge.",
+      "Completed 2026-04-26 and hardened 2026-04-28. v6 qa/axiom-web-regression.spec.ts covers the web-surface subset of the Axiom checklist, with npm run qa:axiom and npm run qa:axiom:live; live smoke waits for visible boot-shell markers, d5a0a83 widens readiness after the Rune diagnostics merge, and commits 98f1623/daa33e9/ff7b7c3 add and harden the axiom-p1-004 player smoke route.",
     links: [{ label: "Axiom web regression", href: `${v6}/blob/main/qa/axiom-web-regression.spec.ts` }],
   }),
   task({
