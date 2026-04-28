@@ -1,6 +1,6 @@
 # Roadmap - Dev Lab Control Plane and CyberTrader v6
 
-Updated: 2026-04-27
+Updated: 2026-04-28
 
 ## Reality Check
 
@@ -16,6 +16,8 @@ https://cyber-trader-age-of-pantheon-v6.vercel.app
 v6 already has the core playable loop: intro/login, LocalAuthority trades, ledger, inventory, XP/rank, locations, travel, heat/raids, couriers, news, flash events, NPC missions, district states, streaks, daily challenges, bounty, and away report.
 
 The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typecheck, tests, and Expo web export are green locally, with Expo toolchain dependency advisories logged for planned remediation. The `rune-p0-002` route hardening pass is also complete: protected routes recover after hydration, menu back actions have safe fallbacks, and Android hardware back returns safely from menu/terminal screens. The `rune-p0-003` persistence reliability pass is in progress, with storage regression coverage now verifying native save/load, reset clearing, and corrupt JSON recovery. The `rune-p0-004` EAS profile pass is complete, `oracle-p0-001` now provides a deterministic 1000-seed economy replay harness, `oracle-p0-002` locks launch survival, Heat, raid, and reward bands with zero issues, `ghost-p0-001` documents release blockers, direct-push criteria, and Gate A/B/C sign-off rules, `ghost-p0-002` assigns the top App Store architecture risks to owners with required evidence and aligns EAS Node to Expo SDK 52, `kite-p0-001` has SupabaseAuthority behind a tested feature-flag boundary, `axiom-p0-002` delivers the store-submission regression checklist (first-session, trading, store metadata) cross-linked to the rune/oracle/kite release notes, `nyx-p0-001` tightens the live first-session loop with home/terminal guidance, manual market ticks, and starter-profit tests, `nyx-p0-002` codifies 10-minute starter, route-runner, and contraband pressure bands, `zoro-p0-001` approves the first 10-minute Gate A journey with follow-up polish assigned, `vex-p0-001` improves mobile HUD readability and one-hand trade controls, `vex-p0-002` adds exported-web responsive viewport captures and self-contained Playwright QA across web, small phone, large phone, and tablet, `vex-p1-003` adds App Store-safe loading/empty/offline/error states, `talon-p0-002` adds the autonomous safety preflight and full `ship:check` command, `zyra-p0-002` now has a repeatable live deployment shell-marker health command, `reel-p0-001` defines the App Store preview storyboard, capture routes, store-safety rules, staged data needs, and Zoro approval checklist, `cipher-p0-001` cites current Apple/Google/Expo submission requirements while binding the Xcode 26 / iOS 26 SDK and Android API 35 target gates into the Axiom checklist, `palette-p0-001` audits current commodity, Eidolon, cinematic, legacy reference, Remotion, icon/splash, and capture-evidence assets for resolution, ownership notes, and screenshot safety, `cipher-p0-002` defines the privacy, token, simulated-trading, and age-rating policy risk matrix, and `hydra-p0-001` adds deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts. The next native gate is running the first simulator/emulator builds against the Axiom checklist with those store-toolchain proofs included.
+
+The 2026-04-28 Codex monitor pass pushed v6 commit `5481191` for `zyra-p1-004`, hardening the live Axiom smoke by waiting for DOM content and visible CyberTrader boot-shell markers instead of `networkidle`. Current validation is green: `npm run health:live`, `npm run qa:axiom:live`, `npm run ship:check` with 118/118 Jest tests in 27 suites, and `npm run build:web -- --clear`.
 
 The next milestone is **App Store / Play Store submission readiness**, not more Dev Lab office work.
 
@@ -68,6 +70,7 @@ Required:
 - App Store-safe loading, empty, offline, and error states exist across route recovery, login validation, terminal locks, empty content, Settings local-mode disclosure, and safe system messages.
 - Autonomous safety preflight and `ship:check` command exist before more direct-push implementation loops.
 - `npm run health:live` verifies the live Vercel shell returns HTTP 200 and contains the expected Expo web entry markers.
+- `npm run qa:axiom:live` verifies the live Vercel shell renders visible CyberTrader boot markers in Chromium without relying on network idle.
 - 2026 Apple/Google/Expo submission requirements are cited, including Xcode 26 / iOS 26 SDK and Android API 35 target gates.
 - Store-facing asset audit exists with resolution, ownership, provenance, icon/splash, and capture-safety findings.
 - Privacy, token naming, simulated trading, wallet, Data Safety, and age-rating risk matrix exists with required copy and escalation triggers.

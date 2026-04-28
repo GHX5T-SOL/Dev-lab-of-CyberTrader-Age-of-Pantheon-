@@ -34,7 +34,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, and headless-renders the live mobile web shell in Chromium without console/page errors",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, and passes the hardened qa:axiom:live Chromium smoke against visible boot-shell markers",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -58,6 +58,7 @@ export const STATUS: StatusBlock = {
     "Palette completed the v6 store asset audit and flagged provenance, icon/splash, capture-safety, and optimization follow-ups",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
+    "Zyra/Codex hardened the live Axiom smoke in v6 commit 5481191 after a stale networkidle wait timed out on an already-rendered Vercel shell",
     "Talon/Zyra completed the rollback and incident protocol: P0/P1/P2 severity tiers, bad-commit detection signals, Vercel dashboard and CLI rollback, git revert procedure, native build rollback (Gate B+), escalation contacts, and post-incident note template are all documented",
     "New v6 App Store readiness task map assigns work to Ghost, Zoro, the AI Council, Zara, and Zyra",
     "OpenClaw on zyra-mini is updated to 2026.4.24, gateway is restarted, v6 is cloned, and Zara/Zyra run through external launchd jobs",
@@ -77,12 +78,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, and renders the live mobile boot shell in headless Chromium without console/page errors",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, and passes npm run qa:axiom:live after commit 5481191 switched live readiness to DOM content plus visible boot-shell markers",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, Jest tests, and Expo web export pass locally",
+      detail: "Rune audit, route hardening, storage regression checks, Oracle replay and launch tuning audits, Hydra swarm scenarios, Ghost architecture risk audit, Kite authority flag checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight, EAS config validation, live Axiom smoke, Jest tests, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -120,5 +121,5 @@ export const STATUS: StatusBlock = {
       detail: "Reel's storyboard, Palette's asset audit, and Cipher's policy matrix are ready, but screenshots, final preview video, source-provenance proof, icon/splash assets, public privacy policy, app metadata, and age rating answers are not submission-ready",
     },
   ],
-  updated: "2026-04-27",
+  updated: "2026-04-28",
 };

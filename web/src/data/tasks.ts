@@ -24,7 +24,7 @@ export interface Task {
   links?: { label: string; href: string }[];
 }
 
-export const LAST_UPDATED = "2026-04-27";
+export const LAST_UPDATED = "2026-04-28";
 
 function task(input: Task): Task {
   return input;
@@ -723,7 +723,7 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-26 (run 20260426T174449Z-zyra): health:live HTTP 200 Vercel cache HIT, typecheck pass, 73/73 Jest in 23 suites. talon-p1-003 (rollback protocol) shipped in same run. Full login/trading browser smoke is still a Gate A follow-up.",
+    notes: "Monitor pass 2026-04-28 (run 20260428T112408Z-codex): health:live HTTP 200 Vercel cache HIT; qa:axiom:live 1/1 passed after v6 commit 5481191 hardened live readiness from networkidle to DOM content plus visible boot-shell markers; ship:check passed with safety scan, typecheck, 118/118 Jest in 27 suites, and Expo web export. Full native iOS/Android QA remains the next Gate B blocker.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
