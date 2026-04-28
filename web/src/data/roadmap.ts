@@ -96,7 +96,7 @@ export const ROADMAP: Phase[] = [
       "Store-facing asset audit and Dev Lab provenance report with resolution, ownership, and icon/splash findings; zara-p1-005 workflow pending",
       "Screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile",
       "Privacy, token naming, simulated trading, wallet, Data Safety, and age-rating risk matrix",
-      "Hydra market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
+      "Hydra market-swarm scenarios plus first-20 retention/churn watch fixtures",
       "v6 GitHub issue batches for active P0/P1 readiness work",
       "Live Vercel smoke passes",
       "iOS simulator smoke passes",
@@ -199,7 +199,7 @@ export const ROADMAP: Phase[] = [
     deliverables: [
       "20-100 invited players",
       "Crash-free sessions above 99%",
-      "D1 retention baseline",
+      "D1 retention baseline from the completed first-20 Hydra scenario harness",
       "Feedback intake loop",
       "Economy stress reports from Hydra/ElizaOS and beta data",
       "Store listing refinements",

@@ -3,18 +3,18 @@
 **Automation:** CyberTrader v6 QA and deployment monitor
 **Task focus:** `zyra-p1-004` live deployment QA + Dev Lab readiness truth sync
 **Dev Lab base after pull/rebase:** `9ee1363`
-**v6 head after pull:** `435b16f`
+**v6 head after final pull:** `2957a6a`
 
 ## Checks
 
 | Check | Result |
 | --- | --- |
 | Dev Lab pull/rebase | PASS - fast-forwarded through `9ee1363`, then rebased this status commit |
-| v6 status | PASS - `main` aligned with `origin/main` at `435b16f`; unrelated local staged/untracked work was left untouched |
+| v6 status | PASS - `main` aligned with `origin/main` at `2957a6a` after Axiom performance-budget and Hydra retention commits landed |
 | Live Vercel HEAD | PASS - HTTP 200, `x-vercel-cache: HIT` |
 | `npm run health:live` | PASS - HTTP 200, Vercel cache HIT |
-| `npm run qa:axiom:live` | PASS - 1/1 Chromium live smoke after the `435b16f` refresh |
-| `npm run regression:monitor` | PASS - typecheck, Jest, and live health passed earlier in the run for `ff7b7c3`; not rerun after unrelated v6 worktree changes appeared |
+| `npm run qa:axiom:live` | PASS - 1/1 Chromium live smoke after the `2957a6a` refresh |
+| `npm run regression:monitor` | PASS - typecheck, Jest, and live health passed for `2957a6a` |
 
 ## Status Change
 

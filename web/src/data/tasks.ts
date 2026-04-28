@@ -60,7 +60,7 @@ export const TASKS: Task[] = [
     id: "studio-p1-003",
     owner: "compass",
     title: "Keep TASKS.md and docs/V6-App-Store-Readiness-Task-Map.md in sync after every shipped task",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "ongoing",
     acceptanceCriteria: ["Every completed task changes status in both sources", "Roadmap checkpoint changes are logged", "Commit message names owner agent"],
@@ -554,6 +554,9 @@ export const TASKS: Task[] = [
     estimate: "4h",
     acceptanceCriteria: ["Budgets are numeric", "Measurement commands are documented", "Owners exist for every miss"],
     tags: ["performance", "mobile", "release"],
+    notes:
+      "Completed 2026-04-28. v6 commit 3e3f0ca adds npm run perf:budgets, scripts/check-performance-budgets.mjs, and docs/release/axiom-p1-003-performance-budgets.md with enforced web-export budgets plus native cold-start, memory, latency, and runtime-error targets for axiom-p0-001.",
+    links: [{ label: "Performance budgets", href: `${v6}/blob/main/docs/release/axiom-p1-003-performance-budgets.md` }],
   }),
   task({
     id: "axiom-p1-004",
@@ -679,11 +682,14 @@ export const TASKS: Task[] = [
     id: "hydra-p1-002",
     owner: "hydra",
     title: "Prototype synthetic retention and churn scenarios for the first 20 beta players",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     acceptanceCriteria: ["At least 5 player archetypes exist", "Churn triggers are logged", "Game Designer receives tuning recommendations"],
     tags: ["retention", "simulation", "soft-launch"],
+    notes:
+      "Completed 2026-04-28. v6 commit 2957a6a adds npm run retention:beta, a deterministic first-20 beta retention harness, and docs/release/hydra-p1-002-retention-churn-scenarios.md. All cohorts stay above the 62% D1 floor with 0 impossible states and watch-level churn triggers for Nyx, Oracle, and Vex.",
+    links: [{ label: "Retention scenarios", href: `${v6}/blob/main/docs/release/hydra-p1-002-retention-churn-scenarios.md` }],
   }),
 
   task({

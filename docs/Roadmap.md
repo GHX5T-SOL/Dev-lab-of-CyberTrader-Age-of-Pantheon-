@@ -79,7 +79,7 @@ Required:
 - Store-facing asset audit and Dev Lab provenance report exist with resolution, ownership, icon/splash, and capture-safety findings; the `zara-p1-005` generated workflow still needs run/review/integration.
 - Screenshot-safe visual state captures exist for home, terminal, market, missions, inventory, and profile.
 - Privacy, token naming, simulated trading, wallet, Data Safety, and age-rating risk matrix exists with required copy and escalation triggers.
-- Hydra market-swarm scenarios exist for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts.
+- Hydra market-swarm scenarios exist for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts; first-20 retention/churn scenarios now provide watch-level D1 risk fixtures.
 - v6 GitHub issue batches exist for active P0/P1 readiness work, with owner and priority mapping in the issue bodies.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
@@ -138,7 +138,7 @@ Required:
 
 - 20-100 invited players.
 - Crash-free sessions above 99%.
-- D1 retention baseline.
+- D1 retention baseline from the completed first-20 Hydra scenario harness.
 - Feedback intake loop.
 - Economy stress reports from Hydra/ElizaOS and real beta data.
 - Store listing refinements.
