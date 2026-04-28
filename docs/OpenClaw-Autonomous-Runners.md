@@ -10,6 +10,7 @@ Source of truth:
 Jobs:
 - `ai.cybertrader.zara.autonomous`: every 2 hours, implementation and production changes.
 - `ai.cybertrader.zyra.autonomous`: every 1 hour, QA, task sync, release readiness, recovery.
+- `ai.cybertrader.openclaw-watchdog`: every 15 minutes, clears stale runner locks, checks/upgrades OpenClaw toward `2026.4.26`, restarts the gateway if `/ready` fails, and starts Zara/Zyra only when their launchd jobs are missing or exited.
 - Codex desktop heartbeat `openclaw-runner-health-watchdog`: every 2 hours, reports unhealthy runner/gateway/repo states in the controlling thread.
 
 Each cycle:
@@ -29,15 +30,19 @@ Current stability policy:
 - OpenClaw sandbox mode is `off` on this Mac mini because Docker is not installed and Docker sandbox mode prevents embedded agent runs.
 - The runner uses an isolated `CODEX_HOME` under the runner root so stale ChatGPT/Aperture Codex auth cannot override API-key auth.
 - The runner's lock cleanup only runs in the top-level process, preventing timeout/watchdog helpers from clearing the global lock mid-run.
+- Runner locks are capped by `RUN_LOCK_MAX_AGE_SECONDS` so stuck model/backend calls do not freeze Zara/Zyra for a full day.
+- The launchd watchdog writes `openclaw-watchdog-status.json` under the runner state directory for quick gateway/version/job inspection.
+- The launchd watchdog does not restart an active agent process; it only starts missing or idle/exited jobs so long-running work is not interrupted every watchdog tick.
 - The runner tries Codex `gpt-5.5`, then `gpt-5.4`, then `gpt-5.4-mini`, then Claude Code fallback.
 - Each backend attempt is capped at 45 minutes so a stuck model call does not freeze a full shift.
 - Ghost/Zoro/human approval is not required for normal implementation, design, lore, asset, automation, or roadmap work.
 - Human-only account, credential, legal, or payment items are logged and never stop the runners from choosing another task.
 
 Current known provider state:
-- The OpenAI API key is present and `/v1/models` succeeds.
-- OpenAI generation currently returns quota exceeded, so live work falls through to Claude Code until credits are restored.
-- The configured free BlockRun/ClawRouter route is not currently reliable enough for unattended production changes because enabling the proxy blocks the gateway from reaching `/ready`.
+- Paid OpenAI/Claude routes are optional and disabled unless credits are intentionally available.
+- Goose/OpenRouter free routing is the first live backend and currently reaches `openai/gpt-oss-120b:free`.
+- If a model backend no-ops, rate-limits, or emits unusable tool calls, the runner performs deterministic local maintenance and still commits/pushes a Dev Lab run note.
+- The configured BlockRun/ClawRouter proxy remains disabled until it can run without blocking gateway `/ready`.
 
 Useful commands:
 
@@ -71,3 +76,13 @@ Zara and Zyra now target daily visible v6 upgrades:
 - Store-media, provenance, SDK/toolchain, QA, and deployment readiness.
 
 If a model backend fails, the runner must fall back to another free model, then deterministic local maintenance, then still update Dev Lab and exit cleanly.
+
+## 2026-04-28 watchdog hardening update
+
+Installed on `brucewayne@100.117.148.52`:
+
+- OpenClaw reports `2026.4.26`.
+- Gateway `/ready` returns healthy on `127.0.0.1:18789`.
+- `ai.cybertrader.zara.autonomous`, `ai.cybertrader.zyra.autonomous`, and `ai.cybertrader.openclaw-watchdog` are loaded under launchd.
+- The first repaired Zara cycle pulled Dev Lab and v6 to current and began active v6 implementation work.
+- The watchdog writes bounded health state to `~/.openclaw/cybertrader-runners/state/openclaw-watchdog-status.json`.

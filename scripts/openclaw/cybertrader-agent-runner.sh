@@ -7,7 +7,7 @@ if [[ "$AGENT_ID" != "zara" && "$AGENT_ID" != "zyra" ]]; then
   exit 64
 fi
 
-export PATH="$HOME/.local/node-current/bin:$HOME/.openclaw-runtime-2026.4.24/node_modules/.bin:$HOME/.local/node-v22.22.2-darwin-x64/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$HOME/.local/node-current/bin:$HOME/.openclaw-runtime-2026.4.26/node_modules/.bin:$HOME/.openclaw-runtime-2026.4.24/node_modules/.bin:$HOME/.local/node-v22.22.2-darwin-x64/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LANG="${LANG:-en_US.UTF-8}"
 export LC_ALL="${LC_ALL:-en_US.UTF-8}"
 
@@ -23,6 +23,7 @@ LOG_FILE="$LOG_DIR/$AGENT_ID.log"
 LAST_MESSAGE="$STATE_DIR/$AGENT_ID-last-message.md"
 DIRECTIVE_FILE="$RUN_ROOT/notes/$AGENT_ID-telegram-directives.md"
 AGENT_BACKEND_TIMEOUT_SECONDS="${AGENT_BACKEND_TIMEOUT_SECONDS:-1800}"
+RUN_LOCK_MAX_AGE_SECONDS="${RUN_LOCK_MAX_AGE_SECONDS:-10800}"
 OPENCLAW_USE_OPENAI_CODEX="${OPENCLAW_USE_OPENAI_CODEX:-0}"
 OPENCLAW_ALLOW_PAID_CLI="${OPENCLAW_ALLOW_PAID_CLI:-0}"
 OPENCLAW_FREE_GOOSE_MODELS="${OPENCLAW_FREE_GOOSE_MODELS:-openrouter|openai/gpt-oss-120b:free openrouter|z-ai/glm-4.5-air:free openrouter|openai/gpt-oss-20b:free openrouter|meta-llama/llama-3.3-70b-instruct:free openrouter|qwen/qwen3-coder:free openrouter|qwen/qwen3-next-80b-a3b-instruct:free openrouter|nousresearch/hermes-3-llama-3.1-405b:free openrouter|meta-llama/llama-3.2-3b-instruct:free}"
@@ -38,6 +39,7 @@ mkdir -p "$LOG_DIR" "$STATE_DIR" "$LOCK_DIR" "$CODEX_HOME"
 exec >>"$LOG_FILE" 2>&1
 
 echo "===== $RUN_ID start $(date '+%Y-%m-%dT%H:%M:%S%z') ====="
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$STATE_DIR/$AGENT_ID-last-start.txt"
 
 if [[ "$AGENT_ID" == "zyra" && "$ZYRA_START_DELAY_SECONDS" != "0" ]]; then
   echo "zyra start delay ${ZYRA_START_DELAY_SECONDS}s to avoid launchd/git contention"
@@ -85,10 +87,27 @@ acquire_lock() {
   fi
   local created now age lock_pid
   lock_pid="$(cat "$dir/pid" 2>/dev/null || true)"
+  created="$(cat "$dir/created_at" 2>/dev/null || true)"
+  if ! [[ "$created" =~ ^[0-9]+$ ]]; then
+    created=0
+  fi
+  now="$(date -u +%s)"
+  age=$((now - created))
   if [[ -n "$lock_pid" ]] && kill -0 "$lock_pid" 2>/dev/null; then
     local lock_cmd
     lock_cmd="$(ps -p "$lock_pid" -o command= 2>/dev/null || true)"
     if [[ "$lock_cmd" == *"cybertrader-agent-runner"* || "$lock_cmd" == *"codex exec"* || "$lock_cmd" == *"claude"* ]]; then
+      if (( age > max_age_seconds )); then
+        echo "stale live lock $name detected after ${age}s under pid $lock_pid; terminating stuck CyberTrader backend"
+        kill -TERM "$lock_pid" 2>/dev/null || true
+        sleep 15
+        kill -KILL "$lock_pid" 2>/dev/null || true
+        rm -rf "$dir"
+        mkdir "$dir"
+        echo "$$" > "$dir/pid"
+        date -u +%s > "$dir/created_at"
+        return 0
+      fi
       echo "lock $name is active under pid $lock_pid ($lock_cmd)"
       exit 0
     fi
@@ -99,12 +118,6 @@ acquire_lock() {
     date -u +%s > "$dir/created_at"
     return 0
   fi
-  created="$(cat "$dir/created_at" 2>/dev/null || true)"
-  if ! [[ "$created" =~ ^[0-9]+$ ]]; then
-    created=0
-  fi
-  now="$(date -u +%s)"
-  age=$((now - created))
   if (( age > max_age_seconds )); then
     echo "stale lock $name detected after ${age}s; clearing"
     rm -rf "$dir"
@@ -132,8 +145,8 @@ release_locks() {
 }
 trap release_locks EXIT
 
-acquire_lock "$AGENT_ID" 21600
-acquire_lock "global" 21600
+acquire_lock "$AGENT_ID" "$RUN_LOCK_MAX_AGE_SECONDS"
+acquire_lock "global" "$RUN_LOCK_MAX_AGE_SECONDS"
 
 configure_git() {
   git config user.name "OpenClaw $AGENT_DISPLAY"
@@ -164,6 +177,65 @@ run_with_timeout() {
   return "$status"
 }
 
+record_sync_blocker() {
+  local repo="$1"
+  local label="$2"
+  local note="$DEVLAB_REPO/docs/automation-runs/${RUN_ID}-${AGENT_ID}-${label}-sync-blocked.md"
+  mkdir -p "$(dirname "$note")"
+  {
+    echo "# $RUN_ID $label sync blocked"
+    echo
+    echo "Agent: $AGENT_ID"
+    echo "Repo: $repo"
+    echo "Status: git sync hit a conflict or incomplete merge/rebase state. The runner aborted its own partial rebase where possible and will retry on the next cycle."
+    echo
+    echo "## Git status"
+    echo
+    echo '```text'
+    git -C "$repo" status --short --branch || true
+    echo '```'
+  } > "$note"
+}
+
+safe_git_state() {
+  local repo="$1"
+  if [[ -d "$repo/.git/rebase-merge" || -d "$repo/.git/rebase-apply" ]]; then
+    echo "repo $repo has an unfinished rebase from a previous run; aborting it before continuing"
+    git -C "$repo" rebase --abort || true
+  fi
+  if [[ -f "$repo/.git/MERGE_HEAD" ]]; then
+    echo "repo $repo has an unfinished merge; refusing this cycle"
+    return 1
+  fi
+}
+
+ensure_gateway_ready() {
+  if curl -fsS --max-time 8 http://127.0.0.1:18789/ready >/dev/null 2>&1; then
+    echo "OpenClaw gateway ready"
+    return 0
+  fi
+
+  echo "OpenClaw gateway /ready is down; attempting bounded restart"
+  run_with_timeout 120 openclaw gateway restart >/dev/null 2>&1 || true
+  if curl -fsS --max-time 8 http://127.0.0.1:18789/ready >/dev/null 2>&1; then
+    echo "OpenClaw gateway recovered after CLI restart"
+    return 0
+  fi
+
+  local uid label
+  uid="$(id -u)"
+  label="ai.openclaw.gateway"
+  launchctl kickstart -k "gui/$uid/$label" >/dev/null 2>&1 || true
+  sleep 10
+  if curl -fsS --max-time 8 http://127.0.0.1:18789/ready >/dev/null 2>&1; then
+    echo "OpenClaw gateway recovered after launchd kickstart"
+    return 0
+  fi
+
+  echo "OpenClaw gateway still not ready; model backends may fail, deterministic fallback remains available"
+  return 1
+}
+
 commit_dirty_state() {
   local repo="$1"
   local label="$2"
@@ -186,6 +258,10 @@ sync_repo_main() {
   fi
   cd "$repo"
   configure_git
+  safe_git_state "$repo" || {
+    record_sync_blocker "$repo" "$label"
+    return 1
+  }
   commit_dirty_state "$repo" "pre-run-$label"
   git fetch origin main
   if git show-ref --verify --quiet refs/heads/main; then
@@ -193,11 +269,17 @@ sync_repo_main() {
   else
     git switch -c main --track origin/main
   fi
-  git pull --rebase --autostash origin main
+  if ! git pull --rebase --autostash origin main; then
+    echo "git pull --rebase failed for $label; aborting partial rebase and recording blocker"
+    git rebase --abort || true
+    record_sync_blocker "$repo" "$label"
+    return 1
+  fi
 }
 
-sync_repo_main "$DEVLAB_REPO" "https://github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-" "devlab"
-sync_repo_main "$GAME_REPO" "https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6.git" "v6"
+ensure_gateway_ready || true
+sync_repo_main "$DEVLAB_REPO" "https://github.com/GHX5T-SOL/Dev-lab-of-CyberTrader-Age-of-Pantheon-" "devlab" || true
+sync_repo_main "$GAME_REPO" "https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6.git" "v6" || true
 
 if [[ "$AGENT_ID" == "zara" ]]; then
   AGENT_TITLE="Zara - OpenClaw implementation scout"
@@ -414,13 +496,23 @@ fi
 for repo in "$GAME_REPO" "$DEVLAB_REPO"; do
   cd "$repo"
   configure_git
+  safe_git_state "$repo" || {
+    record_sync_blocker "$repo" "final"
+    continue
+  }
   if [[ -n "$(git status --porcelain)" ]]; then
     git add -A
     git commit -m "chore(openclaw): ${AGENT_ID} autonomous cycle ${RUN_ID}" || true
   fi
-  git pull --rebase --autostash origin main || true
-  git push origin HEAD:main || true
+  if git pull --rebase --autostash origin main; then
+    git push origin HEAD:main || true
+  else
+    echo "final pull --rebase failed for $repo; aborting partial rebase and leaving pushed state unchanged"
+    git rebase --abort || true
+    record_sync_blocker "$repo" "final"
+  fi
 done
 
 echo "===== $RUN_ID finished status=$STATUS $(date '+%Y-%m-%dT%H:%M:%S%z') ====="
+date -u '+%Y-%m-%dT%H:%M:%SZ' > "$STATE_DIR/$AGENT_ID-last-finish.txt"
 exit "$STATUS"

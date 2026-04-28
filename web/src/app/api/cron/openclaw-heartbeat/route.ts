@@ -25,7 +25,7 @@ export async function GET(req: Request) {
     node: OPENCLAW_NODE.id,
     command: OPENCLAW_NODE.ssh,
     message:
-      "heartbeat endpoint armed; zyra-mini still needs local cron/file-watcher enablement",
+      "heartbeat endpoint armed; zyra-mini OpenClaw launchd runners and watchdog are installed",
     at: new Date().toISOString(),
   });
 }

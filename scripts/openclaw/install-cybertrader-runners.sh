@@ -3,10 +3,12 @@ set -Eeuo pipefail
 
 RUN_ROOT="${RUN_ROOT:-$HOME/.openclaw/cybertrader-runners}"
 SCRIPT_SOURCE="${SCRIPT_SOURCE:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/cybertrader-agent-runner.sh}"
+WATCHDOG_SOURCE="${WATCHDOG_SOURCE:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/cybertrader-openclaw-watchdog.sh}"
 LAUNCH_AGENTS="$HOME/Library/LaunchAgents"
 
 mkdir -p "$RUN_ROOT/bin" "$RUN_ROOT/logs" "$RUN_ROOT/state" "$RUN_ROOT/locks" "$LAUNCH_AGENTS"
 install -m 0755 "$SCRIPT_SOURCE" "$RUN_ROOT/bin/cybertrader-agent-runner.sh"
+install -m 0755 "$WATCHDOG_SOURCE" "$RUN_ROOT/bin/cybertrader-openclaw-watchdog.sh"
 
 write_plist() {
   local agent="$1"
@@ -36,7 +38,7 @@ write_plist() {
   <key>EnvironmentVariables</key>
   <dict>
     <key>PATH</key>
-    <string>$HOME/.local/node-current/bin:$HOME/.openclaw-runtime-2026.4.24/node_modules/.bin:$HOME/.local/node-v22.22.2-darwin-x64/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <string>$HOME/.local/node-current/bin:$HOME/.openclaw-runtime-2026.4.26/node_modules/.bin:$HOME/.openclaw-runtime-2026.4.24/node_modules/.bin:$HOME/.local/node-v22.22.2-darwin-x64/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
     <key>DEVLAB_REPO</key>
     <string>$HOME/Dev-lab-of-CyberTrader-Age-of-Pantheon-</string>
     <key>GAME_REPO</key>
@@ -53,6 +55,40 @@ PLIST
 write_plist "zara" 7200
 write_plist "zyra" 3600
 
+watchdog_plist="$LAUNCH_AGENTS/ai.cybertrader.openclaw-watchdog.plist"
+cat > "$watchdog_plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>ai.cybertrader.openclaw-watchdog</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>$RUN_ROOT/bin/cybertrader-openclaw-watchdog.sh</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StartInterval</key>
+  <integer>900</integer>
+  <key>StandardOutPath</key>
+  <string>$RUN_ROOT/logs/openclaw-watchdog.launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>$RUN_ROOT/logs/openclaw-watchdog.launchd.err.log</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>$HOME/.local/node-current/bin:$HOME/.openclaw-runtime-2026.4.26/node_modules/.bin:$HOME/.openclaw-runtime-2026.4.24/node_modules/.bin:$HOME/.local/node-v22.22.2-darwin-x64/bin:$HOME/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>RUN_ROOT</key>
+    <string>$RUN_ROOT</string>
+    <key>TARGET_OPENCLAW_VERSION</key>
+    <string>2026.4.26</string>
+  </dict>
+</dict>
+</plist>
+PLIST
+plutil -lint "$watchdog_plist"
+
 uid="$(id -u)"
 for agent in zara zyra; do
   label="ai.cybertrader.${agent}.autonomous"
@@ -61,6 +97,10 @@ for agent in zara zyra; do
   launchctl bootstrap "gui/$uid" "$plist"
   launchctl kickstart -k "gui/$uid/$label" || true
 done
+
+launchctl bootout "gui/$uid/ai.cybertrader.openclaw-watchdog" >/dev/null 2>&1 || true
+launchctl bootstrap "gui/$uid" "$watchdog_plist"
+launchctl kickstart -k "gui/$uid/ai.cybertrader.openclaw-watchdog" || true
 
 echo "Installed CyberTrader autonomous runners under $RUN_ROOT"
 launchctl list | grep 'ai.cybertrader' || true
