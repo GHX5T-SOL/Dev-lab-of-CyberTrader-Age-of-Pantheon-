@@ -8,8 +8,8 @@ Task focus: v6 bounded QA/deployment checks and Dev Lab verification repair
 - Dev Lab fast-forwarded from `origin/main` to `3e3ea90`.
 - v6 initially fetched cleanly against `origin/main` at `832cabd`, with local profile/QA harness edits present in the working tree.
 - Those exact v6 edits were verified by the checks below, then another loop pushed them upstream as `3c45be8` (`vex-p1-006 axiom: polish profile dossier QA`).
-- Final v6 fetch is aligned with `origin/main` at `3c45be8`.
-- After that fast-forward, another local profile-capture patch appeared in `.superdesign/design-system.md`, `app/menu/profile.tsx`, `qa/axiom-web-regression.spec.ts`, `qa/responsive-captures.spec.ts`, and `docs/release/vex-p1-006-profile-dossier-polish.md`. This follow-up patch was verified with targeted checks but was not committed or pushed by this monitor.
+- v6 later advanced to `7d92e7f` (`hydra-p1-003 hydra: add retention tuning handoff`), and the final v6 fetch is aligned with that `origin/main` head.
+- A later local profile-capture patch appeared in `.superdesign/design-system.md`, `app/menu/profile.tsx`, `qa/axiom-web-regression.spec.ts`, `qa/responsive-captures.spec.ts`, screenshot/provenance assets, and `docs/release/vex-p1-006-profile-dossier-polish.md`. This follow-up patch was verified with targeted checks, then moved to a git stash by another process; it was not committed or pushed by this monitor.
 
 ## Fixes
 
@@ -30,10 +30,10 @@ Task focus: v6 bounded QA/deployment checks and Dev Lab verification repair
 | `npm run qa:smoke` | PASS - 1/1 Chromium smoke route |
 | `npm run health:live` | PASS - HTTP 200 from Vercel |
 | `npm run qa:axiom:live` | PASS - 1/1 live shell smoke |
-| `npm run regression:check` | PASS - first forced monitor checked `832cabd`; final forced monitor checked `3c45be8`, with typecheck, Jest, and live health green |
+| `npm run regression:check` | PASS - forced monitors checked `832cabd`, `3c45be8`, and final head `7d92e7f`, with typecheck, Jest, and live health green |
 | `npm run qa:axiom` | PASS - 11/11 Chromium checks, including `/menu/profile` route |
 | `npm run qa:responsive` | PASS - 4/4 viewport checks |
-| targeted recheck on final local profile-capture patch | PASS - `npm run safety:autonomous`, `npm run typecheck`, `npm run qa:axiom`, and `npm run qa:responsive` |
+| targeted recheck on local profile-capture patch before stash | PASS - `npm run safety:autonomous`, `npm run typecheck`, `npm run qa:axiom`, `npm run qa:responsive`, and `npm run provenance:assets:check` |
 
 ## Dev Lab Checks
 
