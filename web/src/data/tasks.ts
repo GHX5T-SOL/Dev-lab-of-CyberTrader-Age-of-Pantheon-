@@ -97,7 +97,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
     notes:
-      "Partial 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export after later AgentOS/store-media work, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
+      "Partial 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export after later AgentOS work, qa:smoke passes, post-push regression:monitor passes, and latest provenance/perf budgets pass. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
     links: [{ label: "SDK 54 package alignment", href: `${v6}/blob/main/docs/release/rune-p0-006-sdk54-package-alignment.md` }],
   }),
   task({
@@ -164,14 +164,14 @@ export const TASKS: Task[] = [
     ],
     tags: ["economy", "glch", "archetypes", "retention"],
     notes:
-      "Completed 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
+      "Completed 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, high-severity production audit, and latest provenance/perf budgets.",
     links: [{ label: "GLCH archetype admission", href: `${v6}/blob/main/docs/release/oracle-p1-009-glch-archetype-admission.md` }],
   }),
   task({
     id: "oracle-p1-010",
     owner: "oracle",
     title: "Build deterministic limit-order and faction-pressure economy interfaces",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "2d",
     dependencies: ["nyx-p1-004"],
@@ -280,11 +280,11 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
     notes:
-      "Completed 2026-04-29 in v6 65ad6ce with provenance repair 7bf5e38. Zoro approved the current six-shot App Store screenshot set, Reel preview story spine, and portrait-first cyberdeck mood using real generated captures; provenance:assets:check, ship:check 165/165, regression:monitor, and qa:axiom:live passed. Final preview video, native-device capture evidence, public privacy policy URL, age-rating declarations, and account-owner store submission remain Gate C follow-ups.",
+      "Completed 2026-04-29 in v6 65ad6ce with provenance refresh 7bf5e38. Zoro approved the current six-shot App Store screenshot set, Reel preview story spine, and portrait-first cyberdeck mood using real generated captures. This is a creative/store-media direction lock, not final store submission. Validation: screenshot dimensions reviewed in the release note, provenance:assets:check passes with 39 assets, ship:check 165/165, regression:monitor, qa:axiom:live, and perf:budgets pass. Final preview video, native-device capture evidence, public privacy policy URL, age-rating declarations, and account-owner store submission remain Gate C follow-ups.",
     links: [
       { label: "Store media direction approval", href: `${v6}/blob/main/docs/release/zoro-p0-002-store-media-approval.md` },
       { label: "Zoro approval commit", href: `${v6}/commit/65ad6ce375eb0ab58c72360f8f18a43bc9e1ae30` },
-      { label: "Provenance repair commit", href: `${v6}/commit/7bf5e38` },
+      { label: "Provenance refresh commit", href: `${v6}/commit/7bf5e38` },
       { label: "Approved screenshots", href: `${v6}/tree/main/assets/screenshots` },
     ],
   }),
@@ -899,7 +899,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["No 3D office-only work remains active", "Pipeline supports store screenshots/trailer", "Human feedback hooks are optional and non-blocking"],
     tags: ["assets", "spritecook", "pipeline"],
     notes:
-      "Completed 2026-04-28. v6 commit 2549e8d adds recursive asset provenance generation/check scripts and 37-asset inventory coverage; follow-up a065fd3 aligns store-media clearance language with the full-autonomy policy. Follow-up 49c1e49 refreshes provenance to 39 assets after GLCH source/optimized art landed. npm run provenance:assets:check and npm run ship:check passed.",
+      "Completed 2026-04-28. v6 commit 2549e8d adds recursive asset provenance generation/check scripts and 37-asset inventory coverage; follow-up a065fd3 aligns store-media clearance language with the full-autonomy policy; follow-ups 49c1e49 and 7bf5e38 refresh provenance to 39 assets after GLCH and store screenshot updates. npm run provenance:assets:check, npm run ship:check, and latest npm run perf:budgets passed.",
     links: [{ label: "Asset provenance workflow", href: `${v6}/blob/main/docs/release/zara-p1-005-asset-provenance-workflow.md` }],
   }),
   task({

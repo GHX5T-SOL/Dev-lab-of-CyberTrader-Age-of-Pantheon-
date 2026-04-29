@@ -10,6 +10,7 @@ Highest-impact unblocked v6 task: `nyx-p1-004` AgentOS rank-5 faction unlock loo
 
 - Pushed v6 `6b16a8b` (`nyx-p1-003 nyx-p1-004 nyx: ship AgentOS faction unlock`).
 - Pushed v6 `7c9b47c` (`axiom-p1-004 axiom: reset login storage in web regression`).
+- Synced concurrent v6 `65ad6ce` / `7bf5e38` store-media direction and provenance updates into Dev Lab task truth after verifying the new head.
 - AgentOS gate now checks rank 5, one profitable sell, and Heat <= 70.
 - `/menu/progression` now shows link stability, faction rows, queued/current/bound state, mission bias, Heat posture, and commit/reselection command.
 - LocalAuthority and the demo store persist `FactionChoice`, profile faction, OS tier, and one-free-switch behavior.
@@ -28,6 +29,7 @@ Highest-impact unblocked v6 task: `nyx-p1-004` AgentOS rank-5 faction unlock loo
 - `npm run build:web -- --clear` passed.
 - `npm run provenance:assets:check` passed with 39 assets.
 - Post-push `npm run regression:check` passed on `7c9b47cfd92540269e5b5e22a121589e5449f754` with typecheck, Jest, and `health:live` HTTP 200 / Vercel HIT.
+- After v6 advanced to `7bf5e38`, `npm run provenance:assets:check` passed with 39 assets and `npm run perf:budgets` passed after a fresh Expo web export.
 
 ## Dev Lab Updates
 
