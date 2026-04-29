@@ -11,7 +11,7 @@ Task focus: `ghost-p1-005` authority launch scope decision and Dev Lab planning 
 
 ## Fixes Shipped
 
-- Pushed v6 commit `a6cb172` (`ghost-p1-005 ghost: accept LocalAuthority launch scope`); latest remote later advanced through `89d1f9a` and then `5902d1d` through concurrent Hydra/profile QA work and was fast-forwarded locally before the Dev Lab sync.
+- Pushed v6 commit `a6cb172` (`ghost-p1-005 ghost: accept LocalAuthority launch scope`); latest remote later advanced through `89d1f9a` and then `5902d1d` through concurrent profile QA/live-shell work and was fast-forwarded locally before the Dev Lab sync.
 - Added `docs/release/ghost-p1-005-authority-launch-scope.md`.
 - Updated Ghost/Kite authority release notes so LocalAuthority-only launch scope is accepted and SupabaseAuthority remains feature-flagged/deferred until a reviewed live Supabase/RLS/privacy/native evidence pass.
 - Synced Dev Lab task, roadmap, status, and run-ledger truth to show `ghost-p1-005` complete and current v6 latest verified pushed head `5902d1d`.
