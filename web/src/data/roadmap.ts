@@ -112,6 +112,7 @@ export const ROADMAP: Phase[] = [
       "AgentOS rank-5 faction gate, selection loop, LocalAuthority binding, one-free-switch rule, and faction-biased missions",
       "PirateOS polish, AgentOS rank-5 systems, and PantheonOS late-game territory roadmap",
       "Local ship check, local Axiom QA, provenance check, clean-cache export, live smoke, and post-push monitor pass on verified v6 origin/main 7bf5e38",
+      "Zoro store media approval, screenshot capture, provenance check, safety scan, typecheck, and Expo web export pass on verified v6 origin/main 7bf5e38",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
       "First 10-minute player loop complete without developer guidance",

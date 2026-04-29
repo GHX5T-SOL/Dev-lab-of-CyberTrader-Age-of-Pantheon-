@@ -280,9 +280,10 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
     notes:
-      "Completed 2026-04-29 in v6 65ad6ce with provenance repair 7bf5e38. Zoro approved the current six-shot App Store screenshot set, Reel preview story spine, and portrait-first cyberdeck mood using real generated captures; provenance:assets:check, ship:check 165/165, regression:monitor, and qa:axiom:live passed.",
+      "Completed 2026-04-29 in v6 65ad6ce with provenance repair 7bf5e38. Zoro approved the current six-shot App Store screenshot set, Reel preview story spine, and portrait-first cyberdeck mood using real generated captures; provenance:assets:check, ship:check 165/165, regression:monitor, and qa:axiom:live passed. Final preview video, native-device capture evidence, public privacy policy URL, age-rating declarations, and account-owner store submission remain Gate C follow-ups.",
     links: [
       { label: "Store media direction approval", href: `${v6}/blob/main/docs/release/zoro-p0-002-store-media-approval.md` },
+      { label: "Zoro approval commit", href: `${v6}/commit/65ad6ce375eb0ab58c72360f8f18a43bc9e1ae30` },
       { label: "Provenance repair commit", href: `${v6}/commit/7bf5e38` },
       { label: "Approved screenshots", href: `${v6}/tree/main/assets/screenshots` },
     ],
