@@ -34,6 +34,7 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
+    "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, 181/181 Jest tests, web export, smoke, full Axiom 11/11 including /menu/profile, responsive 4/4, live health, live smoke, and forced regression on 832cabd",
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
     "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 832cabd after AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
@@ -114,7 +115,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck/inventory-bay validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, and Expo web export pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck/inventory-bay validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11 including /menu/profile, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, Expo web export, and Dev Lab verify:phase1 pass locally",
     },
     {
       label: "Native QA",
@@ -129,7 +130,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Dependency audit",
       state: "amber",
-      detail: "v6 package manifest, lockfile, and installed package graph now align with Expo SDK 54; npm audit --omit=dev --audit-level=high exits 0, while npm audit still reports 14 moderate Expo-toolchain advisories and native EAS output must prove Android API 35+ before Play Store submission",
+      detail: "v6 package manifest, lockfile, and installed package graph now align with Expo SDK 54; v6 npm audit --omit=dev --audit-level=high exits 0, while v6 npm audit still reports 14 moderate Expo-toolchain advisories. Dev Lab npm audit --omit=dev --audit-level=high still fails through Expo toolchain transitive advisories whose listed remediation is a breaking Expo 49 downgrade, so this needs planned dependency work rather than an autonomous force fix",
     },
     {
       label: "Store toolchain",

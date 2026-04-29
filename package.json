@@ -43,7 +43,7 @@
     "ai-council:run": "node scripts/ai-council-run.js",
 
     "typecheck": "tsc --noEmit -p src/tsconfig.json",
-    "lint": "eslint src backend --ext .ts,.tsx",
+    "lint": "node scripts/lint-typescript.mjs",
     "test": "jest --config=src/jest.config.js",
     "test:watch": "jest --watch --config=src/jest.config.js",
     "watch:glb": "node scripts/watch-glb-assets.js",

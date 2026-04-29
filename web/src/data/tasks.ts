@@ -81,6 +81,8 @@ export const TASKS: Task[] = [
       "Autonomous automations are scheduled for ship, QA, roadmap, creative, and strategy loops",
     ],
     tags: ["automation", "openclaw", "autonomy", "no-approval"],
+    notes:
+      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. Dev Lab verify now passes; v6 bounded QA/deployment monitor checks pass on 832cabd, with local profile/responsive-QA edits verified but not committed by the monitor.",
   }),
   task({
     id: "rune-p0-006",
