@@ -36,7 +36,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 7c9b47c after SDK 54 package alignment, GLCH archetype admission, worktree-safe regression monitor repair, AgentOS faction selection, Axiom session-reset hardening, and provenance sync",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 7bf5e38 after AgentOS faction selection, store-media direction approval, Axiom session-reset hardening, provenance sync, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -72,11 +72,12 @@ export const STATUS: StatusBlock = {
     "Zara completed zara-p1-005: v6 now has a repeatable 37-asset provenance inventory/check workflow, with store-media clearance language aligned to the autonomy policy",
     "Kite completed kite-p0-002 launch identity recovery in v6 commit 747ff72, keeping first launch wallet-free while documenting recovery limitations",
     "Palette/Zyra completed screenshot-safe visual state captures for home, terminal, market, missions, inventory, and profile at 1242x2688 and synced the SuperDesign capture context",
+    "Zoro completed store media direction approval: the six-shot portrait screenshot set, Reel preview story spine, and cyberdeck store-page mood are locked for autonomous iteration",
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
     "Oracle completed oracle-p1-009: GLCH now participates in the deterministic momentum-trader archetype and beta-tuned mirror while retention and swarm fixtures stay green",
-    "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; monitor state now points at 7c9b47c",
+    "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; latest post-push monitor passed on 7bf5e38",
     "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, and 93096a5; live smoke and qa:smoke both pass",
     "Zara pushed v6 fdd7160 with Obsidian, a rank-7 Eclipse Guild NPC, after OpenClaw repair restored active work on the Mac mini",
     "Codex pushed v6 49c1e49 to repair the Expo SDK 54 lockfile, track GLCH source/optimized art, refresh 39-asset provenance, and verify ship:check plus post-push regression:monitor",
@@ -100,12 +101,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 7c9b47c with post-push regression:monitor and force regression:check green",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 7bf5e38 with post-push regression:monitor green",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction tests, Vex HUD/responsive/system-state validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 165/165 Jest tests, local Axiom QA 11/11, provenance check, live health, live smoke, and Expo web export pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype audits, AgentOS faction selection, store-media direction approval, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session and pressure-band tests, Vex HUD/responsive/system-state validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 165/165 Jest tests, local Axiom QA 11/11, provenance check, live health, live smoke, and Expo web export pass locally",
     },
     {
       label: "Native QA",
@@ -140,7 +141,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "amber",
-      detail: "Zoro's screenshot/preview mood approval, Reel's storyboard, Palette's audit, generated captures, icon/splash art, Cipher's policy matrix, Kite's identity baseline, Dev Lab provenance report, and zara-p1-005 inventory are ready inputs; final preview video, native-device captures, public privacy policy, and store-owner declarations remain",
+      detail: "Zoro's screenshot/preview direction, Reel's storyboard, Palette's asset audit, icon/splash art, generated captures, Cipher's policy matrix, Kite's identity/recovery baseline, Dev Lab provenance report, and zara-p1-005 inventory are ready inputs; final preview video, native-device captures, public privacy policy, and store-owner declarations remain",
     },
   ],
   updated: "2026-04-29",

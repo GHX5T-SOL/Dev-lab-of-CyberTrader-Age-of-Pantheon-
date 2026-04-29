@@ -97,7 +97,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
     notes:
-      "Partial 2026-04-29 in v6 68a8f74, current board verification through 7c9b47c: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export, qa:smoke passes, and post-push regression:monitor is pointed at the current head. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
+      "Partial 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export after later AgentOS/store-media work, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
     links: [{ label: "SDK 54 package alignment", href: `${v6}/blob/main/docs/release/rune-p0-006-sdk54-package-alignment.md` }],
   }),
   task({
@@ -164,7 +164,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["economy", "glch", "archetypes", "retention"],
     notes:
-      "Completed 2026-04-29 in v6 68a8f74, current board verification through 7c9b47c. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
+      "Completed 2026-04-29 in v6 68a8f74, latest verified head 7bf5e38. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
     links: [{ label: "GLCH archetype admission", href: `${v6}/blob/main/docs/release/oracle-p1-009-glch-archetype-admission.md` }],
   }),
   task({
@@ -280,10 +280,11 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
     notes:
-      "Completed 2026-04-29. v6 docs/release/zoro-p0-002-store-media-approval.md approves the current six-shot portrait screenshot direction, Reel's 30-second preview story spine, and the cyberdeck store-page mood. Final preview video, native-device capture evidence, public privacy policy URL, age-rating declarations, and account-owner store submission remain Gate C follow-ups tracked outside this creative approval.",
+      "Completed 2026-04-29 in v6 65ad6ce with provenance repair 7bf5e38. Zoro approved the current six-shot App Store screenshot set, Reel preview story spine, and portrait-first cyberdeck mood using real generated captures; provenance:assets:check, ship:check 165/165, regression:monitor, and qa:axiom:live passed.",
     links: [
-      { label: "Store media approval", href: `${v6}/blob/main/docs/release/zoro-p0-002-store-media-approval.md` },
-      { label: "Generated captures", href: `${v6}/tree/main/assets/screenshots` },
+      { label: "Store media direction approval", href: `${v6}/blob/main/docs/release/zoro-p0-002-store-media-approval.md` },
+      { label: "Provenance repair commit", href: `${v6}/commit/7bf5e38` },
+      { label: "Approved screenshots", href: `${v6}/tree/main/assets/screenshots` },
     ],
   }),
   task({
@@ -810,7 +811,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["New main commits trigger checks", "Monitor state avoids duplicate runs", "LaunchAgent wiring is documented"],
     tags: ["automation", "regression", "launchd"],
     notes:
-      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor state points at 7c9b47c.",
+      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor pass verified 7bf5e38.",
     links: [{ label: "Post-push regression note", href: `${v6}/blob/main/docs/release/talon-p1-004-post-push-regression.md` }],
   }),
 

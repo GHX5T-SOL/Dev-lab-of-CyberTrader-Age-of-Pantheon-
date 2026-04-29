@@ -17,6 +17,8 @@ Pulled the Dev Lab and v6 repos, read the current task truth, and selected the h
 
 - `6b16a8b` - `nyx-p1-003 nyx-p1-004 nyx: ship AgentOS faction unlock`
 - `d165625` - `nyx-p1-004 zara-p1-005 axiom: sync AgentOS smoke provenance`
+- `65ad6ce` - `zoro-p0-002 zoro: approve store media direction`
+- `7bf5e38` - `zoro-p0-002 zara-p1-005: refresh store media provenance`
 
 Player-facing and store-readiness changes:
 
@@ -27,6 +29,8 @@ Player-facing and store-readiness changes:
 - Added `/missions` AgentOS contract gate and menu route invariant coverage.
 - Hardened local Axiom QA by clearing browser session state before login/trading checks.
 - Kept `assets/provenance.json` current at 39 tracked media assets.
+- Approved the six-shot App Store screenshot set and Reel preview story spine for autonomous store-media iteration.
+- Repaired a provenance timestamp drift after the store-media screenshot commit.
 
 ## Validation
 
@@ -39,6 +43,11 @@ Player-facing and store-readiness changes:
 - `npm run health:live` - passed HTTP 200 / Vercel HIT.
 - `npm run qa:axiom:live` - passed 1/1 in Chromium.
 - `npm run regression:monitor` - passed against `d165625d575366ca0f91aabbee6324900ca2a314` with typecheck, Jest, and `health:live`.
+- After v6 advanced to `65ad6ce`, `npm run provenance:assets:check` exposed a timestamp drift; `npm run provenance:assets` regenerated the inventory with 39 assets.
+- `npm run provenance:assets:check` - passed after the repair.
+- `npm run ship:check` - passed again on the provenance repair with safety scan, typecheck, 165/165 Jest tests in 34 suites, and Expo web export.
+- `npm run regression:monitor` - passed post-push against `7bf5e38aaa0e1f3a341381afafbf34811f6139eb` with typecheck, Jest, and `health:live`.
+- `npm run qa:axiom:live` - passed 1/1 in Chromium after the `7bf5e38` push.
 
 ## Dev Lab Sync
 
