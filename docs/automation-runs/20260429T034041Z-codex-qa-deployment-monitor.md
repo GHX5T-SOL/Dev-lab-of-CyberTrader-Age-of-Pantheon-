@@ -21,7 +21,7 @@ Task focus: bounded v6 smoke/regression/deployment checks plus Dev Lab status sy
 | v6 `npm run qa:axiom:live` | PASS - 1/1 Chromium live deployment smoke |
 | v6 `npm run build:web -- --clear` | PASS - clean-cache Expo web export |
 | v6 `npm run regression:check` | PASS - forced monitor checked `1afc137`, typecheck + Jest + live health green |
-| v6 dirty-tree focused check | PASS - `npm run typecheck` plus `npx jest engine/__tests__/factions.test.ts engine/__tests__/mission-generator.test.ts --runInBand` on the late route-pressure diff |
+| v6 dirty-tree focused check | PASS - `npm run typecheck` plus `npx jest authority/__tests__/local-authority.test.ts engine/__tests__/factions.test.ts engine/__tests__/mission-generator.test.ts --runInBand` on the late route-pressure diff |
 
 ## Blockers
 
