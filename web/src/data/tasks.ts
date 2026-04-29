@@ -496,6 +496,23 @@ export const TASKS: Task[] = [
       "Completed first core-surface slice 2026-04-29 in v6 d751d68 with validation note in 1afc137. /home and /terminal now use packet-style section headers, route/rank rails, MarketTapeHeader rows, and denser terminal subsystem framing for route telemetry, Oracle runbook, live tape, order pipe, execution rack, cargo ledger, and signal feed while preserving first-session labels. Validation: typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, build:web -- --clear, qa:axiom 11/11, qa:responsive 4/4, and forced regression:check passed.",
     links: [{ label: "Cyberdeck surface polish", href: `${v6}/blob/main/docs/release/vex-p1-004-cyberdeck-surface-polish.md` }],
   }),
+  task({
+    id: "vex-p1-005",
+    owner: "vex",
+    title: "Polish the inventory bay empty state into a diegetic cargo bay readout",
+    status: "done",
+    priority: "P1",
+    estimate: "3h",
+    acceptanceCriteria: [
+      "Empty inventory shows in-world cargo bay framing instead of dead black space",
+      "Recommended starter route, projected cost, and liquid balance are visible",
+      "A clear CTA returns the agent to the trade loop in one tap",
+    ],
+    tags: ["ux", "cyberdeck", "polish", "empty-state"],
+    notes:
+      "Completed 2026-04-29 in v6 832cabd. /menu/inventory empty state now renders an ASCII cargo bay frame, an Oracle Starter Manifest panel with live VBLM x15 cost preview, liquid 0BOL contrast, an [ OPEN TERMINAL ] 48 px CTA, and an IN-TRANSIT MANIFEST block when courier shipments are out. Existing Axiom QA markers (COMMODITY INVENTORY, 0/5 SLOTS, NO COMMODITIES HELD) and the courier modal flow are preserved. Validation: safety:autonomous, typecheck, jest 181/181 in 37 suites, expo web export, qa:smoke, qa:responsive 4/4, capture:screenshots, provenance:assets, health:live 200, qa:axiom:live.",
+    links: [{ label: "Inventory bay polish", href: `${v6}/blob/main/docs/release/vex-p1-005-inventory-bay-polish.md` }],
+  }),
 
   task({
     id: "rune-p0-001",
