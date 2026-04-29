@@ -36,7 +36,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through d751d68 after persisted terminal limit orders, cyberdeck surface polish, terminal pressure flow, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 1afc137 after persisted terminal limit orders, cyberdeck surface polish, terminal pressure flow, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -106,7 +106,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through d751d68 with ship:check and qa:smoke green; prior 1631381 focused terminal-pressure/limit-order clean-cache export and prior 3ab5746 live health/live Axiom smoke remain valid",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 1afc137 with forced regression:check green; feature commit d751d68 keeps ship:check and qa:smoke green",
     },
     {
       label: "Build checks",

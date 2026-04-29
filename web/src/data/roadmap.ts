@@ -116,7 +116,7 @@ export const ROADMAP: Phase[] = [
       "AgentOS rank-5 faction gate, selection loop, LocalAuthority binding, one-free-switch rule, and faction-biased missions",
       "AgentOS contract-chain mission stakes and limit-order/faction-pressure engine contracts",
       "PirateOS polish, AgentOS rank-5 systems, and PantheonOS late-game territory roadmap",
-      "Local ship check, focused terminal-pressure/limit-order checks, player smoke, local Axiom QA, provenance check, SDK 54 package check, live Vercel smoke, post-push monitor, AgentOS regression, store-media provenance, perf budgets, AgentOS contract-chain checks, and intro smoke pass on verified v6 origin/main d751d68",
+      "Local ship check, focused terminal-pressure/limit-order checks, player smoke, local Axiom QA, provenance check, SDK 54 package check, live Vercel smoke, post-push monitor, AgentOS regression, store-media provenance, perf budgets, AgentOS contract-chain checks, and intro smoke pass on verified v6 origin/main 1afc137",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
       "First 10-minute player loop complete without developer guidance",

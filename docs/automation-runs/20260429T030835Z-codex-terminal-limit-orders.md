@@ -5,7 +5,7 @@ Run time: 2026-04-29T03:08:35Z
 
 ## Result
 
-Completed and pushed v6 commit `d751d6833227a3e6d8cc2d21be555dd10913b763` (`oracle-p1-011 vex-p1-004 oracle: wire terminal limit orders`).
+Completed and pushed v6 feature commit `d751d6833227a3e6d8cc2d21be555dd10913b763` (`oracle-p1-011 vex-p1-004 oracle: wire terminal limit orders`). Current verified v6 head is follow-up docs commit `1afc137f4dbbadc87ef403a8b450bbb0a4fd3451`.
 
 ## Shipped
 
@@ -22,6 +22,7 @@ Completed and pushed v6 commit `d751d6833227a3e6d8cc2d21be555dd10913b763` (`orac
 - `npm run ship:check` passed with safety scan, typecheck, 178/178 Jest tests in 36 suites, and Expo web export.
 - `npm run qa:smoke` passed.
 - Forced post-push `npm run regression:check` passed on `d751d68`, including typecheck, Jest, and `health:live` with live HTTP 200 / Vercel HIT.
+- Forced post-push `npm run regression:check` passed again on latest v6 head `1afc137`, including typecheck, Jest, and `health:live` with live HTTP 200 / Vercel HIT.
 
 ## Remaining
 
