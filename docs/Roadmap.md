@@ -133,8 +133,10 @@ Required:
 - Store-facing asset audit, Dev Lab provenance report, and the `zara-p1-005` generated 37-asset inventory/check workflow exist with resolution, ownership, icon/splash, capture-safety, and source-rights findings.
 - Screenshot-safe visual state captures exist for home, terminal, market, missions, inventory, and profile.
 - Zoro-approved screenshot shot list, preview story spine, and cyberdeck store-page mood exist for autonomous store-media iteration.
+- Zoro commodity/faction/OS art-direction contract exists for 11 commodity lanes, 4 AgentOS faction identities, PirateOS/AgentOS/PantheonOS hierarchy, and Palette/Vex/Reel follow-up asset requests.
 - Privacy, token naming, simulated trading, wallet, Data Safety, and age-rating risk matrix exists with required copy and escalation triggers.
 - Hydra market-swarm scenarios exist for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts; first-20 retention/churn scenarios now provide watch-level D1 risk fixtures across five personas and four beta cohorts.
+- Operator Brief applies the first Hydra retention handoff to `/home` and `/terminal` with first-profit progress, Heat ladder posture, and one next action for `action-fatigue` and `heat-anxiety`.
 - v6 GitHub issue batches exist for active P0/P1 readiness work, with owner and priority mapping in the issue bodies.
 - Web smoke passes on the live Vercel deployment.
 - iOS simulator smoke passes.
