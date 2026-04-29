@@ -8,7 +8,7 @@ Task focus: v6 bounded QA/deployment checks and Dev Lab verification repair
 - Dev Lab fast-forwarded from `origin/main` to `3e3ea90`.
 - v6 fetched `origin/main`; local `main` was already aligned with `origin/main` at `832cabd`.
 - v6 `git pull --ff-only` was blocked by existing unstaged work in `app/menu/profile.tsx`; no remote commits were pending after fetch, so QA continued without stashing or reverting the local edit.
-- During this run, v6 also showed a local edit in `qa/responsive-captures.spec.ts`. Both local v6 edits were verified by the checks below but were not committed or pushed by this monitor.
+- During this run, v6 also showed local edits in `qa/axiom-web-regression.spec.ts` and `qa/responsive-captures.spec.ts`. These local v6 edits plus the pre-existing profile edit were verified by the checks below but were not committed or pushed by this monitor.
 
 ## Fixes
 
