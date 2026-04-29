@@ -82,7 +82,7 @@ export const STATUS: StatusBlock = {
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
     "Oracle completed oracle-p1-009: GLCH now participates in the deterministic momentum-trader archetype and beta-tuned mirror while retention and swarm fixtures stay green",
-    "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; latest post-push monitor passed on 7bf5e38",
+    "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; latest monitor state checked v6 1afc137 and skipped because no new commits landed after the prior green run",
     "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, and 93096a5; live smoke and qa:smoke both pass",
     "Zara pushed v6 fdd7160 with Obsidian, a rank-7 Eclipse Guild NPC, after OpenClaw repair restored active work on the Mac mini",
     "Codex pushed v6 49c1e49 to repair the Expo SDK 54 lockfile, track GLCH source/optimized art, refresh 39-asset provenance, and verify ship:check plus post-push regression:monitor",
