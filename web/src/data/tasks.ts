@@ -82,7 +82,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["automation", "openclaw", "autonomy", "no-approval"],
     notes:
-      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. Dev Lab verify now passes; v6 forced regression passes on final head a6cb172, with same-run browser evidence covering the profile dossier and QA harness path before the latest fast-forward.",
+      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. v6 recent heads 3c45be8, 7d92e7f, 6f0b737, a6cb172, 74c1a37, and 89d1f9a added profile QA, retention handoff, capture verification, LocalAuthority launch-scope acceptance, profile validation docs, and profile route assertion stabilization; latest monitor pass validated regression, live health, live Axiom, and local Axiom.",
   }),
   task({
     id: "rune-p0-006",
@@ -342,12 +342,18 @@ export const TASKS: Task[] = [
     id: "ghost-p1-005",
     owner: "ghost",
     title: "Decide final SupabaseAuthority launch scope versus LocalAuthority demo scope",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "2h",
     dependencies: ["kite-p0-001"],
     acceptanceCriteria: ["Feature flag policy is accepted", "Offline-first behavior is clear", "No launch-blocking ambiguity remains"],
     tags: ["backend", "authority", "scope"],
+    notes:
+      "Completed 2026-04-29 in v6 a6cb172. LocalAuthority-only launch scope is accepted for release, and SupabaseAuthority remains feature-flagged/deferred until a reviewed live Supabase/RLS/privacy/native evidence pass. Validation: safety:autonomous, typecheck, focused authority Jest 10/10, and clean-cache web export passed on a6cb172.",
+    links: [
+      { label: "Authority launch scope", href: `${v6}/blob/main/docs/release/ghost-p1-005-authority-launch-scope.md` },
+      { label: "v6 commit a6cb172", href: `${v6}/commit/a6cb172` },
+    ],
   }),
 
   task({
@@ -1086,7 +1092,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
     notes:
-      "Monitor pass 2026-04-29T06:33Z: v6 head 832cabd is live-health green; Dev Lab fast-forwarded to 3e3ea90; v6 origin/main was already current; live Vercel returned HTTP 200 with cache HIT; health:live, qa:axiom:live 1/1, safety:autonomous, typecheck, and npm audit --omit=dev --audit-level=high all passed. Full native iOS/Android QA remains blocked on a host with full Xcode/simctl plus Android adb/emulator.",
+      "Monitor pass 2026-04-29T07:23Z: v6 head 89d1f9a is post-push-regression green after profile route assertion stabilization; live Vercel returned HTTP 200/cache HIT; regression:monitor passed typecheck, Jest, and live health; qa:axiom:live passed 1/1; qa:axiom passed 11/11 after rebuilt web export. Full native iOS/Android QA remains blocked on a host with full Xcode/simctl plus Android adb/emulator.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },

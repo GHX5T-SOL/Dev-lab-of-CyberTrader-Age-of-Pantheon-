@@ -23,7 +23,7 @@ export const STATUS: StatusBlock = {
   blockers: [
     "iOS simulator and Android emulator runtime validation are still pending",
     "Current Codex host has Xcode Command Line Tools only and lacks simctl, Android Emulator, and adb, so native budget evidence needs a provisioned QA host",
-    "SupabaseAuthority is feature-flagged and its migration/RPC baseline is committed, but live Supabase project application and RLS validation are not confirmed",
+    "LocalAuthority-only launch scope is accepted; SupabaseAuthority remains feature-flagged and deferred until live Supabase project application and RLS validation are confirmed",
     "Apple/Google credentials and first remote EAS build runs are not yet confirmed",
     "iOS uploads after 2026-04-28 must prove Xcode 26 / iOS 26 SDK build output",
     "Android store builds must prove targetSdkVersion 35 or higher; v6 package manifest, lockfile, and installed package graph now align with Expo SDK 54, but native EAS build evidence is still pending",
@@ -34,11 +34,13 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
+    "Codex QA/deployment monitor verified v6 89d1f9a: post-push regression:monitor passed with typecheck, Jest, and live health HTTP 200/cache HIT; qa:axiom:live passed 1/1; local qa:axiom passed 11/11 after clean web export",
+    "Ghost completed ghost-p1-005 in v6 a6cb172: LocalAuthority-only launch scope is accepted and SupabaseAuthority stays feature-flagged/deferred until reviewed live RLS, privacy, and native evidence exists",
     "Hydra completed hydra-p1-003 in v6 7d92e7f: retention/churn outputs now produce deterministic Nyx/Oracle/Vex tuning actions, ranking action-fatigue, heat-anxiety, low-reward, and slow-first-profit with 0 impossible states and a 70.7% minimum estimated D1 return",
-    "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 final head a6cb172 passes forced regression with typecheck, Jest, and live health",
+    "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, Jest, web export, smoke, Axiom, responsive, live health, live smoke, and forced regression",
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through a6cb172 after LocalAuthority launch-scope acceptance, profile dossier capture verification, retention tuning handoff, profile dossier polish, AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 89d1f9a after profile route assertion stabilization, LocalAuthority launch-scope acceptance, profile dossier capture verification, retention tuning handoff, profile dossier polish, AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -112,7 +114,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through a6cb172 with forced regression typecheck, Jest, and live health; hydra-p1-003 at 7d92e7f additionally passed retention:beta, retention:tuning, safety range scan, ship:check 188/188, and Expo web export; same-run browser evidence also covered profile dossier QA, local Axiom 11/11, and responsive QA 4/4",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 89d1f9a with post-push regression typecheck/Jest/live health, ship:check 188/188, responsive 4/4, Axiom 11/11, authority scope safety/type/focused Jest/clean-export evidence, and retention tuning checks",
     },
     {
       label: "Build checks",
@@ -127,7 +129,7 @@ export const STATUS: StatusBlock = {
     {
       label: "SupabaseAuthority",
       state: "amber",
-      detail: "Feature-flagged adapter selection, LocalAuthority launch identity/recovery, and deterministic schema/RPC migrations are committed; live project migration application and RLS validation are still pending",
+      detail: "LocalAuthority-only launch scope is accepted for release; feature-flagged SupabaseAuthority selection, schema/RPC migrations, and RLS requirements are committed, while live project migration application and RLS validation remain deferred for a future reviewed online-authority pass",
     },
     {
       label: "Dependency audit",
