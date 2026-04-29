@@ -172,6 +172,29 @@ export const TASKS: Task[] = [
     ],
   }),
   task({
+    id: "nyx-p1-006",
+    owner: "nyx",
+    title: "Turn AgentOS route consequences into live mission pressure",
+    status: "done",
+    priority: "P1",
+    estimate: "1d",
+    dependencies: ["nyx-p1-005", "oracle-p1-011"],
+    acceptanceCriteria: [
+      "Faction contract stages carry deterministic route pressure",
+      "Generated faction missions serialize reward, timer, and Heat pressure",
+      "Mission banners/contact rows show route pressure compactly",
+      "Mission success and failure apply route Heat pressure through authority code",
+    ],
+    tags: ["agentos", "missions", "factions", "economy"],
+    notes:
+      "Completed 2026-04-29 in v6 38359ef with validation note 37e6151. Every AgentOS faction contract stage now carries route reward/timer/Heat pressure, generated faction missions serialize and display that pressure inside the existing contract strip, and local mission resolution applies route Heat deltas before normal Heat/bounty feedback. Validation: focused faction/mission/local-authority tests, typecheck, ship:check with 181/181 Jest tests in 37 suites plus Expo web export, build:web -- --clear, qa:axiom 11/11, and qa:responsive 4/4 passed.",
+    links: [
+      { label: "AgentOS route pressure note", href: `${v6}/blob/main/docs/release/nyx-p1-006-agentos-route-pressure.md` },
+      { label: "Route pressure implementation", href: `${v6}/commit/38359ef` },
+      { label: "Validation note", href: `${v6}/commit/37e6151` },
+    ],
+  }),
+  task({
     id: "oracle-p1-009",
     owner: "oracle",
     title: "Admit GLCH into deterministic momentum archetype path",
@@ -229,6 +252,25 @@ export const TASKS: Task[] = [
       { label: "Terminal pressure flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-pressure-flow.md` },
       { label: "Terminal limit-order flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-limit-orders.md` },
     ],
+  }),
+  task({
+    id: "oracle-p1-012",
+    owner: "oracle",
+    title: "Apply route reward, timer, and Heat pressure to faction missions",
+    status: "done",
+    priority: "P1",
+    estimate: "1d",
+    dependencies: ["nyx-p1-006", "oracle-p1-011"],
+    acceptanceCriteria: [
+      "Mission reward and timer modifiers are deterministic and serializable",
+      "Mission Heat pressure applies on success and failure",
+      "LocalAuthority remains launch-safe and SupabaseAuthority exposes the matching hook",
+      "Regression checks cover mission pressure without impossible state changes",
+    ],
+    tags: ["economy", "agentos", "missions", "authority"],
+    notes:
+      "Completed 2026-04-29 in v6 38359ef/37e6151. Route pressure now adjusts faction mission payouts and timers, carries success/failure Heat deltas, exposes Authority.applyMissionPressure in LocalAuthority and SupabaseAuthority, and keeps all copy in fictional local-mode terms. Validation: focused faction/mission/local-authority tests, typecheck, ship:check with 181/181 Jest tests, clean-cache web export, qa:axiom 11/11, and qa:responsive 4/4 passed.",
+    links: [{ label: "AgentOS route pressure note", href: `${v6}/blob/main/docs/release/nyx-p1-006-agentos-route-pressure.md` }],
   }),
   task({
     id: "pantheon-p2-001",
