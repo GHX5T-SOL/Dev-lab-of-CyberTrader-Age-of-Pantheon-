@@ -34,10 +34,10 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
-    "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, 181/181 Jest tests, web export, smoke, full Axiom 11/11 including /menu/profile, responsive 4/4, live health, live smoke, and forced regression on 832cabd",
+    "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, 181/181 Jest tests, web export, smoke, full Axiom 11/11 including /menu/profile, responsive 4/4, live health, live smoke, and forced regression on 3c45be8",
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 832cabd after AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 3c45be8 after profile dossier polish, AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -110,7 +110,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 832cabd with focused route-pressure tests, typecheck, ship:check 181/181, clean-cache export, local Axiom QA 11/11, and responsive QA 4/4, plus prior tutorial copy, terminal pressure, limit-order, perf budget, smoke, live smoke, and forced regression evidence",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 3c45be8 with profile dossier QA, typecheck, Jest 181/181, clean-cache export, local Axiom QA 11/11, responsive QA 4/4, live smoke, and forced regression evidence",
     },
     {
       label: "Build checks",
