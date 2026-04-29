@@ -521,6 +521,25 @@ export const TASKS: Task[] = [
       "Completed 2026-04-29 in v6 832cabd. /menu/inventory empty state now renders an ASCII cargo bay frame, an Oracle Starter Manifest panel with live VBLM x15 cost preview, liquid 0BOL contrast, an [ OPEN TERMINAL ] 48 px CTA, and an IN-TRANSIT MANIFEST block when courier shipments are out. Existing Axiom QA markers (COMMODITY INVENTORY, 0/5 SLOTS, NO COMMODITIES HELD) and the courier modal flow are preserved. Validation: safety:autonomous, typecheck, jest 181/181 in 37 suites, expo web export, qa:smoke, qa:responsive 4/4, capture:screenshots, provenance:assets, health:live 200, qa:axiom:live.",
     links: [{ label: "Inventory bay polish", href: `${v6}/blob/main/docs/release/vex-p1-005-inventory-bay-polish.md` }],
   }),
+  task({
+    id: "vex-p1-006",
+    owner: "vex",
+    title: "Polish the profile dossier for store-capture readiness",
+    status: "done",
+    priority: "P1",
+    estimate: "3h",
+    dependencies: ["vex-p1-004", "palette-p1-003", "nyx-p1-004"],
+    acceptanceCriteria: [
+      "Profile reads as an in-world Eidolon dossier rather than a debug summary",
+      "Rank, XP, telemetry, AgentOS standing, and LocalAuthority safety are visible",
+      "Long profile/session strings cannot create small-phone horizontal overflow",
+      "Axiom and responsive QA cover the profile route directly",
+    ],
+    tags: ["ux", "cyberdeck", "profile", "store-capture"],
+    notes:
+      "Completed 2026-04-29 through v6 3c45be8, 6f0b737, 74c1a37, 89d1f9a, and 5902d1d. /menu/profile now renders rank/XP, handle locator, current district, liquid 0BOL, total PnL, Heat, Energy, inventory berths, AgentOS faction standing, and LocalAuthority session anchor copy in a compact Eidolon dossier. Axiom menu QA asserts AGENT TELEMETRY/AGENTOS DOSSIER/SESSION ANCHOR, responsive QA captures profile on all four viewports, screenshots/provenance are refreshed, live shell readiness is widened for cold Vercel runs, and forced regression passes on the pushed validation head.",
+    links: [{ label: "Profile dossier polish", href: `${v6}/blob/main/docs/release/vex-p1-006-profile-dossier-polish.md` }],
+  }),
 
   task({
     id: "rune-p0-001",
