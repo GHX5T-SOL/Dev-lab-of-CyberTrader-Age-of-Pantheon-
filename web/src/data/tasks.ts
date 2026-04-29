@@ -218,15 +218,16 @@ export const TASKS: Task[] = [
     acceptanceCriteria: [
       "Bound AgentOS factions expose live pressure windows in the terminal",
       "Pressure windows alter market prices deterministically without impossible states",
-      "Persisted limit-order commands stay LocalAuthority-only, compact, and store-safe",
-      "Focused tests, typecheck, ship check, smoke, and web export pass",
+      "Players can arm and cancel persisted local limit orders without affecting market commands",
+      "Limit-trigger and pressure copy is compact, store-safe, and stays inside LocalAuthority gameplay",
+      "Focused tests, typecheck, ship check, local Axiom QA, responsive QA, and clean-cache export pass",
     ],
     tags: ["economy", "terminal", "agentos", "limit-orders"],
     notes:
-      "Completed 2026-04-29 across v6 1631381 and d751d68. Bound AgentOS factions derive deterministic 8-tick pressure windows from aligned contact reputation; /terminal applies pressure after location/district/flash modifiers, previews limit triggers, and now persists/cancels/resolves LocalAuthority limit orders on manual/background market ticks. Validation: terminal-pressure tests, limit-orders:check, typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and forced regression:check passed.",
+      "Completed 2026-04-29 across v6 1631381, d751d68, and docs head 1afc137. Bound AgentOS factions derive deterministic 8-tick pressure windows from aligned contact reputation; /terminal applies pressure after location/district/flash modifiers, renders compact pressure-window plus limit-trigger preview rows, and now has a subordinate AgentOS limit-order module for persisted LocalAuthority arm/cancel/recent-fill feedback. Validation: terminal-pressure tests, limit-orders:check, typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, build:web -- --clear, qa:axiom 11/11, qa:responsive 4/4, and forced regression:check passed.",
     links: [
       { label: "Terminal pressure flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-pressure-flow.md` },
-      { label: "Terminal limit orders", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-limit-orders.md` },
+      { label: "Terminal limit-order flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-limit-orders.md` },
     ],
   }),
   task({
@@ -446,7 +447,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Panels feel in-world", "Metrics stay scannable", "Visual density supports play rather than clutter"],
     tags: ["aesthetic", "cyberdeck", "polish"],
     notes:
-      "Completed first core-surface slice 2026-04-29 in v6 d751d68. /home and /terminal now use packet-style DeckSectionHeader dividers, MarketTapeHeader rows, and denser terminal subsystem framing for route telemetry, Oracle runbook, live tape, order pipe, execution rack, cargo ledger, and signal feed. Validation: typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and forced regression:check passed.",
+      "Completed first core-surface slice 2026-04-29 in v6 d751d68 with validation note in 1afc137. /home and /terminal now use packet-style section headers, route/rank rails, MarketTapeHeader rows, and denser terminal subsystem framing for route telemetry, Oracle runbook, live tape, order pipe, execution rack, cargo ledger, and signal feed while preserving first-session labels. Validation: typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, build:web -- --clear, qa:axiom 11/11, qa:responsive 4/4, and forced regression:check passed.",
     links: [{ label: "Cyberdeck surface polish", href: `${v6}/blob/main/docs/release/vex-p1-004-cyberdeck-surface-polish.md` }],
   }),
 
