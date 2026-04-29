@@ -82,7 +82,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["automation", "openclaw", "autonomy", "no-approval"],
     notes:
-      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. v6 recent heads 3c45be8, 7d92e7f, 6f0b737, a6cb172, 74c1a37, 89d1f9a, and 5902d1d added profile QA, retention handoff, capture verification, LocalAuthority launch-scope acceptance, profile validation docs, profile route assertion stabilization, and live shell readiness hardening; latest verification pass ran ship:check and live Axiom.",
+      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. v6 recent heads 3c45be8, 7d92e7f, 6f0b737, a6cb172, 74c1a37, 89d1f9a, 5902d1d, e3becc7, and c6f6f07 added profile QA, retention handoff, capture verification, LocalAuthority launch-scope acceptance, profile validation docs, profile route assertion stabilization, live shell readiness hardening, Operator Brief retention UX, and presentation art direction; latest verification pass ran ship:check on c6f6f07.",
   }),
   task({
     id: "rune-p0-006",
@@ -195,6 +195,28 @@ export const TASKS: Task[] = [
       { label: "Route pressure commit", href: `${v6}/commit/38359ef` },
       { label: "Axiom reset hardening", href: `${v6}/commit/4f8e9f0` },
       { label: "Validation note", href: `${v6}/commit/37e6151` },
+    ],
+  }),
+  task({
+    id: "nyx-p1-007",
+    owner: "nyx",
+    title: "Ship Operator Brief retention guidance on home and terminal",
+    status: "done",
+    priority: "P1",
+    estimate: "1d",
+    dependencies: ["hydra-p1-003", "nyx-p1-002", "vex-p1-006"],
+    acceptanceCriteria: [
+      "Home and terminal expose first-profit progress without adding a generic dashboard",
+      "Heat ladder posture and next-best action reduce action fatigue and Heat anxiety",
+      "The brief routes players into the correct existing command or cooldown flow",
+      "Focused tests, Axiom QA, responsive QA, provenance, ship check, and regression checks pass",
+    ],
+    tags: ["retention", "ux", "first-session", "cyberdeck"],
+    notes:
+      "Completed 2026-04-29 in v6 e3becc7. /home and /terminal now show an in-world Operator Brief with first-profit progress, Heat ladder posture, and one next action for terminal entry, starter buy, market tick, sell setup, heat cooling, or upgrade lanes. Validation: focused operator-brief Jest 6/6, ship:check 194/194 in 39 suites plus Expo web export, qa:axiom 11/11, qa:responsive 4/4 after one transient static-server retry, provenance:assets:check, and forced regression:check on e3becc7 passed.",
+    links: [
+      { label: "Operator Brief release note", href: `${v6}/blob/main/docs/release/nyx-p1-007-operator-brief-retention.md` },
+      { label: "Operator Brief commit", href: `${v6}/commit/e3becc7` },
     ],
   }),
   task({
