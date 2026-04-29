@@ -7,7 +7,7 @@ Task focus: bounded v6 smoke/regression/deployment checks plus Dev Lab status sy
 
 - v6 primary checkout pulled cleanly and was already current at `1afc137` (`docs: record terminal ship validation`).
 - Dev Lab primary checkout required an explicit `git pull --ff-only origin main` because plain `git pull --ff-only` reported `Cannot rebase onto multiple branches`; the explicit pull was already up to date.
-- A sibling Dev Lab checkout at `/Users/mx/Dev-lab-of-CyberTrader-Age-of-Pantheon-` is detached and conflicted, so this monitor did not mutate it.
+- At initial inspection, a sibling Dev Lab checkout at `/Users/mx/Dev-lab-of-CyberTrader-Age-of-Pantheon-` was detached and conflicted, so this monitor did not mutate it.
 - No v6 source changes were needed for the monitor baseline. A late uncommitted v6 route-pressure feature diff appeared after the green baseline checks; this monitor inspected it read-only, verified it with focused checks, and left it unpushed because it was concurrent work.
 
 ## Live/QA Checks
