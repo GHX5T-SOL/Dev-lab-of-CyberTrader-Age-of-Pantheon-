@@ -97,7 +97,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
     notes:
-      "Partial 2026-04-29 in v6 68a8f74, final verified head c73d733: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 157/157 Jest tests in 33 suites plus web export, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
+      "Partial 2026-04-29 in v6 68a8f74, latest verified head d165625: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export after later AgentOS work, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
     links: [{ label: "SDK 54 package alignment", href: `${v6}/blob/main/docs/release/rune-p0-006-sdk54-package-alignment.md` }],
   }),
   task({
@@ -128,7 +128,7 @@ export const TASKS: Task[] = [
     id: "nyx-p1-004",
     owner: "nyx",
     title: "Design and implement AgentOS rank-5 faction unlock loop",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "2d",
     dependencies: ["nyx-p1-003"],
@@ -139,6 +139,14 @@ export const TASKS: Task[] = [
       "Tests cover unlock, faction choice, and persistence",
     ],
     tags: ["agentos", "factions", "progression", "gameplay"],
+    notes:
+      "Completed 2026-04-29 in v6 6b16a8b with follow-up d165625. AgentOS rank-5 faction selection now has deterministic faction definitions, a one-free-switch rule, persisted FactionChoice state, LocalAuthority chooseFaction support, mission bias hooks, AgentOS progression UI, /missions route invariant coverage, and Axiom session-reset hardening. ship:check passed with 165/165 Jest tests in 34 suites; build:web -- --clear, qa:axiom 11/11, provenance:assets:check, health:live, qa:axiom:live, and regression:monitor passed.",
+    links: [
+      { label: "AgentOS faction commit", href: `${v6}/commit/6b16a8b` },
+      { label: "QA/provenance follow-up", href: `${v6}/commit/d165625` },
+      { label: "Faction selection release note", href: `${v6}/blob/main/docs/release/nyx-p1-004-agentos-faction-selection.md` },
+      { label: "Faction design note", href: `${v6}/blob/main/docs/release/nyx-p1-003-agentos-faction-design.md` },
+    ],
   }),
   task({
     id: "oracle-p1-009",
@@ -155,7 +163,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["economy", "glch", "archetypes", "retention"],
     notes:
-      "Completed 2026-04-29 in v6 68a8f74, final verified head c73d733. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
+      "Completed 2026-04-29 in v6 68a8f74, latest verified head d165625. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
     links: [{ label: "GLCH archetype admission", href: `${v6}/blob/main/docs/release/oracle-p1-009-glch-archetype-admission.md` }],
   }),
   task({
@@ -324,12 +332,15 @@ export const TASKS: Task[] = [
     id: "nyx-p1-003",
     owner: "nyx",
     title: "Design Phase 2 faction choice and AgentOS unlock requirements",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["lore-p1-001"],
     acceptanceCriteria: ["Faction choice has gameplay stakes", "One-free-switch rule is defined", "AgentOS gate is testable"],
     tags: ["phase-2", "factions", "progression"],
+    notes:
+      "Completed 2026-04-29 in v6 6b16a8b. The faction-choice contract defines rank-5 AgentOS access, faction gameplay stakes, one free switch, deterministic choice gates, persisted faction state, and the implementation handoff for nyx-p1-004.",
+    links: [{ label: "AgentOS faction design note", href: `${v6}/blob/main/docs/release/nyx-p1-003-agentos-faction-design.md` }],
   }),
 
   task({
@@ -793,7 +804,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["New main commits trigger checks", "Monitor state avoids duplicate runs", "LaunchAgent wiring is documented"],
     tags: ["automation", "regression", "launchd"],
     notes:
-      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor pass verified c73d733.",
+      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor pass verified d165625.",
     links: [{ label: "Post-push regression note", href: `${v6}/blob/main/docs/release/talon-p1-004-post-push-regression.md` }],
   }),
 
