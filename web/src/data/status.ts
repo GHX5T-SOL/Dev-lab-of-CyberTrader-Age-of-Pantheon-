@@ -34,6 +34,7 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
+    "Hydra completed hydra-p1-003 in v6 7d92e7f: retention/churn outputs now produce deterministic Nyx/Oracle/Vex tuning actions, ranking action-fatigue, heat-anxiety, low-reward, and slow-first-profit with 0 impossible states and a 70.7% minimum estimated D1 return",
     "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 final head a6cb172 passes forced regression with typecheck, Jest, and live health",
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
@@ -85,6 +86,7 @@ export const STATUS: StatusBlock = {
     "Cipher completed the privacy/token/simulated-trading/age-rating risk matrix with required policy copy and legal escalation triggers",
     "Hydra completed deterministic market-swarm scenarios for balanced beta, novice onramp, contraband risk-spike, and speedrun race cohorts",
     "Hydra completed first-20-player retention/churn scenarios with five personas, four beta cohorts, churn triggers, and Game Designer handoff notes",
+    "Hydra completed retention trigger tuning handoff with npm run retention:tuning so Nyx, Oracle, and Vex get deterministic owner actions before the next balance or UX tuning patch",
     "Oracle completed oracle-p1-009: GLCH now participates in the deterministic momentum-trader archetype and beta-tuned mirror while retention and swarm fixtures stay green",
     "Talon follow-up repaired npm run regression:monitor for linked worktrees by persisting state through git rev-parse --git-path regression-state.json; latest post-push monitor checked v6 4f8e9f0 and passed typecheck, Jest, and live health",
     "Zyra/Codex hardened the live and local Axiom smokes in v6 commits 5481191, d5a0a83, 98f1623, daa33e9, ff7b7c3, 93096a5, and 4f8e9f0; live smoke and qa:smoke both pass",
@@ -110,12 +112,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through a6cb172 with forced regression typecheck, Jest, and live health; same-run browser evidence also covered profile dossier QA, local Axiom 11/11, and responsive QA 4/4 before the latest fast-forward",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through a6cb172 with forced regression typecheck, Jest, and live health; hydra-p1-003 at 7d92e7f additionally passed retention:beta, retention:tuning, safety range scan, ship:check 188/188, and Expo web export; same-run browser evidence also covered profile dossier QA, local Axiom 11/11, and responsive QA 4/4",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck/inventory-bay validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11 including /menu/profile, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, Expo web export, and Dev Lab verify:phase1 pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios and retention:tuning handoff, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck/inventory-bay validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11 including /menu/profile, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, Expo web export, and Dev Lab verify:phase1 pass locally",
     },
     {
       label: "Native QA",

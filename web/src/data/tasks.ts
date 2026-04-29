@@ -967,6 +967,25 @@ export const TASKS: Task[] = [
       "Completed 2026-04-28. v6 commit 2957a6a adds npm run retention:beta, five first-20-player retention personas, four deterministic beta cohorts, churn trigger scoring, and Game Designer handoff recommendations. Validation: retention:beta passed; ship:check passed with 133/133 Jest tests in 29 suites and Expo web export.",
     links: [{ label: "Retention/churn scenarios", href: `${v6}/blob/main/docs/release/hydra-p1-002-retention-churn-scenarios.md` }],
   }),
+  task({
+    id: "hydra-p1-003",
+    owner: "hydra",
+    title: "Convert retention churn triggers into Nyx, Oracle, and Vex tuning actions",
+    status: "done",
+    priority: "P1",
+    estimate: "4h",
+    dependencies: ["hydra-p1-002"],
+    acceptanceCriteria: [
+      "Retention triggers are ranked deterministically",
+      "Each active trigger has a primary owner and success metric",
+      "Nyx, Oracle, and Vex can use the handoff for the next tuning patch",
+      "Focused retention tuning, safety, ship checks, and web export pass",
+    ],
+    tags: ["retention", "tuning", "simulation", "game-design"],
+    notes:
+      "Completed 2026-04-29 in v6 7d92e7f. engine/retention-tuning.ts and npm run retention:tuning rank first-20 churn triggers into owner actions: action-fatigue 45 weighted player slots for Nyx with Oracle/Vex support, heat-anxiety 30 for Vex with Oracle support, low-reward 18 for Oracle with Nyx support, and slow-first-profit 3 for Nyx/Vex. Validation: retention:beta, retention:tuning, explicit safety scan over origin/main..HEAD, and ship:check with 188/188 Jest tests in 38 suites plus Expo web export.",
+    links: [{ label: "Retention tuning handoff", href: `${v6}/blob/main/docs/release/hydra-p1-003-retention-tuning-handoff.md` }],
+  }),
 
   task({
     id: "zara-p0-001",
