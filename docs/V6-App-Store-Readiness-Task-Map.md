@@ -1,6 +1,6 @@
 # CyberTrader v6 App Store Readiness Task Map
 
-Updated: 2026-04-29 (full autonomy directive active; v6 37e6151 AgentOS route-pressure mission consequences)
+Updated: 2026-04-29 (full autonomy directive active; v6 832cabd inventory bay polish verified live)
 
 ## Mission
 
@@ -259,6 +259,6 @@ These are the next high-impact tracks for daily visible improvements:
 - Expo toolchain transitive dependency advisories remain open at moderate severity: `npm audit --omit=dev --audit-level=high` returns exit 0 after the SDK 54 package alignment, while `npm audit` still reports 14 moderate Expo-toolchain advisories and the automatic forced fix proposes a breaking Expo downgrade.
 - Autonomous direct-to-main release authority, local safety preflight, rollback/incident protocol (talon-p1-003), and automated post-push regression detection (talon-p1-004) are all complete; next automation gate is Mac mini launchd installation of the regression monitor (`scripts/launchd/com.cybertrader.v6.regression-monitor.plist.template`) and optional webhook-based sub-minute detection (talon-p1-005). (complete)
 - OpenClaw Mac mini now runs `OpenClaw 2026.4.26` with Zara/Zyra on external `launchd` jobs plus `ai.cybertrader.openclaw-watchdog`; gateway `/ready` is healthy, and Zara shipped v6 commit `fdd7160` after repair.
-- v6 commit `37e6151` is the latest verified pushed head after AgentOS route-pressure mission consequences, Axiom smoke reset hardening, tutorial copy review, persisted terminal limit-order command wiring, cyberdeck surface polish, terminal pressure-window wiring, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, Zoro store-media direction approval, Axiom QA hardening, and provenance refresh; validation through `37e6151` includes focused route-pressure tests, `typecheck`, `ship:check`, clean-cache web export, local Axiom QA 11/11, and responsive QA 4/4, with prior `1afc137`, `3ab5746`, and `7bf5e38` evidence still valid.
+- v6 commit `832cabd` is the latest verified pushed head after inventory bay empty-state polish, AgentOS route-pressure mission consequences, Axiom smoke reset hardening, tutorial copy review, persisted terminal limit-order command wiring, cyberdeck surface polish, terminal pressure-window wiring, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, Zoro store-media direction approval, Axiom QA hardening, and provenance refresh; validation through `832cabd` includes safety preflight, `typecheck`, Jest 181/181 in 37 suites, web export, player smoke 1/1, responsive QA 4/4, screenshot capture, asset provenance generation, `health:live` HTTP 200, and `qa:axiom:live` 1/1, with prior `37e6151`, `1afc137`, `3ab5746`, and `7bf5e38` evidence still valid.
 - A bounded post-fix OpenClaw doctor still timed out after 60 seconds.
 - OpenClaw reports 38 skill requirement gaps after `doctor --fix`; Cipher/Talon should decide which ClawdHub/OpenClaw skills are required for v6 execution.
