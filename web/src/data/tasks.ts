@@ -97,7 +97,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["expo", "sdk-54", "native", "stores"],
     notes:
-      "Partial 2026-04-29 in v6 68a8f74, latest verified head d165625: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export after later AgentOS work, qa:smoke passes, and post-push regression:monitor passes. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
+      "Partial 2026-04-29 in v6 68a8f74, current board verification through 7c9b47c: Expo SDK 54 package graph is aligned, npx expo install --check passes, ship:check passes with 165/165 Jest tests in 34 suites plus web export, qa:smoke passes, and post-push regression:monitor is pointed at the current head. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.",
     links: [{ label: "SDK 54 package alignment", href: `${v6}/blob/main/docs/release/rune-p0-006-sdk54-package-alignment.md` }],
   }),
   task({
@@ -164,7 +164,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["economy", "glch", "archetypes", "retention"],
     notes:
-      "Completed 2026-04-29 in v6 68a8f74, latest verified head d165625. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
+      "Completed 2026-04-29 in v6 68a8f74, current board verification through 7c9b47c. Oracle added GLCH to the momentum-trader medium-risk path and beta-tuned mirror, updated retention/swarm handoff copy, and verified archetypes:report, tuning:beta, retention:beta, swarm:market, ship:check, qa:smoke, clean-cache web export, post-push regression:monitor, and high-severity production audit.",
     links: [{ label: "GLCH archetype admission", href: `${v6}/blob/main/docs/release/oracle-p1-009-glch-archetype-admission.md` }],
   }),
   task({
@@ -273,13 +273,18 @@ export const TASKS: Task[] = [
     id: "zoro-p0-002",
     owner: "zoro",
     title: "Approve App Store screenshots, preview story, and store-page mood",
-    status: "todo",
+    status: "done",
     priority: "P0",
     estimate: "1d",
     dependencies: ["reel-p0-001", "palette-p0-001"],
     acceptanceCriteria: ["Screenshot shot list is locked", "Preview video tone is locked", "No store asset feels generic"],
     tags: ["store-assets", "creative", "marketing"],
-    notes: "Reel preview storyboard and capture plan are complete, Palette's current-asset audit is complete, and the Dev Lab provenance report is ready. Agents should keep iterating screenshots/preview media; only account/legal items belong in HUMAN_ACTIONS.md.",
+    notes:
+      "Completed 2026-04-29. v6 docs/release/zoro-p0-002-store-media-approval.md approves the current six-shot portrait screenshot direction, Reel's 30-second preview story spine, and the cyberdeck store-page mood. Final preview video, native-device capture evidence, public privacy policy URL, age-rating declarations, and account-owner store submission remain Gate C follow-ups tracked outside this creative approval.",
+    links: [
+      { label: "Store media approval", href: `${v6}/blob/main/docs/release/zoro-p0-002-store-media-approval.md` },
+      { label: "Generated captures", href: `${v6}/tree/main/assets/screenshots` },
+    ],
   }),
   task({
     id: "zoro-p1-003",
@@ -340,8 +345,8 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Faction choice has gameplay stakes", "One-free-switch rule is defined", "AgentOS gate is testable"],
     tags: ["phase-2", "factions", "progression"],
     notes:
-      "Completed 2026-04-29 in v6 6b16a8b. The faction-choice contract defines rank-5 AgentOS access, faction gameplay stakes, one free switch, deterministic choice gates, persisted faction state, and the implementation handoff for nyx-p1-004.",
-    links: [{ label: "AgentOS faction design note", href: `${v6}/blob/main/docs/release/nyx-p1-003-agentos-faction-design.md` }],
+      "Completed 2026-04-29 alongside nyx-p1-004. v6 docs/release/nyx-p1-003-agentos-faction-design.md defines the AgentOS rank-5 gate, four launch factions, gameplay stakes, one-free-switch rule, serializable faction contracts, and SuperDesign context.",
+    links: [{ label: "AgentOS faction design", href: `${v6}/blob/main/docs/release/nyx-p1-003-agentos-faction-design.md` }],
   }),
 
   task({
@@ -805,7 +810,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["New main commits trigger checks", "Monitor state avoids duplicate runs", "LaunchAgent wiring is documented"],
     tags: ["automation", "regression", "launchd"],
     notes:
-      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor pass verified d165625.",
+      "Completed 2026-04-26; Codex follow-up 2026-04-29. v6 npm run regression:check and npm run regression:monitor run typecheck, Jest, and health:live, persist state through git rev-parse --git-path regression-state.json so linked worktrees work, and include a Mac mini LaunchAgent template. Latest monitor state points at 7c9b47c.",
     links: [{ label: "Post-push regression note", href: `${v6}/blob/main/docs/release/talon-p1-004-post-push-regression.md` }],
   }),
 
