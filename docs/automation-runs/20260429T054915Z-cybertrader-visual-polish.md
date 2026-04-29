@@ -47,7 +47,7 @@ Refreshed all six store screenshot presets at 1242×2688 portrait (`assets/scree
 ## SHAs
 
 - v6: `adeb0b0..832cabd` (this loop pushed `832cabd` directly to v6 origin/main).
-- Dev-lab: pending — sync commit will follow this run note.
+- Dev-lab: `42bdf52..ac2d187` (sync commit `6c6ebd9` rebased onto upstream `42bdf52`).
 
 ## Diff Summary
 
