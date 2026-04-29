@@ -5,16 +5,16 @@ Task focus: `ghost-p1-005` authority launch scope decision and Dev Lab planning 
 
 ## Repo Sync
 
-- v6 was aligned with `origin/main` before the Ghost push, then was fast-forwarded again to latest remote head `89d1f9a` after a concurrent profile-route QA follow-up landed.
+- v6 was aligned with `origin/main` before the Ghost push, then was fast-forwarded again through remote head `89d1f9a` after a concurrent profile-route QA follow-up landed; the later QA monitor verified `5902d1d`.
 - Dev Lab was fast-forwarded through `98e185d` and `a64c550`; autostash conflict resolution kept the newer monitor facts before applying this run's `ghost-p1-005` status.
 - No secrets, on-chain operations, real-money operations, EAS submit/build operations, force-pushes, or destructive git resets were performed.
 
 ## Fixes Shipped
 
-- Pushed v6 commit `a6cb172` (`ghost-p1-005 ghost: accept LocalAuthority launch scope`); latest remote later advanced to `89d1f9a` through concurrent Hydra/profile QA work and was fast-forwarded locally before the Dev Lab sync.
+- Pushed v6 commit `a6cb172` (`ghost-p1-005 ghost: accept LocalAuthority launch scope`); latest remote later advanced through `89d1f9a` and then `5902d1d` through concurrent Hydra/profile QA work and was fast-forwarded locally before the Dev Lab sync.
 - Added `docs/release/ghost-p1-005-authority-launch-scope.md`.
 - Updated Ghost/Kite authority release notes so LocalAuthority-only launch scope is accepted and SupabaseAuthority remains feature-flagged/deferred until a reviewed live Supabase/RLS/privacy/native evidence pass.
-- Synced Dev Lab task, roadmap, status, and run-ledger truth to show `ghost-p1-005` complete and current v6 latest verified pushed head `89d1f9a`.
+- Synced Dev Lab task, roadmap, status, and run-ledger truth to show `ghost-p1-005` complete and current v6 latest verified pushed head `5902d1d`.
 
 ## v6 Checks
 
@@ -25,7 +25,7 @@ Task focus: `ghost-p1-005` authority launch scope decision and Dev Lab planning 
 | `npm test -- authority/__tests__/authority-config.test.ts authority/__tests__/launch-identity.test.ts --runInBand` | PASS - 10/10 focused authority tests |
 | `npm run build:web -- --clear` | PASS - clean-cache Expo web export |
 | earlier rebased candidate `npm run ship:check` | PASS - 188/188 Jest tests in 38 suites plus Expo web export |
-| concurrent 89d1f9a evidence integrated from QA monitor | PASS - regression/live/local Axiom evidence recorded in the QA run note |
+| concurrent 5902d1d evidence integrated from QA monitor | PASS - regression/live/local Axiom evidence recorded in the QA run note |
 
 ## Dev Lab Checks
 

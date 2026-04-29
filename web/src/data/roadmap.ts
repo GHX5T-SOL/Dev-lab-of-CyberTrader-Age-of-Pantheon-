@@ -121,7 +121,7 @@ export const ROADMAP: Phase[] = [
       "Cyberdeck surface polish for home and terminal packet headers, route/rank rails, and market-tape columns",
       "Inventory bay diegetic polish: empty-state cargo bay frame, Oracle Starter Manifest with live cost preview, in-transit manifest, and 48 px [ OPEN TERMINAL ] CTA",
       "LocalAuthority-only launch scope accepted; SupabaseAuthority remains feature-flagged/deferred until reviewed live RLS, privacy, and native evidence exists",
-      "Local ship check, retention beta/tuning checks, explicit autonomous safety range scan, focused terminal-pressure/limit-order/route-pressure/inventory-bay/authority checks, player smoke, clean-cache export, local Axiom QA, responsive QA, provenance check, SDK 54 package check, live Vercel smoke, post-push monitor, AgentOS regression, store-media provenance, perf budgets, AgentOS contract-chain checks, profile route assertion stabilization, and intro smoke pass on verified v6 origin/main 89d1f9a",
+      "Local ship check, retention beta/tuning checks, explicit autonomous safety range scan, focused terminal-pressure/limit-order/route-pressure/inventory-bay/authority checks, player smoke, clean-cache export, local Axiom QA, responsive QA, provenance check, SDK 54 package check, live Vercel smoke, post-push monitor, AgentOS regression, store-media provenance, perf budgets, AgentOS contract-chain checks, live shell readiness hardening, profile route assertion stabilization, and intro smoke pass on verified v6 origin/main 5902d1d",
       "iOS simulator smoke passes",
       "Android emulator smoke passes",
       "First 10-minute player loop complete without developer guidance",

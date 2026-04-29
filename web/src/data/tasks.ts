@@ -82,7 +82,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["automation", "openclaw", "autonomy", "no-approval"],
     notes:
-      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. v6 recent heads 3c45be8, 7d92e7f, 6f0b737, a6cb172, 74c1a37, and 89d1f9a added profile QA, retention handoff, capture verification, LocalAuthority launch-scope acceptance, profile validation docs, and profile route assertion stabilization; latest monitor pass validated regression, live health, live Axiom, and local Axiom.",
+      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. v6 recent heads 3c45be8, 7d92e7f, 6f0b737, a6cb172, 74c1a37, 89d1f9a, and 5902d1d added profile QA, retention handoff, capture verification, LocalAuthority launch-scope acceptance, profile validation docs, profile route assertion stabilization, and live shell readiness hardening; latest monitor pass validated regression, live health, live Axiom, and local Axiom.",
   }),
   task({
     id: "rune-p0-006",
@@ -1092,7 +1092,7 @@ export const TASKS: Task[] = [
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
     notes:
-      "Monitor pass 2026-04-29T07:23Z: v6 head 89d1f9a is post-push-regression green after profile route assertion stabilization; live Vercel returned HTTP 200/cache HIT; regression:monitor passed typecheck, Jest, and live health; qa:axiom:live passed 1/1; qa:axiom passed 11/11 after rebuilt web export. Full native iOS/Android QA remains blocked on a host with full Xcode/simctl plus Android adb/emulator.",
+      "Monitor pass 2026-04-29T07:35Z: v6 head 5902d1d is post-push-regression green after live shell readiness hardening; live Vercel returned HTTP 200/cache HIT; regression:monitor passed typecheck, Jest, and live health; qa:axiom:live passed 1/1; prior 89d1f9a qa:axiom passed 11/11 after rebuilt web export. Full native iOS/Android QA remains blocked on a host with full Xcode/simctl plus Android adb/emulator.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
