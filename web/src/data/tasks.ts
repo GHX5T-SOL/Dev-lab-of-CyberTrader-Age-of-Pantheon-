@@ -210,7 +210,7 @@ export const TASKS: Task[] = [
   task({
     id: "oracle-p1-011",
     owner: "oracle",
-    title: "Wire faction pressure windows into the terminal command flow",
+    title: "Wire faction pressure windows and limit-order commands into the terminal flow",
     status: "done",
     priority: "P1",
     estimate: "1d",
@@ -218,13 +218,16 @@ export const TASKS: Task[] = [
     acceptanceCriteria: [
       "Bound AgentOS factions expose live pressure windows in the terminal",
       "Pressure windows alter market prices deterministically without impossible states",
-      "Limit-trigger preview copy is compact, store-safe, and does not create off-authority orders",
-      "Focused tests, typecheck, ship check, smoke, and clean-cache export pass",
+      "Persisted limit-order commands stay LocalAuthority-only, compact, and store-safe",
+      "Focused tests, typecheck, ship check, smoke, and web export pass",
     ],
     tags: ["economy", "terminal", "agentos", "limit-orders"],
     notes:
-      "Completed 2026-04-29 in v6 1631381. Bound AgentOS factions derive deterministic 8-tick pressure windows from aligned contact reputation; /terminal applies the same pressure after location/district/flash modifiers and renders compact pressure-window plus limit-trigger preview rows. Validation: focused terminal-pressure/limit-order tests, typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and build:web -- --clear passed.",
-    links: [{ label: "Terminal pressure flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-pressure-flow.md` }],
+      "Completed 2026-04-29 across v6 1631381 and d751d68. Bound AgentOS factions derive deterministic 8-tick pressure windows from aligned contact reputation; /terminal applies pressure after location/district/flash modifiers, previews limit triggers, and now persists/cancels/resolves LocalAuthority limit orders on manual/background market ticks. Validation: terminal-pressure tests, limit-orders:check, typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and forced regression:check passed.",
+    links: [
+      { label: "Terminal pressure flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-pressure-flow.md` },
+      { label: "Terminal limit orders", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-limit-orders.md` },
+    ],
   }),
   task({
     id: "pantheon-p2-001",
@@ -436,12 +439,15 @@ export const TASKS: Task[] = [
     id: "vex-p1-004",
     owner: "vex",
     title: "Reduce dashboard feel and make every screen feel like a cyberdeck",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["zoro-p0-001"],
     acceptanceCriteria: ["Panels feel in-world", "Metrics stay scannable", "Visual density supports play rather than clutter"],
     tags: ["aesthetic", "cyberdeck", "polish"],
+    notes:
+      "Completed first core-surface slice 2026-04-29 in v6 d751d68. /home and /terminal now use packet-style DeckSectionHeader dividers, MarketTapeHeader rows, and denser terminal subsystem framing for route telemetry, Oracle runbook, live tape, order pipe, execution rack, cargo ledger, and signal feed. Validation: typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and forced regression:check passed.",
+    links: [{ label: "Cyberdeck surface polish", href: `${v6}/blob/main/docs/release/vex-p1-004-cyberdeck-surface-polish.md` }],
   }),
 
   task({
