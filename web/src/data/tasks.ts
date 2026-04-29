@@ -391,12 +391,21 @@ export const TASKS: Task[] = [
     id: "zoro-p1-003",
     owner: "zoro",
     title: "Art-direct commodity, faction, and OS upgrade presentation for launch",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "1d",
     dependencies: ["palette-p1-002"],
     acceptanceCriteria: ["Commodity set is visually coherent", "Faction/OS hierarchy feels premium", "Missing asset requests are filed"],
     tags: ["brand", "assets", "lore"],
+    notes:
+      "Completed 2026-04-29 in v6 c6f6f07 after rebasing on the nyx-p1-007 operator brief head e3becc7. SuperDesign produced a current-state presentation board plus asset-direction and OS/faction hierarchy branches; data/presentation-direction.ts now covers all 11 commodities, 4 AgentOS factions, PirateOS/AgentOS/PantheonOS hierarchy, and concrete Palette/Vex/Reel follow-up asset requests. Validation: focused presentation-direction Jest 7/7, then ship:check passed with safety scan, typecheck, 201/201 Jest tests in 40 suites, and Expo web export.",
+    links: [
+      { label: "Presentation art direction", href: `${v6}/blob/main/docs/release/zoro-p1-003-commodity-faction-os-art-direction.md` },
+      { label: "Typed presentation contract", href: `${v6}/blob/main/data/presentation-direction.ts` },
+      { label: "SuperDesign asset branch", href: "https://p.superdesign.dev/draft/a9ccd626-2899-4324-98b3-062300ecee9e" },
+      { label: "SuperDesign OS/faction branch", href: "https://p.superdesign.dev/draft/218326c6-0622-4fcd-a294-c51baf6686e9" },
+      { label: "v6 commit c6f6f07", href: `${v6}/commit/c6f6f07` },
+    ],
   }),
   task({
     id: "zoro-p1-004",

@@ -34,6 +34,7 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
+    "Codex autonomous ship loop pushed v6 c6f6f07 for zoro-p1-003 after rebasing on e3becc7: data/presentation-direction.ts now locks all 11 commodity lanes, 4 AgentOS faction sigil rules, PirateOS/AgentOS/PantheonOS hierarchy, and Palette/Vex/Reel follow-up asset requests; ship:check passed with safety scan, typecheck, 201/201 Jest tests in 40 suites, and Expo web export",
     "Codex autonomous ship loop verified v6 5902d1d: ship:check passed with safety scan, typecheck, 188/188 Jest tests, and Expo web export; qa:axiom:live passed 1/1 after widened live shell readiness; prior 89d1f9a local qa:axiom passed 11/11 after clean web export",
     "Codex autonomous ship loop pushed v6 5902d1d for vex-p1-006: /menu/profile is now a store-ready Eidolon dossier with rank/XP, live 0BOL/PNL/Heat/Energy telemetry, AgentOS standing, LocalAuthority session anchor copy, refreshed profile screenshot/provenance evidence, direct Axiom/responsive QA coverage, and widened live shell readiness",
     "Ghost completed ghost-p1-005 in v6 a6cb172: LocalAuthority-only launch scope is accepted and SupabaseAuthority stays feature-flagged/deferred until reviewed live RLS, privacy, and native evidence exists",
@@ -41,7 +42,7 @@ export const STATUS: StatusBlock = {
     "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, Jest, web export, smoke, Axiom, responsive, live health, live smoke, and forced regression",
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 5902d1d after live shell readiness hardening, profile route assertion stabilization, LocalAuthority launch-scope acceptance, profile dossier capture verification, retention tuning handoff, profile dossier polish, AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through c6f6f07 after Zoro presentation-direction locking, operator brief retention work, live shell readiness hardening, profile route assertion stabilization, LocalAuthority launch-scope acceptance, profile dossier capture verification, retention tuning handoff, profile dossier polish, AgentOS route-pressure mission hooks, Axiom session-reset hardening, tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -74,6 +75,7 @@ export const STATUS: StatusBlock = {
     "Vex shipped vex-p1-006 profile dossier polish through v6 5902d1d: /menu/profile is now a store-ready Eidolon dossier with rank/XP, live 0BOL/PNL/Heat/Energy telemetry, AgentOS standing, LocalAuthority session anchor copy, refreshed store screenshot evidence, direct Axiom/responsive QA coverage, and widened live shell readiness",
     "Reel/Codex polished the intro handoff with packet metadata, signal status, progress rails, and larger mobile-safe skip/enter commands",
     "Zoro completed zoro-p1-004 tutorial copy review: /tutorial, Help Terminal, and Oracle cues now teach the local fictional VBLM x15 buy/wait/sell route with focused copy tests",
+    "Zoro completed zoro-p1-003 in v6 c6f6f07: commodity, faction, and OS presentation direction is now typed, tested, SuperDesign-backed, and linked to concrete Palette/Vex/Reel follow-up asset requests",
     "Zoro's first 10-minute creative pass and store-media direction approval are preserved as direction, while future visual/copy work now ships autonomously",
     "Vex completed the mobile HUD readability pass with prioritized Energy/Heat/0BOL telemetry, terminal owned-quantity visibility, scaled labels, and 44-52 px first-trade touch targets",
     "Vex completed exported-web responsive viewport captures and QA across web desktop, small phone, large phone, and tablet portrait",
@@ -116,12 +118,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 5902d1d with ship:check safety/typecheck/Jest/export evidence, widened live shell readiness, prior 89d1f9a responsive 4/4 and Axiom 11/11, authority scope safety/type/focused Jest/clean-export evidence, and retention tuning checks",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through c6f6f07 with ship:check safety/typecheck/201 Jest tests/export evidence, Zoro presentation-direction coverage, widened live shell readiness, prior 89d1f9a responsive 4/4 and Axiom 11/11, authority scope safety/type/focused Jest/clean-export evidence, and retention tuning checks",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios and retention:tuning handoff, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck/inventory-bay/profile-dossier validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11 including /menu/profile, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, Expo web export, and Dev Lab verify:phase1 pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, AgentOS route-pressure mission checks, Hydra swarm/retention scenarios and retention:tuning handoff, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain/operator-brief tests, Zoro store-media/tutorial/presentation-direction checks, Vex HUD/responsive/system-state/cyberdeck/inventory-bay/profile-dossier validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11 including /menu/profile, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, Expo web export, and Dev Lab verify:phase1 pass locally",
     },
     {
       label: "Native QA",
@@ -156,7 +158,7 @@ export const STATUS: StatusBlock = {
     {
       label: "Store assets",
       state: "amber",
-      detail: "Zoro's store-media direction approval, Reel's storyboard, Palette's asset audit, icon/splash art, generated captures, Cipher's policy matrix, Kite's identity/recovery baseline, Dev Lab provenance report, and zara-p1-005 inventory are ready inputs; final preview video, native-device captures, public privacy policy, and store-owner declarations remain account/legal follow-ups",
+      detail: "Zoro's store-media direction approval and typed commodity/faction/OS presentation direction, Reel's storyboard, Palette's asset audit, icon/splash art, generated captures, Cipher's policy matrix, Kite's identity/recovery baseline, Dev Lab provenance report, and zara-p1-005 inventory are ready inputs; final preview video, native-device captures, public privacy policy, and store-owner declarations remain account/legal follow-ups",
     },
   ],
   updated: "2026-04-29",
