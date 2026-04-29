@@ -36,7 +36,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 7bf5e38 after AgentOS faction selection, store-media direction approval, Axiom session-reset hardening, provenance sync, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 3ab5746 after AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -60,6 +60,9 @@ export const STATUS: StatusBlock = {
     "Nyx completed 10-minute demo pressure tuning with starter, route-runner, and contraband strategy bands",
     "Nyx/Oracle completed tuned strategy guidance: VBLM x15 starter route, Heat-aware Oracle cue, Help/NPC hints, GLCH icon coverage, 155/155 tests, smoke, responsive QA, live QA, and force regression all pass",
     "Nyx shipped AgentOS rank-5 faction selection: deterministic faction definitions, faction alignment matrix, persisted FactionChoice, one-free-switch rule, LocalAuthority chooseFaction support, faction-biased missions, mission contact linkage, and 165/165 tests passing",
+    "Nyx shipped AgentOS contract chains: mission banners and contact rows now show faction stage, Heat posture, route consequence, and reputation delta from deterministic faction contracts",
+    "Oracle shipped deterministic limit-order and faction-pressure engine contracts with npm run limit-orders:check coverage for order fills, cancellation, expiry, and pressure-triggered sell execution",
+    "Reel/Codex polished the intro handoff with packet metadata, signal status, progress rails, and larger mobile-safe skip/enter commands",
     "Zoro's first 10-minute creative pass and store-media direction approval are preserved as direction, while future visual/copy work now ships autonomously",
     "Vex completed the mobile HUD readability pass with prioritized Energy/Heat/0BOL telemetry, terminal owned-quantity visibility, scaled labels, and 44-52 px first-trade touch targets",
     "Vex completed exported-web responsive viewport captures and QA across web desktop, small phone, large phone, and tablet portrait",
@@ -101,12 +104,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 7bf5e38 with post-push regression:monitor, force regression:check, provenance:assets:check, and perf:budgets green",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 3ab5746 with ship:check, clean-cache export, qa:smoke, limit-orders:check, post-push live health, and live Axiom smoke green",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction tests, Zoro store-media approval, Vex HUD/responsive/system-state validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, 165/165 Jest tests, local Axiom QA 11/11, provenance check, live health, live smoke, latest perf budgets, and Expo web export pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order audits, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval, Vex HUD/responsive/system-state validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11, provenance check, live health, live smoke, latest perf budgets, and Expo web export pass locally",
     },
     {
       label: "Native QA",

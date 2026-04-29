@@ -150,6 +150,28 @@ export const TASKS: Task[] = [
     ],
   }),
   task({
+    id: "nyx-p1-005",
+    owner: "nyx",
+    title: "Ship AgentOS contract-chain stakes on mission contacts",
+    status: "done",
+    priority: "P1",
+    estimate: "1d",
+    dependencies: ["nyx-p1-004"],
+    acceptanceCriteria: [
+      "Faction contracts expose stage, Heat posture, route consequence, and reputation delta",
+      "Mission banners and contact rows show the same deterministic contract signal",
+      "Contract copy stays compact, diegetic, and store-safe",
+      "Faction and mission generator tests cover the contract-chain mapping",
+    ],
+    tags: ["agentos", "missions", "factions", "ux"],
+    notes:
+      "Completed 2026-04-29 in v6 3ab5746. Adds four-stage AgentOS contract chains for every launch faction, attaches contract signals to aligned missions, and renders the stage/Heat/route/reputation strip on Missions. SuperDesign branch 8132f3d8 guided the compact terminal treatment. Validation: focused faction/mission tests and full ship:check passed.",
+    links: [
+      { label: "AgentOS contract chains", href: `${v6}/blob/main/docs/release/nyx-p1-005-agentos-contract-chains.md` },
+      { label: "SuperDesign preview", href: "https://p.superdesign.dev/draft/8132f3d8-d0a0-4323-a99e-d0643137658e" },
+    ],
+  }),
+  task({
     id: "oracle-p1-009",
     owner: "oracle",
     title: "Admit GLCH into deterministic momentum archetype path",
@@ -181,6 +203,9 @@ export const TASKS: Task[] = [
       "Regression harness covers order execution and cancellation",
     ],
     tags: ["economy", "limit-orders", "factions", "engine"],
+    notes:
+      "Completed 2026-04-29 in v6 3ab5746. Adds serializable limit-order/fill/faction-pressure types, deterministic order creation/cancel/expiry/fill handling, faction market pressure helpers, and npm run limit-orders:check coverage. UI adoption remains a follow-up after Nyx defines the terminal command flow.",
+    links: [{ label: "Limit orders and faction pressure", href: `${v6}/blob/main/docs/release/oracle-p1-010-limit-orders-faction-pressure.md` }],
   }),
   task({
     id: "pantheon-p2-001",
@@ -571,12 +596,21 @@ export const TASKS: Task[] = [
   task({
     id: "reel-p1-002",
     owner: "reel",
-    title: "Polish intro cinematic handoff timing and skip behavior",
-    status: "todo",
+    title: "Polish intro transmission handoff for store-preview readiness",
+    status: "done",
     priority: "P1",
-    estimate: "4h",
-    acceptanceCriteria: ["Skip is instant", "Handoff cannot stall", "Audio/video fallback is documented"],
-    tags: ["intro", "cinematic", "qa"],
+    estimate: "1d",
+    dependencies: ["reel-p0-001"],
+    acceptanceCriteria: [
+      "Video intro exposes in-world packet metadata and signal status",
+      "Text intro uses packetized lore with visible progress",
+      "Skip and enter commands meet mobile touch target expectations",
+      "Fallback copy stays diegetic and store-safe",
+    ],
+    tags: ["intro", "cinematic", "store-media", "ux"],
+    notes:
+      "Completed 2026-04-29 in v6 3ab5746. /video-intro and /intro now add packet metadata, signal status, progress rails, earlier skip availability, and 52 px skip/enter commands. Validation: npm run ship:check passed with 173/173 Jest tests and Expo web export; qa:smoke, health:live, and qa:axiom:live passed after push.",
+    links: [{ label: "Intro transmission polish", href: `${v6}/blob/main/docs/release/reel-p1-002-intro-transmission-polish.md` }],
   }),
   task({
     id: "reel-p1-003",

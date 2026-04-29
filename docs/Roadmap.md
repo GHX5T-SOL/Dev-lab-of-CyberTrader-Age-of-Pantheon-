@@ -21,6 +21,8 @@ The `rune-p0-001` technical audit is complete as of 2026-04-26: install, typeche
 
 The latest 2026-04-29 autonomous store-media pass pushed v6 commits `65ad6ce` and `7bf5e38` for `zoro-p0-002` / `zara-p1-005`. The pass approves the current six-shot portrait screenshot direction, Reel preview story spine, and cyberdeck store-page mood; refreshes screenshot capture/provenance to the current 39-asset inventory; and leaves final preview video, native-device captures, public privacy policy, age-rating declarations, and account-owner store submission as Gate C follow-ups. Validation is green: `npm run safety:autonomous`, `npm run typecheck`, `npm run capture:screenshots` with Expo web export, six 1242 x 2688 PNG screenshot dimension checks, `npm run provenance:assets:check`, `npm run ship:check` with 165/165 Jest tests in 34 suites, post-push `npm run regression:monitor`, `npm run qa:axiom:live`, and `npm run perf:budgets` passed on or through `7bf5e38`.
 
+The 2026-04-29 Codex autonomous ship loop pushed v6 commit `3ab5746` for `nyx-p1-005`, `oracle-p1-010`, and `reel-p1-002`: AgentOS missions now surface faction-specific contract-chain stakes on mission banners and contact rows; the engine exposes deterministic limit-order/fill/faction-pressure contracts for the next terminal command layer; and the cinematic/text intro handoff now has packet metadata, progress rails, and larger mobile-safe skip/enter commands. Validation included focused AgentOS/mission tests, `npm run limit-orders:check`, `npm run typecheck`, the full v6 `npm run ship:check`, `npm run build:web -- --clear`, `npm run qa:smoke`, `npm run health:live`, and `npm run qa:axiom:live`.
+
 The earlier 2026-04-29 AgentOS autonomous pass pushed v6 commits `6b16a8b`, `d165625`, and `7c9b47c` for `nyx-p1-003` / `nyx-p1-004` plus Axiom/provenance hardening. The pass ships deterministic rank-5 faction selection, selectable faction alignment, one free faction switch, persisted `FactionChoice`, LocalAuthority `chooseFaction`, mission-bias hooks, AgentOS progression copy, `/missions` contract gate coverage, and Axiom login-storage hardening. Validation is green: focused faction/mission/local-authority tests, `npm run typecheck`, `npm run ship:check` with 165/165 Jest tests in 34 suites, `npm run build:web -- --clear`, `npm run qa:axiom` 11/11 after browser-session reset hardening, `npm run perf:budgets`, `npm run provenance:assets:check`, `npm run health:live`, `npm run qa:axiom:live`, post-push `npm run regression:monitor` through `d165625`, and force `npm run regression:check` on `7c9b47c` all passed.
 
 The earlier 2026-04-29 autonomous pass pushed v6 commits `68a8f74` and `c73d733` for `oracle-p1-009`, `rune-p0-006`, and the `talon-p1-004` monitor follow-up. The pass aligns the Expo SDK 54 package graph, admits GLCH into the Oracle momentum-trader archetype and beta-tuned mirror, updates retention/swarm handoff copy to `PGAS/GLCH/ORRS/SNPS`, and makes `npm run regression:monitor` persist state through `git rev-parse --git-path regression-state.json` so linked worktrees can run it. Validation is green: `npx expo install --check`, `npm run ship:check` with 157/157 Jest tests in 33 suites, `npm run qa:smoke`, clean-cache web export, post-push `npm run regression:monitor`, and `npm audit --omit=dev --audit-level=high` all passed. Native Xcode 26/iOS 26 and Android API 35 proof remains pending on a provisioned QA host.
@@ -36,7 +38,7 @@ The next milestone is **App Store / Play Store submission readiness**, not more 
 The autonomous team should evolve v6 into a mobile MMORPG-lite cyberdeck game:
 
 1. **PirateOS** - polish the current first 10-minute trading loop until it feels premium, fast, animated, and addictive.
-2. **AgentOS** - rank-5 faction choice, one-free-switch allegiance, mission bias, and reputation hooks are live; next grow route-map consequences, limit orders, and stronger NPC contract chains.
+2. **AgentOS** - rank-5 faction choice, one-free-switch allegiance, mission bias, reputation hooks, mission contract chains, and deterministic limit-order/faction-pressure engine interfaces are live; next grow route-map consequences and wire pressure windows into the terminal command flow.
 3. **PantheonOS** - rank-20 late-game shell with Neon Void territory map, shard memory storyline, crew warfare, faction events, seasonal dominance, and territory modifiers.
 
 The game bible is a guide. Agents may invent new missions, factions, commodities, enemy systems, abilities, levels, cinematics, and assets when they improve the game.
@@ -81,6 +83,7 @@ Required:
 - Launch tuning bands lock 1000/1000 profitable replay sessions, median max Heat 60, 81 raid sessions, and zero low/medium/high-risk strategy issues.
 - 10-minute demo pressure bands prove three viable strategies with visible bounty/courier risk escalation.
 - AgentOS rank-5 faction choice has a shipped gate, persistent local authority contract, mission-surface readiness cues, and deterministic faction-biased mission generation.
+- AgentOS faction contracts now expose reputation-linked stage, Heat posture, route consequence, and reputation delta on mission surfaces.
 - Ghost release blockers and direct-push automation criteria are documented; older Gate A/B/C sign-off language is superseded by the 2026-04-28 full-autonomy directive.
 - Ghost architecture risk audit assigns the top 10 App Store submission risks to owners with evidence requirements.
 - SupabaseAuthority remains off by default and is guarded by explicit flag/config tests before live validation.
@@ -91,6 +94,7 @@ Required:
 - First-session loop guidance is live on home/terminal, with manual market ticks and a tested starter profitable sell path.
 - Oracle beta tuning is live in the first-session strategy cue, Help terminal, NPC hints, and VBLM x15 starter default.
 - AgentOS rank-5 faction selection is live with deterministic faction choices, one free switch, persisted faction choice, LocalAuthority support, mission bias hooks, and AgentOS progression UI.
+- Deterministic limit-order and faction-pressure engine contracts exist for future terminal command wiring.
 - Deterministic 10-minute pressure audit exists for starter, medium-risk, and contraband strategies.
 - Mobile HUD readability and one-hand first-trade controls meet the first Vex P0 pass.
 - Exported-web responsive viewport QA and capture evidence exist for web desktop, small phone, large phone, and tablet portrait.
