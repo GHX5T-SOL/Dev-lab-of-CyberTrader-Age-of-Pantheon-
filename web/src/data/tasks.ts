@@ -1064,7 +1064,8 @@ export const TASKS: Task[] = [
     dependencies: ["zyra-p0-001"],
     acceptanceCriteria: ["Live URL is checked", "Failures create a task or commit a status note", "No silent broken deploys"],
     tags: ["qa", "vercel", "monitoring"],
-    notes: "Monitor pass 2026-04-28: v6 head 49c1e49 is live-health green; health:live returned HTTP 200; qa:axiom:live passed 1/1; qa:smoke remains green on rebuilt Expo web; regression:monitor passed typecheck, Jest, and health:live. Full native iOS/Android QA remains the next Gate B blocker.",
+    notes:
+      "Monitor pass 2026-04-29T06:33Z: v6 head 832cabd is live-health green; Dev Lab fast-forwarded to 3e3ea90; v6 origin/main was already current; live Vercel returned HTTP 200 with cache HIT; health:live, qa:axiom:live 1/1, safety:autonomous, typecheck, and npm audit --omit=dev --audit-level=high all passed. Full native iOS/Android QA remains blocked on a host with full Xcode/simctl plus Android adb/emulator.",
     links: [
       { label: "v6 deployment", href: live },
       { label: "Live health check note", href: `${v6}/blob/main/docs/release/zyra-p0-002-live-health-check.md` },
