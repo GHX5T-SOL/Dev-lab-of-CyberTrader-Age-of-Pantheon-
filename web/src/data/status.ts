@@ -34,7 +34,7 @@ export const STATUS: StatusBlock = {
     "OpenAI generation is quota-limited on the Mac mini runner, so live work must use free-first OpenRouter/Goose routing, deterministic maintenance, Claude/Codex CLI, or existing paid credits only when available",
   ],
   recentWins: [
-    "Codex QA/deployment monitor verified v6 5902d1d: post-push regression:monitor passed with typecheck, Jest, and live health HTTP 200/cache HIT; qa:axiom:live passed 1/1 after widened live shell readiness; prior 89d1f9a local qa:axiom passed 11/11 after clean web export",
+    "Codex autonomous ship loop verified v6 5902d1d: ship:check passed with safety scan, typecheck, 188/188 Jest tests, and Expo web export; qa:axiom:live passed 1/1 after widened live shell readiness; prior 89d1f9a local qa:axiom passed 11/11 after clean web export",
     "Ghost completed ghost-p1-005 in v6 a6cb172: LocalAuthority-only launch scope is accepted and SupabaseAuthority stays feature-flagged/deferred until reviewed live RLS, privacy, and native evidence exists",
     "Hydra completed hydra-p1-003 in v6 7d92e7f: retention/churn outputs now produce deterministic Nyx/Oracle/Vex tuning actions, ranking action-fatigue, heat-anxiety, low-reward, and slow-first-profit with 0 impossible states and a 70.7% minimum estimated D1 return",
     "Codex QA/deployment monitor repaired Dev Lab verify:phase1 by replacing the broken ESLint 9 legacy command with a local TypeScript lint smoke; Dev Lab now passes typecheck, lint smoke, and 35/35 Jest tests while v6 passes safety, typecheck, Jest, web export, smoke, Axiom, responsive, live health, live smoke, and forced regression",
@@ -114,7 +114,7 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 5902d1d with post-push regression typecheck/Jest/live health, widened live shell readiness, prior 89d1f9a ship:check 188/188, responsive 4/4, Axiom 11/11, authority scope safety/type/focused Jest/clean-export evidence, and retention tuning checks",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 5902d1d with ship:check safety/typecheck/Jest/export evidence, widened live shell readiness, prior 89d1f9a responsive 4/4 and Axiom 11/11, authority scope safety/type/focused Jest/clean-export evidence, and retention tuning checks",
     },
     {
       label: "Build checks",

@@ -6,23 +6,23 @@ Task focus: current v6 head regression/deployment verification and Dev Lab statu
 ## Repo Sync
 
 - Dev Lab is aligned with `origin/main` after clearing stale unmerged index entries from an earlier concurrent sync.
-- v6 is clean and aligned with `origin/main` at `5902d1d` (`vex-p1-006 axiom: widen live shell readiness`) after `89d1f9a`, `74c1a37`, `a6cb172`, `6f0b737`, `7d92e7f`, and `3c45be8`.
+- v6 is clean and aligned with `origin/main` at `89d1f9a` (`vex-p1-006 axiom: stabilize profile route assertion`) after `74c1a37`, `a6cb172`, `6f0b737`, `7d92e7f`, and `3c45be8`.
 - This run preserved the existing Ghost/Hydra updates and added the current QA/deployment monitor evidence.
 
 ## Fixes Shipped
 
 - No new v6 code fix was required after the latest fast-forward.
-- Dev Lab task/status/run-ledger entries were updated to show `5902d1d` as the latest verified pushed head with fresh regression/deployment evidence.
+- Dev Lab task/status/run-ledger entries were updated to show `89d1f9a` as the latest verified pushed head with fresh regression/deployment evidence.
 - No new human-account, legal, payment, credential, or store-declaration blocker was found; `HUMAN_ACTIONS.md` was not changed.
 
 ## v6 Checks
 
 | Check | Result |
 | --- | --- |
-| `npm run regression:monitor` | PASS - checked `5902d1d` after previous `89d1f9a` with typecheck, Jest, and live health |
-| `npm run health:live` via regression monitor | PASS - HTTP 200 from Vercel, cache HIT, 402 ms |
-| `npm run qa:axiom:live` | PASS - 1/1 Chromium live shell smoke after widened readiness timeout |
-| `npm run qa:axiom` | PASS - 11/11 Chromium checks against rebuilt web export on `89d1f9a` before the live-timeout-only follow-up |
+| `npm run regression:monitor` | PASS - checked `89d1f9a` after previous `74c1a37` with typecheck, Jest, and live health |
+| `npm run health:live` via regression monitor | PASS - HTTP 200 from Vercel, cache HIT, 69 ms |
+| `npm run qa:axiom:live` | PASS - 1/1 Chromium live shell smoke |
+| `npm run qa:axiom` | PASS - 11/11 Chromium checks against rebuilt web export |
 
 ## Dev Lab Checks
 
