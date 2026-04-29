@@ -140,10 +140,11 @@ export const TASKS: Task[] = [
     ],
     tags: ["agentos", "factions", "progression", "gameplay"],
     notes:
-      "Completed 2026-04-29 in v6 6b16a8b with follow-up d165625. AgentOS rank-5 faction selection now has deterministic faction definitions, a one-free-switch rule, persisted FactionChoice state, LocalAuthority chooseFaction support, mission bias hooks, AgentOS progression UI, /missions route invariant coverage, and Axiom session-reset hardening. ship:check passed with 165/165 Jest tests in 34 suites; build:web -- --clear, qa:axiom 11/11, provenance:assets:check, health:live, qa:axiom:live, and regression:monitor passed.",
+      "Completed 2026-04-29. v6 commits 6b16a8b, d165625, and 7c9b47c ship the AgentOS faction gate, selectable rank-5 faction alignment matrix, persisted FactionChoice, one-free-switch rule, LocalAuthority faction binding, faction-biased missions, Missions contact linkage, Axiom browser-session hardening, and current provenance. Validation: focused faction/mission/local-authority tests, ship:check with 165/165 Jest tests, qa:axiom 11/11, perf:budgets, cleared web export, provenance check, live health/smoke, post-push regression:monitor, and force regression:check passed on 7c9b47c.",
     links: [
       { label: "AgentOS faction commit", href: `${v6}/commit/6b16a8b` },
       { label: "QA/provenance follow-up", href: `${v6}/commit/d165625` },
+      { label: "Axiom hardening follow-up", href: `${v6}/commit/7c9b47c` },
       { label: "Faction selection release note", href: `${v6}/blob/main/docs/release/nyx-p1-004-agentos-faction-selection.md` },
       { label: "Faction design note", href: `${v6}/blob/main/docs/release/nyx-p1-003-agentos-faction-design.md` },
     ],
