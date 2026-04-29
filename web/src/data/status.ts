@@ -36,7 +36,7 @@ export const STATUS: StatusBlock = {
   recentWins: [
     "Dev Lab /office 3D metaverse work shipped and is now closed as a studio milestone",
     "Dev Lab GitHub open PRs/issues were cleaned to zero open items",
-    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 1afc137 after terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
+    "CyberTrader v6 live deployment returns HTTP 200, passes npm run health:live, passes the hardened qa:axiom:live Chromium smoke, and v6 origin/main is verified through 4a8c078 after tutorial copy review, terminal pressure flow, persisted terminal limit orders, cyberdeck surface polish, AgentOS contract chains, limit-order/faction-pressure interfaces, intro transmission polish, privacy policy sync, AgentOS faction selection, store-media direction approval, SDK 54 package alignment, GLCH archetype admission, and worktree-safe regression monitor repair",
     "v6 contains the LocalAuthority trade loop, ledger, inventory, XP/rank, locations, heat/raids, couriers, news, missions, district states, streaks, daily challenges, bounty, and away report",
     "Rune completed the v6 technical audit: install, typecheck, Jest, and Expo web export pass locally",
     "Rune completed route hardening: protected deep links recover after hydration and menu/Android back actions have safe fallbacks",
@@ -65,6 +65,7 @@ export const STATUS: StatusBlock = {
     "Oracle shipped terminal pressure and persisted limit-order command flow through v6 1afc137: bound AgentOS factions apply deterministic 8-tick pressure windows and /terminal now persists, cancels, expires, and resolves LocalAuthority limit orders with recent-fill feedback",
     "Vex shipped the first core cyberdeck surface polish slice through v6 1afc137: /home and /terminal now use packet section headers, market tape labels, route/rank rails, and terminal subsystem framing",
     "Reel/Codex polished the intro handoff with packet metadata, signal status, progress rails, and larger mobile-safe skip/enter commands",
+    "Zoro completed zoro-p1-004 tutorial copy review: /tutorial, Help Terminal, and Oracle cues now teach the local fictional VBLM x15 buy/wait/sell route with focused copy tests",
     "Zoro's first 10-minute creative pass and store-media direction approval are preserved as direction, while future visual/copy work now ships autonomously",
     "Vex completed the mobile HUD readability pass with prioritized Energy/Heat/0BOL telemetry, terminal owned-quantity visibility, scaled labels, and 44-52 px first-trade touch targets",
     "Vex completed exported-web responsive viewport captures and QA across web desktop, small phone, large phone, and tablet portrait",
@@ -106,12 +107,12 @@ export const STATUS: StatusBlock = {
     {
       label: "v6 deployment",
       state: "green",
-      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 1afc137 with limit-orders:check, ship:check, perf:budgets, qa:smoke, clean-cache export, local Axiom QA 11/11, responsive QA 4/4, and forced regression green; prior 1631381 focused terminal-pressure checks and prior 3ab5746 live health/live Axiom smoke remain valid",
+      detail: "https://cyber-trader-age-of-pantheon-v6.vercel.app returns HTTP 200, passes npm run health:live, passes npm run qa:axiom:live, and v6 origin/main is verified through 4a8c078 with tutorial copy/cue/strategy tests, ship:check, qa:smoke, clean-cache export, post-push live Axiom smoke, post-push regression:monitor, plus prior limit-orders, perf budgets, local Axiom QA 11/11, responsive QA 4/4, and forced regression evidence; prior 1631381 focused terminal-pressure checks and prior 3ab5746 live health/live Axiom smoke remain valid",
     },
     {
       label: "Build checks",
       state: "green",
-      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval, Vex HUD/responsive/system-state/cyberdeck validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, and Expo web export pass locally",
+      detail: "Rune audit, SDK 54 package alignment, route hardening, storage regression checks, crash/log diagnostics hooks, Oracle replay/tuning/strategy guidance/GLCH archetype/limit-order/terminal-pressure audits, persisted limit-order terminal flow, Hydra swarm/retention scenarios, Ghost architecture risk audit, Kite authority/store-safety checks, Nyx first-session/pressure/AgentOS faction/contract-chain tests, Zoro store-media approval and tutorial copy review, Vex HUD/responsive/system-state/cyberdeck validation, Talon safety preflight and worktree-safe monitor, EAS config validation, Axiom performance budgets/smokes, Palette screenshot capture, Zara provenance drift check, local Axiom QA 11/11, responsive QA 4/4, provenance check, live health, live smoke, latest perf budgets, forced regression, and Expo web export pass locally",
     },
     {
       label: "Native QA",

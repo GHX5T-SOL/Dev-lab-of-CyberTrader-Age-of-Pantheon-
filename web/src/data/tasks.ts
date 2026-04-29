@@ -351,12 +351,15 @@ export const TASKS: Task[] = [
     id: "zoro-p1-004",
     owner: "zoro",
     title: "Review all tutorial text for style, tension, and clarity",
-    status: "todo",
+    status: "done",
     priority: "P1",
     estimate: "3h",
     dependencies: ["nyx-p0-001"],
     acceptanceCriteria: ["Tutorial voice matches CyberTrader", "Every instruction is understandable", "No filler UX copy remains"],
     tags: ["tutorial", "copy", "ux"],
+    notes:
+      "Completed 2026-04-29 in v6 4a8c078. The routed tutorial script now lives in data/tutorial-copy.ts with copy tests, the eight steps explicitly teach the local fictional VBLM x15 buy/wait/sell loop, FirstSessionCue and Help Terminal copy were tightened for clearer SELL/WAIT guidance and store-safe local-mode boundaries, and .superdesign/design-system.md records the copy constraints. Validation: focused copy/cue/strategy tests, ship:check with 180/180 Jest tests in 37 suites plus Expo web export, qa:smoke, clean-cache web export, post-push qa:axiom:live, and post-push regression:monitor passed.",
+    links: [{ label: "Tutorial copy review", href: `${v6}/blob/main/docs/release/zoro-p1-004-tutorial-copy-review.md` }],
   }),
 
   task({
