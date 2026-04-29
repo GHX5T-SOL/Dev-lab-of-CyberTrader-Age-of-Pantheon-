@@ -82,7 +82,7 @@ export const TASKS: Task[] = [
     ],
     tags: ["automation", "openclaw", "autonomy", "no-approval"],
     notes:
-      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. Dev Lab verify now passes; v6 forced regression passes on final head 6f0b737, with same-run browser evidence covering the profile dossier and QA harness path before the latest fast-forward.",
+      "2026-04-29 QA/deployment monitor repaired Dev Lab verify:phase1 for ESLint 9 by adding scripts/lint-typescript.mjs and switching npm run lint to the local TypeScript lint smoke. Dev Lab verify now passes; v6 forced regression passes on final head a6cb172, with same-run browser evidence covering the profile dossier and QA harness path before the latest fast-forward.",
   }),
   task({
     id: "rune-p0-006",
