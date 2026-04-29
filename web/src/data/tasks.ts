@@ -204,8 +204,27 @@ export const TASKS: Task[] = [
     ],
     tags: ["economy", "limit-orders", "factions", "engine"],
     notes:
-      "Completed 2026-04-29 in v6 3ab5746. Adds serializable limit-order/fill/faction-pressure types, deterministic order creation/cancel/expiry/fill handling, faction market pressure helpers, and npm run limit-orders:check coverage. UI adoption remains a follow-up after Nyx defines the terminal command flow.",
+      "Completed 2026-04-29 in v6 3ab5746. Adds serializable limit-order/fill/faction-pressure types, deterministic order creation/cancel/expiry/fill handling, faction market pressure helpers, and npm run limit-orders:check coverage. Follow-up oracle-p1-011 now wires deterministic pressure windows into /terminal.",
     links: [{ label: "Limit orders and faction pressure", href: `${v6}/blob/main/docs/release/oracle-p1-010-limit-orders-faction-pressure.md` }],
+  }),
+  task({
+    id: "oracle-p1-011",
+    owner: "oracle",
+    title: "Wire faction pressure windows into the terminal command flow",
+    status: "done",
+    priority: "P1",
+    estimate: "1d",
+    dependencies: ["nyx-p1-005", "oracle-p1-010"],
+    acceptanceCriteria: [
+      "Bound AgentOS factions expose live pressure windows in the terminal",
+      "Pressure windows alter market prices deterministically without impossible states",
+      "Limit-trigger preview copy is compact, store-safe, and does not create off-authority orders",
+      "Focused tests, typecheck, ship check, smoke, and clean-cache export pass",
+    ],
+    tags: ["economy", "terminal", "agentos", "limit-orders"],
+    notes:
+      "Completed 2026-04-29 in v6 1631381. Bound AgentOS factions derive deterministic 8-tick pressure windows from aligned contact reputation; /terminal applies the same pressure after location/district/flash modifiers and renders compact pressure-window plus limit-trigger preview rows. Validation: focused terminal-pressure/limit-order tests, typecheck, ship:check with 178/178 Jest tests in 36 suites plus Expo web export, qa:smoke, and build:web -- --clear passed.",
+    links: [{ label: "Terminal pressure flow", href: `${v6}/blob/main/docs/release/oracle-p1-011-terminal-pressure-flow.md` }],
   }),
   task({
     id: "pantheon-p2-001",
