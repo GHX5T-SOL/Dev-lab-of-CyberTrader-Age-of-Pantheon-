@@ -72,16 +72,16 @@ export default function CommodityRow({
         resizeMode="contain"
         style={{ width: 28, height: 28, marginRight: 8 }}
       />
-      <Text style={{ width: 60, fontFamily: terminalFont, fontSize: 14, fontWeight: "700", color: terminalColors.cyan }}>
+      <Text style={{ width: 60, fontFamily: terminalFont, fontSize: 16, fontWeight: "700", color: terminalColors.cyan }}>
         {ticker}
       </Text>
-      <Text numberOfLines={1} style={{ flex: 1, fontFamily: terminalFont, fontSize: 12, color: terminalColors.muted }}>
+      <Text numberOfLines={1} style={{ flex: 1, fontFamily: terminalFont, fontSize: 14, color: terminalColors.muted }}>
         {name}
       </Text>
-      <Text style={{ width: 100, textAlign: "right", fontFamily: terminalFont, fontSize: 16, color: terminalColors.text }}>
+      <Text style={{ width: 100, textAlign: "right", fontFamily: terminalFont, fontSize: 18, color: terminalColors.text }}>
         {price.toFixed(2)}
       </Text>
-      <Text style={{ width: 80, textAlign: "right", fontFamily: terminalFont, fontSize: 13, color }}>
+      <Text style={{ width: 80, textAlign: "right", fontFamily: terminalFont, fontSize: 15, color }}>
         {prefix} {Math.abs(changePercent).toFixed(1)}%
       </Text>
     </Pressable>
