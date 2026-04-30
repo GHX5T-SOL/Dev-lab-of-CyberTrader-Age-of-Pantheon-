@@ -141,7 +141,7 @@ Current native/store readiness blockers:
 
 - **compass-p0-002** v6 GitHub issue batches – **Completed** (2026-04-28): issues [#2](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/2)-[#6](https://github.com/GHX5T-SOL/CyberTrader-Age-of-Pantheon-v6/issues/6) now carry active P0/P1 owner/priority maps.
 
-- **axiom-p0-001** - iOS/Android runtime validation pending due to missing simulator credentials. This is a runner/tooling task, not a human approval gate. Reel capture route evidence pending. (zyra-p1-005 ✅)
+- **axiom-p0-001** - iOS/Android runtime validation pending due to missing simulator credentials. This is a runner/tooling task, not a human approval gate. Reel capture route evidence pending. (zyra-p1-005 ⛔️ BLOCKED - see HUMAN_ACTIONS.md)
 
 1. **Ghost** - release authority bar and architecture risk audit are complete; Ghost is now an optional observer, not an approval gate. AI agents can execute SDK 54, EAS, Supabase, and release-plan work unless account-owner access is required.
 2. **Zoro** - first 10-minute creative pass, Reel preview storyboard, store-media direction approval, and tutorial copy review are complete; Zoro is now an optional creative observer, not a blocker. Palette/Reel/Vex may generate and ship visual improvements continuously.
